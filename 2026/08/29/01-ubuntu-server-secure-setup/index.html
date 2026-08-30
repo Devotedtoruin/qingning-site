@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ubuntu、SSH、Docker、Nginx 与 Hexo 静态站点运维记录。">
+  <meta name="theme-color" content="#111714">
+  <title>Ubuntu 24.04 云服务器初始化：SSH 安全与基础维护 | 运维 Runbook</title>
+  <link rel="alternate" type="application/atom+xml" title="运维 Runbook" href="/atom.xml">
+  <link rel="stylesheet" href="/css/style.css">
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="/" aria-label="返回首页">
+      <span class="brand-mark">OPS</span>
+      <span><strong>运维 Runbook</strong><small>通用流程、验证与回退</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+      
+        <a href="/">首页</a>
+      
+        <a href="/articles/">文章</a>
+      
+        <a href="/categories/">分类</a>
+      
+        <a href="/tags/">标签</a>
+      
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" type="button" data-search-open aria-label="搜索" title="搜索">⌕</button>
+      <a class="icon-button" href="/subscribe/" aria-label="RSS订阅" title="RSS订阅">RSS</a>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航">☰</button>
+    </div>
+  </div>
+  <nav class="mobile-nav" data-mobile-nav aria-label="移动导航">
+    
+      <a href="/">首页</a>
+    
+      <a href="/articles/">文章</a>
+    
+      <a href="/categories/">分类</a>
+    
+      <a href="/tags/">标签</a>
+    
+  </nav>
+</header>
+
+<main class="page-main"><article class="shell article-shell">
+  <header class="article-header"><p class="eyebrow">2026-08-29 · 技术文章</p><h1>Ubuntu 24.04 云服务器初始化：SSH 安全与基础维护</h1><div class="post-tags"><a href="/tags/Ubuntu/">#Ubuntu</a><a href="/tags/SSH/">#SSH</a><a href="/tags/%E5%AE%89%E5%85%A8/">#安全</a><a href="/tags/APT/">#APT</a></div></header>
+  <div class="article-content"><p>本文以 Ubuntu Server 24.04 为例，完成普通管理员、公钥认证、SSH 端口迁移和基础软件维护。操作涉及 Windows 管理端、云网络控制台和服务器终端。修改 SSH 时保留控制台或现有会话，确认新连接可用后再关闭旧入口。</p>
+<h2 id="适用范围、风险与变量"><a href="#适用范围、风险与变量" class="headerlink" title="适用范围、风险与变量"></a>适用范围、风险与变量</h2><p>适用于 Ubuntu Server 24.04。开始前准备云控制台或可用的初始 SSH 会话，并预留一个新的 PowerShell 窗口测试连接。示例变量按实际环境填写。</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>含义</th>
+<th>操作位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ADMIN_USER</code></td>
+<td>普通管理用户</td>
+<td>服务器</td>
+</tr>
+<tr>
+<td><code>SERVER_ADDR</code></td>
+<td>服务器公网地址或域名</td>
+<td>PowerShell</td>
+</tr>
+<tr>
+<td><code>OLD_SSH_PORT</code> &#x2F; <code>NEW_SSH_PORT</code></td>
+<td>迁移前后 SSH 端口</td>
+<td>控制台、服务器、PowerShell</td>
+</tr>
+<tr>
+<td><code>KEY_FILE</code></td>
+<td>Windows 私钥文件名</td>
+<td>PowerShell</td>
+</tr>
+</tbody></table>
+<p>PowerShell 先定义变量：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$AdminUser</span> = <span class="string">&#x27;&lt;管理员用户&gt;&#x27;</span></span><br><span class="line"><span class="variable">$ServerAddr</span> = <span class="string">&#x27;&lt;服务器地址&gt;&#x27;</span></span><br><span class="line"><span class="variable">$OldSshPort</span> = <span class="string">&#x27;&lt;旧SSH端口&gt;&#x27;</span></span><br><span class="line"><span class="variable">$NewSshPort</span> = <span class="string">&#x27;&lt;新SSH端口&gt;&#x27;</span></span><br><span class="line"><span class="variable">$KeyFile</span> = <span class="string">&quot;<span class="variable">$HOME</span>\.ssh\&lt;私钥文件&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-建立独立密钥和普通管理用户"><a href="#1-建立独立密钥和普通管理用户" class="headerlink" title="1. 建立独立密钥和普通管理用户"></a>1. 建立独立密钥和普通管理用户</h2><p>在 Windows PowerShell 创建一套服务器专用密钥。公钥文件默认在私钥路径后追加 <code>.pub</code>；私钥只保留在管理端。</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh<span class="literal">-keygen</span> <span class="literal">-t</span> ed25519 <span class="literal">-a</span> <span class="number">100</span> <span class="operator">-f</span> <span class="variable">$KeyFile</span> <span class="literal">-C</span> <span class="string">&#x27;&lt;用途说明&gt;&#x27;</span></span><br><span class="line"><span class="built_in">Get-Content</span> <span class="string">&quot;<span class="variable">$KeyFile</span>.pub&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在<strong>保留的初始服务器会话</strong>中创建用户。<code>adduser</code> 会交互设置服务器本地密码；不要记录或公开该密码。将 PowerShell 中读取的单行公钥粘贴到 heredoc 内。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ADMIN_USER=<span class="string">&#x27;&lt;管理员用户&gt;&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> adduser <span class="string">&quot;<span class="variable">$ADMIN_USER</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> usermod -aG <span class="built_in">sudo</span> <span class="string">&quot;<span class="variable">$ADMIN_USER</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> install -d -m 700 -o <span class="string">&quot;<span class="variable">$ADMIN_USER</span>&quot;</span> -g <span class="string">&quot;<span class="variable">$ADMIN_USER</span>&quot;</span> <span class="string">&quot;/home/<span class="variable">$ADMIN_USER</span>/.ssh&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">tee</span> <span class="string">&quot;/home/<span class="variable">$ADMIN_USER</span>/.ssh/authorized_keys&quot;</span> &gt;/dev/null &lt;&lt;<span class="string">&#x27;EOF_KEY&#x27;</span></span><br><span class="line">&lt;粘贴单行公钥&gt;</span><br><span class="line">EOF_KEY</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chown</span> <span class="string">&quot;<span class="variable">$ADMIN_USER</span>:<span class="variable">$ADMIN_USER</span>&quot;</span> <span class="string">&quot;/home/<span class="variable">$ADMIN_USER</span>/.ssh/authorized_keys&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> 600 <span class="string">&quot;/home/<span class="variable">$ADMIN_USER</span>/.ssh/authorized_keys&quot;</span></span><br><span class="line"><span class="built_in">id</span> <span class="string">&quot;<span class="variable">$ADMIN_USER</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> namei -l <span class="string">&quot;/home/<span class="variable">$ADMIN_USER</span>/.ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>确认账号、sudo组和文件权限无误后，保持旧会话打开，转到新的PowerShell窗口测试登录。</p>
+<p>在<strong>第二个 PowerShell 窗口</strong>验证公钥和 sudo：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$OldSshPort</span> <span class="literal">-i</span> <span class="variable">$KeyFile</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>登录后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">id</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">whoami</span></span><br></pre></td></tr></table></figure>
+
+<p>预期<code>id</code>显示新用户，<code>sudo whoami</code>输出<code>root</code>。还可以用另一把未授权密钥确认访问会被拒绝：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$OldSshPort</span> <span class="literal">-i</span> <span class="string">&quot;<span class="variable">$HOME</span>\.ssh\&lt;其他私钥文件&gt;&quot;</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>若登录失败，在旧会话或控制台检查用户名、公钥是否完整，以及<code>.ssh</code>和<code>authorized_keys</code>的属主与权限。修复配置后重新测试，不要先删除唯一可用的授权。</p>
+<h2 id="2-平滑迁移-SSH-端口"><a href="#2-平滑迁移-SSH-端口" class="headerlink" title="2. 平滑迁移 SSH 端口"></a>2. 平滑迁移 SSH 端口</h2><p>端口迁移遵循：<strong>新增网络规则 → 双端口监听 → 第二会话登录 → 单端口监听 → 第三会话登录 → 移除旧网络规则</strong>。非默认端口只减少常见扫描噪声，核心控制仍是密钥、私钥口令、禁止密码&#x2F;root 登录和最小 sudo。</p>
+<p>先在服务器识别实际监听单元。Ubuntu 24.04 可能使用 <code>ssh.socket</code>，不能假定只改 <code>sshd_config</code> 就会改变监听：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl is-enabled ssh.socket ssh.service</span><br><span class="line">systemctl status ssh.socket --no-pager</span><br><span class="line">systemctl <span class="built_in">cat</span> ssh.socket</span><br><span class="line">systemctl show ssh.socket -p Listen -p ActiveState</span><br><span class="line">ss -lntp | grep -E <span class="string">&#x27;:(&lt;旧SSH端口&gt;|&lt;新SSH端口&gt;)\b&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在云网络控制台新增TCP <code>NEW_SSH_PORT</code>入站规则，暂时保留<code>OLD_SSH_PORT</code>。保存规则后还要检查服务器监听，并从新的PowerShell窗口实际登录。</p>
+<p>在服务器写双端口 socket drop-in：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">OLD_SSH_PORT=<span class="string">&#x27;&lt;旧SSH端口&gt;&#x27;</span></span><br><span class="line">NEW_SSH_PORT=<span class="string">&#x27;&lt;新SSH端口&gt;&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> install -d -m 755 /etc/systemd/system/ssh.socket.d</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/systemd/system/ssh.socket.d/10-ports.conf &gt;/dev/null &lt;&lt;<span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="string">[Socket]</span></span><br><span class="line"><span class="string">ListenStream=</span></span><br><span class="line"><span class="string">ListenStream=$OLD_SSH_PORT</span></span><br><span class="line"><span class="string">ListenStream=$NEW_SSH_PORT</span></span><br><span class="line"><span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">cat</span> ssh.socket</span><br><span class="line"><span class="built_in">sudo</span> systemctl show ssh.socket -p Listen -p ActiveState</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart ssh.socket</span><br><span class="line"><span class="built_in">sudo</span> systemctl status ssh.socket --no-pager</span><br><span class="line">ss -lntp | grep -E <span class="string">&quot;:(<span class="variable">$OLD_SSH_PORT</span>|<span class="variable">$NEW_SSH_PORT</span>)\b&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>空的 <code>ListenStream=</code> 重置列表；随后两行明确保留旧端口并新增新端口。<code>daemon-reload</code>、<code>cat/show/restart/status</code> 的退出状态用于发现加载问题，<code>ss</code> 才证明监听层。</p>
+<p>在第二个新 PowerShell 窗口验证新端口和 sudo：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$NewSshPort</span> <span class="literal">-i</span> <span class="variable">$KeyFile</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>成功后先让服务器只监听新端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/systemd/system/ssh.socket.d/10-ports.conf &gt;/dev/null &lt;&lt;<span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="string">[Socket]</span></span><br><span class="line"><span class="string">ListenStream=</span></span><br><span class="line"><span class="string">ListenStream=$NEW_SSH_PORT</span></span><br><span class="line"><span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart ssh.socket</span><br><span class="line"><span class="built_in">sudo</span> systemctl status ssh.socket --no-pager</span><br><span class="line">ss -lntp | grep -E <span class="string">&quot;:(<span class="variable">$OLD_SSH_PORT</span>|<span class="variable">$NEW_SSH_PORT</span>)\b&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在<strong>第三个新 PowerShell 窗口</strong>再次登录新端口：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$NewSshPort</span> <span class="literal">-i</span> <span class="variable">$KeyFile</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>第三个会话成功，才在云网络控制台删除旧端口放行。最后的新连接到旧端口应失败：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$OldSshPort</span> <span class="literal">-i</span> <span class="variable">$KeyFile</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>若旧端口测试表现为超时，应结合网络规则和服务器<code>ss</code>输出确认是否已经关闭。</p>
+<h3 id="端口迁移回退"><a href="#端口迁移回退" class="headerlink" title="端口迁移回退"></a>端口迁移回退</h3><p>迁移失败时，先在网络控制台确认或恢复旧端口放行，再在保留会话恢复双端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/systemd/system/ssh.socket.d/10-ports.conf &gt;/dev/null &lt;&lt;<span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="string">[Socket]</span></span><br><span class="line"><span class="string">ListenStream=</span></span><br><span class="line"><span class="string">ListenStream=$OLD_SSH_PORT</span></span><br><span class="line"><span class="string">ListenStream=$NEW_SSH_PORT</span></span><br><span class="line"><span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart ssh.socket</span><br><span class="line"><span class="built_in">sudo</span> systemctl status ssh.socket --no-pager</span><br><span class="line">ss -lntp | grep -E <span class="string">&quot;:(<span class="variable">$OLD_SSH_PORT</span>|<span class="variable">$NEW_SSH_PORT</span>)\b&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>随后用独立新终端测试旧端口。没有有效旧会话或控制台时，不应删除唯一入口。</p>
+<h2 id="3-仅允许公钥认证"><a href="#3-仅允许公钥认证" class="headerlink" title="3. 仅允许公钥认证"></a>3. 仅允许公钥认证</h2><p>确认新端口公钥登录正常后再收紧认证策略，并继续保留一个已登录会话。先查看现有配置；Ubuntu的OpenSSH配置可能受多个文件影响，最终以<code>sshd -T</code>输出为准。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">backup_id=$(<span class="built_in">date</span> +%Y%m%d_%H%M%S)</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -a /etc/ssh/sshd_config <span class="string">&quot;/etc/ssh/sshd_config.backup.<span class="variable">$&#123;backup_id&#125;</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> grep -nE <span class="string">&#x27;^(Include|PasswordAuthentication|KbdInteractiveAuthentication|PermitRootLogin|PubkeyAuthentication)&#x27;</span> /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*.conf 2&gt;/dev/null</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/ssh/sshd_config.d/00-publickey-only.conf &gt;/dev/null &lt;&lt;<span class="string">&#x27;EOF_SSHD&#x27;</span></span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span></span><br><span class="line">PasswordAuthentication no</span><br><span class="line">KbdInteractiveAuthentication no</span><br><span class="line">PermitRootLogin no</span><br><span class="line">EOF_SSHD</span><br><span class="line"><span class="built_in">sudo</span> sshd -t</span><br><span class="line"><span class="built_in">sudo</span> sshd -T | grep -Ei <span class="string">&#x27;^(pubkeyauthentication|passwordauthentication|kbdinteractiveauthentication|permitrootlogin)&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl reload ssh.service</span><br></pre></td></tr></table></figure>
+
+<p>用新的 PowerShell 窗口做正向验证：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$NewSshPort</span> <span class="literal">-i</span> <span class="variable">$KeyFile</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在新的PowerShell窗口分别确认密码认证和root远程登录已被拒绝：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$NewSshPort</span> <span class="literal">-o</span> PubkeyAuthentication=no <span class="literal">-o</span> PreferredAuthentications=password <span class="literal">-o</span> NumberOfPasswordPrompts=<span class="number">1</span> <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br><span class="line">ssh <span class="literal">-p</span> <span class="variable">$NewSshPort</span> <span class="literal">-o</span> BatchMode=yes <span class="string">&quot;root@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>回退前先显示精确文件，确认后删除，再检查并 reload：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">ls</span> -l /etc/ssh/sshd_config.d/00-publickey-only.conf</span><br><span class="line"><span class="built_in">sudo</span> sed -n <span class="string">&#x27;1,120p&#x27;</span> /etc/ssh/sshd_config.d/00-publickey-only.conf</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -f /etc/ssh/sshd_config.d/00-publickey-only.conf</span><br><span class="line"><span class="built_in">sudo</span> sshd -t</span><br><span class="line"><span class="built_in">sudo</span> sshd -T | grep -Ei <span class="string">&#x27;^(pubkeyauthentication|passwordauthentication|kbdinteractiveauthentication|permitrootlogin)&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl reload ssh.service</span><br></pre></td></tr></table></figure>
+
+<p>再以新终端复验，最后才关闭回退会话。</p>
+<h2 id="4-软件索引、工具、升级与重启"><a href="#4-软件索引、工具、升级与重启" class="headerlink" title="4. 软件索引、工具、升级与重启"></a>4. 软件索引、工具、升级与重启</h2><p>升级前确认SSH仍可从新窗口登录，并检查磁盘、内存和失败服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> -h /</span><br><span class="line">free -h</span><br><span class="line">systemctl --failed</span><br><span class="line">apt-cache policy git curl docker.io rsync</span><br></pre></td></tr></table></figure>
+
+<p><code>apt update</code> 会刷新本地包索引，是状态变更但不会升级已安装包；<code>apt install</code> 安装指定包；<code>apt upgrade</code> 升级已安装包。模拟依赖动作仍需要可用索引：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line">update_status=$?</span><br><span class="line"><span class="built_in">printf</span> <span class="string">&#x27;apt update exit=%s\n&#x27;</span> <span class="string">&quot;<span class="variable">$update_status</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> apt -s install git curl ca-certificates docker.io rsync</span><br><span class="line"><span class="built_in">sudo</span> apt -s upgrade</span><br></pre></td></tr></table></figure>
+
+<p>确认模拟结果和维护窗口后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install git curl ca-certificates docker.io rsync</span><br><span class="line"><span class="built_in">sudo</span> apt upgrade</span><br><span class="line"><span class="built_in">sudo</span> apt autoremove --dry-run</span><br></pre></td></tr></table></figure>
+
+<p>Compose 是否需要取决于业务和当前软件源，不应假定所有主机都有相同 Compose 包。检查重启标记：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">test</span> -e /var/run/reboot-required &amp;&amp; <span class="built_in">cat</span> /var/run/reboot-required || <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>如果核心库或内核更新要求重启，选择维护时段重启，随后重新建立SSH连接并检查：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">uname</span> -r</span><br><span class="line"><span class="built_in">uptime</span></span><br><span class="line">systemctl is-system-running || <span class="literal">true</span></span><br><span class="line">systemctl --failed</span><br></pre></td></tr></table></figure>
+
+<p><code>degraded</code> 是诊断信号，要结合失败单元判断；即使没有重启标记，也应复验关键服务和管理入口。</p>
+<h2 id="常见问题与最终验收"><a href="#常见问题与最终验收" class="headerlink" title="常见问题与最终验收"></a>常见问题与最终验收</h2><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>先检查什么</th>
+<th>不能据此断定什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>新端口超时</td>
+<td>网络规则、<code>ss</code>、管理端地址</td>
+<td>不能只凭超时认定是安全组问题</td>
+</tr>
+<tr>
+<td>新用户被拒绝</td>
+<td>公钥、权限、用户名、日志</td>
+<td>本地文件存在不等于登录成功</td>
+</tr>
+<tr>
+<td><code>sshd -t</code> 成功</td>
+<td>再看 <code>sshd -T</code></td>
+<td>语法成功不等于策略生效</td>
+</tr>
+<tr>
+<td><code>systemctl</code> 非零</td>
+<td><code>systemctl --failed</code></td>
+<td>不自动等于系统不能维护</td>
+</tr>
+</tbody></table>
+<p>完成后确认：普通管理员可以通过新端口和公钥登录并使用sudo；旧端口已经关闭；密码与root远程登录被拒绝；软件更新和服务状态无异常。</p>
+<blockquote>
+<p>Ubuntu镜像和云平台的默认配置可能不同。修改前先查看当前SSH unit和生效配置，并始终保留控制台或已有会话。</p>
+</blockquote>
+</div>
+  <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+</article></main><footer class="site-footer">
+  <div class="shell footer-inner">
+    <p><strong>运维 Runbook</strong><span>Ubuntu、SSH、Docker 与静态站点发布。</span></p>
+    <p>Powered by Hexo · 2026</p>
+  </div>
+</footer>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" placeholder="输入命令、故障或主题" autocomplete="off">
+    <div class="search-meta" data-search-meta>输入关键词开始检索</div>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/js/site.js" defer></script>
+</body>
+</html>
+

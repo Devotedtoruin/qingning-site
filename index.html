@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ubuntu、SSH、Docker、Nginx 与 Hexo 静态站点运维记录。">
+  <meta name="theme-color" content="#111714">
+  <title>运维 Runbook</title>
+  <link rel="alternate" type="application/atom+xml" title="运维 Runbook" href="/atom.xml">
+  <link rel="stylesheet" href="/css/style.css">
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="/" aria-label="返回首页">
+      <span class="brand-mark">OPS</span>
+      <span><strong>运维 Runbook</strong><small>通用流程、验证与回退</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+      
+        <a href="/">首页</a>
+      
+        <a href="/articles/">文章</a>
+      
+        <a href="/categories/">分类</a>
+      
+        <a href="/tags/">标签</a>
+      
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" type="button" data-search-open aria-label="搜索" title="搜索">⌕</button>
+      <a class="icon-button" href="/subscribe/" aria-label="RSS订阅" title="RSS订阅">RSS</a>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航">☰</button>
+    </div>
+  </div>
+  <nav class="mobile-nav" data-mobile-nav aria-label="移动导航">
+    
+      <a href="/">首页</a>
+    
+      <a href="/articles/">文章</a>
+    
+      <a href="/categories/">分类</a>
+    
+      <a href="/tags/">标签</a>
+    
+  </nav>
+</header>
+
+<main>
+  <section class="hero-band"><div class="shell hero-grid"><div class="hero-copy"><p class="eyebrow">运维 RUNBOOK</p><h1>运维 Runbook</h1><p class="hero-lead">Ubuntu、SSH、Docker、Nginx 与静态站点发布记录。</p></div></div></section>
+  <section class="content-band"><div class="shell narrow-shell">
+    <div class="section-heading"><div><p class="eyebrow">LATEST</p><h2>最新文章</h2></div><a href="/articles/">查看全部</a></div>
+    <div class="post-list"><article class="post-row">
+  <div class="post-date"><span>08</span><strong>29</strong><small>2026</small></div>
+  <div class="post-summary">
+    <div class="post-taxonomy"><span>静态站点发布</span></div>
+    <h2><a href="/2026/08/29/02-hexo-docker-nginx-publish/">Hexo 7 静态博客构建、布局修改与 Docker/Nginx 发布</a></h2>
+    <p>静态站点维护分为三份：Hexo 源码保存文章、布局和配置；public/ 是可再生成产物；发布端目录只接收已生成文件。因此云端无需 Node 或 Hexo，构建问题与服务问题也可以分层处理。 适用范围与变量BLOG_DIR=&amp;#x27;&amp;lt;博客源码目录&amp;gt;&amp;#x27;DEPLOY_DIR=&amp;...</p>
+    <div class="post-tags"><a href="/tags/Hexo/">#Hexo</a><a href="/tags/Docker/">#Docker</a><a href="/tags/Nginx/">#Nginx</a><a href="/tags/Git/">#Git</a></div>
+  </div>
+  <a class="row-link" href="/2026/08/29/02-hexo-docker-nginx-publish/" aria-label="阅读 Hexo 7 静态博客构建、布局修改与 Docker/Nginx 发布">→</a>
+</article>
+<article class="post-row">
+  <div class="post-date"><span>08</span><strong>29</strong><small>2026</small></div>
+  <div class="post-summary">
+    <div class="post-taxonomy"><span>服务器初始化</span></div>
+    <h2><a href="/2026/08/29/01-ubuntu-server-secure-setup/">Ubuntu 24.04 云服务器初始化：SSH 安全与基础维护</a></h2>
+    <p>本文以 Ubuntu Server 24.04 为例，完成普通管理员、公钥认证、SSH 端口迁移和基础软件维护。操作涉及 Windows 管理端、云网络控制台和服务器终端。修改 SSH 时保留控制台或现有会话，确认新连接可用后再关闭旧入口。 适用范围、风险与变量适用于 Ubuntu Server 2...</p>
+    <div class="post-tags"><a href="/tags/Ubuntu/">#Ubuntu</a><a href="/tags/SSH/">#SSH</a><a href="/tags/%E5%AE%89%E5%85%A8/">#安全</a><a href="/tags/APT/">#APT</a></div>
+  </div>
+  <a class="row-link" href="/2026/08/29/01-ubuntu-server-secure-setup/" aria-label="阅读 Ubuntu 24.04 云服务器初始化：SSH 安全与基础维护">→</a>
+</article>
+</div>
+  </div></section>
+</main>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <p><strong>运维 Runbook</strong><span>Ubuntu、SSH、Docker 与静态站点发布。</span></p>
+    <p>Powered by Hexo · 2026</p>
+  </div>
+</footer>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" placeholder="输入命令、故障或主题" autocomplete="off">
+    <div class="search-meta" data-search-meta>输入关键词开始检索</div>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/js/site.js" defer></script>
+</body>
+</html>
+
