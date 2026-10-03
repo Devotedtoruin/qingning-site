@@ -206,7 +206,7 @@ body > main { flex: 1 0 auto; }
 .narrow-shell { max-width: 1000px; }
 .page-heading { padding-bottom: 24px; border-bottom: 1px solid #e5e7eb; margin-bottom: 8px; }
 .page-heading p { color: #57606a; }
-.article-shell { max-width: 1000px; }
+.article-shell { max-width: 1060px; }
 .article-header { padding: 22px 0 30px; border-bottom: 1px solid #e5e7eb; margin-bottom: 34px; }
 .article-header h1 {
   font-size: clamp(30px, 4vw, 42px);
@@ -662,13 +662,14 @@ body > main { flex: 1 0 auto; }
 }
 
 @media (min-width: 900px) {
-  .article-layout { grid-template-columns: minmax(0, 1fr) 214px; gap: 36px; align-items: start; }
-  .article-toc { order: 2; }
+  /* 目录在左列（固定宽），正文在右列并限制可读宽度 */
+  .article-layout { grid-template-columns: 214px minmax(0, 1fr); gap: 44px; align-items: start; }
+  .article-toc { order: 1; }
+  .article-main { order: 2; max-width: 760px; }
   .article-toc {
     position: sticky;
     top: 84px;
     margin-bottom: 0;
-    order: 2;
     max-height: calc(100vh - 118px);
     overflow: auto;
   }
