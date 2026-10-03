@@ -99,13 +99,13 @@ body > main { flex: 1 0 auto; }
 }
 .hero-copy h1 {
   margin: 0;
-  font-size: clamp(36px, 5vw, 54px);
+  font-size: clamp(30px, 4.2vw, 42px);
   line-height: 1.15;
   font-weight: 700;
   letter-spacing: 0;
   color: #1f2328;
 }
-.hero-lead { font-size: 16px; color: #57606a; max-width: 560px; margin: 20px 0 28px; }
+.hero-lead { font-size: 15px; color: #57606a; max-width: 560px; margin: 18px 0 26px; }
 .hero-actions { display: flex; gap: 12px; }
 .primary-action, .secondary-action {
   border: 1px solid #0f766e;
@@ -160,7 +160,7 @@ body > main { flex: 1 0 auto; }
   padding-bottom: 16px;
   border-bottom: 1px solid #e5e7eb;
 }
-.section-heading h2, .page-heading h1 { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: 0; }
+.section-heading h2, .page-heading h1 { margin: 0; font-size: 21px; font-weight: 700; letter-spacing: 0; }
 .section-heading > a { font-size: 13px; font-weight: 600; color: #0f766e; }
 
 .post-row {
@@ -176,9 +176,9 @@ body > main { flex: 1 0 auto; }
 .post-date span, .post-date small { display: block; color: #8b949e; font: 600 11px ui-monospace, Consolas, monospace; }
 .post-date strong { display: block; font-size: 24px; line-height: 1.1; color: #1f2328; }
 .post-taxonomy span { font: 600 11px ui-monospace, Consolas, monospace; color: #0f766e; }
-.post-summary h2 { margin: 5px 0 8px; font-size: 20px; line-height: 1.35; font-weight: 600; }
+.post-summary h2 { margin: 5px 0 8px; font-size: 17.5px; line-height: 1.4; font-weight: 600; }
 .post-summary h2 a:hover { color: #0f766e; }
-.post-summary p { margin: 0 0 10px; color: #57606a; font-size: 14px; }
+.post-summary p { margin: 0 0 10px; color: #57606a; font-size: 13.5px; line-height: 1.65; }
 .post-tags { display: flex; flex-wrap: wrap; gap: 10px; }
 .post-tags a { font-size: 12px; color: #8b949e; }
 .post-tags a:hover { color: #0f766e; }
@@ -209,17 +209,17 @@ body > main { flex: 1 0 auto; }
 .article-shell { max-width: 1060px; }
 .article-header { padding: 22px 0 30px; border-bottom: 1px solid #e5e7eb; margin-bottom: 34px; }
 .article-header h1 {
-  font-size: clamp(30px, 4vw, 42px);
-  line-height: 1.2;
-  margin: 0 0 16px;
+  font-size: clamp(25px, 3.2vw, 32px);
+  line-height: 1.28;
+  margin: 0 0 14px;
   font-weight: 700;
   letter-spacing: 0;
 }
-.article-content { font-size: 16.5px; line-height: 1.85; }
-.article-content p { margin: 0 0 20px; }
+.article-content { font-size: 15.5px; line-height: 1.75; }
+.article-content p { margin: 0 0 18px; }
 .article-content h2 {
-  margin: 52px 0 18px;
-  font-size: 23px;
+  margin: 44px 0 16px;
+  font-size: 19px;
   font-weight: 700;
   padding-bottom: 10px;
   border-bottom: 1px solid #e5e7eb;
@@ -235,8 +235,8 @@ body > main { flex: 1 0 auto; }
   border-radius: 2px;
   background: linear-gradient(90deg, #0f766e, #2da44e);
 }
-.article-content h3 { margin: 32px 0 12px; font-size: 18.5px; font-weight: 600; }
-.article-content h3::before { content: ''; display: inline-block; width: 3px; height: 15px; margin-right: 9px; border-radius: 2px; background: #0f766e; vertical-align: -2px; }
+.article-content h3 { margin: 28px 0 10px; font-size: 16.5px; font-weight: 600; }
+.article-content h3::before { content: ''; display: inline-block; width: 3px; height: 13px; margin-right: 8px; border-radius: 2px; background: #0f766e; vertical-align: -1px; }
 .article-content p, .article-content li { color: #3f4246; }
 .article-content a { color: #0f766e; border-bottom: 1px solid #b6d9d4; }
 .article-content a:hover { border-bottom-color: #0f766e; }
@@ -244,9 +244,9 @@ body > main { flex: 1 0 auto; }
   background: #f0f3f6;
   border: 1px solid #e4e8ec;
   padding: 1px 5px;
-  border-radius: 5px;
+  border-radius: 4px;
   font-family: ui-monospace, Consolas, "SF Mono", monospace;
-  font-size: 0.87em;
+  font-size: 0.88em;
   color: #0b4f4a;
 }
 .article-content pre {
@@ -259,8 +259,8 @@ body > main { flex: 1 0 auto; }
 }
 .article-content pre code { background: transparent; padding: 0; color: #1f2328; }
 .article-content blockquote {
-  margin: 26px 0;
-  padding: 15px 20px;
+  margin: 22px 0;
+  padding: 14px 18px;
   border-left: 3px solid #0f766e;
   background: #f0f9f7;
   border-radius: 0 8px 8px 0;
@@ -275,10 +275,10 @@ body > main { flex: 1 0 auto; }
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  font-size: 14px;
+  font-size: 13.5px;
   display: block;
   overflow-x: auto;
-  margin: 24px 0;
+  margin: 22px 0;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
 }
@@ -400,8 +400,8 @@ body > main { flex: 1 0 auto; }
   .post-date { padding-right: 10px; }
   .row-link { display: none; }
   .post-summary h2 { font-size: 17px; }
-  .article-header h1 { font-size: 28px; }
-  .article-content { font-size: 15px; }
+  .article-header h1 { font-size: 24px; }
+  .article-content { font-size: 14.5px; }
   .taxonomy-grid ul { grid-template-columns: 1fr; }
   .footer-inner { display: block; }
   .footer-inner p + p { margin-top: 12px; }
@@ -463,8 +463,8 @@ body > main { flex: 1 0 auto; }
   padding: 14px 16px;
   overflow-x: auto;
   max-width: 100%;
-  line-height: 1.65;
-  font-size: 13.5px;
+  line-height: 1.6;
+  font-size: 13px;
   white-space: pre;
 }
 .article-content > pre {
@@ -476,8 +476,8 @@ body > main { flex: 1 0 auto; }
   padding: 14px 16px;
   overflow-x: auto;
   max-width: 100%;
-  line-height: 1.65;
-  font-size: 13.5px;
+  line-height: 1.6;
+  font-size: 13px;
 }
 .article-content .highlight .line { display: block; }
 .article-content figure.highlight code { background: transparent; padding: 0; color: inherit; }
@@ -752,8 +752,8 @@ body > main { flex: 1 0 auto; }
 
 /* ---------- 404 页 ---------- */
 .error-page { padding: 12px 0 12px; }
-.error-page h1 { font-size: clamp(28px, 4vw, 38px); line-height: 1.2; margin: 0 0 14px; font-weight: 700; }
-.error-page > p { color: #57606a; font-size: 16.5px; margin: 0 0 26px; max-width: 620px; }
+.error-page h1 { font-size: clamp(24px, 3.2vw, 30px); line-height: 1.28; margin: 0 0 12px; font-weight: 700; }
+.error-page > p { color: #57606a; font-size: 15px; margin: 0 0 24px; max-width: 620px; }
 .error-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 44px; }
 .error-list { border-top: 1px solid #e5e7eb; padding-top: 22px; }
 .error-list .timeline-item:last-child { border-bottom: 0; }
