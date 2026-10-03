@@ -625,7 +625,12 @@ body > main { flex: 1 0 auto; }
 }
 .article-toc > p { margin: 0 0 10px; font: 600 11px ui-monospace, Consolas, monospace; color: #0f766e; text-transform: uppercase; letter-spacing: 0.5px; }
 .article-toc ol { margin: 0; padding-left: 0; list-style: none; }
-.article-toc ol > li { padding-left: 14px; position: relative; }
+.article-toc ol > li { padding-left: 0; position: relative; }
+.article-toc ol > li > a {
+  display: block;
+  padding-left: 14px;      /* 悬挂缩进：换行第二行与首行文字对齐 */
+  line-height: 1.5;
+}
 .article-toc ol > li::before {
   content: '';
   position: absolute;
@@ -639,20 +644,20 @@ body > main { flex: 1 0 auto; }
 }
 .article-toc ol > li:hover::before { background: #0f766e; }
 /* 子条目（h3）：去掉圆点，改用缩进 + 左侧细线表达层级 */
-.article-toc li.toc-l3 { margin-left: 12px; }
+.article-toc li.toc-l3 { margin-left: 0; }
 .article-toc li.toc-l3::before {
   content: '';
   position: absolute;
-  left: 3px;
-  top: 0.15em;
-  bottom: 0.15em;
+  left: 3px;                 /* 与顶层圆点同一垂直轴 */
+  top: 0.1em;
+  bottom: 0.1em;
   width: 1px;
   height: auto;
   border-radius: 0;
   background: #e0e5ea;
 }
 .article-toc li.toc-l3:hover::before { background: #9fc7c2; }
-.article-toc li.toc-l3 a { color: #7a848d; }
+.article-toc li.toc-l3 a { color: #7a848d; padding-left: 28px; font-size: 13px; }
 .article-toc li { font-size: 14px; color: #57606a; margin: 5px 0; }
 .article-toc > p { display: flex; align-items: center; justify-content: space-between; cursor: pointer; margin: 0; }
 .article-toc > p::after { content: '▾'; font-size: 12px; transition: transform 0.2s; color: #8b949e; }
