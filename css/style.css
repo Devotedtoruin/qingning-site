@@ -638,7 +638,21 @@ body > main { flex: 1 0 auto; }
   transition: background 0.15s;
 }
 .article-toc ol > li:hover::before { background: #0f766e; }
+/* 子条目（h3）：去掉圆点，改用缩进 + 左侧细线表达层级 */
 .article-toc li.toc-l3 { margin-left: 12px; }
+.article-toc li.toc-l3::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0.15em;
+  bottom: 0.15em;
+  width: 1px;
+  height: auto;
+  border-radius: 0;
+  background: #e0e5ea;
+}
+.article-toc li.toc-l3:hover::before { background: #9fc7c2; }
+.article-toc li.toc-l3 a { color: #7a848d; }
 .article-toc li { font-size: 14px; color: #57606a; margin: 5px 0; }
 .article-toc > p { display: flex; align-items: center; justify-content: space-between; cursor: pointer; margin: 0; }
 .article-toc > p::after { content: '▾'; font-size: 12px; transition: transform 0.2s; color: #8b949e; }
@@ -651,14 +665,16 @@ body > main { flex: 1 0 auto; }
   .article-toc:not(.is-collapsed) ol { display: block; }
 }
 .article-toc li.toc-l3 { margin-left: 14px; font-size: 13px; }
+.article-toc li.toc-l3::before { background: #e0e5ea; }
 .article-toc a { transition: color 0.15s; }
 .article-toc a:hover { color: #0f766e; }
 .article-toc a.is-active { color: #0f766e; font-weight: 600; }
 
 /* 窄屏：目录回到正文上方（DOM 中在正文之后，用 order 提到前面） */
 @media (max-width: 899px) {
+  /* DOM 中目录已在正文之前，block 布局下自然位于上方 */
   .article-layout { display: block; }
-  .article-toc { order: -1; margin-bottom: 26px; }
+  .article-toc { margin-bottom: 26px; }
 }
 
 @media (min-width: 900px) {
@@ -666,6 +682,7 @@ body > main { flex: 1 0 auto; }
   .article-layout { grid-template-columns: 214px minmax(0, 1fr); gap: 44px; align-items: start; }
   .article-toc { order: 1; }
   .article-main { order: 2; max-width: 760px; }
+  .article-main > .article-header { margin-top: 0; }
   .article-toc {
     position: sticky;
     top: 84px;
