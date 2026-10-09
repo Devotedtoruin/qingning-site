@@ -1,20 +1,34 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
+  
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Ubuntu、SSH、Docker、Nginx 与 Hexo 静态站点运维记录。">
-  <meta name="theme-color" content="#111714">
-  <title>Hexo 7 静态博客构建、布局修改与 Docker/Nginx 发布 | 运维 Runbook</title>
+  <meta name="description" content="静态站点维护分为三份： Hexo 源码 保存文章、布局和配置； public/ 是可再生成产物；发布端目录只接收已生成文件。因此云端无需 Node 或 Hexo，构建问题与服务问题也可以分层处理。">
+  <meta name="theme-color" content="#faf9f3">
+  <title>Hexo 7 静态博客构建、布局修改与 Docker/Nginx 发布 | 青柠小站</title>
   
+  
+  <link rel="canonical" href="https://qingning.co/2026/08/29/02-hexo-docker-nginx-publish/">
+  <meta property="og:url" content="https://qingning.co/2026/08/29/02-hexo-docker-nginx-publish/">
+  
+  <meta property="og:title" content="Hexo 7 静态博客构建、布局修改与 Docker/Nginx 发布 | 青柠小站">
+  <meta property="og:description" content="静态站点维护分为三份： Hexo 源码 保存文章、布局和配置； public/ 是可再生成产物；发布端目录只接收已生成文件。因此云端无需 Node 或 Hexo，构建问题与服务问题也可以分层处理。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+  
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+  
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/css/style.css">
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
+
 <header class="site-header">
   <div class="shell header-inner">
-    <a class="brand" href="/" aria-label="返回首页">
-      <span class="brand-mark">OPS</span>
-      <span><strong>运维 Runbook</strong><small>通用流程、验证与回退</small></span>
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="40" height="40"></span>
+      <span><strong>青柠小站</strong><small>记录个人技术实践的学习笔记</small></span>
     </a>
     <nav class="desktop-nav" aria-label="主导航">
       
@@ -28,8 +42,8 @@
       
     </nav>
     <div class="header-actions">
-      <button class="icon-button" type="button" data-search-open aria-label="搜索" title="搜索">⌕</button>
-      <a class="icon-button" href="/subscribe/" aria-label="RSS订阅" title="RSS订阅">RSS</a>
+      <button class="icon-button" type="button" data-search-open aria-label="搜索" title="搜索"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <a class="icon-button" href="/subscribe/" aria-label="RSS 订阅" title="RSS 订阅"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="19" r="1" fill="currentColor"/><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/></svg></a>
       <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航">☰</button>
     </div>
   </div>
@@ -46,11 +60,21 @@
   </nav>
 </header>
 
+
 <main class="page-main"><div class="shell article-shell"><div class="article-layout">
   <nav class="article-toc" data-article-toc hidden aria-label="文章目录"><p>本页目录</p><ol data-toc-list></ol></nav>
   <article class="article-main">
-    <header class="article-header"><p class="eyebrow">2026-08-29 · 技术文章</p><h1>Hexo 7 静态博客构建、布局修改与 Docker/Nginx 发布</h1><div class="post-tags"><a href="/tags/Hexo/">#Hexo</a><a href="/tags/Docker/">#Docker</a><a href="/tags/Nginx/">#Nginx</a><a href="/tags/Git/">#Git</a></div></header>
+    <header class="article-header">
+      <p class="eyebrow"><time datetime="2026-08-29">2026-08-29</time> · 学习笔记</p>
+      <h1>Hexo 7 静态博客构建、布局修改与 Docker/Nginx 发布</h1>
+      
+      <div class="post-tags"><a href="/tags/Hexo/">#Hexo</a><a href="/tags/Docker/">#Docker</a><a href="/tags/Nginx/">#Nginx</a><a href="/tags/Git/">#Git</a></div>
+    </header>
+    
     <div class="article-content"><p>静态站点维护分为三份：<strong>Hexo 源码</strong>保存文章、布局和配置；<code>public/</code> 是可再生成产物；发布端目录只接收已生成文件。因此云端无需 Node 或 Hexo，构建问题与服务问题也可以分层处理。</p>
+<blockquote>
+<p><strong>维护说明（2026-10-10）：</strong> 青柠小站现由 GitHub Pages 托管。本文保留 Docker&#x2F;Nginx 自托管静态站点的实践，说明构建与托管如何分层，不是当前站点的日常发布指南。下文旧式 Hexo deploy 示例可能强推并覆盖远端后来加入的工作流，不应直接用于现行 Pages 仓库；新的交付应保留控制文件、审查同一份构建产物并正常推送。</p>
+</blockquote>
 <h2 id="适用范围与变量"><a href="#适用范围与变量" class="headerlink" title="适用范围与变量"></a>适用范围与变量</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">BLOG_DIR=<span class="string">&#x27;&lt;博客源码目录&gt;&#x27;</span></span><br><span class="line">DEPLOY_DIR=<span class="string">&#x27;&lt;部署目录&gt;&#x27;</span></span><br><span class="line">CONTAINER_NAME=<span class="string">&#x27;&lt;容器名称&gt;&#x27;</span></span><br><span class="line">HTTP_PORT=<span class="string">&#x27;&lt;HTTP端口&gt;&#x27;</span></span><br><span class="line">IMAGE_REF=<span class="string">&#x27;&lt;完整镜像引用&gt;&#x27;</span>  <span class="comment"># 例如 nginx:固定版本 或 nginx@sha256:摘要</span></span><br></pre></td></tr></table></figure>
 
 <p>先按实际环境填写变量。本文采用本地构建、产物仓库交付、发布端拉取，以及 Docker 内 Nginx 只读挂载发布目录的架构。</p>
@@ -86,20 +110,20 @@
 <td><code>themes/ops-journal/source/css/style.css</code>、<code>source/js/site.js</code></td>
 </tr>
 </tbody></table>
-<p>公开配置使用保留的无效域名作为占位值，不能直接用于正式构建。正式部署时通过未跟踪的本地配置覆盖站点 URL、产物仓库和发布分支；未配置正式 canonical URL 时，构建会停用 Atom 输出并在订阅页标明暂不可用：</p>
+<p>历史自托管方案曾在公开配置中使用无效域名占位，再通过未跟踪的本地配置覆盖 URL 和部署目标。正式站点的公开域名并不是秘密：现在建议把它统一放在受版本管理的站点配置中，让检查、订阅和发布使用同一地址；凭据和私有部署参数仍不得入库。下例仅解释旧的多配置方式，不能用它重建未经检查的另一份产物后直接发布：</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># _config.deploy.local.yml：本地私密文件</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://&lt;正式域名&gt;</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&lt;私密产物仓库地址&gt;</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">&lt;发布分支&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="本地预览与构建"><a href="#本地预览与构建" class="headerlink" title="本地预览与构建"></a>本地预览与构建</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$BLOG_DIR</span>&quot;</span></span><br><span class="line">git status -sb</span><br><span class="line">git diff --check</span><br><span class="line">node --version</span><br><span class="line">npm --version</span><br><span class="line"><span class="built_in">test</span> -f package-lock.json</span><br><span class="line">npm <span class="built_in">ls</span> --depth=0</span><br><span class="line"><span class="comment"># 仅在需要预览时启动，并只监听本机回环地址；完成后按 Ctrl+C 退出</span></span><br><span class="line">npx hexo server --ip 127.0.0.1</span><br></pre></td></tr></table></figure>
 
-<p>预览服务不会作为后台服务或 systemd 单元启动，也不会修改当前已运行的服务。确认本地预览无误后，使用现有依赖生成静态文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm run clean</span><br><span class="line">npm run build</span><br><span class="line">build_status=$?</span><br><span class="line"><span class="built_in">printf</span> <span class="string">&#x27;build exit=%s\n&#x27;</span> <span class="string">&quot;<span class="variable">$build_status</span>&quot;</span></span><br><span class="line"><span class="built_in">test</span> -f public/index.html</span><br><span class="line">find public -<span class="built_in">type</span> f -name <span class="string">&#x27;*.html&#x27;</span> | <span class="built_in">wc</span> -l</span><br><span class="line">find public -<span class="built_in">type</span> f -name search.json -<span class="built_in">print</span></span><br><span class="line"><span class="comment"># 仅配置正式 canonical URL 后才应存在 Atom</span></span><br><span class="line"><span class="built_in">test</span> ! -e public/atom.xml || grep -F <span class="string">&#x27;&lt;正式域名&gt;&#x27;</span> _config.deploy.local.yml &gt;/dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>预览服务不会作为后台服务或 systemd 单元启动，也不会修改当前已运行的服务。确认本地预览无误后，使用现有依赖生成静态文件。<code>public/</code> 和构建缓存必须只是可重建产物；<strong>clean 或 build 任一步失败都立即停止，不继续运行后续检查或交付</strong>。下例仅展示历史手工检查，当前项目优先使用串联检查、遇错停止的 <code>npm run check</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(</span><br><span class="line"><span class="built_in">set</span> -euo pipefail</span><br><span class="line"><span class="comment"># 只清理可重建产物；子 Shell 遇错停止，不退出当前交互会话</span></span><br><span class="line">npm run clean</span><br><span class="line">npm run build</span><br><span class="line"><span class="built_in">test</span> -f public/index.html</span><br><span class="line"><span class="built_in">test</span> -f public/search.json</span><br><span class="line">find public -<span class="built_in">type</span> f -name <span class="string">&#x27;*.html&#x27;</span> | <span class="built_in">wc</span> -l</span><br><span class="line"><span class="comment"># 再检查实际页面和订阅链接，文件存在不等于内容正确</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
 <p>构建完成后检查首页、文章和搜索索引；只有使用正式 canonical URL 的部署构建才应生成 Atom 订阅。</p>
-<h2 id="日常交付契约"><a href="#日常交付契约" class="headerlink" title="日常交付契约"></a>日常交付契约</h2><p>这里固定采用一条发布链：<strong>Hexo deploy 推送产物仓库，发布端再用<code>git pull --ff-only</code>更新</strong>。源码仓库保存 Markdown、主题和配置，产物仓库只保存可公开部署的静态文件。</p>
+<h2 id="历史交付方式"><a href="#历史交付方式" class="headerlink" title="历史交付方式"></a>历史交付方式</h2><p>当时采用的发布链是：<strong>Hexo deploy 推送产物仓库，发布端再用 <code>git pull --ff-only</code> 更新</strong>。源码仓库保存 Markdown、主题和配置，产物仓库只保存可公开部署的静态文件。</p>
 <p>发布前先确认源码和发布端工作区：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$BLOG_DIR</span>&quot;</span></span><br><span class="line">git status -sb</span><br><span class="line">git remote -v</span><br><span class="line">git branch --show-current</span><br><span class="line">git -C <span class="string">&quot;<span class="variable">$DEPLOY_DIR</span>&quot;</span> status -sb</span><br></pre></td></tr></table></figure>
 
-<p>确认分支、远程地址和工作区后执行：</p>
+<p><strong>以下命令只保留作历史说明，不用于当前 Pages 仓库。</strong> <code>hexo-deployer-git</code> 的旧部署缓存可能缺少远端新建的工作流，强推会把它覆盖；现行发布应采用独立产物检出、先同步远端、保留控制文件、审查差异后正常推送。历史方案在确认分支、远程地址和工作区后曾执行：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo --config _config.yml,_config.deploy.local.yml deploy</span><br><span class="line">git -C <span class="string">&quot;<span class="variable">$DEPLOY_DIR</span>&quot;</span> pull --ff-only</span><br></pre></td></tr></table></figure>
 
 <p><code>hexo deploy</code>会更新产物仓库，<code>git pull --ff-only</code>会更新发布目录。如果分支发生分歧，先检查双方提交和差异，不要直接强制重置。当前项目未安装链接检查工具，可先检查目标页面和不存在路径的 HTTP 行为：</p>
@@ -114,14 +138,14 @@
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">test</span> -d <span class="string">&quot;<span class="variable">$DEPLOY_DIR</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">test</span> -f <span class="string">&quot;<span class="variable">$DEPLOY_DIR</span>/index.html&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> docker pull <span class="string">&quot;<span class="variable">$IMAGE_REF</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> docker run -d \</span><br><span class="line">  --name <span class="string">&quot;<span class="variable">$CONTAINER_NAME</span>&quot;</span> \</span><br><span class="line">  --restart unless-stopped \</span><br><span class="line">  --log-opt max-size=10m --log-opt max-file=3 \</span><br><span class="line">  -p <span class="string">&quot;<span class="variable">$HTTP_PORT</span>:80&quot;</span> \</span><br><span class="line">  -v <span class="string">&quot;<span class="variable">$DEPLOY_DIR</span>:/usr/share/nginx/html:ro&quot;</span> \</span><br><span class="line">  <span class="string">&quot;<span class="variable">$IMAGE_REF</span>&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>固定镜像标签或摘要避免浮动 <code>latest</code>；只读 Bind Mount 防止容器改写发布文件；日志轮转避免无限增长。</p>
+<p>固定版本标签可减少使用 <code>latest</code> 带来的意外升级，但标签仍可能被重新指向；需要固定镜像内容时使用摘要。只读 Bind Mount 限制容器通过该挂载改写发布文件，但不阻止 HTTP 读取敏感文件；日志轮转限制单容器日志持续增长。</p>
 <p>验证跨越容器、挂载、监听、应用和公网：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker ps --filter <span class="string">&quot;name=^/$CONTAINER_NAME$&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> docker inspect <span class="string">&quot;<span class="variable">$CONTAINER_NAME</span>&quot;</span> --format <span class="string">&#x27;&#123;&#123;range .Mounts&#125;&#125;&#123;&#123;println .Source &quot;-&gt;&quot; .Destination .RW&#125;&#125;&#123;&#123;end&#125;&#125;&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> docker port <span class="string">&quot;<span class="variable">$CONTAINER_NAME</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> ss -lntp | grep -E <span class="string">&quot;:<span class="variable">$HTTP_PORT</span>\b&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> docker <span class="built_in">exec</span> <span class="string">&quot;<span class="variable">$CONTAINER_NAME</span>&quot;</span> nginx -t</span><br><span class="line">curl -fsSI <span class="string">&quot;http://127.0.0.1:<span class="variable">$HTTP_PORT</span>/&quot;</span></span><br><span class="line">curl -fsSI <span class="string">&quot;http://127.0.0.1:<span class="variable">$HTTP_PORT</span>/&lt;页面路径&gt;/&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> docker logs --<span class="built_in">tail</span> 50 <span class="string">&quot;<span class="variable">$CONTAINER_NAME</span>&quot;</span></span><br><span class="line"><span class="built_in">sha256sum</span> <span class="string">&quot;<span class="variable">$DEPLOY_DIR</span>/index.html&quot;</span></span><br></pre></td></tr></table></figure>
 <p>管理端公网验证：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSI <span class="string">&quot;http://&lt;服务器地址&gt;:<span class="variable">$HTTP_PORT</span>/&quot;</span></span><br></pre></td></tr></table></figure>
 <p>如果本机请求成功但公网失败，再检查云网络入站规则和外部访问路径。</p>
 <h2 id="更新、重建与回退"><a href="#更新、重建与回退" class="headerlink" title="更新、重建与回退"></a>更新、重建与回退</h2><p>修改 Markdown 或主题后，先本地预览并重新构建，再发布新产物。Nginx 始终读取同一 Bind Mount，因此仅更新静态文件时不需要重建容器；只有镜像、端口、容器参数、Nginx 配置或挂载关系变化时才需要重建。</p>
-<p>首选的日常更新仍是上面的 <code>git pull --ff-only</code>。下面的 <code>rsync --delete</code> 只用于发布端需要从一份已经验收的静态产物目录做受控替换或回退时；这些命令在 <strong>VM&#x2F;云端发布主机</strong> 上执行，不是在本地 Hexo 源码目录中执行。<code>--delete</code> 会删除目标中来源没有的文件，变量为空、方向写反或跨错主机都可能破坏发布目录。</p>
+<p>本节历史自托管方案使用上面的 <code>git pull --ff-only</code> 更新发布目录，不代表现行 Pages 的发布步骤。下面的 <code>rsync --delete</code> 只用于发布端需要从一份已经验收的静态产物目录做受控替换或回退时；这些命令在 <strong>VM&#x2F;云端发布主机</strong> 上执行，不是在本地 Hexo 源码目录中执行。<code>--delete</code> 会删除目标中来源没有的文件，变量为空、方向写反或跨错主机都可能破坏发布目录。</p>
 <p>先在发布主机设置来源、目标和独立备份目录。三者必须已经存在、用途明确，并且规范化后两两不相等、不互相嵌套。备份根目录由发布账号拥有且可写；不要为通过检查对未知目录递归改属主。本例由发布账号执行 rsync，以 <code>--no-owner --no-group</code> 避免沿用来源属主，目标中已有文件也须具有所需读写权限。</p>
 <p>下面是一个完整子 Shell：校验或备份失败会终止整个块；dry-run 后需要输入 <code>yes</code> 才会继续。不要拆开执行后半段，变量只在该子 Shell 内有效。路径检查不能保证任意路径绝对安全，不能防止并发替换、所有符号链接、特殊挂载或错误的业务目录选择；须人工确认静态内容、权限、空间和目标边界，并避免同步期间其他发布任务修改这些目录。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(</span><br><span class="line"><span class="built_in">set</span> -euo pipefail</span><br><span class="line">SOURCE_DIR=<span class="string">&#x27;&lt;发布主机上的已验证静态产物目录&gt;&#x27;</span></span><br><span class="line">BACKUP_ROOT=<span class="string">&#x27;&lt;发布主机上的独立备份目录&gt;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">dir</span> <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$SOURCE_DIR</span>&quot;</span> <span class="string">&quot;<span class="variable">$DEPLOY_DIR</span>&quot;</span> <span class="string">&quot;<span class="variable">$BACKUP_ROOT</span>&quot;</span>; <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">test</span> -n <span class="string">&quot;<span class="variable">$dir</span>&quot;</span></span><br><span class="line">  <span class="built_in">test</span> -d <span class="string">&quot;<span class="variable">$dir</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">source_real=$(<span class="built_in">realpath</span> -e -- <span class="string">&quot;<span class="variable">$SOURCE_DIR</span>&quot;</span>)</span><br><span class="line">deploy_real=$(<span class="built_in">realpath</span> -e -- <span class="string">&quot;<span class="variable">$DEPLOY_DIR</span>&quot;</span>)</span><br><span class="line">backup_root_real=$(<span class="built_in">realpath</span> -e -- <span class="string">&quot;<span class="variable">$BACKUP_ROOT</span>&quot;</span>)</span><br><span class="line">paths=(<span class="string">&quot;<span class="variable">$source_real</span>&quot;</span> <span class="string">&quot;<span class="variable">$deploy_real</span>&quot;</span> <span class="string">&quot;<span class="variable">$backup_root_real</span>&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> ((i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++)); <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">test</span> <span class="string">&quot;<span class="variable">$&#123;paths[i]&#125;</span>&quot;</span> != /</span><br><span class="line">  <span class="keyword">for</span> ((j=<span class="number">0</span>; j&lt;<span class="number">3</span>; j++)); <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> ((i != j)); <span class="keyword">then</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;<span class="variable">$&#123;paths[i]&#125;</span>/&quot;</span> <span class="keyword">in</span></span><br><span class="line">        <span class="string">&quot;<span class="variable">$&#123;paths[j]&#125;</span>/&quot;</span>*) <span class="built_in">printf</span> <span class="string">&#x27;路径相同或嵌套，停止同步\n&#x27;</span> &gt;&amp;2; <span class="built_in">exit</span> 1 ;;</span><br><span class="line">      <span class="keyword">esac</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">  <span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">test</span> -f <span class="string">&quot;<span class="variable">$source_real</span>/index.html&quot;</span></span><br><span class="line"><span class="built_in">test</span> -f <span class="string">&quot;<span class="variable">$deploy_real</span>/index.html&quot;</span></span><br><span class="line"><span class="built_in">test</span> -d <span class="string">&quot;<span class="variable">$deploy_real</span>/.git&quot;</span></span><br><span class="line"><span class="built_in">test</span> -w <span class="string">&quot;<span class="variable">$deploy_real</span>&quot;</span></span><br><span class="line"><span class="built_in">test</span> -w <span class="string">&quot;<span class="variable">$backup_root_real</span>&quot;</span></span><br><span class="line"><span class="built_in">test</span> <span class="string">&quot;<span class="subst">$(stat -c %u <span class="string">&quot;<span class="variable">$deploy_real</span>&quot;</span>)</span>&quot;</span> = <span class="string">&quot;<span class="subst">$(id -u)</span>&quot;</span></span><br><span class="line"><span class="built_in">test</span> <span class="string">&quot;<span class="subst">$(stat -c %u <span class="string">&quot;<span class="variable">$backup_root_real</span>&quot;</span>)</span>&quot;</span> = <span class="string">&quot;<span class="subst">$(id -u)</span>&quot;</span></span><br><span class="line">BACKUP_DIR=$(<span class="built_in">mktemp</span> -d <span class="string">&quot;<span class="variable">$backup_root_real</span>/site.XXXXXXXX&quot;</span>)</span><br><span class="line"><span class="built_in">printf</span> <span class="string">&#x27;记录本次 BACKUP_DIR=%s\n&#x27;</span> <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>&quot;</span></span><br><span class="line"><span class="built_in">cp</span> -a -- <span class="string">&quot;<span class="variable">$deploy_real</span>/.&quot;</span> <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>/&quot;</span></span><br><span class="line"><span class="built_in">test</span> -f <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>/index.html&quot;</span></span><br><span class="line"><span class="built_in">test</span> -d <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>/.git&quot;</span></span><br><span class="line">rsync -a --no-owner --no-group --delete --dry-run --itemize-changes \</span><br><span class="line">  --filter=<span class="string">&#x27;protect /.git/&#x27;</span> --exclude=<span class="string">&#x27;/.git/&#x27;</span> \</span><br><span class="line">  <span class="string">&quot;<span class="variable">$source_real</span>/&quot;</span> <span class="string">&quot;<span class="variable">$deploy_real</span>/&quot;</span></span><br><span class="line"><span class="built_in">read</span> -r -p <span class="string">&#x27;已核对主机、路径、备份及删除清单？输入 yes 继续：&#x27;</span> confirm</span><br><span class="line"><span class="built_in">test</span> <span class="string">&quot;<span class="variable">$confirm</span>&quot;</span> = <span class="built_in">yes</span></span><br><span class="line">rsync -a --no-owner --no-group --delete --itemize-changes \</span><br><span class="line">  --filter=<span class="string">&#x27;protect /.git/&#x27;</span> --exclude=<span class="string">&#x27;/.git/&#x27;</span> \</span><br><span class="line">  <span class="string">&quot;<span class="variable">$source_real</span>/&quot;</span> <span class="string">&quot;<span class="variable">$deploy_real</span>/&quot;</span></span><br><span class="line"><span class="built_in">test</span> -d <span class="string">&quot;<span class="variable">$deploy_real</span>/.git&quot;</span></span><br><span class="line">curl -fsSI <span class="string">&quot;http://127.0.0.1:<span class="variable">$HTTP_PORT</span>/&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
@@ -135,18 +159,19 @@
 </div>
     <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
   </article>
-</div></div></main><div class="read-progress" data-read-progress role="presentation"></div>
+</div></div></main>
+<div class="read-progress" data-read-progress role="presentation"></div>
 <button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部">↑</button>
 <footer class="site-footer">
   <div class="shell footer-inner">
-    <p><strong>运维 Runbook</strong><span>Ubuntu、SSH、Docker 与静态站点发布。</span></p>
-    <p>Powered by Hexo · 2026</p>
+    <p><strong>青柠小站</strong><span>记录个人技术实践的学习笔记</span></p>
+    <p class="footer-note">在实践中探索，也在记录中生长。<span>Powered by Hexo · 2026</span></p>
   </div>
 </footer>
 <div class="search-dialog" data-search-dialog hidden>
   <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
-    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" data-search-close aria-label="关闭搜索">×</button></div>
-    <input class="search-input" data-search-input type="search" placeholder="输入命令、故障或主题" autocomplete="off">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索学习笔记" placeholder="搜索项目、工具或一个关键词" autocomplete="off">
     <div class="search-meta" data-search-meta>输入关键词开始检索</div>
     <div class="search-results" data-search-results></div>
   </div>

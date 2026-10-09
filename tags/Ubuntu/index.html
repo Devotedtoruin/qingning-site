@@ -1,20 +1,33 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
+  
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Ubuntu、SSH、Docker、Nginx 与 Hexo 静态站点运维记录。">
-  <meta name="theme-color" content="#111714">
-  <title>运维 Runbook</title>
+  <meta name="description" content="青柠小站，记录个人技术实践中的项目折腾、工具使用、汉化尝试与探索发现，让零散经验慢慢长成可回看的学习笔记。">
+  <meta name="theme-color" content="#faf9f3">
+  <title>Ubuntu | 青柠小站</title>
   
+  
+  <link rel="canonical" href="https://qingning.co/tags/Ubuntu/">
+  <meta property="og:url" content="https://qingning.co/tags/Ubuntu/">
+  
+  <meta property="og:title" content="Ubuntu | 青柠小站">
+  <meta property="og:description" content="青柠小站，记录个人技术实践中的项目折腾、工具使用、汉化尝试与探索发现，让零散经验慢慢长成可回看的学习笔记。">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="青柠小站">
+  
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+  
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/css/style.css">
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
 <header class="site-header">
   <div class="shell header-inner">
-    <a class="brand" href="/" aria-label="返回首页">
-      <span class="brand-mark">OPS</span>
-      <span><strong>运维 Runbook</strong><small>通用流程、验证与回退</small></span>
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="40" height="40"></span>
+      <span><strong>青柠小站</strong><small>记录个人技术实践的学习笔记</small></span>
     </a>
     <nav class="desktop-nav" aria-label="主导航">
       
@@ -28,8 +41,8 @@
       
     </nav>
     <div class="header-actions">
-      <button class="icon-button" type="button" data-search-open aria-label="搜索" title="搜索">⌕</button>
-      <a class="icon-button" href="/subscribe/" aria-label="RSS订阅" title="RSS订阅">RSS</a>
+      <button class="icon-button" type="button" data-search-open aria-label="搜索" title="搜索"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <a class="icon-button" href="/subscribe/" aria-label="RSS 订阅" title="RSS 订阅"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="19" r="1" fill="currentColor"/><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/></svg></a>
       <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航">☰</button>
     </div>
   </div>
@@ -63,14 +76,14 @@
 <button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部">↑</button>
 <footer class="site-footer">
   <div class="shell footer-inner">
-    <p><strong>运维 Runbook</strong><span>Ubuntu、SSH、Docker 与静态站点发布。</span></p>
-    <p>Powered by Hexo · 2026</p>
+    <p><strong>青柠小站</strong><span>记录个人技术实践的学习笔记</span></p>
+    <p class="footer-note">在实践中探索，也在记录中生长。<span>Powered by Hexo · 2026</span></p>
   </div>
 </footer>
 <div class="search-dialog" data-search-dialog hidden>
   <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
-    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" data-search-close aria-label="关闭搜索">×</button></div>
-    <input class="search-input" data-search-input type="search" placeholder="输入命令、故障或主题" autocomplete="off">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索学习笔记" placeholder="搜索项目、工具或一个关键词" autocomplete="off">
     <div class="search-meta" data-search-meta>输入关键词开始检索</div>
     <div class="search-results" data-search-results></div>
   </div>

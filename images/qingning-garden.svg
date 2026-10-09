@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none">
+  <title>青柠与笔记</title>
+  <desc>原创几何插画：暖白桌面上的笔记本、工具窗口、枝叶与一片青柠。</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1200" y2="800" gradientUnits="userSpaceOnUse"><stop stop-color="#faf9f3"/><stop offset="1" stop-color="#edf0df"/></linearGradient>
+    <linearGradient id="leaf" x1="932" y1="215" x2="1057" y2="406" gradientUnits="userSpaceOnUse"><stop stop-color="#91ad73"/><stop offset="1" stop-color="#547453"/></linearGradient>
+  </defs>
+  <path fill="url(#paper)" d="M0 0h1200v800H0z"/>
+  <circle cx="915" cy="400" r="241" fill="#e3eacb" fill-opacity=".56"/>
+  <circle cx="955" cy="386" r="176" stroke="#f9faf1" stroke-width="2"/>
+  <path d="M558 614c123-59 384-44 531 18" stroke="#d3dbc1" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="832" cy="621" rx="261" ry="29" fill="#ced8ba" fill-opacity=".42"/>
+  <g transform="rotate(-7 777 349)">
+    <rect x="646" y="246" width="238" height="170" rx="20" fill="#d1dbc2"/>
+    <rect x="637" y="236" width="238" height="170" rx="20" fill="#fffef8" stroke="#ccd6bd" stroke-width="2"/>
+    <path d="M637 277h238" stroke="#e0e5d3" stroke-width="2"/>
+    <circle cx="659" cy="257" r="4" fill="#96ac7d"/><circle cx="674" cy="257" r="4" fill="#d4dfb9"/><circle cx="689" cy="257" r="4" fill="#e5ebd5"/>
+    <path d="m693 307-20 19 20 19m32-38 20 19-20 19m-16-43-8 48" stroke="#5b7753" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M776 313h65m-65 17h47m-47 17h57M671 375h91" stroke="#d1dcc0" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <g>
+    <path d="M988 456c4-66 6-155-13-241" stroke="#617b52" stroke-width="5" stroke-linecap="round"/>
+    <path d="M984 344c-42-3-68-29-66-63 44-4 74 23 66 63Zm6 30c46-9 72-39 65-74-44 1-73 36-65 74ZM979 279c-34-3-55-24-51-51 34-1 60 20 51 51Zm6-32c32-4 50-24 49-49-31-2-55 22-49 49Z" fill="url(#leaf)"/>
+    <path d="m930 294 51 49m18 18 43-43m-100-78 31 33m18-35 29-29" stroke="#adc092" stroke-width="2" stroke-linecap="round"/>
+    <path d="M934 424h105l-13 133c-1 12-15 19-38 19s-36-7-37-19Z" fill="#e0d5bb"/>
+    <ellipse cx="986.5" cy="424" rx="52.5" ry="13" fill="#e9dfc9"/>
+    <ellipse cx="986.5" cy="424" rx="37" ry="8" fill="#8b9271"/>
+    <path d="M958 446 966 549m16-99 2 105m20-106-3 103" stroke="#f2eada" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <g transform="rotate(8 785 523)">
+    <rect x="607" y="428" width="291" height="174" rx="14" fill="#728b5a"/>
+    <rect x="611" y="419" width="281" height="174" rx="12" fill="#c4d5a2"/>
+    <path d="M625 429h120c19 0 27 7 30 14 3-7 12-14 29-14h74v148h-74c-17 0-26 5-29 10-3-5-12-10-30-10H625Z" fill="#fffdf4"/>
+    <path d="M775 443v144" stroke="#e0dec8" stroke-width="2"/>
+    <path d="M647 457h92m-92 19h102m-102 19h89m-89 19h98m-98 19h67M797 457h56m-56 19h58m-58 19h48m-48 19h59" stroke="#dce2cf" stroke-width="4" stroke-linecap="round"/>
+    <path d="M835 426v63l10-7 10 7v-63" fill="#a5bd75"/>
+  </g>
+  <g transform="rotate(-28 909 578)">
+    <rect x="902" y="484" width="13" height="174" rx="5" fill="#456443"/>
+    <path d="m902 658 6.5 21 6.5-21" fill="#d4bd91"/><path d="m906 671 2.5 8 2.5-8" fill="#456443"/>
+    <rect x="902" y="496" width="13" height="9" fill="#d4dfb9"/>
+  </g>
+  <g transform="rotate(16 1028 582)">
+    <circle cx="1028" cy="582" r="58" fill="#587946"/>
+    <circle cx="1028" cy="582" r="50" fill="#f6f4d7"/>
+    <g fill="#bed48d" stroke="#f6f4d7" stroke-width="4" stroke-linejoin="round">
+      <path d="m1028 582 0-45a45 45 0 0 1 38.97 22.5Z"/><path d="m1028 582 38.97-22.5a45 45 0 0 1 0 45Z"/><path d="m1028 582 38.97 22.5a45 45 0 0 1-38.97 22.5Z"/><path d="m1028 582 0 45a45 45 0 0 1-38.97-22.5Z"/><path d="m1028 582-38.97 22.5a45 45 0 0 1 0-45Z"/><path d="m1028 582-38.97-22.5a45 45 0 0 1 38.97-22.5Z"/>
+    </g>
+    <circle cx="1028" cy="582" r="5" fill="#f6f4d7"/>
+  </g>
+  <path d="M572 479c-17-27-14-46 6-57 19 22 18 42-6 57Z" fill="#b8c999"/>
+  <path d="M1104 484c2-22 16-34 35-29-1 22-16 35-35 29Z" fill="#c1cea7"/>
+  <circle cx="611" cy="336" r="5" fill="#a9bf83"/><circle cx="1056" cy="221" r="4" fill="#c7d4ad"/>
+  <path d="M858 175v12m-6-6h12M1106 362v12m-6-6h12" stroke="#9db27e" stroke-width="2" stroke-linecap="round"/>
+</svg>
