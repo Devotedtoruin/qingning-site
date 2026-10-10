@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="青柠小站，分享技术文章与实用经验。通过分类、标签和站内搜索，查找感兴趣的内容。">
-  <meta name="theme-color" content="#faf9f3">
+  <meta name="theme-color" content="#faf8f2">
   <title>Docker | 青柠小站</title>
   
   
@@ -20,6 +20,7 @@
   <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
   
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
   <link rel="stylesheet" href="/css/style.css">
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
@@ -30,10 +31,9 @@
         <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="40" height="40"></span>
         <strong>青柠小站</strong>
       </a>
-      <figure class="brand-quote brand-quote--header" data-quote-instance>
-  <span class="quote-label" aria-hidden="true">DAILY</span>
-  <blockquote><p data-quote-text>把日子过成留白，把发现写成文章。</p></blockquote>
-  <figcaption class="visually-hidden"><cite data-quote-source title="青柠小站 · 本站原创">青柠小站 · 本站原创</cite></figcaption>
+      <figure class="brand-quote brand-quote--header">
+  <blockquote><p>行到水穷处，坐看云起时。</p></blockquote>
+  <figcaption><cite>王维《终南别业》</cite></figcaption>
 </figure>
 
     </div>
@@ -77,10 +77,9 @@
   <div class="shell footer-inner">
     <div class="footer-brand">
       <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="28" height="28"><strong>青柠小站</strong></a>
-      <figure class="brand-quote brand-quote--footer" data-quote-instance>
-  <span class="quote-label" aria-hidden="true">DAILY</span>
-  <blockquote><p data-quote-text>把日子过成留白，把发现写成文章。</p></blockquote>
-  <figcaption><cite data-quote-source title="青柠小站 · 本站原创">青柠小站 · 本站原创</cite></figcaption>
+      <figure class="brand-quote brand-quote--footer">
+  <blockquote><p>行到水穷处，坐看云起时。</p></blockquote>
+  <figcaption><cite>王维《终南别业》</cite></figcaption>
 </figure>
 
     </div>
@@ -91,10 +90,13 @@
   <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
     <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
     <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
-    <div class="search-meta" data-search-meta>输入关键词开始检索</div>
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
     <div class="search-results" data-search-results></div>
   </div>
 </div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js" defer></script>
 <script src="/js/site.js" defer></script>
 <script src="/js/quotes.js" defer></script>
 </body>

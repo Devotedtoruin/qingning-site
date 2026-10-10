@@ -1,65 +1,9 @@
 (() => {
-  const dialog = document.querySelector('[data-search-dialog]');
-  const input = document.querySelector('[data-search-input]');
-  const results = document.querySelector('[data-search-results]');
-  const meta = document.querySelector('[data-search-meta]');
   const menu = document.querySelector('[data-mobile-nav]');
-  let index = null;
-  let loading = null;
-
-  const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-  })[char]);
-
-  const render = () => {
-    const query = input.value.trim().toLowerCase();
-    results.innerHTML = '';
-    if (!query) { meta.textContent = index ? `可检索 ${index.length} 篇文章` : '输入关键词开始检索'; return; }
-    if (!index) { meta.textContent = '正在加载搜索索引...'; return; }
-    const matches = index.filter((item) => [item.title, item.content, ...(item.tags || []), ...(item.categories || [])]
-      .join(' ').toLowerCase().includes(query)).slice(0, 12);
-    meta.textContent = matches.length ? `找到 ${matches.length} 条结果` : '没有匹配结果，试试 Docker、SSH、备份或 404';
-    matches.forEach((item) => {
-      const link = document.createElement('a');
-      link.className = 'search-result';
-      link.href = item.url;
-      link.innerHTML = `<span>${escapeHtml(item.date)}</span><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.content.slice(0, 120))}...</p>`;
-      results.appendChild(link);
-    });
-  };
-
-  const loadIndex = () => {
-    if (index) return Promise.resolve(index);
-    if (!loading) {
-      loading = fetch('/search.json', { cache: 'no-store' })
-        .then((response) => {
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          return response.json();
-        })
-        .then((data) => { index = data; render(); return data; })
-        .catch(() => { meta.textContent = '搜索索引加载失败，请刷新后重试'; return []; });
-    }
-    return loading;
-  };
-
   document.querySelectorAll('[data-menu-toggle]').forEach((button) => button.addEventListener('click', () => {
-    menu.classList.toggle('is-open');
+    if (menu) menu.classList.toggle('is-open');
   }));
-
-  const closeSearch = () => { dialog.hidden = true; document.body.classList.remove('dialog-open'); };
-  const openSearch = () => {
-    dialog.hidden = false;
-    document.body.classList.add('dialog-open');
-    input.focus();
-    render();
-    loadIndex();
-  };
-
-  document.querySelectorAll('[data-search-open]').forEach((button) => button.addEventListener('click', openSearch));
-  document.querySelectorAll('[data-search-close]').forEach((button) => button.addEventListener('click', closeSearch));
-  dialog.addEventListener('click', (event) => { if (event.target === dialog) closeSearch(); });
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !dialog.hidden) closeSearch(); });
-  input.addEventListener('input', render);
+  if (window.JournalSearch) window.JournalSearch.mount(document, window);
 
   /* ---------- 滚动进度条 ---------- */
   const progress = document.querySelector('[data-read-progress]');
@@ -149,35 +93,74 @@
     figure.appendChild(btn);
   });
 
-  /* ---------- 从正文标题生成目录 ---------- */
+  /* ---------- 普通表格局部横向滚动；不改变代码高亮表格 ---------- */
+  document.querySelectorAll('.article-content table').forEach((table) => {
+    if (table.closest('figure.highlight') || table.closest('.table-scroll') || !table.parentNode) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'table-scroll';
+    wrapper.tabIndex = 0;
+    wrapper.setAttribute('role', 'region');
+    const caption = table.querySelector('caption');
+    wrapper.setAttribute('aria-label', caption && caption.textContent.trim() ? caption.textContent.trim() : '文章表格，可横向滚动');
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+
+  // Malformed percent escapes in a heading id must not stop the rest of the UI.
+  const headingForLink = (link) => {
+    const hash = link.getAttribute('href');
+    if (!hash || !hash.startsWith('#')) return null;
+    const raw = hash.slice(1);
+    try { return document.getElementById(decodeURIComponent(raw)) || document.getElementById(raw); }
+    catch (_) { return document.getElementById(raw); }
+  };
+
+  /* ---------- 从正文标题生成有层级的目录 ---------- */
   const toc = document.querySelector('[data-article-toc]');
   if (toc) {
     const list = toc.querySelector('[data-toc-list]');
     const heads = Array.from(document.querySelectorAll('.article-content h2, .article-content h3'));
     let n = 0;
-    heads.forEach((h) => {
-      if (!h.id) {
-        n += 1;
-        h.id = 'section-' + n;
-      }
-      const li = document.createElement('li');
-      if (h.tagName === 'H3') li.className = 'toc-l3';
-      const a = document.createElement('a');
-      a.href = '#' + h.id;
-      a.textContent = h.textContent.trim();
-      li.appendChild(a);
-      list.appendChild(li);
-    });
-    if (list.children.length >= 2) {
+    let parent = null;
+    let sublist = null;
+    if (list) {
+      list.textContent = '';
+      heads.forEach((h) => {
+        if (!h.id) {
+          do { n += 1; } while (document.getElementById('section-' + n));
+          h.id = 'section-' + n;
+        }
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = '#' + encodeURIComponent(h.id);
+        a.textContent = h.textContent.trim();
+        li.appendChild(a);
+        if (h.tagName === 'H3') {
+          li.className = 'toc-l3';
+          if (parent) {
+            if (!sublist) { sublist = document.createElement('ol'); parent.appendChild(sublist); }
+            sublist.appendChild(li);
+          } else list.appendChild(li); // An initial h3 has no fabricated parent.
+        } else {
+          list.appendChild(li);
+          parent = li;
+          sublist = null;
+        }
+      });
+    }
+    if (list && heads.length >= 2) {
       toc.hidden = false;
-      const head = toc.querySelector('p');
+      const button = toc.querySelector('[data-toc-toggle]');
+      if (!list.id) list.id = 'article-toc-list';
+      if (button) button.setAttribute('aria-controls', list.id);
       const isWide = () => window.matchMedia('(min-width: 900px)').matches;
-      // 统一成单一状态类：is-collapsed 表示“收起”。窄屏默认收起，宽屏默认展开。
-      const applyDefault = () => {
-        if (isWide()) toc.classList.remove('is-collapsed');
-        else toc.classList.add('is-collapsed');
+      const setCollapsed = (collapsed) => {
+        toc.classList.toggle('is-collapsed', collapsed);
+        list.hidden = collapsed;
+        if (button) button.setAttribute('aria-expanded', String(!collapsed));
       };
-      if (head) head.addEventListener('click', () => toc.classList.toggle('is-collapsed'));
+      const applyDefault = () => setCollapsed(!isWide());
+      if (button) button.addEventListener('click', () => setCollapsed(!list.hidden));
       applyDefault();
       let lastWide = isWide();
       window.addEventListener('resize', () => {
@@ -187,7 +170,7 @@
       toc.addEventListener('click', (e) => {
         const a = e.target.closest('a[href^="#"]');
         if (!a) return;
-        const target = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+        const target = headingForLink(a);
         if (!target) return;
         e.preventDefault();
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -203,11 +186,7 @@
   /* ---------- 目录跟随高亮（按滚动位置选，末项也能命中） ---------- */
   if (toc) {
     const links = Array.from(toc.querySelectorAll('a[href^="#"]'));
-    const pairs = links.map((a) => ({
-      link: a,
-      head: document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)))
-    })).filter((p) => p.head);
-
+    const pairs = links.map((a) => ({ link: a, head: headingForLink(a) })).filter((p) => p.head);
     if (pairs.length) {
       let currentId = null;
       const setActive = (id) => {
@@ -216,12 +195,11 @@
         pairs.forEach((p) => p.link.classList.toggle('is-active', p.head.id === id));
       };
       const update = () => {
-        const line = window.scrollY + 120;          // 判定线：导航栏下方
+        const line = window.scrollY + 120;
         let active = pairs[0].head.id;
         for (const p of pairs) {
           if (p.head.getBoundingClientRect().top + window.scrollY <= line) active = p.head.id;
         }
-        // 滚动到页面底部时，强制高亮最后一项
         if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
           active = pairs[pairs.length - 1].head.id;
         }

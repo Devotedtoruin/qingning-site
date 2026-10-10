@@ -1,30 +1,7 @@
 (() => {
   'use strict';
 
-  // Classical lines retain their real author/work. All other lines are site originals.
-  // Keep the first original in sync with the meaningful, script-free brand fallback.
-  const quotes = Object.freeze([
-    Object.freeze({ text: '把日子过成留白，把发现写成文章。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '欲穷千里目，更上一层楼。', author: '王之涣', work: '《登鹳雀楼》' }),
-    Object.freeze({ text: '窗外的风很轻，手边的书正好。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '把远处的风景，收进眼前的文字。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '山重水复疑无路，柳暗花明又一村。', author: '陆游', work: '《游山西村》' }),
-    Object.freeze({ text: '雨落在窗沿，思绪停在字里。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '借一页纸，留住片刻的晴朗。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '行到水穷处，坐看云起时。', author: '王维', work: '《终南别业》' }),
-    Object.freeze({ text: '日子不必太满，文字自有回声。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '翻过这一页，还有新的风景。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '沉舟侧畔千帆过，病树前头万木春。', author: '刘禹锡', work: '《酬乐天扬州初逢席上见赠》' }),
-    Object.freeze({ text: '把零散的发现，慢慢连成小径。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '寻常的一天，也有值得记下的光。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '一蓑烟雨任平生。', author: '苏轼', work: '《定风波·莫听穿林打叶声》' }),
-    Object.freeze({ text: '晚风翻动书页，灯火照见字句。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '给忙碌留一道缝，让风与光经过。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '明月松间照，清泉石上流。', author: '王维', work: '《山居秋暝》' }),
-    Object.freeze({ text: '小小的发现，也能照亮一个午后。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '有些答案，藏在不经意的停顿里。', author: '青柠小站', work: '本站原创' }),
-    Object.freeze({ text: '把眼前看仔细，让文字慢慢落下。', author: '青柠小站', work: '本站原创' })
-  ]);
+  // The brand quotation is static HTML. This file only enhances the local calendar.
   const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
 
   function localDateInfo(date) {
@@ -36,20 +13,9 @@
     return { year, month, day, key, label: `${year}年${month}月${day}日 ${weekdays[date.getDay()]}` };
   }
 
-  function dailyIndex(date, count = quotes.length) {
-    const parts = localDateInfo(date);
-    if (!parts || !Number.isSafeInteger(count) || count < 1) return 0;
-    // Use the visitor's calendar fields, not elapsed local hours (DST) or a UTC date string.
-    // The UTC container is only for day arithmetic; setUTCFullYear also handles years 0–99.
-    const calendar = new Date(0);
-    calendar.setUTCFullYear(parts.year, parts.month - 1, parts.day);
-    const day = Math.floor(calendar.getTime() / 86400000);
-    return ((day % count) + count) % count;
-  }
-
-  function nextIndex(index, count = quotes.length) {
-    if (!Number.isSafeInteger(index) || !Number.isSafeInteger(count) || count < 1) return 0;
-    return (((index % count) + count) % count + 1) % count;
+  function formatClock(date) {
+    if (!localDateInfo(date)) return '';
+    return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
   }
 
   function calendarInfo(date) {
@@ -57,7 +23,7 @@
     if (!parts) return null;
     const leap = parts.year % 4 === 0 && (parts.year % 100 !== 0 || parts.year % 400 === 0);
     const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][parts.month - 1];
-    // Derive the first weekday from today's calendar fields; no elapsed local hours.
+    // Derive the first weekday from calendar fields, not elapsed hours across DST.
     const leading = (date.getDay() + 6 - ((parts.day - 1) % 7) + 7) % 7;
     const cells = Array.from({ length: Math.ceil((leading + days) / 7) * 7 }, (_, index) => {
       const day = index - leading + 1;
@@ -66,42 +32,28 @@
     return { ...parts, monthLabel: `${parts.year}年${parts.month}月`, leading, days, cells };
   }
 
-  function quoteSource(quote) {
-    return `${quote.author} · ${quote.work}`;
-  }
-
-  function initQuote(doc, view, now = () => new Date()) {
-    const documentRoot = doc.documentElement;
-    if (!documentRoot || documentRoot.hasAttribute('data-quotes-ready')) return false;
-    const instances = Array.from(doc.querySelectorAll('[data-quote-instance]')).map((root) => ({
-      text: root.querySelector('[data-quote-text]'),
-      source: root.querySelector('[data-quote-source]')
-    })).filter(({ text, source }) => text && source);
+  function initCalendar(doc, view, now = () => new Date()) {
+    const documentRoot = doc && doc.documentElement;
+    if (!documentRoot || documentRoot.hasAttribute('data-calendar-ready')) return false;
     const calendars = Array.from(doc.querySelectorAll('[data-calendar]')).map((root) => ({
       root,
       date: root.querySelector('[data-calendar-date]'),
       month: root.querySelector('[data-calendar-month]'),
-      grid: root.querySelector('[data-calendar-grid]')
-    })).filter(({ date, month, grid }) => date && month && grid);
-    if (!instances.length && !calendars.length) return false;
-    const controls = instances.length ? Array.from(doc.querySelectorAll('[data-quote-next]')) : [];
-    const announcement = doc.querySelector('[data-quote-announcement]');
-    let index = 0;
-    let dateKey = null;
+      grid: root.querySelector('[data-calendar-grid]'),
+      clock: root.querySelector('[data-clock]')
+    })).filter(({ date, month, grid, clock }) => date && month && grid && clock);
+    if (!calendars.length) return false;
 
-    const renderQuote = (announce = false) => {
-      const quote = quotes[index];
-      for (const { text, source } of instances) {
-        text.textContent = quote.text;
-        source.textContent = quoteSource(quote);
-        source.setAttribute('title', quoteSource(quote));
-      }
-      if (announce && announcement) announcement.textContent = `${quote.text}——${quoteSource(quote)}`;
+    let dateKey = null;
+    let timer = null;
+    let pageActive = true;
+    const isVisible = () => pageActive && doc.visibilityState !== 'hidden';
+    const stopTimer = () => {
+      if (timer !== null && view && typeof view.clearTimeout === 'function') view.clearTimeout(timer);
+      timer = null;
     };
     const renderCalendar = (info) => {
-      for (const { root, date, month, grid } of calendars) {
-        root.hidden = !info;
-        if (!info) continue;
+      for (const { date, month, grid } of calendars) {
         date.dateTime = info.key;
         date.textContent = info.label;
         date.setAttribute('aria-label', `本地日期：${info.label}`);
@@ -126,42 +78,56 @@
         }
       }
     };
-    const refreshDay = () => {
-      const date = now();
+    const refresh = (date) => {
       const parts = localDateInfo(date);
       if (!parts) {
         dateKey = null;
-        renderCalendar(null);
+        for (const { root } of calendars) root.hidden = true;
         return;
       }
-      if (parts.key === dateKey) return;
-      dateKey = parts.key;
-      index = dailyIndex(date);
-      renderQuote();
-      renderCalendar(calendarInfo(date));
+      if (dateKey !== parts.key) {
+        renderCalendar(calendarInfo(date));
+        dateKey = parts.key;
+      }
+      const text = formatClock(date);
+      const offset = -date.getTimezoneOffset();
+      const zone = `UTC${offset >= 0 ? '+' : '-'}${String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0')}:${String(Math.abs(offset) % 60).padStart(2, '0')}`;
+      for (const { root, clock } of calendars) {
+        root.hidden = false;
+        if (clock.textContent !== text) clock.textContent = text;
+        clock.dateTime = text;
+        clock.setAttribute('aria-live', 'off');
+        clock.setAttribute('aria-label', `本地时间（浏览器时区，${zone}）：${text}`);
+      }
+    };
+    const tick = () => {
+      stopTimer();
+      if (!isVisible()) return;
+      const date = now();
+      refresh(date);
+      if (view && typeof view.setTimeout === 'function' && typeof view.clearTimeout === 'function') {
+        // One timeout aligned to the next minute; never a seconds ticker.
+        const delay = localDateInfo(date) ? 60000 - ((date.getTime() % 60000 + 60000) % 60000) : 60000;
+        timer = view.setTimeout(tick, delay);
+      }
     };
 
-    refreshDay();
-    if (controls.length) doc.addEventListener('click', (event) => {
-      const target = event.target;
-      const control = target && typeof target.closest === 'function' ? target.closest('[data-quote-next]') : null;
-      if (!controls.includes(control) || control.hidden || control.disabled) return;
-      refreshDay();
-      index = nextIndex(index);
-      renderQuote(true);
-    });
+    documentRoot.setAttribute('data-calendar-ready', '');
     doc.addEventListener('visibilitychange', () => {
-      if (doc.visibilityState === 'visible') refreshDay();
+      if (isVisible()) tick();
+      else stopTimer();
     });
-    if (view && typeof view.addEventListener === 'function') view.addEventListener('pageshow', refreshDay);
-    documentRoot.setAttribute('data-quotes-ready', '');
-    for (const control of controls) control.hidden = false;
+    if (view && typeof view.addEventListener === 'function') {
+      view.addEventListener('pagehide', () => { pageActive = false; stopTimer(); });
+      view.addEventListener('pageshow', () => { pageActive = true; tick(); });
+    }
+    tick();
     return true;
   }
 
-  // No browser globals added. CommonJS exports support the dependency-free Node tests.
+  // No browser globals. CommonJS exports support dependency-free, offline tests.
   if (typeof module === 'object' && module.exports) {
-    module.exports = Object.freeze({ quotes, localDateInfo, dailyIndex, nextIndex, calendarInfo, initQuote });
+    module.exports = Object.freeze({ localDateInfo, calendarInfo, formatClock, initCalendar });
   }
-  if (typeof document !== 'undefined') initQuote(document, typeof window === 'undefined' ? null : window);
+  if (typeof document !== 'undefined') initCalendar(document, typeof window === 'undefined' ? null : window);
 })();
