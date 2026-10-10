@@ -1,16 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
   <title>青柠小站</title>
-  <rect width="64" height="64" rx="20" fill="#e7efcf"/>
-  <circle cx="32" cy="33" r="22" fill="#36543b"/>
-  <circle cx="32" cy="33" r="17.5" fill="#f9f7df"/>
-  <g fill="#adc979" stroke="#f9f7df" stroke-width="2" stroke-linejoin="round">
-    <path d="M32 33 32 17.5A15.5 15.5 0 0 1 45.4 25.25Z"/>
-    <path d="M32 33 45.4 25.25A15.5 15.5 0 0 1 45.4 40.75Z"/>
-    <path d="M32 33 45.4 40.75A15.5 15.5 0 0 1 32 48.5Z"/>
-    <path d="M32 33 32 48.5A15.5 15.5 0 0 1 18.6 40.75Z"/>
-    <path d="M32 33 18.6 40.75A15.5 15.5 0 0 1 18.6 25.25Z"/>
-    <path d="M32 33 18.6 25.25A15.5 15.5 0 0 1 32 17.5Z"/>
+  <g stroke="#526047" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="30" cy="37" r="21" fill="#fffcf5"/>
+    <circle cx="30" cy="37" r="15.5" fill="none"/>
+    <path d="M30 21.5v31M16.6 29.25l26.8 15.5M16.6 44.75l26.8-15.5" fill="none" stroke-width="2"/>
+    <path d="M32 16C32 6 43 3 52 7c-1 9-9 15-20 9Z" fill="#e4e8d9"/>
+    <path d="m34 15 9-5" fill="none" stroke-width="2"/>
   </g>
-  <circle cx="32" cy="33" r="2.6" fill="#f9f7df"/>
-  <path d="M34 12c1-7 9-8 13-6-1 7-8 10-13 6Z" fill="#36543b"/>
+  <circle cx="30" cy="37" r="2.6" fill="#a38555"/>
 </svg>

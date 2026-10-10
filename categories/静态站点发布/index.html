@@ -4,7 +4,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="青柠小站，收录文章、工具与有趣的发现。">
+  <meta name="description" content="青柠小站，分享技术文章与实用经验。通过分类、标签和站内搜索，查找感兴趣的内容。">
   <meta name="theme-color" content="#faf9f3">
   <title>静态站点发布 | 青柠小站</title>
   
@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://qingning.co/categories/%E9%9D%99%E6%80%81%E7%AB%99%E7%82%B9%E5%8F%91%E5%B8%83/">
   
   <meta property="og:title" content="静态站点发布 | 青柠小站">
-  <meta property="og:description" content="青柠小站，收录文章、工具与有趣的发现。">
+  <meta property="og:description" content="青柠小站，分享技术文章与实用经验。通过分类、标签和站内搜索，查找感兴趣的内容。">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="青柠小站">
   
@@ -25,10 +25,18 @@
 <body>
 <header class="site-header">
   <div class="shell header-inner">
-    <a class="brand" href="/" aria-label="青柠小站，返回首页">
-      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="40" height="40"></span>
-      <span><strong>青柠小站</strong><small>文章与发现</small></span>
-    </a>
+    <div class="brand-block">
+      <a class="brand" href="/" aria-label="青柠小站，返回首页">
+        <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="40" height="40"></span>
+        <strong>青柠小站</strong>
+      </a>
+      <figure class="brand-quote brand-quote--header" data-quote-instance>
+  <span class="quote-label" aria-hidden="true">DAILY</span>
+  <blockquote><p data-quote-text>把日子过成留白，把发现写成文章。</p></blockquote>
+  <figcaption class="visually-hidden"><cite data-quote-source title="青柠小站 · 本站原创">青柠小站 · 本站原创</cite></figcaption>
+</figure>
+
+    </div>
     <nav class="desktop-nav" aria-label="主导航">
       
         <a href="/articles/">文章</a>
@@ -38,7 +46,7 @@
     </nav>
     <div class="header-actions">
       <button class="icon-button" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
-      <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航">☰</button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
   <nav class="mobile-nav" data-mobile-nav aria-label="移动导航">
@@ -56,7 +64,7 @@
 <article class="post-row">
   <time class="post-date" datetime="2026-08-29"><span>08 月</span><strong>29</strong><small>2026</small></time>
   <div class="post-summary">
-    <div class="post-taxonomy"><span>静态站点发布</span></div>
+    <div class="post-taxonomy"><a href="/categories/%E9%9D%99%E6%80%81%E7%AB%99%E7%82%B9%E5%8F%91%E5%B8%83/">静态站点发布</a></div>
     <h2><a href="/posts/02-hexo-docker-nginx-publish/">Hexo 7 静态博客构建、布局修改与 Docker/Nginx 发布</a></h2>
     <p>静态站点维护分为三份： Hexo 源码 保存文章、布局和配置； public/ 是可再生成产物；发布端目录只接收已生成文件。因此云端无需 Node 或 Hexo，构建问题与服务问题也可以分层处理。</p>
     <div class="post-tags"><a href="/tags/Hexo/">#Hexo</a><a href="/tags/Docker/">#Docker</a><a href="/tags/Nginx/">#Nginx</a><a href="/tags/Git/">#Git</a></div>
@@ -69,7 +77,15 @@
 <button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部">↑</button>
 <footer class="site-footer">
   <div class="shell footer-inner">
-    <p><strong>青柠小站</strong><span>文章与发现</span></p>
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="28" height="28"><strong>青柠小站</strong></a>
+      <figure class="brand-quote brand-quote--footer" data-quote-instance>
+  <span class="quote-label" aria-hidden="true">DAILY</span>
+  <blockquote><p data-quote-text>把日子过成留白，把发现写成文章。</p></blockquote>
+  <figcaption><cite data-quote-source title="青柠小站 · 本站原创">青柠小站 · 本站原创</cite></figcaption>
+</figure>
+
+    </div>
     <p class="footer-note"><a href="/subscribe/">RSS 订阅</a><span>Powered by Hexo · 2026</span></p>
   </div>
 </footer>
@@ -82,6 +98,7 @@
   </div>
 </div>
 <script src="/js/site.js" defer></script>
+<script src="/js/quotes.js" defer></script>
 </body>
 </html>
 
