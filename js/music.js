@@ -158,6 +158,23 @@
       paint();
     };
 
+    // Closing is a presentation change only: keep pending intent and audio untouched.
+    const closePanel = () => {
+      if (body.hidden) return;
+      const returnFocus = body.contains(document.activeElement);
+      body.hidden = true;
+      load.setAttribute('aria-expanded', 'false');
+      if (returnFocus) load.focus();
+    };
+    document.addEventListener('pointerdown', (event) => {
+      if (!root.contains(event.target)) closePanel();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || body.hidden) return;
+      event.preventDefault();
+      closePanel();
+    });
+
     load.addEventListener('click', () => {
       const open = body.hidden;
       body.hidden = !open;

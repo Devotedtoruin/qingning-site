@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="以本站 Hexo 主题为例，梳理模板职责、Grid 收缩、阅读宽度、目录顺序与代码表格的溢出处理。">
+  <meta name="theme-color" content="#fffcf6">
+  <title>静态博客前端（一）：从页面骨架到可阅读的布局排版 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/06-frontend-layout-typography-draft/">
+  <meta property="og:url" content="https://qingning.co/posts/06-frontend-layout-typography-draft/">
+
+  <meta property="og:title" content="静态博客前端（一）：从页面骨架到可阅读的布局排版 | 青柠小站">
+  <meta property="og:description" content="以本站 Hexo 主题为例，梳理模板职责、Grid 收缩、阅读宽度、目录顺序与代码表格的溢出处理。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261013-editorial1">
+
+  <link rel="stylesheet" href="/vendor/photoswipe-5.4.4/photoswipe.css">
+
+  <script src="/js/appearance.js?v=20261013-editorial1"></script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <div class="brand-block">
+      <a class="brand" href="/" aria-label="青柠小站，返回首页">
+        <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="40" height="40"></span>
+        <strong>青柠小站</strong>
+      </a>
+      <div class="brand-quote brand-quote--header">
+  <p>收录一些文章、工具和偶然遇到的有趣事物。</p>
+</div>
+
+    </div>
+    <nav class="desktop-nav" aria-label="主导航">
+
+        <a href="/articles/">文章</a>
+
+        <a href="/categories/">分类</a>
+
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle" aria-label="选择外观、背景和面板透明度"><span aria-hidden="true">◐</span> 外观</summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>外观</legend><div class="appearance-choices">
+            <button type="button" data-appearance-choice="glass" aria-pressed="true">玻璃</button>
+            <button type="button" data-appearance-choice="paper" aria-pressed="false">纸页</button>
+            <button type="button" data-appearance-choice="night" aria-pressed="false">夜色</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>背景</legend><div class="appearance-choices">
+            <button type="button" data-background-choice="forest" aria-pressed="true">林间晨光</button>
+            <button type="button" data-background-choice="gradient" aria-pressed="false">暖色渐变</button>
+            <button type="button" data-background-choice="illustration" aria-pressed="false">湖山插画</button>
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="45" step="1" value="18" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">18%</output>
+          </div>
+          <p id="appearance-help">0% 为实色纸面；只调整内容面板，不改变背景照片或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/categories/">分类</a>
+
+  </nav>
+</header>
+
+<main class="page-main"><div class="shell article-shell"><div class="article-layout">
+  <nav class="article-toc" data-article-toc hidden aria-label="文章目录"><button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button><ol id="article-toc-list" data-toc-list></ol></nav>
+  <article class="article-main">
+    <header class="article-header">
+      <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
+      <p class="eyebrow"><time datetime="2026-09-04">2026-09-04</time> · 约 9 分钟阅读（粗估）</p>
+<p class="article-updated">更新于 <time datetime="2026-10-13">2026-10-13</time></p>
+      <h1>静态博客前端（一）：从页面骨架到可阅读的布局排版</h1>
+<p class="article-description">以本站 Hexo 主题为例，梳理模板职责、Grid 收缩、阅读宽度、目录顺序与代码表格的溢出处理。</p>
+      <div class="post-tags"><a href="/tags/Hexo/">#Hexo</a><a href="/tags/CSS/">#CSS</a><a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E8%AE%BE%E8%AE%A1/">#响应式设计</a><a href="/tags/%E6%8E%92%E7%89%88/">#排版</a></div>
+    </header>
+    <div class="article-content"><p>博客的布局不是把截图里几个矩形排齐，而是让标题、正文、目录和工具在内容变化后仍有清晰关系。短标题、没有封面的卡片、长代码与手机放大阅读，都应成为设计输入，而不是最后才发现的例外。</p>
+<p>本文依据本站 <code>ops-journal</code> 主题源码讲解，不把独立视觉稿当成实际页面，也没有在本次起草中完成浏览器验收。文中的独立代码示例用于解释布局，不是整份主题的替代实现；源码核对不等于完成浏览器视觉验收。本系列后两篇分别讨论分层背景，以及 PJAX 与持续播放器的生命周期。</p>
+<h2 id="先分清模板负责什么"><a href="#先分清模板负责什么" class="headerlink" title="先分清模板负责什么"></a>先分清模板负责什么</h2><p>主题的 <code>layout/index.ejs</code> 负责首页正文列表和侧栏，<code>layout/post.ejs</code> 负责文章骨架；共用页头、页脚由 <code>_partial/header.ejs</code> 与 <code>_partial/footer.ejs</code> 输出。最外层 <code>layout/layout.ejs</code> 承担 body 外壳，并不是另一个重复包裹所有页头的容器。</p>
+<p>首页模板目前把最新文章放在主体列，再调用首页侧栏 partial。文章页则包含目录导航、文章头、<code>.article-content</code> 和文末返回入口。Markdown 的 h2&#x2F;h3 是正文结构，页面 h1 是文章标题；不能为视觉字号把一个次级小节提升为 h2，也不应为了目录漂亮给每段都加标题。</p>
+<p>这套职责划分使修改范围可以预测：卡片样式影响列表，文章正文样式影响阅读页，页头影响所有页面。排版调整应先找到对应容器，而不是通过一串全局 <code>div</code> 选择器改变所有区域。</p>
+<h2 id="Grid-最容易忽略的是能否收缩"><a href="#Grid-最容易忽略的是能否收缩" class="headerlink" title="Grid 最容易忽略的是能否收缩"></a>Grid 最容易忽略的是能否收缩</h2><p>首页采用正文与轻侧栏，文章页宽屏采用目录与正文的双列。列宽要容纳内容，但也必须允许长内容在本列内处理。以下是同类布局的简化示例，不是待直接覆盖主题的完整补丁：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.reading-layout</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: grid;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="number">13rem</span> <span class="built_in">minmax</span>(<span class="number">0</span>, <span class="number">1</span>fr);</span><br><span class="line">  <span class="attribute">gap</span>: <span class="number">1.5rem</span>;</span><br><span class="line">  <span class="attribute">align-items</span>: start;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.reading-main</span> &#123;</span><br><span class="line">  <span class="attribute">min-width</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">max-width</span>: <span class="number">56rem</span>) &#123;</span><br><span class="line">  <span class="selector-class">.reading-layout</span> &#123;</span><br><span class="line">    <span class="attribute">grid-template-columns</span>: <span class="built_in">minmax</span>(<span class="number">0</span>, <span class="number">1</span>fr);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1fr</code> 并不总能解决长内容问题。网格项目默认的最小尺寸可能受到长单词、代码或图片影响；<code>minmax(0, 1fr)</code> 与子项目的 <code>min-width: 0</code> 允许列收缩，再由代码块或表格承担必要的横向滚动。把整页 <code>overflow-x: hidden</code> 当作修复，只是把内容裁掉，键盘用户仍可能无法读完。</p>
+<p>本站 CSS 中 <code>.content-main</code>、<code>.article-main</code>、<code>.post-summary</code> 均有收缩或换行约束。文章卡片还有有封面与无封面两种布局，小屏将封面移到独立一行。这意味着测试不能只看一张封面卡片：至少要覆盖空摘要、长标题、多标签以及没有图片的卡片。</p>
+<h2 id="限制阅读宽度，而不是无限填满屏幕"><a href="#限制阅读宽度，而不是无限填满屏幕" class="headerlink" title="限制阅读宽度，而不是无限填满屏幕"></a>限制阅读宽度，而不是无限填满屏幕</h2><p>大屏上能显示更多字，不代表应该把正文扩展到窗口边缘。行太长会增加换行后寻找下一行起点的成本；行太短又让长代码频繁溢出。中文、英文和技术符号混排时，不能机械套用单一字符数。</p>
+<p>主题用 shell 控制外边距，用文章布局分配目录与正文，再给正文面板留内边距。正文宽度并不等于 shell 宽度：目录列、列间距、边框与面板 padding 都会消耗可用空间。排查“文章看起来很窄”时应看计算后的盒模型，而不是只把外层 <code>max-width</code> 加大。</p>
+<p>字体也有职责差异。本站标题使用本地托管的 Noto Serif SC 字重资源，正文优先系统无衬线，代码使用等宽字体。标题字体加载失败时应落到回退字体，而不是让正文不可见。对长中文标题，要检查换行、字距和字体替换后的高度变化，不能只凭字体成功加载一次就认定稳定。</p>
+<h2 id="目录的位置和阅读顺序要一起设计"><a href="#目录的位置和阅读顺序要一起设计" class="headerlink" title="目录的位置和阅读顺序要一起设计"></a>目录的位置和阅读顺序要一起设计</h2><p><code>post.ejs</code> 的目录导航在 DOM 中位于 article 前面，脚本从正文 h2&#x2F;h3 构建父子列表。CSS 可以通过 <code>order</code> 改变视觉位置，但不会自动改变读屏器和 Tab 的遍历顺序。因此左侧还是右侧目录不是纯审美问题，还应检查键盘用户是否先经过过长目录才能进入正文，以及窄屏折叠是否可操作。</p>
+<p>当前源码使用 sticky 目录和折叠按钮；目录高度受视口约束并可滚动。sticky 的 top、标题的滚动落点和页头高度需要一起验收。若页头在手机上多一行，沿用大屏的固定偏移可能让章节标题被遮挡。</p>
+<p>本站目录在宽屏位于左侧，900 px 起采用双列，窄屏默认折叠。维护时应确认：视觉位置与文案一致；按钮的 <code>aria-expanded</code>、实际列表可见状态同步；正文标题的锚点有效；在底部短小节也能得到正确高亮。</p>
+<h2 id="普通表格与代码高亮表格不能共用一套规则"><a href="#普通表格与代码高亮表格不能共用一套规则" class="headerlink" title="普通表格与代码高亮表格不能共用一套规则"></a>普通表格与代码高亮表格不能共用一套规则</h2><p>Hexo 高亮输出可能包含 <code>figure.highlight</code> 内的 table，它不是业务数据表格。普通表格要考虑列标题、换行和阅读关系；代码要保持空格与缩进，并在块内滚动。对所有 <code>.article-content table</code> 都设置相同的 hover 底色和 cell padding，可能破坏代码宽度与对齐。</p>
+<p>本站 CSS 单独定义高亮 figure、table、td 和 pre；<code>site.js</code> 包装普通表格时跳过高亮 figure 与已包装表格。语言标签、复制按钮又由脚本添加，所以首次打开正常不够，还要检查 PJAX 进入文章后是否仍只有一个按钮。</p>
+<p>溢出检查应使用具有意义的长内容：长 URL、长中文单元格、连续代码字符与多列数据。数据表不能为了适配手机把列之间的对应关系拆散；确需横向滚动时，滚动容器应有名称且可由键盘访问。复制代码不应连同语言标签、行号或按钮文案一起复制。</p>
+<h2 id="阅读时间和邻文在构建时计算"><a href="#阅读时间和邻文在构建时计算" class="headerlink" title="阅读时间和邻文在构建时计算"></a>阅读时间和邻文在构建时计算</h2><p>文章头与列表卡片的“约 N 分钟阅读（粗估）”来自 <code>scripts/reading.js</code>，不是访客统计。它先从正文 HTML 提取纯文本，按中文字符数除以 300、其余字母数字词数除以 200 相加，向上取整，至少 1 分钟。代码和技术符号也会影响估计，图片与推理难度并不会被充分表达，不能把粗估当成读者必须完成的倒计时。</p>
+<p>文末上一篇、下一篇也在构建时选择：先按公开条件过滤，再按日期升序排列；上一篇较早，下一篇较新，同日期按路径排序。没有邻文的一端不生成假链接。邻文不是直接信任 Hexo 的原始 prev&#x2F;next，因此未发表的运维草稿不会因为排在中间而被推荐。</p>
+<p>排查异常时，先查文章 <code>date</code>、<code>draft</code> 与 <code>published</code>，再查 helper 和生成 HTML。改日期会改变顺序，但不等于文章过去已经公开；阅读时间发生变化也不代表测到了访客读得更快。</p>
+<h2 id="浮动工具应避开页脚，而不是挤大正文"><a href="#浮动工具应避开页脚，而不是挤大正文" class="headerlink" title="浮动工具应避开页脚，而不是挤大正文"></a>浮动工具应避开页脚，而不是挤大正文</h2><p>播放器与返回顶部固定在视口边缘。主题用 <code>--floating-lift</code> 把它们在页脚进入视口时抬高：<code>site.js</code> 测量正常文档流中 <code>.site-footer</code> 与视口的重叠高度，向上取整后写入变量，CSS 的 bottom 再加安全区和原有间距。测量对象不是已经被抬高的按钮，否则容易形成自我反馈。</p>
+<p>滚动与 resize 通过 requestAnimationFrame 合并测量，PJAX 的每页 mount 也会安排更新。这个变量只服务浮动底部位置，不应加到卡片、标题或目录内部间距上。检查应走到短页和长文末尾，确认按钮不遮页脚链接、播放器展开不挡关键控件；源码公式不能代替触屏与键盘验收。</p>
+<h2 id="用验收场景代替“看起来差不多”"><a href="#用验收场景代替“看起来差不多”" class="headerlink" title="用验收场景代替“看起来差不多”"></a>用验收场景代替“看起来差不多”</h2><p>可以按以下顺序审查实际生成页面，而不是在生产站点直接试改：</p>
+<ol>
+<li>在窄屏检查页头工具、标题和卡片，确认整页没有横向滚动。</li>
+<li>放大文字或页面，检查双列能否转为单列，按钮是否仍可见。</li>
+<li>用键盘经过目录、复制按钮、表格与返回入口，确认焦点不被固定播放器遮挡。</li>
+<li>检查长代码只在块内滚动，正文与代码块左右边界一致。</li>
+<li>检查无 JavaScript 时仍可阅读正文、访问文章链接和原图。</li>
+<li>用真实的生成页面复核字体、目录锚点与页面底部，不把示意图作为验收证据。</li>
+</ol>
+<p>本文只将源码可确认的结构与操作列为实现事实，没有生成上述浏览器结果。CSS 存在多段历史覆盖规则，最终表现以级联和媒体条件的计算结果为准；后续整理不能仅删掉看似重复的选择器而不比较页面。</p>
+<h2 id="继续阅读与技术参考"><a href="#继续阅读与技术参考" class="headerlink" title="继续阅读与技术参考"></a>继续阅读与技术参考</h2><p>可对照 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/min-width">MDN：Grid 的最小尺寸</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/order">MDN：order 与可访问性</a> 和 <a target="_blank" rel="noopener" href="https://www.w3.org/WAI/WCAG22/Understanding/reflow.html">W3C：Reflow</a> 理解这些设计约束；这些链接是延伸参考，不表示本站已经达到相应合规等级。</p>
+<p>本文实现依据为主题 <code>layout/index.ejs</code>、<code>layout/post.ejs</code>、<code>source/css/style.css</code>、<code>source/js/site.js</code> 与站点 <code>scripts/reading.js</code>。实际验收应另外覆盖放大后的重排、长代码与表格、字体失败降级及 PJAX 后复制按钮去重。本文不提供未测得的视觉评分、性能分数或合规结论。下一篇讨论外观与背景的分层，第三篇解释 PJAX 如何保留播放器。</p>
+</div>
+
+<nav class="post-neighbors" aria-label="前后文章">
+<a href="/posts/03-server-survival-games/"><span>上一篇</span><strong>Server Survival 与 Datacenter Survival：两款运维模拟游戏</strong></a>
+<a href="/posts/07-frontend-glass-accessibility-draft/"><span>下一篇</span><strong>静态博客前端（二）：外观切换、分层背景与可访问性回退</strong></a>
+    </nav>
+    <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+  </article>
+</div></div></main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部">↑</button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+    </div>
+    <p class="footer-note"><a href="/subscribe/">RSS 订阅</a><a href="/credits/">素材致谢</a><span>Powered by Hexo · 2026</span></p>
+  </div>
+</footer>
+<div class="music-player" data-music-player data-music-state="idle">
+  <button class="music-load vinyl-trigger secondary-action" type="button" data-music-load aria-controls="footer-music-panel" aria-expanded="false">
+    <span class="vinyl-mini" aria-hidden="true"></span>
+    <span class="music-load-text">音乐</span>
+  </button>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden>
+    <p class="music-kicker">PIANO ROOM · 钢琴小憩</p>
+    <div class="vinyl-stage">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true">
+        <span class="vinyl-groove"></span>
+        <span class="vinyl-label"></span>
+      </div>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true">▶</span></button>
+    </div>
+    <p class="music-title" data-music-title>钢琴小憩</p>
+    <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+    <div class="music-progress" data-music-progress role="presentation">
+      <span class="music-progress-fill" data-music-progress-fill></span>
+    </div>
+    <div class="music-times">
+      <span data-music-current>0:00</span>
+      <span data-music-duration>--:--</span>
+    </div>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-02.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 02"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Meditation Impromptu 02</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-03.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 03"><span class="music-item-index" aria-hidden="true">4</span><span class="music-item-title">Meditation Impromptu 03</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">5</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/clean-soul.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Clean Soul"><span class="music-item-index" aria-hidden="true">6</span><span class="music-item-title">Clean Soul</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/piano-between.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Piano Between"><span class="music-item-index" aria-hidden="true">7</span><span class="music-item-title">Piano Between</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/dreamy-flashback.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Dreamy Flashback"><span class="music-item-index" aria-hidden="true">8</span><span class="music-item-title">Dreamy Flashback</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/heartbreaking.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Heartbreaking"><span class="music-item-index" aria-hidden="true">9</span><span class="music-item-title">Heartbreaking</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/long-note-two.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Long Note Two"><span class="music-item-index" aria-hidden="true">10</span><span class="music-item-title">Long Note Two</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="钢琴小憩播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+    <p class="music-hint">点击外部或按 Esc 收起，音乐继续播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261013-editorial1" defer></script>
+<script src="/js/site.js?v=20261013-editorial1" defer></script>
+<script src="/js/quotes.js?v=20261013-editorial1" defer></script>
+
+<script src="/vendor/photoswipe-5.4.4/photoswipe.umd.min.js" defer></script>
+<script src="/vendor/photoswipe-5.4.4/photoswipe-lightbox.umd.min.js" defer></script>
+
+<script src="/js/media.js?v=20261013-editorial1" defer></script>
+<script src="/js/music.js?v=20261013-editorial1" defer></script>
+<script src="/js/pjax.js?v=20261013-editorial1" defer></script>
+</body>
+</html>

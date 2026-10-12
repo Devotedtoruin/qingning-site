@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从只替换 main 的导航边界出发，区分全局与每页插件，处理异步竞态、播放器状态、历史回退和失败降级。">
+  <meta name="theme-color" content="#fffcf6">
+  <title>静态博客前端（三）：PJAX 插件生命周期与持续音乐 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/08-frontend-pjax-music-lifecycle-draft/">
+  <meta property="og:url" content="https://qingning.co/posts/08-frontend-pjax-music-lifecycle-draft/">
+
+  <meta property="og:title" content="静态博客前端（三）：PJAX 插件生命周期与持续音乐 | 青柠小站">
+  <meta property="og:description" content="从只替换 main 的导航边界出发，区分全局与每页插件，处理异步竞态、播放器状态、历史回退和失败降级。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261013-editorial1">
+
+  <link rel="stylesheet" href="/vendor/photoswipe-5.4.4/photoswipe.css">
+
+  <script src="/js/appearance.js?v=20261013-editorial1"></script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <div class="brand-block">
+      <a class="brand" href="/" aria-label="青柠小站，返回首页">
+        <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="40" height="40"></span>
+        <strong>青柠小站</strong>
+      </a>
+      <div class="brand-quote brand-quote--header">
+  <p>收录一些文章、工具和偶然遇到的有趣事物。</p>
+</div>
+
+    </div>
+    <nav class="desktop-nav" aria-label="主导航">
+
+        <a href="/articles/">文章</a>
+
+        <a href="/categories/">分类</a>
+
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle" aria-label="选择外观、背景和面板透明度"><span aria-hidden="true">◐</span> 外观</summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>外观</legend><div class="appearance-choices">
+            <button type="button" data-appearance-choice="glass" aria-pressed="true">玻璃</button>
+            <button type="button" data-appearance-choice="paper" aria-pressed="false">纸页</button>
+            <button type="button" data-appearance-choice="night" aria-pressed="false">夜色</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>背景</legend><div class="appearance-choices">
+            <button type="button" data-background-choice="forest" aria-pressed="true">林间晨光</button>
+            <button type="button" data-background-choice="gradient" aria-pressed="false">暖色渐变</button>
+            <button type="button" data-background-choice="illustration" aria-pressed="false">湖山插画</button>
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="45" step="1" value="18" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">18%</output>
+          </div>
+          <p id="appearance-help">0% 为实色纸面；只调整内容面板，不改变背景照片或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/categories/">分类</a>
+
+  </nav>
+</header>
+
+<main class="page-main"><div class="shell article-shell"><div class="article-layout">
+  <nav class="article-toc" data-article-toc hidden aria-label="文章目录"><button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button><ol id="article-toc-list" data-toc-list></ol></nav>
+  <article class="article-main">
+    <header class="article-header">
+      <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
+      <p class="eyebrow"><time datetime="2026-09-11">2026-09-11</time> · 约 10 分钟阅读（粗估）</p>
+<p class="article-updated">更新于 <time datetime="2026-10-13">2026-10-13</time></p>
+      <h1>静态博客前端（三）：PJAX 插件生命周期与持续音乐</h1>
+<p class="article-description">从只替换 main 的导航边界出发，区分全局与每页插件，处理异步竞态、播放器状态、历史回退和失败降级。</p>
+      <div class="post-tags"><a href="/tags/%E6%B8%90%E8%BF%9B%E5%A2%9E%E5%BC%BA/">#渐进增强</a><a href="/tags/JavaScript/">#JavaScript</a><a href="/tags/PJAX/">#PJAX</a><a href="/tags/%E9%9F%B3%E9%A2%91/">#音频</a></div>
+    </header>
+    <div class="article-content"><p>静态站点也可以在站内跳转时保留播放器，但关键不是“记住播放秒数”，而是不要销毁正在播放的那个 audio 元素。与此同时，目录、复制按钮和图片灯箱属于旧文章，不能因为页面没有完整刷新就一直留下来。</p>
+<p>本文依据本站 <code>pjax.js</code>、<code>site.js</code> 与 <code>music.js</code> 的源码讲解维护方法。本文区分源码中已经实现的保护与读者仍应执行的验收场景，不把代码阅读当作真实连续播放测试。标注为教学模型的示例不代表主题的完整接口。</p>
+<h2 id="先确定什么会被替换"><a href="#先确定什么会被替换" class="headerlink" title="先确定什么会被替换"></a>先确定什么会被替换</h2><p>本站 PJAX 以 <code>main</code> 为替换边界：获取同源 HTML，解析出新 main，替换旧正文，再同步页面标题与部分元信息。页头、页脚和放在 main 外的播放器可以保留。持续音乐依赖播放器节点身份不变，而不是在换页后重新创建音频并跳到旧时间。</p>
+<p>以下示例说明位置关系，不是主题完整模板：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span>站点导航<span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">main</span>&gt;</span>当前页面正文<span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">footer</span>&gt;</span>站点信息<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">data-music-player</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-music-audio</span> <span class="attr">preload</span>=<span class="string">&quot;none&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>PJAX 同时意味着完整页面脚本不会在每次替换时重新执行。插入 HTML 不应等于执行里面的任意脚本；可选库应由导航器明确加载，本地插件由明确的 mount 入口初始化。否则页面内容会变成隐式脚本加载协议，也容易出现重复事件绑定。</p>
+<h2 id="全局生命周期和每页生命周期分开"><a href="#全局生命周期和每页生命周期分开" class="headerlink" title="全局生命周期和每页生命周期分开"></a>全局生命周期和每页生命周期分开</h2><p>滚动进度、回到顶部、固定页头和播放器属于长期保留的界面；目录、文章表格、复制按钮及文章媒体则依赖当前正文。前者通常只安装一次，后者每次换页重新挂载，并在旧页离开时清理引用和外部监听。</p>
+<p>本站已使用 WeakSet 或 WeakMap 去重部分 DOM 初始化。去重能避免同一节点出现两个复制按钮，却不能自动解决所有资源泄漏：挂在 window 上的旧目录滚动监听，仍可能保留已移除标题的引用；IntersectionObserver、超时回调和灯箱也需要明确释放。</p>
+<p>一个最小的生命周期接口可以如此表达。它是教学模型，不表示本站已有同名完整实现：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title function_">disposePage</span> = (<span class="params"></span>) =&gt; &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">mountPage</span>(<span class="params">main</span>) &#123;</span><br><span class="line">  <span class="title function_">disposePage</span>();</span><br><span class="line">  <span class="keyword">const</span> cleanup = [];</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onResize</span> = (<span class="params"></span>) =&gt; <span class="title function_">updateCurrentLayout</span>(main);</span><br><span class="line">  <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;resize&#x27;</span>, onResize);</span><br><span class="line">  cleanup.<span class="title function_">push</span>(<span class="function">() =&gt;</span> <span class="variable language_">window</span>.<span class="title function_">removeEventListener</span>(<span class="string">&#x27;resize&#x27;</span>, onResize));</span><br><span class="line">  disposePage = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    cleanup.<span class="title function_">forEach</span>(<span class="function">(<span class="params">dispose</span>) =&gt;</span> <span class="title function_">dispose</span>());</span><br><span class="line">    cleanup.<span class="property">length</span> = <span class="number">0</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>updateCurrentLayout</code> 是示意函数。实际还要取消未完成动画帧、断开观察器、关闭旧灯箱并防止旧异步任务更新新页面。WeakMap 是节点去重工具，不是自动资源管理器。</p>
+<h2 id="请求取消与“最后一次导航获胜”是两道保护"><a href="#请求取消与“最后一次导航获胜”是两道保护" class="headerlink" title="请求取消与“最后一次导航获胜”是两道保护"></a>请求取消与“最后一次导航获胜”是两道保护</h2><p>快速点击文章 A、B 时，A 的响应可能晚于 B。如果只按响应顺序替换页面，会回到用户已经放弃的页面。本站导航器使用 AbortController 取消前一个请求，同时用递增的导航标识检查响应是否仍属于当前导航。</p>
+<p>两者不能互相替代：取消是尽量停止工作，版本标识是防止过期工作提交结果。插件脚本加载、缓存响应或已经开始的 Promise 回调，都不一定随 fetch 取消而消失。每次异步完成前，应再次核对导航标识与当前 main 的身份。</p>
+<p>导航失败应保留普通页面跳转。本站对 HTTP 错误、非 HTML、缺失 main 和超时采用整页导航回退；这会重建 audio，因而音乐可能停止。正确的产品说明应是“受支持的 PJAX 站内切换持续播放”，不是“任何跳转都不断”。外站、新标签页、刷新和失败回退也不在保持范围内。</p>
+<h2 id="插件失败不能阻塞正文"><a href="#插件失败不能阻塞正文" class="headerlink" title="插件失败不能阻塞正文"></a>插件失败不能阻塞正文</h2><p>图片灯箱是增强功能，原图链接才是基本入口。当前 PJAX 代码在正文替换后调用本地模块，再异步准备文章所需的 PhotoSwipe；可选加载失败不应让整篇文章无法进入。脚本超时或库缺失时，图片仍应能直接打开。</p>
+<p>不过插件需有可重复挂载的边界。库晚到时第二次 mount，应增强当前文章，而不是给旧文章绑定监听；从文章回列表时，也不应保留遮罩、锁滚动状态或焦点陷阱。当前顺序是关闭搜索、销毁每页工具与日历、替换正文，再重新挂载当前页面；可选媒体库准备完成后还要检查导航标识与 main 身份。<code>media.js</code> 在 mount 时扫描已脱离文档的旧文章，调用动画清理与 gallery.destroy，再从集合和 WeakMap 移除。这里是下次挂载时清理，不是浏览器自动释放所有全局状态。</p>
+<p>不能只验收首页直接打开的文章。至少要走首页 → 文章 → 列表 → 另一篇文章，重复数次，再检查复制按钮数量、目录高亮、表格容器和灯箱关闭后的焦点返回。</p>
+<h2 id="音乐是一套异步状态，不是一个播放图标"><a href="#音乐是一套异步状态，不是一个播放图标" class="headerlink" title="音乐是一套异步状态，不是一个播放图标"></a>音乐是一套异步状态，不是一个播放图标</h2><p>播放器默认没有音源、<code>preload=&quot;none&quot;</code>，首次展开后准备本地音源；播放仍由用户主动点击开始。展开界面、加载源和开始播放是不同动作。浏览器可能拒绝 <code>play()</code>，网络可能进入 waiting，音频可能自然结束，因此不能在调用 <code>play()</code> 的瞬间直接把界面永久画成“正在播放”。</p>
+<p>源码使用以下状态：用户是否想继续播放、播放 Promise 是否待完成、是否缓冲、是否出错，以及当前请求编号。应从真实媒体事件和最新用户意图一起推导显示状态：缓冲时不旋转唱片，暂停后旧 Promise 的成功回调不应把界面改回播放。</p>
+<p>特别容易出现的竞态是：用户点击播放，立即暂停，再选择另一首；第一首的 Promise 晚到。递增请求编号能让旧回调失效，但还应结合 <code>playing</code> 事件与实际媒体状态，防止音频本身继续发声而界面显示暂停。这里不声称本文已经完成这组实测。</p>
+<p>曲目地址应来自受控本地列表，不能把用户参数任意转成音源。当前 <code>safeAudioUrl</code> 限定本站 <code>/audio/</code> 路径和 MP3&#x2F;OGG 格式，并排除查询串、片段、路径穿越等不符合规则的输入。这是特定站点的输入约束，不是适用于所有 URL 的通用安全解析器。</p>
+<h2 id="自然续播不能绕过主动播放与暂停"><a href="#自然续播不能绕过主动播放与暂停" class="headerlink" title="自然续播不能绕过主动播放与暂停"></a>自然续播不能绕过主动播放与暂停</h2><p>多曲目列表可以在自然结束后继续下一首，但前提应是用户已经主动播放且没有撤回意图。单纯收到 ended 事件不能作为“随时自动播放下一首”的许可；暂停、错误、换曲请求失效时应清除续播资格。</p>
+<p>当前代码在 <code>playing</code> 后允许自然续播，并在暂停或错误时清除；多曲目使用下一项循环。多曲目以 <code>(index + 1) % entries.length</code> 回到下一项，最后一首自然结束后回第一首；只有一首时停止。播放请求等待期间再次点击暂停，会撤回意图并让旧请求失效；错误后由用户重试。不要把它描述成浏览器一定允许的自动播放保证。</p>
+<p>播放器可以点触发按钮收起，也会在根节点外 pointerdown 或 Escape 时收起；这些入口只隐藏面板、更新 <code>aria-expanded</code>，不暂停、不归零。收起前焦点位于面板内部时，返回触发按钮。点击面板内进度或曲目不属于外部点击，不能意外关闭。切页时保留同一个 audio。减少动态效果只应停止唱片装饰动画，不应该自行停止用户选择的音乐。键盘进度控制还需要有效时长、有限数值和范围校验，未知 duration 时不能计算 NaN 百分比。</p>
+<h2 id="历史记录、锚点与焦点是导航的一部分"><a href="#历史记录、锚点与焦点是导航的一部分" class="headerlink" title="历史记录、锚点与焦点是导航的一部分"></a>历史记录、锚点与焦点是导航的一部分</h2><p>PJAX 替换了正文，却没有浏览器整页加载自动提供的全部语义。需要处理标题、canonical、描述等元信息，前进后退的页面状态、滚动位置，以及当前页面锚点。本站导航器维护 history 状态与滚动位置，并区分普通进入和历史恢复；同页片段通常交给目录或原生行为。</p>
+<p>目录更新 hash 时不能无条件覆盖整个 history state，否则导航器保存的信息会丢失。返回入口也不能只看 referrer：它可能为空或来自外站；缺少有效站内来源时，仍需一个明确的文章列表链接。</p>
+<p>还有一项不能遗漏的验收是焦点：新页面进入后，用户是否知道正文已改变；后退是否恢复可预测位置；搜索关闭后焦点是否回到触发入口。本文不把“URL 变了”当成可访问导航已完成，最终行为仍需实际键盘与辅助技术检查。</p>
+<h2 id="把成功路径和失败路径分开验收"><a href="#把成功路径和失败路径分开验收" class="headerlink" title="把成功路径和失败路径分开验收"></a>把成功路径和失败路径分开验收</h2><ol>
+<li>首次进入时没有自动音频请求或自动播放；展开、播放、暂停分别符合文案。</li>
+<li>支持的站内切页后 audio 节点保持不变，播放位置继续，页面工具更新。</li>
+<li>播放 Promise 被拒绝、缓冲和错误时，按钮、状态文案与旋转动画一致。</li>
+<li>快速播放&#x2F;暂停&#x2F;换曲与自然结束不会让旧请求恢复播放或覆盖新曲目。</li>
+<li>快速导航只显示最后选中的页面，取消不会触发旧页面的整页跳转。</li>
+<li>前进后退、文章锚点、返回入口、标题与元信息正确。</li>
+<li>可选媒体库加载失败仍可阅读并打开原图；导航失败转为普通跳转。</li>
+<li>重复换页后没有重复目录监听、复制按钮、表格包装或遗留灯箱状态。</li>
+</ol>
+<p>维护规范已区分 PJAX 站内切换与完整页面跳转：前者保留同一个音频实例，后者会重建页面并中断音乐。收起仅隐藏界面，暂停由明确按钮控制。播放连续性与缓冲反馈仍须在真实网络条件下验收，源码阅读并没有给出无缝播放的测量结果。</p>
+<p>实现依据为主题 <code>source/js/pjax.js</code>、<code>source/js/site.js</code>、<code>source/js/music.js</code> 与播放器所在模板。延伸参考：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play">MDN：HTMLMediaElement.play()</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">MDN：History API</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">MDN：AbortController</a>。源码核对日期为 2026-10-13。上述清单是可重复使用的验收方法，不是已经完成的测试日志；本文不提供未执行的线上结果。</p>
+</div>
+
+<nav class="post-neighbors" aria-label="前后文章">
+<a href="/posts/07-frontend-glass-accessibility-draft/"><span>上一篇</span><strong>静态博客前端（二）：外观切换、分层背景与可访问性回退</strong></a>
+
+    </nav>
+    <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+  </article>
+</div></div></main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部">↑</button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+    </div>
+    <p class="footer-note"><a href="/subscribe/">RSS 订阅</a><a href="/credits/">素材致谢</a><span>Powered by Hexo · 2026</span></p>
+  </div>
+</footer>
+<div class="music-player" data-music-player data-music-state="idle">
+  <button class="music-load vinyl-trigger secondary-action" type="button" data-music-load aria-controls="footer-music-panel" aria-expanded="false">
+    <span class="vinyl-mini" aria-hidden="true"></span>
+    <span class="music-load-text">音乐</span>
+  </button>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden>
+    <p class="music-kicker">PIANO ROOM · 钢琴小憩</p>
+    <div class="vinyl-stage">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true">
+        <span class="vinyl-groove"></span>
+        <span class="vinyl-label"></span>
+      </div>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true">▶</span></button>
+    </div>
+    <p class="music-title" data-music-title>钢琴小憩</p>
+    <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+    <div class="music-progress" data-music-progress role="presentation">
+      <span class="music-progress-fill" data-music-progress-fill></span>
+    </div>
+    <div class="music-times">
+      <span data-music-current>0:00</span>
+      <span data-music-duration>--:--</span>
+    </div>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-02.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 02"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Meditation Impromptu 02</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-03.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 03"><span class="music-item-index" aria-hidden="true">4</span><span class="music-item-title">Meditation Impromptu 03</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">5</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/clean-soul.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Clean Soul"><span class="music-item-index" aria-hidden="true">6</span><span class="music-item-title">Clean Soul</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/piano-between.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Piano Between"><span class="music-item-index" aria-hidden="true">7</span><span class="music-item-title">Piano Between</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/dreamy-flashback.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Dreamy Flashback"><span class="music-item-index" aria-hidden="true">8</span><span class="music-item-title">Dreamy Flashback</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/heartbreaking.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Heartbreaking"><span class="music-item-index" aria-hidden="true">9</span><span class="music-item-title">Heartbreaking</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/long-note-two.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Long Note Two"><span class="music-item-index" aria-hidden="true">10</span><span class="music-item-title">Long Note Two</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="钢琴小憩播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+    <p class="music-hint">点击外部或按 Esc 收起，音乐继续播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261013-editorial1" defer></script>
+<script src="/js/site.js?v=20261013-editorial1" defer></script>
+<script src="/js/quotes.js?v=20261013-editorial1" defer></script>
+
+<script src="/vendor/photoswipe-5.4.4/photoswipe.umd.min.js" defer></script>
+<script src="/vendor/photoswipe-5.4.4/photoswipe-lightbox.umd.min.js" defer></script>
+
+<script src="/js/media.js?v=20261013-editorial1" defer></script>
+<script src="/js/music.js?v=20261013-editorial1" defer></script>
+<script src="/js/pjax.js?v=20261013-editorial1" defer></script>
+</body>
+</html>

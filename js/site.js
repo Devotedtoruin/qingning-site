@@ -11,6 +11,7 @@
   const wrappedTables = new WeakSet(); // 已包过滚动容器的表格
   let globalsInstalled = false;
   let menuBound = false;
+  let scheduleGlobals = () => {};
   let pageCleanups = [];
 
   function destroyPage() {
@@ -29,19 +30,28 @@
     const progress = document.querySelector('[data-read-progress]');
     const toTop = document.querySelector('[data-to-top]');
     const header = document.querySelector('.site-header');
+    const footer = document.querySelector('.site-footer');
     const onScroll = () => {
       const doc = document.documentElement;
       const max = doc.scrollHeight - doc.clientHeight;
       if (progress) progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + '%';
       if (toTop) toTop.classList.toggle('is-visible', doc.scrollTop > 480);
       if (header) header.classList.toggle('is-scrolled', doc.scrollTop > 8);
+      // Measure only the normal-flow footer, never a lifted control's rectangle.
+      // The CSS base bottom already provides the gap and safe-area inset.
+      const viewportHeight = window.innerHeight || doc.clientHeight;
+      const rect = footer && footer.getBoundingClientRect();
+      const overlap = rect ? Math.max(0, Math.min(viewportHeight, rect.bottom) - Math.max(0, rect.top)) : 0;
+      doc.style.setProperty('--floating-lift', Math.ceil(overlap) + 'px');
     };
     let ticking = false;
-    window.addEventListener('scroll', () => {
+    scheduleGlobals = () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => { onScroll(); ticking = false; });
-    }, { passive: true });
+    };
+    window.addEventListener('scroll', scheduleGlobals, { passive: true });
+    window.addEventListener('resize', scheduleGlobals);
     onScroll();
 
     if (toTop) toTop.addEventListener('click', () => {
@@ -55,6 +65,7 @@
   /* ---------- 每页：可重复调用 ---------- */
   function mountPage(document, window) {
     installGlobals(document, window);
+    scheduleGlobals();
     if (!menuBound) {
       menuBound = true;
       document.querySelectorAll('[data-menu-toggle]').forEach((button) => button.addEventListener('click', () => {
