@@ -11,6 +11,13 @@
   const wrappedTables = new WeakSet(); // 已包过滚动容器的表格
   let globalsInstalled = false;
   let menuBound = false;
+  let pageCleanups = [];
+
+  function destroyPage() {
+    const cleanups = pageCleanups;
+    pageCleanups = [];
+    cleanups.forEach((cleanup) => cleanup());
+  }
 
   const prefersReduce = () => typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -86,6 +93,10 @@
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
     targets.forEach((el) => io.observe(el));
+    pageCleanups.push(() => {
+      io.disconnect();
+      targets.forEach((el) => prepared.delete(el));
+    });
   }
 
   function mountCodeBlocks(document) {
@@ -163,6 +174,17 @@
     if (!toc) return;
     if (toc.__tocMounted) return; // 同一份 DOM 不被重复挂载
     toc.__tocMounted = true;
+    const disposers = [];
+    let pageActive = true;
+    const listen = (target, type, listener, options) => {
+      target.addEventListener(type, listener, options);
+      disposers.push(() => target.removeEventListener(type, listener, options));
+    };
+    pageCleanups.push(() => {
+      pageActive = false;
+      disposers.forEach((dispose) => dispose());
+      delete toc.__tocMounted;
+    });
 
     const list = toc.querySelector('[data-toc-list]');
     const heads = Array.from(document.querySelectorAll('.article-content h2, .article-content h3'));
@@ -207,14 +229,14 @@
       if (button) button.setAttribute('aria-expanded', String(!collapsed));
     };
     const applyDefault = () => setCollapsed(!isWide());
-    if (button) button.addEventListener('click', () => setCollapsed(!list.hidden));
+    if (button) listen(button, 'click', () => setCollapsed(!list.hidden));
     applyDefault();
     let lastWide = isWide();
-    window.addEventListener('resize', () => {
+    listen(window, 'resize', () => {
       const nowWide = isWide();
       if (nowWide !== lastWide) { lastWide = nowWide; applyDefault(); }
     });
-    toc.addEventListener('click', (e) => {
+    listen(toc, 'click', (e) => {
       const a = e.target.closest('a[href^="#"]');
       if (!a) return;
       const target = headingForLink(document, a);
@@ -222,7 +244,11 @@
       e.preventDefault();
       const y = target.getBoundingClientRect().top + window.scrollY - 76;
       window.scrollTo({ top: y, behavior: prefersReduce() ? 'auto' : 'smooth' });
-      history.replaceState(null, '', a.getAttribute('href'));
+      const state = window.history.state;
+      const url = new URL(a.getAttribute('href'), window.location.href).href;
+      const nextState = state && typeof state === 'object' ? { ...state } : state;
+      if (nextState && nextState.__journalPjax) nextState.__journalPjax = { ...nextState.__journalPjax, url };
+      window.history.replaceState(nextState, '', a.getAttribute('href'));
     });
 
     /* ---------- 目录跟随高亮（按滚动位置选，末项也能命中） ---------- */
@@ -236,6 +262,7 @@
       pairs.forEach((p) => p.link.classList.toggle('is-active', p.head.id === id));
     };
     const update = () => {
+      if (!pageActive) return; // Ignore a TOC frame queued before the page was removed.
       const line = window.scrollY + 120;
       let active = pairs[0].head.id;
       for (const p of pairs) {
@@ -247,16 +274,16 @@
       setActive(active);
     };
     let ticking2 = false;
-    window.addEventListener('scroll', () => {
+    listen(window, 'scroll', () => {
       if (ticking2) return;
       ticking2 = true;
       requestAnimationFrame(() => { update(); ticking2 = false; });
     }, { passive: true });
-    window.addEventListener('resize', update);
+    listen(window, 'resize', update);
     update();
   }
 
-  window.JournalSite = { mountPage };
+  window.JournalSite = { mountPage, destroyPage };
 
   const start = () => mountPage(document, window);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });

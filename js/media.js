@@ -102,7 +102,7 @@
 
     // Missing/blocked vendor scripts must not break the rest of the site or the original image link.
     if (typeof window.PhotoSwipeLightbox !== 'function' || typeof window.PhotoSwipe !== 'function') {
-      return { destroy: () => cleanups.forEach((cleanup) => cleanup()) };
+      return { enhanced: false, destroy: () => cleanups.forEach((cleanup) => cleanup()) };
     }
     let lightbox = null;
     let failed = false;
@@ -154,6 +154,7 @@
     };
     article.addEventListener('click', onClick);
     return {
+      enhanced: true,
       get lightbox() { return lightbox; },
       destroy() {
         article.removeEventListener('click', onClick);
@@ -183,12 +184,23 @@
     });
     const mounted = [];
     document.querySelectorAll('.article-content').forEach((article) => {
-      if (preparedArticles.has(article)) return;
+      const prepared = preparedArticles.get(article);
+      if (prepared) {
+        // PJAX shows images immediately, then upgrades this gallery once vendors arrive.
+        // Keep the original animation preference/listener: current src may already be GIF.
+        if (!prepared.gallery.enhanced && typeof window.PhotoSwipeLightbox === 'function' && typeof window.PhotoSwipe === 'function') {
+          prepared.gallery.destroy();
+          prepared.gallery = mountGallery(article, document, window);
+          galleries.push(prepared.gallery);
+          mounted.push(prepared.gallery);
+        }
+        return;
+      }
       const animations = mountAnimations(article, window);
       const gallery = mountGallery(article, document, window);
       preparedArticles.set(article, { animations, gallery });
       activeArticles.add(article);
-      if (gallery.lightbox !== undefined) { galleries.push(gallery); mounted.push(gallery); }
+      if (gallery.enhanced) { galleries.push(gallery); mounted.push(gallery); }
     });
     return { galleries, mounted };
   }

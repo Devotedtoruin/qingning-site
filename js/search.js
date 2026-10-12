@@ -202,6 +202,7 @@
     const meta = document.querySelector('[data-search-meta]');
     const retry = document.querySelector('[data-search-retry]');
     if (!dialog || !input || !results || !meta) return null;
+    if (dialog.__journalSearch) return dialog.__journalSearch;
     let lastFocus = null;
     let loader;
     const render = () => {
@@ -222,12 +223,12 @@
     };
     loader = createLoader({ fetch: typeof window.fetch === 'function' ? window.fetch.bind(window) : null,
       AbortController: window.AbortController, MiniSearch: window.MiniSearch, onChange: render });
-    const close = () => {
+    const close = (options = {}) => {
       if (dialog.hidden) return;
       dialog.hidden = true;
       document.body.classList.remove('dialog-open');
       loader.close();
-      if (lastFocus && typeof lastFocus.focus === 'function' && lastFocus.isConnected !== false) lastFocus.focus();
+      if (options.restoreFocus !== false && lastFocus && typeof lastFocus.focus === 'function' && lastFocus.isConnected !== false) lastFocus.focus();
     };
     const open = () => {
       if (dialog.hidden) lastFocus = document.activeElement;
@@ -258,8 +259,14 @@
         event.preventDefault(); first.focus();
       }
     });
-    return { open, close, render, loader };
+    dialog.__journalSearch = { open, close, render, loader };
+    return dialog.__journalSearch;
   }
 
-  return { normalize, queryTokens, makeTokenizer, safePostUrl, validateRecords, createIndex, createLoader, renderResults, mount };
+  function close(document, options) {
+    const dialog = document && document.querySelector('[data-search-dialog]');
+    if (dialog && dialog.__journalSearch) dialog.__journalSearch.close(options);
+  }
+
+  return { close, normalize, queryTokens, makeTokenizer, safePostUrl, validateRecords, createIndex, createLoader, renderResults, mount };
 });

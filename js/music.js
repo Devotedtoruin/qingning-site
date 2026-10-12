@@ -1,6 +1,6 @@
 /* 青柠小站 · 唱片机播放器
    规则（与站点既有约定一致）：
-   - 绝不自动播放：只有用户点击「播放」或点选曲目才调用 play()。
+   - 首次播放必须由用户点击；自然结束后可续播下一首。
    - 不预加载音频：直到用户第一次展开播放器才注入 <source>。
    - 页面切换不断音乐：播放器是 <body> 的独立子元素，PJAX 只替换 <main>。
    - 不上报、不统计、不保存收听记录；localStorage 不参与。
@@ -68,11 +68,14 @@
     let pendingPlay = false;
     let wantPlayback = false;
     let allowAutoNext = false;
+    let buffering = false;
+    let errorMessage = '';
 
-    const fail = (message) => { status.textContent = message; };
+    const fail = (message) => { errorMessage = message; };
 
     const paint = () => {
-      const playing = !body.hidden && wantPlayback && !audio.paused;
+      const playing = wantPlayback && !audio.paused && !audio.ended && !buffering && !errorMessage;
+      const state = errorMessage ? 'error' : (wantPlayback && (pendingPlay || buffering) ? 'buffering' : (playing ? 'playing' : (loaded ? 'paused' : 'idle')));
       entries.forEach(({ item, title }, i) => {
         const isCurrent = i === index;
         item.classList.toggle('is-current', isCurrent);
@@ -83,14 +86,18 @@
       const entry = entries[index];
       if (titleEl) titleEl.textContent = entry.title;
       if (creditEl) creditEl.textContent = entry.item.getAttribute('data-credit') || 'Kevin MacLeod · CC BY 3.0';
-      if (icon) icon.textContent = playing ? '❚❚' : '▶';
-      toggle.setAttribute('aria-label', playing ? '暂停' : '播放');
+      const canPause = wantPlayback && (pendingPlay || !audio.paused);
+      if (icon) icon.textContent = canPause ? '❚❚' : '▶';
+      toggle.setAttribute('aria-label', canPause ? '暂停' : '播放');
       if (disc) disc.classList.toggle('is-spinning', playing);
-      root.setAttribute('data-music-state', playing ? 'playing' : (loaded ? 'paused' : 'idle'));
+      root.setAttribute('data-music-state', state);
+      if (status) status.textContent = errorMessage || (state === 'buffering' ? '正在缓冲，请稍候。' : (playing ? '正在播放：' + entry.title : (loaded ? '已暂停，点击播放继续。' : '选择曲目后点击播放，不会自动播放。')));
     };
 
     const setSource = (i) => {
       index = i;
+      errorMessage = '';
+      buffering = false;
       const entry = entries[i];
       if (!sourceEl) {
         sourceEl = document.createElement('source');
@@ -101,23 +108,27 @@
       if (fill) fill.style.width = '0%';
       if (progress) progress.setAttribute('aria-valuenow', '0');
       if (currentEl) currentEl.textContent = '0:00';
+      if (durationEl) durationEl.textContent = '--:--';
       try { audio.load(); } catch (_) { fail('音频暂时无法加载或当前浏览器不支持此格式。'); return false; }
       loaded = true;
       return true;
     };
 
-    // 唯一允许调用 play() 的入口：由真实用户交互触发。
+    // 用户播放及已获允许的自然续播共用入口；暂停使旧请求失效。
     const playAt = (i) => {
       const currentRequest = ++requestId;
       pendingPlay = true;
       wantPlayback = true;
       allowAutoNext = false;
+      errorMessage = '';
       if ((!loaded || i !== index) && !setSource(i)) {
         pendingPlay = false;
         wantPlayback = false;
         paint();
         return;
       }
+      buffering = true;
+      paint();
       let attempt;
       try { attempt = audio.play(); } catch (error) { attempt = Promise.reject(error); }
       if (attempt && typeof attempt.then === 'function') {
@@ -125,12 +136,13 @@
           if (currentRequest !== requestId) return;
           pendingPlay = false;
           paint();
-        }, () => {
+        }, (error) => {
           if (currentRequest !== requestId) return;
           pendingPlay = false;
           wantPlayback = false;
           allowAutoNext = false;
-          fail('浏览器拦截了播放，请再点一次播放按钮。');
+          buffering = false;
+          fail(error && error.name === 'NotAllowedError' ? '浏览器拦截了播放，请再点一次播放按钮。' : '音频播放失败，请稍后再试。');
           paint();
         });
       } else pendingPlay = false;
@@ -141,27 +153,17 @@
       pendingPlay = false;
       wantPlayback = false;
       allowAutoNext = false;
+      buffering = false;
       audio.pause();
       paint();
-    };
-
-    const stop = () => {
-      pause();
-      try { audio.currentTime = 0; } catch (_) { /* metadata might not be available yet */ }
-      if (fill) fill.style.width = '0%';
-      if (progress) progress.setAttribute('aria-valuenow', '0');
-      if (currentEl) currentEl.textContent = '0:00';
     };
 
     load.addEventListener('click', () => {
       const open = body.hidden;
       body.hidden = !open;
       load.setAttribute('aria-expanded', String(open));
-      if (open) {
-        if (!loaded) setSource(index);
-        paint();
-        status.textContent = '选择曲目后点击播放，不会自动播放。';
-      } else stop();
+      if (open && !loaded) setSource(index);
+      paint();
     });
 
     toggle.addEventListener('click', () => {
@@ -231,22 +233,32 @@
     audio.addEventListener('timeupdate', onTime);
     audio.addEventListener('loadedmetadata', onTime);
     audio.addEventListener('durationchange', onTime);
-    const onPlay = () => {
-      if (body.hidden || !wantPlayback) { stop(); return; }
-      allowAutoNext = true;
-      paint();
+    const guardPlay = () => {
+      if (!wantPlayback) { pause(); return false; }
+      return true;
     };
-    audio.addEventListener('play', onPlay);
-    audio.addEventListener('playing', onPlay);
+    audio.addEventListener('play', () => { if (guardPlay()) paint(); });
+    audio.addEventListener('playing', () => {
+      if (!guardPlay()) return;
+      pendingPlay = false; buffering = false; errorMessage = ''; allowAutoNext = true;
+      paint();
+    });
+    audio.addEventListener('waiting', () => { if (wantPlayback) { buffering = true; paint(); } });
+    audio.addEventListener('stalled', () => { if (wantPlayback && audio.readyState < 3) { buffering = true; paint(); } });
     audio.addEventListener('pause', paint);
     audio.addEventListener('ended', () => {
-      if (body.hidden || !allowAutoNext || !audio.ended) return;
+      if (!allowAutoNext || !wantPlayback || !audio.ended) return;
       allowAutoNext = false;
-      // 当前曲目自然播完后续播下一首，不在关闭、手动暂停或未播放状态续播。
       if (entries.length > 1) playAt((index + 1) % entries.length);
-      else paint();
+      else { wantPlayback = false; buffering = false; paint(); }
     });
-    audio.addEventListener('error', () => { if (body.hidden) return; fail('音频暂时无法加载或当前浏览器不支持此格式，请稍后再试。'); paint(); });
+    audio.addEventListener('error', () => {
+      requestId += 1;
+      pendingPlay = false; wantPlayback = false; allowAutoNext = false; buffering = false;
+      fail('音频暂时无法加载或当前浏览器不支持此格式，请稍后再试。');
+      audio.pause();
+      paint();
+    });
 
     paint();
     return { playAt, paint, get index() { return index; }, entries };

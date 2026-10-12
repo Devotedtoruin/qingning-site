@@ -878,3 +878,48 @@ body > .music-player .music-body {
 .article-photo img { width: 100%; height: auto; max-height: 340px; object-fit: cover; }
 .article-photo figcaption { margin-top: 8px; color: var(--muted); font-size: 12px; }
 .article-photo figcaption a { text-decoration-color: var(--border-strong); }
+
+/* ---------- Modern glass: final cascade and accessible defaults ---------- */
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 28px; align-items: center; }
+.hero-copy .primary-action { margin-top: 18px; border-radius: 999px; }
+.hero-art { border-radius: 12px; }
+.hero-art img { height: 190px; object-fit: cover; }
+body::before { position: fixed; inset: -12px; background-size: cover; background-position: center; filter: blur(5px); }
+.hero-grid, .content-main, .side-rail section, .article-main, .article-toc,
+.page-main > .narrow-shell, .page-main > article.article-shell { -webkit-backdrop-filter: blur(14px) saturate(1.12); backdrop-filter: blur(14px) saturate(1.12); }
+.footer-inner { padding-left: 0; }
+body > .music-player { left: auto; right: max(16px, env(safe-area-inset-right)); bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+body > .music-player .music-body { left: auto; right: 0; }
+.music-progress { height: 20px; background: transparent; }
+.music-progress::before { content: ''; position: absolute; left: 0; right: 0; top: 7px; height: 6px; border-radius: 3px; background: var(--surface-muted); }
+.music-progress-fill { top: 7px; bottom: auto; height: 6px; }
+@media (max-width: 700px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .hero-art img { height: 140px; }
+  .hero-copy h1 { font-size: 30px; }
+  body > .music-player { left: auto; right: max(12px, env(safe-area-inset-right)); bottom: calc(68px + env(safe-area-inset-bottom, 0px)); }
+  body > .music-player .music-body { left: auto; right: 0; }
+}
+/* A deliberate slider choice overrides the OS default, never forced colors. */
+@media (prefers-reduced-transparency: reduce) {
+  :root:not([data-panel-preference="custom"]) { --panel-background: #fffcf6; --header-background: #fffcf6; }
+  :root[data-panel-preference="custom"] { --panel-background: rgba(255, 252, 246, var(--panel-alpha)); }
+  :root:not([data-panel-preference="custom"]) .hero-grid,
+  :root:not([data-panel-preference="custom"]) .content-main,
+  :root:not([data-panel-preference="custom"]) .side-rail section,
+  :root:not([data-panel-preference="custom"]) .article-main,
+  :root:not([data-panel-preference="custom"]) .article-toc,
+  :root:not([data-panel-preference="custom"]) .page-main > .narrow-shell,
+  :root:not([data-panel-preference="custom"]) .page-main > article.article-shell,
+  .site-header, .site-footer { -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root, :root[data-panel-preference="custom"] { --panel-background: #fffcf6; --header-background: #fffcf6; }
+}
+@media (forced-colors: active) {
+  :root, :root[data-panel-preference="custom"] { --panel-background: Canvas; --header-background: Canvas; --ink: CanvasText; --muted: CanvasText; --accent: LinkText; --accent-deep: LinkText; --border: CanvasText; --panel-border: CanvasText; }
+  body::before { display: none; }
+  .hero-grid, .content-main, .side-rail section, .article-main, .article-toc,
+  .page-main > .narrow-shell, .page-main > article.article-shell,
+  .site-header, .site-footer { box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}

@@ -120,6 +120,7 @@
     };
 
     const remount = () => {
+      if (window.JournalCalendar && typeof window.JournalCalendar.mount === 'function') window.JournalCalendar.mount(document, window);
       if (window.JournalSite && typeof window.JournalSite.mountPage === 'function') window.JournalSite.mountPage(document, window);
       if (window.JournalMedia && typeof window.JournalMedia.mount === 'function') window.JournalMedia.mount(document, window);
       if (window.JournalSearch && typeof window.JournalSearch.mount === 'function') window.JournalSearch.mount(document, window);
@@ -129,6 +130,9 @@
       const nextMain = doc.querySelector(MAIN);
       const oldMain = document.querySelector(MAIN);
       if (!nextMain || !oldMain) return false;
+      if (window.JournalSearch && typeof window.JournalSearch.close === 'function') window.JournalSearch.close(document, { restoreFocus: false });
+      if (window.JournalSite && typeof window.JournalSite.destroyPage === 'function') window.JournalSite.destroyPage();
+      if (window.JournalCalendar && typeof window.JournalCalendar.destroy === 'function') window.JournalCalendar.destroy(document);
       oldMain.replaceWith(nextMain);
       const nextTitle = doc.querySelector('title');
       if (nextTitle) document.title = nextTitle.textContent;
@@ -170,22 +174,30 @@
       const controller = typeof window.AbortController === 'function' ? new window.AbortController() : null;
       inflight = controller;
       document.documentElement.classList.add('is-pjaxing');
-      return window.fetch(url, { credentials: 'same-origin', signal: controller ? controller.signal : undefined })
+      let timer;
+      const timeout = new Promise((_, reject) => {
+        timer = window.setTimeout(() => {
+          if (controller) controller.abort();
+          reject(new Error('navigation timeout'));
+        }, 10000);
+      });
+      const request = Promise.resolve().then(() => window.fetch(url, { credentials: 'same-origin', signal: controller ? controller.signal : undefined }))
         .then((response) => {
           if (!response.ok) throw new Error('HTTP ' + response.status);
           const type = response.headers.get('content-type') || '';
           if (type && !/text\/html/.test(type)) throw new Error('not html');
           return response.text();
-        })
-        .then(async (html) => {
+        });
+      return Promise.race([request, timeout])
+        .then((html) => {
+          if (requestId !== navigationId) return;
           const doc = new window.DOMParser().parseFromString(html, 'text/html');
           if (!doc || !doc.querySelector(MAIN)) throw new Error('no main');
-          // The home page never loads these assets. Wait before exposing post links
-          // so a first click opens PhotoSwipe rather than the target=_blank original.
-          await ensurePostVendor(doc);
-          if (requestId !== navigationId) return;
+          // Start optional assets before apply moves the stylesheet, but never await them.
+          const enhancement = ensurePostVendor(doc);
           if (push) {
             current.scrollY = Math.max(0, window.scrollY || 0);
+            current.url = window.location.href; // Preserve TOC fragment changes.
             remember(current);
             window.history.replaceState(historyState(current), '', current.url);
             const next = { id: id(), url, from: current.url, internal: true, scrollY: 0 };
@@ -200,11 +212,17 @@
           setBackLink();
           remount();
           scrollToPage(url, push, current.scrollY);
+          const pageMain = document.querySelector(MAIN);
+          enhancement.then(() => {
+            if (requestId !== navigationId || document.querySelector(MAIN) !== pageMain) return;
+            if (window.JournalMedia && typeof window.JournalMedia.mount === 'function') window.JournalMedia.mount(document, window);
+          }).catch(() => { /* Original image links remain usable if enhancement fails. */ });
         })
         .catch(() => {
           if (requestId === navigationId) window.location.assign(url);
         })
         .finally(() => {
+          window.clearTimeout(timer);
           if (requestId !== navigationId) return;
           inflight = null;
           document.documentElement.classList.remove('is-pjaxing');
@@ -228,11 +246,12 @@
 
     window.addEventListener('popstate', (event) => {
       const url = window.location.href;
-      const saved = stateData(event.state, url) || byUrl.get(url) ||
+      const payload = event.state && event.state.__journalPjax;
+      const saved = stateData(event.state, url) || (payload && positions.get(payload.id)) || byUrl.get(url) ||
         { id: id(), url, from: null, internal: false, scrollY: 0 };
       // The article TOC can replace a state without our payload; the in-memory
       // entry still carries the previous page and scroll position for this URL.
-      load(url, false, { ...saved });
+      load(url, false, { ...saved, url });
     });
 
     return { load, remount };

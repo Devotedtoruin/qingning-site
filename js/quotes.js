@@ -34,7 +34,7 @@
 
   function initCalendar(doc, view, now = () => new Date()) {
     const documentRoot = doc && doc.documentElement;
-    if (!documentRoot || documentRoot.hasAttribute('data-calendar-ready')) return false;
+    if (!documentRoot || doc.__journalCalendar) return false;
     const calendars = Array.from(doc.querySelectorAll('[data-calendar]')).map((root) => ({
       root,
       date: root.querySelector('[data-calendar-date]'),
@@ -47,7 +47,8 @@
     let dateKey = null;
     let timer = null;
     let pageActive = true;
-    const isVisible = () => pageActive && doc.visibilityState !== 'hidden';
+    let destroyed = false;
+    const isVisible = () => !destroyed && pageActive && doc.visibilityState !== 'hidden';
     const stopTimer = () => {
       if (timer !== null && view && typeof view.clearTimeout === 'function') view.clearTimeout(timer);
       timer = null;
@@ -112,22 +113,47 @@
       }
     };
 
-    documentRoot.setAttribute('data-calendar-ready', '');
-    doc.addEventListener('visibilitychange', () => {
+    const onVisibility = () => {
       if (isVisible()) tick();
       else stopTimer();
-    });
+    };
+    const onHide = () => { pageActive = false; stopTimer(); };
+    const onShow = () => { pageActive = true; tick(); };
+    const controller = {
+      destroy() {
+        if (destroyed) return;
+        destroyed = true;
+        stopTimer();
+        doc.removeEventListener('visibilitychange', onVisibility);
+        if (view && typeof view.removeEventListener === 'function') {
+          view.removeEventListener('pagehide', onHide);
+          view.removeEventListener('pageshow', onShow);
+        }
+        documentRoot.removeAttribute('data-calendar-ready');
+        if (doc.__journalCalendar === controller) delete doc.__journalCalendar;
+      }
+    };
+    doc.__journalCalendar = controller;
+    documentRoot.setAttribute('data-calendar-ready', '');
+    doc.addEventListener('visibilitychange', onVisibility);
     if (view && typeof view.addEventListener === 'function') {
-      view.addEventListener('pagehide', () => { pageActive = false; stopTimer(); });
-      view.addEventListener('pageshow', () => { pageActive = true; tick(); });
+      view.addEventListener('pagehide', onHide);
+      view.addEventListener('pageshow', onShow);
     }
     tick();
     return true;
   }
 
-  // No browser globals. CommonJS exports support dependency-free, offline tests.
+  function destroy(doc) {
+    if (doc && doc.__journalCalendar) doc.__journalCalendar.destroy();
+  }
+
+  // CommonJS exports support dependency-free, offline tests.
   if (typeof module === 'object' && module.exports) {
-    module.exports = Object.freeze({ localDateInfo, calendarInfo, formatClock, initCalendar });
+    module.exports = Object.freeze({ localDateInfo, calendarInfo, formatClock, initCalendar, mount: initCalendar, destroy });
+  }
+  if (typeof window !== 'undefined') {
+    window.JournalCalendar = window.JournalCalendar || Object.freeze({ mount: initCalendar, destroy });
   }
   if (typeof document !== 'undefined') initCalendar(document, typeof window === 'undefined' ? null : window);
 })();
