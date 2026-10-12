@@ -140,6 +140,8 @@
       view.addEventListener('pagehide', onHide);
       view.addEventListener('pageshow', onShow);
     }
+    // A background PJAX mount still needs populated markup, but no running timer.
+    refresh(now());
     tick();
     return true;
   }
