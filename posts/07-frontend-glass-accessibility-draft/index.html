@@ -4,16 +4,17 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="以本站的玻璃、纸页、夜色三种外观为例，解释背景分层、透明度、枚举校验、本地偏好与实色回退。">
-  <meta name="theme-color" content="#fffcf6">
-  <title>静态博客前端（二）：外观切换、分层背景与可访问性回退 | 青柠小站</title>
+  <meta name="description" content="把纸页与玻璃作为材质、浅色与深色作为独立配色，示范透明度偏好保存、禁用解释和实色回退。">
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261018-review4">
+  <title>静态博客前端：分层外观与可访问性 | 青柠小站</title>
 
 
   <link rel="canonical" href="https://qingning.co/posts/07-frontend-glass-accessibility-draft/">
   <meta property="og:url" content="https://qingning.co/posts/07-frontend-glass-accessibility-draft/">
 
-  <meta property="og:title" content="静态博客前端（二）：外观切换、分层背景与可访问性回退 | 青柠小站">
-  <meta property="og:description" content="以本站的玻璃、纸页、夜色三种外观为例，解释背景分层、透明度、枚举校验、本地偏好与实色回退。">
+  <meta property="og:title" content="静态博客前端：分层外观与可访问性 | 青柠小站">
+  <meta property="og:description" content="把纸页与玻璃作为材质、浅色与深色作为独立配色，示范透明度偏好保存、禁用解释和实色回退。">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="青柠小站">
 
@@ -21,15 +22,16 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261013-editorial1">
-
-  <link rel="stylesheet" href="/vendor/photoswipe-5.4.4/photoswipe.css">
-
-  <script src="/js/appearance.js?v=20261013-editorial1"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261018-review4">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261018-review4">
+  <script src="/js/ui.js?v=20261018-review4"></script>
+  <script src="/js/backgrounds.js?v=20261018-review4"></script>
+  <script src="/js/appearance.js?v=20261018-review4"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-<body>
 
-<header class="site-header">
+<body data-layout="post">
+
+<header class="site-header" data-floating-header>
   <div class="shell header-inner">
     <div class="brand-block">
       <a class="brand" href="/" aria-label="青柠小站，返回首页">
@@ -37,166 +39,283 @@
         <strong>青柠小站</strong>
       </a>
       <div class="brand-quote brand-quote--header">
-  <p>收录一些文章、工具和偶然遇到的有趣事物。</p>
+  <p>收录偶然遇到的有趣事物。</p>
 </div>
 
     </div>
     <nav class="desktop-nav" aria-label="主导航">
 
-        <a href="/articles/">文章</a>
-
-        <a href="/categories/">分类</a>
-
-    </nav>
-    <div class="header-actions">
-      <details class="appearance-controls" data-appearance-controls>
-        <summary class="appearance-toggle" aria-label="选择外观、背景和面板透明度"><span aria-hidden="true">◐</span> 外观</summary>
-        <div class="appearance-panel">
-          <fieldset class="appearance-options"><legend>外观</legend><div class="appearance-choices">
-            <button type="button" data-appearance-choice="glass" aria-pressed="true">玻璃</button>
-            <button type="button" data-appearance-choice="paper" aria-pressed="false">纸页</button>
-            <button type="button" data-appearance-choice="night" aria-pressed="false">夜色</button>
-          </div></fieldset>
-          <fieldset class="appearance-options"><legend>背景</legend><div class="appearance-choices">
-            <button type="button" data-background-choice="forest" aria-pressed="true">林间晨光</button>
-            <button type="button" data-background-choice="gradient" aria-pressed="false">暖色渐变</button>
-            <button type="button" data-background-choice="illustration" aria-pressed="false">湖山插画</button>
-          </div></fieldset>
-          <label for="appearance-transparency">内容面板透明度</label>
-          <div class="appearance-control-row">
-            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="45" step="1" value="18" aria-describedby="appearance-help" data-appearance-range>
-            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">18%</output>
-          </div>
-          <p id="appearance-help">0% 为实色纸面；只调整内容面板，不改变背景照片或文字清晰度。</p>
-          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
-        </div>
-      </details>
-      <button class="icon-button" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
-      <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-    </div>
-  </div>
-  <nav class="mobile-nav" data-mobile-nav aria-label="移动导航">
-
       <a href="/articles/">文章</a>
 
       <a href="/categories/">分类</a>
 
+
+
+      <details class="mega-menu" data-mega-menu>
+        <summary class="mega-trigger" aria-label="探索分类与精选专栏">专题探索</summary>
+        <div class="mega-panel">
+          <div class="mega-col">
+            <p class="mega-kicker">分类专栏</p>
+            <ul class="mega-list">
+
+              <li><a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span>前端技术</span><span class="count">3</span></a></li>
+
+              <li><a href="/categories/%E9%A1%B9%E7%9B%AE/"><span>项目</span><span class="count">1</span></a></li>
+
+              <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span>学习笔记</span><span class="count">2</span></a></li>
+
+            </ul>
+          </div>
+
+          <div class="mega-col">
+            <p class="mega-kicker">高频标签</p>
+            <div class="mega-tags">
+
+              <a href="/tags/CSS/">#CSS<sup>2</sup></a>
+
+              <a href="/tags/Hexo/">#Hexo<sup>2</sup></a>
+
+              <a href="/tags/%E9%83%A8%E7%BD%B2/">#部署<sup>1</sup></a>
+
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8/">#服务器安全<sup>1</sup></a>
+
+              <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目<sup>1</sup></a>
+
+              <a href="/tags/%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7/">#可访问性<sup>1</sup></a>
+
+              <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80/">#响应式布局<sup>1</sup></a>
+
+              <a href="/tags/Docker/">#Docker<sup>1</sup></a>
+
+            </div>
+          </div>
+
+
+          <div class="mega-col mega-featured">
+            <p class="mega-kicker">精选推荐</p>
+            <a class="mega-spotlight" href="/posts/08-frontend-pjax-music-lifecycle-draft/">
+              <strong>静态博客前端：PJAX 与持续音乐</strong>
+              <span>阅读全文 ↗</span>
+            </a>
+          </div>
+
+        </div>
+      </details>
+
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16" /><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布壁纸</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="forest" aria-pressed="false">林间晨光</button>
+
+            <button type="button" data-background-choice="wallpaper2" aria-pressed="false" disabled>山湖倒影<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper3" aria-pressed="false" disabled>晨曦山峦<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper4" aria-pressed="false" disabled>宇宙星云<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper6" aria-pressed="false" disabled>海洋波浪<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper7" aria-pressed="false" disabled>夏日海滨<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper8" aria-pressed="false" disabled>动漫夏日<small>待添加</small></button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="45" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">45%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景照片或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger-pill" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><kbd class="search-kbd" aria-hidden="true">Ctrl K</kbd></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/categories/">分类</a>
+
   </nav>
 </header>
 
-<main class="page-main"><div class="shell article-shell"><div class="article-layout">
-  <nav class="article-toc" data-article-toc hidden aria-label="文章目录"><button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button><ol id="article-toc-list" data-toc-list></ol></nav>
-  <article class="article-main">
-    <header class="article-header">
-      <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
-      <p class="eyebrow"><time datetime="2026-09-08">2026-09-08</time> · 约 8 分钟阅读（粗估）</p>
-<p class="article-updated">更新于 <time datetime="2026-10-13">2026-10-13</time></p>
-      <h1>静态博客前端（二）：外观切换、分层背景与可访问性回退</h1>
-<p class="article-description">以本站的玻璃、纸页、夜色三种外观为例，解释背景分层、透明度、枚举校验、本地偏好与实色回退。</p>
-      <div class="post-tags"><a href="/tags/CSS/">#CSS</a><a href="/tags/%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7/">#可访问性</a><a href="/tags/%E6%B8%90%E8%BF%9B%E5%A2%9E%E5%BC%BA/">#渐进增强</a></div>
-    </header>
-    <div class="article-content"><p>背景照片可以提供气氛，却不能决定正文是否看得清。毛玻璃界面的难点不在写出 <code>blur()</code>，而在背景明暗、浏览器能力和用户偏好变化后，内容仍有稳定的阅读入口。</p>
-<p>本文依据本站主题 CSS、<code>appearance.js</code> 与页头控件解释实现。源码核对日期为 2026-10-13；这里说明的是可确认的设置与回退逻辑，不提供未实测的对比度、GPU 开销、兼容性评分或合规结论。</p>
-<h2 id="先把外观、背景和透明度分成三个选择"><a href="#先把外观、背景和透明度分成三个选择" class="headerlink" title="先把外观、背景和透明度分成三个选择"></a>先把外观、背景和透明度分成三个选择</h2><p>从页头的“外观”打开面板，可以分别选择外观、背景和面板透明度。</p>
+
+<main class="page-main" id="main">
+  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="ambient-wash"></div></div>
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
+        <header class="article-header">
+          <p class="article-meta-line"><time datetime="2026-09-08">2026-09-08</time> · <a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</a> · 约 10 分钟阅读（粗估）</p>
+          <p class="article-updated">更新于 <time datetime="2026-10-16">2026-10-16</time></p>
+          <h1>静态博客前端：分层外观与可访问性</h1>
+          <p class="article-description">把纸页与玻璃作为材质、浅色与深色作为独立配色，示范透明度偏好保存、禁用解释和实色回退。</p>
+          <div class="post-tags"><a href="/tags/CSS/">#CSS</a><a href="/tags/%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7/">#可访问性</a></div>
+        </header>
+        <div class="article-content"><p>阅读界面中的“外观”至少包含两件事：面板是什么材质，文字使用哪套配色。纸页可以是浅色，也可以是深色；玻璃同样如此。把“夜色”与“纸页、玻璃”放在同一组选项中，会让颜色与材质互相覆盖，控件的含义也变得模糊。</p>
+<p>本文以一个独立阅读面板为例：默认浅色纸页，纸页始终实色；选择玻璃后才启用透明度。示例使用普通 HTML、CSS 和 JavaScript，不依赖站点专用脚本。它演示状态与回退，不宣称任何照片在任意透明度下都能保持足够对比度。</p>
+<figure class="article-diagram">
+  <a href="/images/articles/appearance-layers.svg" target="_blank" rel="noopener"><img src="/images/articles/appearance-layers.svg" alt="材质分为实色纸页和半透明玻璃；浅深配色独立选择，壁纸、面板和文字分层绘制。" width="1200" height="620" loading="lazy" decoding="async"></a>
+  <figcaption>独立的材质与配色，以及面板的绘制层次</figcaption>
+</figure>
+
+<p><span id="先把外观、背景和透明度分成三个选择" class="heading-anchor" aria-hidden="true"></span><br><span id="先定义三个互不重置的选择" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="定义独立的外观选择"><a href="#定义独立的外观选择" class="headerlink" title="定义独立的外观选择"></a>定义独立的外观选择</h2><p>先定义状态，而不是先给按钮上色：</p>
 <table>
 <thead>
 <tr>
-<th>设置</th>
-<th>可选值</th>
-<th>职责</th>
+<th>状态</th>
+<th>示例值</th>
+<th>改变的内容</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>外观</td>
-<td>玻璃 <code>glass</code>、纸页 <code>paper</code>、夜色 <code>night</code></td>
-<td>控制面板与前景的视觉变量</td>
+<td>材质 material</td>
+<td>paper &#x2F; glass</td>
+<td>面板是否允许透出背景</td>
 </tr>
 <tr>
-<td>背景</td>
-<td>林间晨光 <code>forest</code>、暖色渐变 <code>gradient</code>、湖山插画 <code>illustration</code></td>
-<td>选择背景来源，不改文章内容</td>
+<td>配色 scheme</td>
+<td>light &#x2F; dark</td>
+<td>面板底色、文字、边框和代码颜色</td>
 </tr>
 <tr>
-<td>面板透明度</td>
-<td>0–45%，默认 18%</td>
-<td>调整面板底色的 alpha，不让文字一起变淡</td>
+<td>透明度 transparency</td>
+<td>0–90 的整数</td>
+<td>仅玻璃面板的底色 alpha</td>
+</tr>
+<tr>
+<td>透明度模式 mode</td>
+<td>custom &#x2F; system</td>
+<td>是否响应系统减少透明度偏好</td>
 </tr>
 </tbody></table>
-<p>玻璃使用浅色半透明面板；纸页将面板底色改为实色；夜色使用深色表面、浅色文字和相应的代码 token 配色，并设置 <code>color-scheme: dark</code>。这不是只把 body 背景涂黑：链接、日期、代码高亮、按钮选中态也要随语义变量变化。</p>
-<p>纸页下透明度偏好仍保留，切回玻璃或夜色再生效。因此滑块的值与当前纸页的实色表现并不矛盾，帮助文字应解释这一点。背景与外观相互独立，切换背景不应顺便重置透明度。</p>
-<p>用户可以用 Tab 进入按钮与滑块，用原生 range 的方向键调整；选中按钮用 <code>aria-pressed</code> 表达状态。按 Escape 收起面板并将焦点返回 summary。“恢复默认”恢复玻璃、林间晨光、18%，移除三项保存值，并重新遵循系统减少透明度偏好。</p>
-<h2 id="背景和内容必须处于不同绘制层"><a href="#背景和内容必须处于不同绘制层" class="headerlink" title="背景和内容必须处于不同绘制层"></a>背景和内容必须处于不同绘制层</h2><p>本站以 <code>body::before</code> 承载背景，用 <code>pointer-events: none</code> 避免装饰层抢走点击。body 建立隔离上下文，背景留在内容后方；正文、列表和目录使用带 alpha 的底色，文字仍在前景。</p>
-<p>CSS 的 <code>--background-image</code> 选择照片、渐变或插画，<code>--backdrop-veil</code> 提供遮罩。滑块改变的是 <code>--panel-alpha</code>，不改变照片、不改变遮罩，更不改变文字和正文图片。夜色另外使用较深遮罩，与透明度选择是两个维度。</p>
-<p>给整个文章容器设 <code>opacity: 0.82</code> 会把文字、按钮、图片一起参与透明合成，还会创建新的堆叠上下文。想调整纸面，应该改底色 alpha，而不是整块元素的 opacity。以下是教学示例，不是本站完整补丁：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  <span class="attr">--panel-alpha</span>: <span class="number">0.82</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.reading-panel</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#25291e</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">252</span>, <span class="number">246</span>, <span class="built_in">var</span>(--panel-alpha));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@supports</span> (<span class="attribute">backdrop-filter</span>: blur(<span class="number">1px</span>)) &#123;</span><br><span class="line">  <span class="selector-class">.reading-panel</span> &#123;</span><br><span class="line">    <span class="attribute">backdrop-filter</span>: <span class="built_in">blur</span>(<span class="number">12px</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>背景图片是另外的资源选择，不应被材质或配色开关重置。本文固定背景层，不实现壁纸选择器；若提供背景选项，只保存预先核验过的有限 ID，不接受任意图片地址。</p>
+<p>透明度 90% 表示底色 alpha 为 0.1，而不是 0.9：<code>alpha = 1 - transparency / 100</code>。这只改变面板背景色，不能对包含正文的元素设置 <code>opacity</code>，否则文字、图片和按钮也会一起变淡。纸页保持 alpha 为 1，滑块禁用但保留上次玻璃值，切回玻璃时再使用。</p>
+<p><span id="背景和内容必须处于不同绘制层" class="heading-anchor" aria-hidden="true"></span><br><span id="把背景、固定遮罩和面板拆成三层" class="heading-anchor" aria-hidden="true"></span><br><span id="分离背景、遮罩与面板" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="分离背景、滤镜与面板"><a href="#分离背景、滤镜与面板" class="headerlink" title="分离背景、滤镜与面板"></a>分离背景、滤镜与面板</h2><p>下面的 CSS 与后续 HTML、脚本配套。默认无需 JavaScript 就是浅色实色面板；只有脚本明确设置 glass 后才使用玻璃效果。背景层独立绘制，不在整页叠一张改变所有内容明暗的遮罩。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  <span class="attr">--page</span>: <span class="number">#e9ece6</span>;</span><br><span class="line">  <span class="attr">--wallpaper</span>: none; <span class="comment">/* 可在样式表中换成已核验的本地图片，不从存储拼 URL */</span></span><br><span class="line">  <span class="attr">--panel-rgb</span>: <span class="number">255</span> <span class="number">253</span> <span class="number">247</span>;</span><br><span class="line">  <span class="attr">--text</span>: <span class="number">#20382d</span>;</span><br><span class="line">  <span class="attr">--line</span>: <span class="number">#647a6b</span>;</span><br><span class="line">  <span class="attr">--code</span>: <span class="number">#edf0e9</span>;</span><br><span class="line">  <span class="attr">--glass-alpha</span>: .<span class="number">82</span>;</span><br><span class="line">  <span class="attr">--backdrop</span>: <span class="built_in">blur</span>(<span class="number">14px</span>) <span class="built_in">saturate</span>(.<span class="number">6</span>) <span class="built_in">contrast</span>(.<span class="number">3</span>) <span class="built_in">brightness</span>(<span class="number">1.8</span>);</span><br><span class="line">  <span class="attribute">color-scheme</span>: light;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-pseudo">:root</span><span class="selector-attr">[data-scheme=<span class="string">&quot;dark&quot;</span>]</span> &#123;</span><br><span class="line">  <span class="attr">--page</span>: <span class="number">#141c18</span>;</span><br><span class="line">  <span class="attr">--panel-rgb</span>: <span class="number">25</span> <span class="number">35</span> <span class="number">29</span>;</span><br><span class="line">  <span class="attr">--text</span>: <span class="number">#edf2e8</span>;</span><br><span class="line">  <span class="attr">--line</span>: <span class="number">#a0b49f</span>;</span><br><span class="line">  <span class="attr">--code</span>: <span class="number">#26332a</span>;</span><br><span class="line">  <span class="attr">--backdrop</span>: <span class="built_in">blur</span>(<span class="number">14px</span>) <span class="built_in">saturate</span>(.<span class="number">6</span>) <span class="built_in">contrast</span>(.<span class="number">3</span>) <span class="built_in">brightness</span>(.<span class="number">28</span>);</span><br><span class="line">  <span class="attribute">color-scheme</span>: dark;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">body</span> &#123; <span class="attribute">margin</span>: <span class="number">0</span>; <span class="attribute">color</span>: <span class="built_in">var</span>(--text); <span class="attribute">isolation</span>: isolate; &#125;</span><br><span class="line"><span class="selector-tag">body</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">inset</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">z-index</span>: -<span class="number">1</span>;</span><br><span class="line">  <span class="attribute">pointer-events</span>: none;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">var</span>(--page) <span class="built_in">var</span>(--wallpaper) center / cover no-repeat;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.reading-panel</span>, <span class="selector-class">.appearance-controls</span> &#123;</span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">46rem</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">1rem</span> auto;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">1.25rem</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="built_in">var</span>(--line);</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgb</span>(<span class="built_in">var</span>(--panel-rgb));</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-pseudo">:root</span><span class="selector-attr">[data-material=<span class="string">&quot;glass&quot;</span>]</span> <span class="selector-class">.reading-panel</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgb</span>(<span class="built_in">var</span>(--panel-rgb) / <span class="built_in">var</span>(--glass-alpha));</span><br><span class="line">  -webkit-<span class="attribute">backdrop-filter</span>: <span class="built_in">var</span>(--backdrop);</span><br><span class="line">  <span class="attribute">backdrop-filter</span>: <span class="built_in">var</span>(--backdrop);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.appearance-controls</span> <span class="selector-tag">label</span> &#123; <span class="attribute">display</span>: block; <span class="attribute">margin-block</span>: .<span class="number">75rem</span>; &#125;</span><br><span class="line"><span class="selector-class">.reading-panel</span> pre &#123; <span class="attribute">overflow-x</span>: auto; <span class="attribute">padding</span>: <span class="number">1rem</span>; <span class="attribute">background</span>: <span class="built_in">var</span>(--code); &#125;</span><br><span class="line"><span class="selector-tag">a</span> &#123; <span class="attribute">color</span>: inherit; <span class="attribute">text-decoration</span>: underline; &#125;</span><br><span class="line"><span class="selector-tag">button</span>, <span class="selector-tag">select</span>, <span class="selector-tag">input</span> &#123; <span class="attribute">font</span>: inherit; &#125;</span><br><span class="line"><span class="selector-pseudo">:focus-visible</span> &#123; <span class="attribute">outline</span>: <span class="number">2px</span> solid currentColor; <span class="attribute">outline-offset</span>: <span class="number">3px</span>; &#125;</span><br><span class="line"><span class="comment">/* 状态回退只改有效外观，不覆盖保存的玻璃数值。 */</span></span><br><span class="line"><span class="selector-pseudo">:root</span><span class="selector-attr">[data-solid=<span class="string">&quot;true&quot;</span>]</span> <span class="selector-class">.reading-panel</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgb</span>(<span class="built_in">var</span>(--panel-rgb));</span><br><span class="line">  -webkit-<span class="attribute">backdrop-filter</span>: none;</span><br><span class="line">  <span class="attribute">backdrop-filter</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@supports</span> <span class="keyword">not</span> ((<span class="attribute">backdrop-filter</span>: blur(<span class="number">1px</span>)) <span class="keyword">or</span> (<span class="attribute">-webkit-backdrop-filter</span>: blur(<span class="number">1px</span>))) &#123;</span><br><span class="line">  <span class="selector-pseudo">:root</span><span class="selector-attr">[data-material=<span class="string">&quot;glass&quot;</span>]</span> <span class="selector-class">.reading-panel</span> &#123; <span class="attribute">background</span>: <span class="built_in">rgb</span>(<span class="built_in">var</span>(--panel-rgb)); &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">forced-colors</span>: active) &#123;</span><br><span class="line">  <span class="selector-tag">body</span><span class="selector-pseudo">::before</span> &#123; <span class="attribute">background</span>: Canvas; &#125;</span><br><span class="line">  <span class="selector-pseudo">:root</span><span class="selector-attr">[data-material]</span> <span class="selector-class">.reading-panel</span>, <span class="selector-pseudo">:root</span> <span class="selector-class">.reading-panel</span>, <span class="selector-pseudo">:root</span> <span class="selector-class">.appearance-controls</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: Canvas;</span><br><span class="line">    <span class="attribute">color</span>: CanvasText;</span><br><span class="line">    <span class="attribute">border-color</span>: CanvasText;</span><br><span class="line">    -webkit-<span class="attribute">backdrop-filter</span>: none;</span><br><span class="line">    <span class="attribute">backdrop-filter</span>: none;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.reading-panel</span> pre &#123; <span class="attribute">background</span>: Canvas; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><code>backdrop-filter</code> 处理面板后面的内容；<code>filter: blur()</code> 如果加在正文容器上，则会连文字一起模糊。底色先提供阅读条件，模糊只作为增强。示例色值不表示已通过合成对比度测试。</p>
-<h2 id="一个内容组只保留一个主要玻璃面"><a href="#一个内容组只保留一个主要玻璃面" class="headerlink" title="一个内容组只保留一个主要玻璃面"></a>一个内容组只保留一个主要玻璃面</h2><p>主题把首页主列、侧栏区块、文章和目录作为主要面板；列表行使用透明底与分隔线。若父容器和每张卡片都各叠一层半透明底色，合成结果会越来越实，边框与阴影也会重复。</p>
-<p>滑块“似乎没效果”时，先在开发者工具检查内层是否仍有不透明背景，再检查后面的选择器是否覆盖变量。代码块、搜索、外观面板和播放器控件保留更稳定的底色是有意选择：操作区域不应为了背景效果牺牲辨认能力。</p>
-<p>CSS 变量是维护边界，不是免验收凭证。切换夜色后，如果复制按钮仍沿用旧浅底文字，说明某个局部组件绕过了语义变量；继续增加全局选择器往往只能遮住问题。</p>
-<h2 id="输入校验应先于应用和保存"><a href="#输入校验应先于应用和保存" class="headerlink" title="输入校验应先于应用和保存"></a>输入校验应先于应用和保存</h2><p>透明度 18% 对应 alpha 0.82，0% 对应实色。当前代码只接受可安全表示的整数串，再夹取到 0–45；空值、损坏值或非整数回默认 18%。因此超范围整数与任意坏字符串有不同处理，不应统称为“所有非法值都归零”。</p>
-<p>外观与背景不接受任意 CSS 或 URL，而是各自的枚举。下面是与实现相同思路的独立示例：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> appearances = [<span class="string">&#x27;glass&#x27;</span>, <span class="string">&#x27;paper&#x27;</span>, <span class="string">&#x27;night&#x27;</span>];</span><br><span class="line"><span class="keyword">const</span> backgrounds = [<span class="string">&#x27;forest&#x27;</span>, <span class="string">&#x27;gradient&#x27;</span>, <span class="string">&#x27;illustration&#x27;</span>];</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">enumValue</span> = (<span class="params">raw, values</span>) =&gt; values.<span class="title function_">includes</span>(raw) ? raw : values[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> appearance = <span class="title function_">enumValue</span>(<span class="string">&#x27;unknown&#x27;</span>, appearances); <span class="comment">// glass</span></span><br><span class="line"><span class="keyword">const</span> background = <span class="title function_">enumValue</span>(<span class="literal">null</span>, backgrounds);     <span class="comment">// forest</span></span><br></pre></td></tr></table></figure>
+<p>这里的滤镜只是一个起点，不是通用阅读保证。模糊改变细节，亮度与对比度处理改变颜色范围；高透明度时仍必须针对实际背景核对文字和交互状态。面板外不加滤镜，正文图片也不随背景一起模糊。</p>
+<p><span id="一个内容组只保留一个主要玻璃面" class="heading-anchor" aria-hidden="true"></span><br><span id="避免把同一张纸叠两遍" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="避免重复叠加面板"><a href="#避免重复叠加面板" class="headerlink" title="避免重复叠加面板"></a>避免重复叠加面板</h2><p>把下面的内容放进页面 body。设置区始终实色，阅读区承担材质效果；它们是相邻区域，不在玻璃父容器里再套一层玻璃卡片。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;appearance-controls&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;阅读外观&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span>材质</span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;material&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;paper&quot;</span>&gt;</span>纸页<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;glass&quot;</span>&gt;</span>玻璃<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span>配色</span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;scheme&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;light&quot;</span>&gt;</span>浅色<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;dark&quot;</span>&gt;</span>深色<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span>透明度模式</span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;mode&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;custom&quot;</span>&gt;</span>自定义<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;system&quot;</span>&gt;</span>跟随系统<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span>玻璃透明度：<span class="tag">&lt;<span class="name">output</span> <span class="attr">id</span>=<span class="string">&quot;transparency-value&quot;</span>&gt;</span>18%<span class="tag">&lt;/<span class="name">output</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;transparency&quot;</span> <span class="attr">type</span>=<span class="string">&quot;range&quot;</span> <span class="attr">min</span>=<span class="string">&quot;0&quot;</span> <span class="attr">max</span>=<span class="string">&quot;90&quot;</span> <span class="attr">step</span>=<span class="string">&quot;1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;18&quot;</span></span></span><br><span class="line"><span class="tag">           <span class="attr">aria-describedby</span>=<span class="string">&quot;appearance-status&quot;</span> <span class="attr">disabled</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;appearance-status&quot;</span> <span class="attr">role</span>=<span class="string">&quot;status&quot;</span>&gt;</span>纸页使用实色，玻璃透明度暂不可用。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">&quot;reading-panel&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>阅读示例<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>材质和配色分别选择，正文不使用容器透明度。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#example-code&quot;</span>&gt;</span>查看示例代码<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">pre</span> <span class="attr">id</span>=<span class="string">&quot;example-code&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">code</span>&gt;</span>const material = &#x27;paper&#x27;;<span class="tag">&lt;/<span class="name">code</span>&gt;</span><span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>不要把存储里的字符串直接拼成背景地址或 <code>style</code>。白名单既限制异常值，也让设置迁移的默认行为可预测。</p>
-<p>设置仅存本机 localStorage：<code>qingning.panelTransparency</code>、<code>qingning.appearance</code> 和 <code>qingning.background</code>，不保存浏览记录或身份。读取异常时使用默认值；写入被拒绝时本页调整仍可用，只是不保证下次保留。<code>storage</code> 事件同样经过校验，其他标签页清空设置时恢复默认。</p>
-<p>外观脚本在 head 阶段读取设置并应用根属性，DOM 就绪后再同步控件，目的在于减少首次绘制之后的突然切换。这是实现意图，不等于已测得零闪烁。排查时可以分别检查首次加载、存储拒绝、跨标签页切换和 PJAX 之后的控件值。</p>
-<h2 id="用户偏好和浏览器能力不是同一件事"><a href="#用户偏好和浏览器能力不是同一件事" class="headerlink" title="用户偏好和浏览器能力不是同一件事"></a>用户偏好和浏览器能力不是同一件事</h2><p>降低透明度、降低动画和强制颜色分别解决不同需求。</p>
-<ol>
-<li>未主动调整滑块时，系统 <code>prefers-reduced-transparency: reduce</code> 使面板使用实色并取消面板背景模糊。主动移动滑块后，<code>data-panel-preference=&quot;custom&quot;</code> 表示自定义选择；恢复默认清除此意图。</li>
-<li>不支持背景滤镜时，<code>@supports not</code> 使用实色底色；即使保存了自定义透明度，也不能让能力回退失效。</li>
-<li><code>forced-colors: active</code> 使用 Canvas、CanvasText、LinkText 等系统颜色，移除背景照片、模糊和阴影。选中按钮另有边框反馈，不只依靠颜色差异。</li>
-<li><code>prefers-reduced-motion</code> 针对平滑滚动和装饰动画，不应隐式停止用户主动播放的音频。</li>
-</ol>
-<p>检查不能停在“找到了媒体查询”。CSS 存在历史覆盖规则，必须看最终级联、选择器优先级和对应模式下的计算样式。减少透明度媒体查询并非所有浏览器都支持，因此 0% 透明度和纸页外观仍是有用的手动入口。</p>
-<h2 id="对比度必须针对合成后的背景"><a href="#对比度必须针对合成后的背景" class="headerlink" title="对比度必须针对合成后的背景"></a>对比度必须针对合成后的背景</h2><p>带 alpha 的面板没有单一最终底色。照片、遮罩、模糊和纸面合成后，文字背后的颜色才是实际背景。仅用 CSS 中纸色与文字色计算，不能证明所有照片区域都通过。</p>
-<p>普通文本常用的 WCAG 最低对比度要求是 4.5:1，大文本是 3:1；大文本有字号与字重条件，不能因为类名叫 title 就直接按 3:1 验收。按钮边界、焦点轮廓与状态还需要检查非文本对比度和可辨性。</p>
-<p>可以按默认、0%、45% 三组透明度，逐一观察正文、弱化日期、标签、链接和焦点，再覆盖亮背景与暗背景。若最高透明度使弱文字难读，优先调整范围、底色或文字色，不要用浓阴影给每个字描边。模糊能减少细节，不能保证亮度安全。</p>
-<h2 id="性能与可用性分开检查"><a href="#性能与可用性分开检查" class="headerlink" title="性能与可用性分开检查"></a>性能与可用性分开检查</h2><p>大面积固定背景、滤镜和相邻面板可能增加绘制与合成成本，但不能从 <code>blur(14px)</code> 推导某台手机的帧率。应记录浏览器、设备、页面长度与测试条件，再观察首次渲染、长文滚动、搜索、拖动滑块和切页。</p>
-<p>功能检查则要确认：三个外观都能阅读代码与表格；背景加载失败不阻挡正文；纸页解释透明度保留；拒绝存储不让按钮失效；重置与跨标签页更新同步；窄屏面板不超出视口；键盘收起后焦点可见。</p>
-<p>本文没有执行对比度测量或设备性能测试，以上是检查方法，不是结果。实现依据为主题 <code>source/css/style.css</code>、<code>source/js/appearance.js</code> 与 <code>layout/_partial/header.ejs</code>。延伸参考：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter">MDN：backdrop-filter</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/opacity">MDN：opacity</a>、<a target="_blank" rel="noopener" href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">W3C：Contrast Minimum</a>。</p>
+<p>半透明面板相叠后，最终颜色不再等于单层 alpha。嵌套背景滤镜也增加合成工作，开销取决于区域、设备和浏览器，不能简单声称“每叠一层性能翻倍”。列表父容器通常只负责排版，让叶子卡片承担底色即可。</p>
+<p><span id="输入校验应先于应用和保存" class="heading-anchor" aria-hidden="true"></span><br><span id="完整的偏好读取、校验与同步" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="读取与同步偏好"><a href="#读取与同步偏好" class="headerlink" title="读取与同步偏好"></a>读取与同步偏好</h2><p>下面脚本放在 HTML 后执行，只管理一个演示专用键。先校验每个字段，再应用；localStorage 被拒绝时，当前页面仍然能操作。跨标签事件只更新状态，不再次写入。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> root = <span class="variable language_">document</span>.<span class="property">documentElement</span>;</span><br><span class="line"><span class="keyword">const</span> key = <span class="string">&#x27;reader.preferences&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> defaults = &#123; <span class="attr">material</span>: <span class="string">&#x27;paper&#x27;</span>, <span class="attr">scheme</span>: <span class="string">&#x27;light&#x27;</span>, <span class="attr">transparency</span>: <span class="number">18</span>, <span class="attr">mode</span>: <span class="string">&#x27;custom&#x27;</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> fields = <span class="title class_">Object</span>.<span class="title function_">fromEntries</span>(</span><br><span class="line">  [<span class="string">&#x27;material&#x27;</span>, <span class="string">&#x27;scheme&#x27;</span>, <span class="string">&#x27;transparency&#x27;</span>, <span class="string">&#x27;mode&#x27;</span>].<span class="title function_">map</span>(<span class="function"><span class="params">id</span> =&gt;</span> [id, <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(id)])</span><br><span class="line">);</span><br><span class="line"><span class="keyword">const</span> status = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;appearance-status&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> value = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;transparency-value&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> reduced = <span class="title function_">matchMedia</span>(<span class="string">&#x27;(prefers-reduced-transparency: reduce)&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> forced = <span class="title function_">matchMedia</span>(<span class="string">&#x27;(forced-colors: active)&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> supportsGlass = <span class="variable constant_">CSS</span>.<span class="title function_">supports</span>(<span class="string">&#x27;backdrop-filter&#x27;</span>, <span class="string">&#x27;blur(1px)&#x27;</span>) ||</span><br><span class="line">  <span class="variable constant_">CSS</span>.<span class="title function_">supports</span>(<span class="string">&#x27;-webkit-backdrop-filter&#x27;</span>, <span class="string">&#x27;blur(1px)&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">validate</span>(<span class="params">input</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> x = input &amp;&amp; <span class="keyword">typeof</span> input === <span class="string">&#x27;object&#x27;</span> &amp;&amp; !<span class="title class_">Array</span>.<span class="title function_">isArray</span>(input) ? input : &#123;&#125;;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">material</span>: [<span class="string">&#x27;paper&#x27;</span>, <span class="string">&#x27;glass&#x27;</span>].<span class="title function_">includes</span>(x.<span class="property">material</span>) ? x.<span class="property">material</span> : defaults.<span class="property">material</span>,</span><br><span class="line">    <span class="attr">scheme</span>: [<span class="string">&#x27;light&#x27;</span>, <span class="string">&#x27;dark&#x27;</span>].<span class="title function_">includes</span>(x.<span class="property">scheme</span>) ? x.<span class="property">scheme</span> : defaults.<span class="property">scheme</span>,</span><br><span class="line">    <span class="attr">transparency</span>: <span class="title class_">Number</span>.<span class="title function_">isInteger</span>(x.<span class="property">transparency</span>) &amp;&amp; x.<span class="property">transparency</span> &gt;= <span class="number">0</span> &amp;&amp; x.<span class="property">transparency</span> &lt;= <span class="number">90</span></span><br><span class="line">      ? x.<span class="property">transparency</span> : defaults.<span class="property">transparency</span>,</span><br><span class="line">    <span class="attr">mode</span>: [<span class="string">&#x27;custom&#x27;</span>, <span class="string">&#x27;system&#x27;</span>].<span class="title function_">includes</span>(x.<span class="property">mode</span>) ? x.<span class="property">mode</span> : defaults.<span class="property">mode</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">decode</span>(<span class="params">raw</span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123; <span class="keyword">return</span> <span class="title function_">validate</span>(<span class="title class_">JSON</span>.<span class="title function_">parse</span>(raw)); &#125;</span><br><span class="line">  <span class="keyword">catch</span> &#123; <span class="keyword">return</span> &#123; ...defaults &#125;; &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">read</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123; <span class="keyword">return</span> <span class="title function_">decode</span>(<span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(key)); &#125;</span><br><span class="line">  <span class="keyword">catch</span> &#123; <span class="keyword">return</span> &#123; ...defaults &#125;; &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> state = <span class="title function_">read</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">  root.<span class="property">dataset</span>.<span class="property">material</span> = state.<span class="property">material</span>;</span><br><span class="line">  root.<span class="property">dataset</span>.<span class="property">scheme</span> = state.<span class="property">scheme</span>;</span><br><span class="line">  <span class="keyword">let</span> reason = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="keyword">if</span> (forced.<span class="property">matches</span>) reason = <span class="string">&#x27;系统强制颜色模式使用实色。&#x27;</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (state.<span class="property">material</span> === <span class="string">&#x27;paper&#x27;</span>) reason = <span class="string">&#x27;纸页使用实色，保留上次玻璃透明度。&#x27;</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (!supportsGlass) reason = <span class="string">&#x27;浏览器不支持背景滤镜，使用实色。&#x27;</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (state.<span class="property">mode</span> === <span class="string">&#x27;system&#x27;</span> &amp;&amp; reduced.<span class="property">matches</span>) reason = <span class="string">&#x27;跟随系统减少透明度，使用实色。&#x27;</span>;</span><br><span class="line">  root.<span class="property">dataset</span>.<span class="property">solid</span> = <span class="title class_">String</span>(<span class="title class_">Boolean</span>(reason));</span><br><span class="line">  root.<span class="property">style</span>.<span class="title function_">setProperty</span>(<span class="string">&#x27;--glass-alpha&#x27;</span>, <span class="title class_">String</span>(<span class="number">1</span> - state.<span class="property">transparency</span> / <span class="number">100</span>));</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> [name, control] <span class="keyword">of</span> <span class="title class_">Object</span>.<span class="title function_">entries</span>(fields)) control.<span class="property">value</span> = <span class="title class_">String</span>(state[name]);</span><br><span class="line">  fields.<span class="property">transparency</span>.<span class="property">disabled</span> = <span class="title class_">Boolean</span>(reason);</span><br><span class="line">  value.<span class="property">textContent</span> = <span class="string">`<span class="subst">$&#123;state.transparency&#125;</span>%`</span>;</span><br><span class="line">  status.<span class="property">textContent</span> = reason || <span class="string">`玻璃透明度 <span class="subst">$&#123;state.transparency&#125;</span>%，请结合背景检查可读性。`</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [name, control] <span class="keyword">of</span> <span class="title class_">Object</span>.<span class="title function_">entries</span>(fields)) &#123;</span><br><span class="line">  control.<span class="title function_">addEventListener</span>(name === <span class="string">&#x27;transparency&#x27;</span> ? <span class="string">&#x27;input&#x27;</span> : <span class="string">&#x27;change&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    state = <span class="title function_">validate</span>(&#123; ...state, [name]: name === <span class="string">&#x27;transparency&#x27;</span> ? <span class="title class_">Number</span>(control.<span class="property">value</span>) : control.<span class="property">value</span> &#125;);</span><br><span class="line">    <span class="title function_">render</span>();</span><br><span class="line">    <span class="keyword">try</span> &#123; <span class="variable language_">localStorage</span>.<span class="title function_">setItem</span>(key, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(state)); &#125;</span><br><span class="line">    <span class="keyword">catch</span> &#123; status.<span class="property">textContent</span> += <span class="string">&#x27; 偏好无法保存，仅在当前页面生效。&#x27;</span>; &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;storage&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (event.<span class="property">key</span> !== key &amp;&amp; event.<span class="property">key</span> !== <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123; <span class="keyword">if</span> (event.<span class="property">storageArea</span> !== <span class="variable language_">localStorage</span>) <span class="keyword">return</span>; &#125;</span><br><span class="line">  <span class="keyword">catch</span> &#123; <span class="keyword">return</span>; &#125;</span><br><span class="line">  state = <span class="title function_">decode</span>(event.<span class="property">key</span> === <span class="literal">null</span> ? <span class="literal">null</span> : event.<span class="property">newValue</span>);</span><br><span class="line">  <span class="title function_">render</span>();</span><br><span class="line">&#125;);</span><br><span class="line">reduced.<span class="title function_">addEventListener</span>(<span class="string">&#x27;change&#x27;</span>, render);</span><br><span class="line">forced.<span class="title function_">addEventListener</span>(<span class="string">&#x27;change&#x27;</span>, render);</span><br><span class="line"><span class="title function_">render</span>();</span><br></pre></td></tr></table></figure>
+
+<p>这个最小示例假设上述 DOM 已存在，且只初始化一次。用于多页面站点时，把偏好恢复放到合适的早期阶段、控件绑定放到 DOM 就绪后；用于 PJAX 时还需区分长驻设置与每页控件。不要为恢复外观而读取或清空其他业务的存储键。</p>
+<p><span id="用户偏好和浏览器能力不是同一件事" class="heading-anchor" aria-hidden="true"></span><br><span id="三种回退，各自解决一种问题" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="提供实色与辅助回退"><a href="#提供实色与辅助回退" class="headerlink" title="提供实色与辅助回退"></a>提供实色与辅助回退</h2><p>纸页是主动选择的材质，不是“玻璃失败”的别名。其余几种实色状态也各有原因：不支持背景滤镜是能力限制，跟随系统减少透明度是用户偏好，forced-colors 则应尊重系统语义色。</p>
+<p>禁用透明度时同时给出原因，并保留用户之前的数值，比让滑块还能拖、页面却没有变化更清楚。减少透明度媒体查询并非每个浏览器都支持；不支持时不能假称读到了系统偏好，纸页仍是始终可用的手动实色选择。</p>
+<p><span id="对比度必须针对合成后的背景" class="heading-anchor" aria-hidden="true"></span><br><span id="对比度看最终底色，不看变量名称" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="计算合成后的对比度"><a href="#计算合成后的对比度" class="headerlink" title="计算合成后的对比度"></a>计算合成后的对比度</h2><p>纸页底色固定，比较文字与面板即可；玻璃则要考虑滤镜后的背景与半透明底色合成。简化估算可用 <code>C = alpha × 面板色 + (1 − alpha) × 背景色</code> 得到候选底色，再按 sRGB 相对亮度计算对比度。对 blur 等空间滤镜，这个逐色近似不能覆盖真实照片的全部情况。</p>
+<p>WCAG 2.2 AA 对一般文字要求至少 4.5:1，大号文字至少 3:1。链接、禁用说明、代码、焦点和表单边框也需要各自检查；算出几组颜色合格不等于通过完整可访问性认证。深色配色尤其要覆盖代码、表格和设置区，不是只把正文文字改白。</p>
+<p><span id="性能与可用性分开检查" class="heading-anchor" aria-hidden="true"></span><br><span id="检查设置的状态，而不只检查按钮颜色" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="检查偏好状态与性能"><a href="#检查偏好状态与性能" class="headerlink" title="检查偏好状态与性能"></a>检查偏好状态与性能</h2><p>先检查状态，再检查绘制：默认应为浅色纸页；切到玻璃后滑块启用；换成深色不改变材质和数值；回到纸页只禁用效果，不丢失值。刷新后合法值恢复，非法枚举和越界数值回到默认；拒绝存储时当前页仍能切换。</p>
+<p>再检查系统减少透明度、无滤镜和强制颜色路径，确认解释文字与实际效果一致。最后用真实壁纸、窄屏、键盘及缩放阅读核对对比度和控件，观察滚动时是否卡顿。DOM 测试可以验证属性和禁用状态，但不能证明滤镜绘制、性能或整站可访问性已经通过。</p>
+<h2 id="技术参考"><a href="#技术参考" class="headerlink" title="技术参考"></a>技术参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter">MDN：backdrop-filter</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-transparency">MDN：prefers-reduced-transparency</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">WCAG：Contrast (Minimum)</a></li>
+</ul>
 </div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
 
-<nav class="post-neighbors" aria-label="前后文章">
-<a href="/posts/06-frontend-layout-typography-draft/"><span>上一篇</span><strong>静态博客前端（一）：从页面骨架到可阅读的布局排版</strong></a>
-<a href="/posts/08-frontend-pjax-music-lifecycle-draft/"><span>下一篇</span><strong>静态博客前端（三）：PJAX 插件生命周期与持续音乐</strong></a>
-    </nav>
-    <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
-  </article>
-</div></div></main>
+      <aside class="article-aside" aria-label="文章侧栏">
+        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+
+        <section class="aside-card recent-card" aria-labelledby="recent-title">
+          <h2 class="aside-title" id="recent-title">推荐阅读</h2>
+          <ul class="recent-list">
+
+            <li><a href="/posts/08-frontend-pjax-music-lifecycle-draft/"><span>静态博客前端：PJAX 与持续音乐</span><time datetime="2026-09-11">09-11</time></a></li>
+
+            <li><a href="/posts/06-frontend-layout-typography-draft/"><span>静态博客前端：布局与排版</span><time datetime="2026-09-04">09-04</time></a></li>
+
+            <li><a href="/posts/03-server-survival-games/"><span>Server Survival 与 Datacenter Survival：请求与机房</span><time datetime="2026-09-01">09-01</time></a></li>
+
+            <li><a href="/posts/02-hexo-docker-nginx-publish/"><span>Hexo 与 Nginx：构建与安全发布</span><time datetime="2026-08-29">08-29</time></a></li>
+
+            <li><a href="/posts/01-ubuntu-server-secure-setup/"><span>Ubuntu SSH：公钥登录与端口迁移</span><time datetime="2026-08-27">08-27</time></a></li>
+
+          </ul>
+        </section>
+
+      </aside>
+    </div>
+  </div>
+</main>
 <div class="read-progress" data-read-progress role="presentation"></div>
-<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部">↑</button>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
 <footer class="site-footer">
   <div class="shell footer-inner">
     <div class="footer-brand">
       <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
     </div>
-    <p class="footer-note"><a href="/subscribe/">RSS 订阅</a><a href="/credits/">素材致谢</a><span>Powered by Hexo · 2026</span></p>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/subscribe/">RSS 订阅</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-note">
+      <span>本站内容为技术记录与随手笔记，文中命令均为示例，请在自己的环境中验证后再执行。</span>
+      <span>文字与原创插图版权归本站所有；第三方素材版权归原作者，详见素材致谢。</span>
+      <span class="footer-meta">
+        <span>Powered by Hexo · 2026</span>
+        <span class="footer-icp" title="取得备案号后在此填写">备案信息待补充</span>
+      </span>
+    </p>
   </div>
+
 </footer>
-<div class="music-player" data-music-player data-music-state="idle">
-  <button class="music-load vinyl-trigger secondary-action" type="button" data-music-load aria-controls="footer-music-panel" aria-expanded="false">
-    <span class="vinyl-mini" aria-hidden="true"></span>
-    <span class="music-load-text">音乐</span>
-  </button>
-  <div class="music-body" id="footer-music-panel" data-music-body hidden>
-    <p class="music-kicker">PIANO ROOM · 钢琴小憩</p>
-    <div class="vinyl-stage">
-      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true">
-        <span class="vinyl-groove"></span>
-        <span class="vinyl-label"></span>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
       </div>
-      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true">▶</span></button>
     </div>
-    <p class="music-title" data-music-title>钢琴小憩</p>
-    <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
-    <div class="music-progress" data-music-progress role="presentation">
-      <span class="music-progress-fill" data-music-progress-fill></span>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
     </div>
-    <div class="music-times">
-      <span data-music-current>0:00</span>
-      <span data-music-duration>--:--</span>
-    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1" aria-label="音乐音量"></label>
     <ol class="music-list" data-music-list role="list">
 
       <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
@@ -240,9 +359,8 @@
       </li>
 
     </ol>
-    <audio id="footer-music" data-music-audio preload="none" aria-label="钢琴小憩播放器" hidden></audio>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
     <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
-    <p class="music-hint">点击外部或按 Esc 收起，音乐继续播放。</p>
   </div>
   <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
 </div>
@@ -256,15 +374,11 @@
   </div>
 </div>
 <script src="/vendor/minisearch-7.2.0.js" defer></script>
-<script src="/js/search.js?v=20261013-editorial1" defer></script>
-<script src="/js/site.js?v=20261013-editorial1" defer></script>
-<script src="/js/quotes.js?v=20261013-editorial1" defer></script>
-
-<script src="/vendor/photoswipe-5.4.4/photoswipe.umd.min.js" defer></script>
-<script src="/vendor/photoswipe-5.4.4/photoswipe-lightbox.umd.min.js" defer></script>
-
-<script src="/js/media.js?v=20261013-editorial1" defer></script>
-<script src="/js/music.js?v=20261013-editorial1" defer></script>
-<script src="/js/pjax.js?v=20261013-editorial1" defer></script>
+<script src="/js/search.js?v=20261018-review4" defer></script>
+<script src="/js/site.js?v=20261018-review4" defer></script>
+<script src="/js/quotes.js?v=20261018-review4" defer></script>
+<script src="/js/media.js?v=20261018-review4" defer></script>
+<script src="/js/music.js?v=20261018-review4" defer></script>
+<script src="/js/pjax.js?v=20261018-review4" defer></script>
 </body>
 </html>

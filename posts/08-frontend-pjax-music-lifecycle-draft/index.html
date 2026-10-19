@@ -4,16 +4,17 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="从只替换 main 的导航边界出发，区分全局与每页插件，处理异步竞态、播放器状态、历史回退和失败降级。">
-  <meta name="theme-color" content="#fffcf6">
-  <title>静态博客前端（三）：PJAX 插件生命周期与持续音乐 | 青柠小站</title>
+  <meta name="description" content="从长驻 audio 和可清理的每页工具入手，用有界请求协调示例解释 PJAX 竞态、失败回退与播放意图。">
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261018-review4">
+  <title>静态博客前端：PJAX 与持续音乐 | 青柠小站</title>
 
 
   <link rel="canonical" href="https://qingning.co/posts/08-frontend-pjax-music-lifecycle-draft/">
   <meta property="og:url" content="https://qingning.co/posts/08-frontend-pjax-music-lifecycle-draft/">
 
-  <meta property="og:title" content="静态博客前端（三）：PJAX 插件生命周期与持续音乐 | 青柠小站">
-  <meta property="og:description" content="从只替换 main 的导航边界出发，区分全局与每页插件，处理异步竞态、播放器状态、历史回退和失败降级。">
+  <meta property="og:title" content="静态博客前端：PJAX 与持续音乐 | 青柠小站">
+  <meta property="og:description" content="从长驻 audio 和可清理的每页工具入手，用有界请求协调示例解释 PJAX 竞态、失败回退与播放意图。">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="青柠小站">
 
@@ -21,15 +22,16 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261013-editorial1">
-
-  <link rel="stylesheet" href="/vendor/photoswipe-5.4.4/photoswipe.css">
-
-  <script src="/js/appearance.js?v=20261013-editorial1"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261018-review4">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261018-review4">
+  <script src="/js/ui.js?v=20261018-review4"></script>
+  <script src="/js/backgrounds.js?v=20261018-review4"></script>
+  <script src="/js/appearance.js?v=20261018-review4"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-<body>
 
-<header class="site-header">
+<body data-layout="post">
+
+<header class="site-header" data-floating-header>
   <div class="shell header-inner">
     <div class="brand-block">
       <a class="brand" href="/" aria-label="青柠小站，返回首页">
@@ -37,147 +39,268 @@
         <strong>青柠小站</strong>
       </a>
       <div class="brand-quote brand-quote--header">
-  <p>收录一些文章、工具和偶然遇到的有趣事物。</p>
+  <p>收录偶然遇到的有趣事物。</p>
 </div>
 
     </div>
     <nav class="desktop-nav" aria-label="主导航">
 
-        <a href="/articles/">文章</a>
-
-        <a href="/categories/">分类</a>
-
-    </nav>
-    <div class="header-actions">
-      <details class="appearance-controls" data-appearance-controls>
-        <summary class="appearance-toggle" aria-label="选择外观、背景和面板透明度"><span aria-hidden="true">◐</span> 外观</summary>
-        <div class="appearance-panel">
-          <fieldset class="appearance-options"><legend>外观</legend><div class="appearance-choices">
-            <button type="button" data-appearance-choice="glass" aria-pressed="true">玻璃</button>
-            <button type="button" data-appearance-choice="paper" aria-pressed="false">纸页</button>
-            <button type="button" data-appearance-choice="night" aria-pressed="false">夜色</button>
-          </div></fieldset>
-          <fieldset class="appearance-options"><legend>背景</legend><div class="appearance-choices">
-            <button type="button" data-background-choice="forest" aria-pressed="true">林间晨光</button>
-            <button type="button" data-background-choice="gradient" aria-pressed="false">暖色渐变</button>
-            <button type="button" data-background-choice="illustration" aria-pressed="false">湖山插画</button>
-          </div></fieldset>
-          <label for="appearance-transparency">内容面板透明度</label>
-          <div class="appearance-control-row">
-            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="45" step="1" value="18" aria-describedby="appearance-help" data-appearance-range>
-            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">18%</output>
-          </div>
-          <p id="appearance-help">0% 为实色纸面；只调整内容面板，不改变背景照片或文字清晰度。</p>
-          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
-        </div>
-      </details>
-      <button class="icon-button" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
-      <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-    </div>
-  </div>
-  <nav class="mobile-nav" data-mobile-nav aria-label="移动导航">
-
       <a href="/articles/">文章</a>
 
       <a href="/categories/">分类</a>
 
+
+
+      <details class="mega-menu" data-mega-menu>
+        <summary class="mega-trigger" aria-label="探索分类与精选专栏">专题探索</summary>
+        <div class="mega-panel">
+          <div class="mega-col">
+            <p class="mega-kicker">分类专栏</p>
+            <ul class="mega-list">
+
+              <li><a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span>前端技术</span><span class="count">3</span></a></li>
+
+              <li><a href="/categories/%E9%A1%B9%E7%9B%AE/"><span>项目</span><span class="count">1</span></a></li>
+
+              <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span>学习笔记</span><span class="count">2</span></a></li>
+
+            </ul>
+          </div>
+
+          <div class="mega-col">
+            <p class="mega-kicker">高频标签</p>
+            <div class="mega-tags">
+
+              <a href="/tags/CSS/">#CSS<sup>2</sup></a>
+
+              <a href="/tags/Hexo/">#Hexo<sup>2</sup></a>
+
+              <a href="/tags/%E9%83%A8%E7%BD%B2/">#部署<sup>1</sup></a>
+
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8/">#服务器安全<sup>1</sup></a>
+
+              <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目<sup>1</sup></a>
+
+              <a href="/tags/%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7/">#可访问性<sup>1</sup></a>
+
+              <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80/">#响应式布局<sup>1</sup></a>
+
+              <a href="/tags/Docker/">#Docker<sup>1</sup></a>
+
+            </div>
+          </div>
+
+
+          <div class="mega-col mega-featured">
+            <p class="mega-kicker">精选推荐</p>
+            <a class="mega-spotlight" href="/posts/08-frontend-pjax-music-lifecycle-draft/">
+              <strong>静态博客前端：PJAX 与持续音乐</strong>
+              <span>阅读全文 ↗</span>
+            </a>
+          </div>
+
+        </div>
+      </details>
+
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16" /><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布壁纸</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="forest" aria-pressed="false">林间晨光</button>
+
+            <button type="button" data-background-choice="wallpaper2" aria-pressed="false" disabled>山湖倒影<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper3" aria-pressed="false" disabled>晨曦山峦<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper4" aria-pressed="false" disabled>宇宙星云<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper6" aria-pressed="false" disabled>海洋波浪<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper7" aria-pressed="false" disabled>夏日海滨<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper8" aria-pressed="false" disabled>动漫夏日<small>待添加</small></button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="45" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">45%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景照片或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger-pill" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><kbd class="search-kbd" aria-hidden="true">Ctrl K</kbd></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/categories/">分类</a>
+
   </nav>
 </header>
 
-<main class="page-main"><div class="shell article-shell"><div class="article-layout">
-  <nav class="article-toc" data-article-toc hidden aria-label="文章目录"><button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button><ol id="article-toc-list" data-toc-list></ol></nav>
-  <article class="article-main">
-    <header class="article-header">
-      <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
-      <p class="eyebrow"><time datetime="2026-09-11">2026-09-11</time> · 约 10 分钟阅读（粗估）</p>
-<p class="article-updated">更新于 <time datetime="2026-10-13">2026-10-13</time></p>
-      <h1>静态博客前端（三）：PJAX 插件生命周期与持续音乐</h1>
-<p class="article-description">从只替换 main 的导航边界出发，区分全局与每页插件，处理异步竞态、播放器状态、历史回退和失败降级。</p>
-      <div class="post-tags"><a href="/tags/%E6%B8%90%E8%BF%9B%E5%A2%9E%E5%BC%BA/">#渐进增强</a><a href="/tags/JavaScript/">#JavaScript</a><a href="/tags/PJAX/">#PJAX</a><a href="/tags/%E9%9F%B3%E9%A2%91/">#音频</a></div>
-    </header>
-    <div class="article-content"><p>静态站点也可以在站内跳转时保留播放器，但关键不是“记住播放秒数”，而是不要销毁正在播放的那个 audio 元素。与此同时，目录、复制按钮和图片灯箱属于旧文章，不能因为页面没有完整刷新就一直留下来。</p>
-<p>本文依据本站 <code>pjax.js</code>、<code>site.js</code> 与 <code>music.js</code> 的源码讲解维护方法。本文区分源码中已经实现的保护与读者仍应执行的验收场景，不把代码阅读当作真实连续播放测试。标注为教学模型的示例不代表主题的完整接口。</p>
-<h2 id="先确定什么会被替换"><a href="#先确定什么会被替换" class="headerlink" title="先确定什么会被替换"></a>先确定什么会被替换</h2><p>本站 PJAX 以 <code>main</code> 为替换边界：获取同源 HTML，解析出新 main，替换旧正文，再同步页面标题与部分元信息。页头、页脚和放在 main 外的播放器可以保留。持续音乐依赖播放器节点身份不变，而不是在换页后重新创建音频并跳到旧时间。</p>
-<p>以下示例说明位置关系，不是主题完整模板：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span>站点导航<span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">main</span>&gt;</span>当前页面正文<span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">footer</span>&gt;</span>站点信息<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">data-music-player</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-music-audio</span> <span class="attr">preload</span>=<span class="string">&quot;none&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>PJAX 同时意味着完整页面脚本不会在每次替换时重新执行。插入 HTML 不应等于执行里面的任意脚本；可选库应由导航器明确加载，本地插件由明确的 mount 入口初始化。否则页面内容会变成隐式脚本加载协议，也容易出现重复事件绑定。</p>
-<h2 id="全局生命周期和每页生命周期分开"><a href="#全局生命周期和每页生命周期分开" class="headerlink" title="全局生命周期和每页生命周期分开"></a>全局生命周期和每页生命周期分开</h2><p>滚动进度、回到顶部、固定页头和播放器属于长期保留的界面；目录、文章表格、复制按钮及文章媒体则依赖当前正文。前者通常只安装一次，后者每次换页重新挂载，并在旧页离开时清理引用和外部监听。</p>
-<p>本站已使用 WeakSet 或 WeakMap 去重部分 DOM 初始化。去重能避免同一节点出现两个复制按钮，却不能自动解决所有资源泄漏：挂在 window 上的旧目录滚动监听，仍可能保留已移除标题的引用；IntersectionObserver、超时回调和灯箱也需要明确释放。</p>
-<p>一个最小的生命周期接口可以如此表达。它是教学模型，不表示本站已有同名完整实现：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title function_">disposePage</span> = (<span class="params"></span>) =&gt; &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">mountPage</span>(<span class="params">main</span>) &#123;</span><br><span class="line">  <span class="title function_">disposePage</span>();</span><br><span class="line">  <span class="keyword">const</span> cleanup = [];</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onResize</span> = (<span class="params"></span>) =&gt; <span class="title function_">updateCurrentLayout</span>(main);</span><br><span class="line">  <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;resize&#x27;</span>, onResize);</span><br><span class="line">  cleanup.<span class="title function_">push</span>(<span class="function">() =&gt;</span> <span class="variable language_">window</span>.<span class="title function_">removeEventListener</span>(<span class="string">&#x27;resize&#x27;</span>, onResize));</span><br><span class="line">  disposePage = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    cleanup.<span class="title function_">forEach</span>(<span class="function">(<span class="params">dispose</span>) =&gt;</span> <span class="title function_">dispose</span>());</span><br><span class="line">    cleanup.<span class="property">length</span> = <span class="number">0</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<main class="page-main" id="main">
+  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="ambient-wash"></div></div>
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
+        <header class="article-header">
+          <p class="article-meta-line"><time datetime="2026-09-11">2026-09-11</time> · <a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</a> · 约 9 分钟阅读（粗估）</p>
+          <p class="article-updated">更新于 <time datetime="2026-10-16">2026-10-16</time></p>
+          <h1>静态博客前端：PJAX 与持续音乐</h1>
+          <p class="article-description">从长驻 audio 和可清理的每页工具入手，用有界请求协调示例解释 PJAX 竞态、失败回退与播放意图。</p>
+          <div class="post-tags"><a href="/tags/JavaScript/">#JavaScript</a><a href="/tags/PJAX/">#PJAX</a></div>
+        </header>
+        <div class="article-content"><p>音乐在文章之间继续播放，关键不是换页后重新寻找上次的秒数，而是让浏览器始终保留同一个 audio 节点。PJAX 通常指获取目标页面的 HTML，只替换其中一部分，并同步浏览器导航状态。它让页面外壳长驻，也因此引入请求竞态、工具卸载和历史记录等问题。</p>
+<p>本文拆开讲解这几项职责，给出每页工具、请求协调和单曲播放的有限示例。它们不是一份完整的 PJAX 导航器：链接拦截、文档应用、历史记录与滚动恢复需要由站点导航层实现。普通链接仍是基础，脚本失败时应允许整页访问。</p>
+<figure class="article-diagram">
+  <a href="/images/articles/pjax-audio-lifecycle.svg" target="_blank" rel="noopener"><img src="/images/articles/pjax-audio-lifecycle.svg" alt="播放器与 audio 留在长驻外壳中，局部导航依次清理旧文章工具、替换 main、挂载新工具。" width="1200" height="640" loading="lazy" decoding="async"></a>
+  <figcaption>长驻音频与每页工具使用不同的生命周期</figcaption>
+</figure>
 
-<p>这里的 <code>updateCurrentLayout</code> 是示意函数。实际还要取消未完成动画帧、断开观察器、关闭旧灯箱并防止旧异步任务更新新页面。WeakMap 是节点去重工具，不是自动资源管理器。</p>
-<h2 id="请求取消与“最后一次导航获胜”是两道保护"><a href="#请求取消与“最后一次导航获胜”是两道保护" class="headerlink" title="请求取消与“最后一次导航获胜”是两道保护"></a>请求取消与“最后一次导航获胜”是两道保护</h2><p>快速点击文章 A、B 时，A 的响应可能晚于 B。如果只按响应顺序替换页面，会回到用户已经放弃的页面。本站导航器使用 AbortController 取消前一个请求，同时用递增的导航标识检查响应是否仍属于当前导航。</p>
-<p>两者不能互相替代：取消是尽量停止工作，版本标识是防止过期工作提交结果。插件脚本加载、缓存响应或已经开始的 Promise 回调，都不一定随 fetch 取消而消失。每次异步完成前，应再次核对导航标识与当前 main 的身份。</p>
-<p>导航失败应保留普通页面跳转。本站对 HTTP 错误、非 HTML、缺失 main 和超时采用整页导航回退；这会重建 audio，因而音乐可能停止。正确的产品说明应是“受支持的 PJAX 站内切换持续播放”，不是“任何跳转都不断”。外站、新标签页、刷新和失败回退也不在保持范围内。</p>
-<h2 id="插件失败不能阻塞正文"><a href="#插件失败不能阻塞正文" class="headerlink" title="插件失败不能阻塞正文"></a>插件失败不能阻塞正文</h2><p>图片灯箱是增强功能，原图链接才是基本入口。当前 PJAX 代码在正文替换后调用本地模块，再异步准备文章所需的 PhotoSwipe；可选加载失败不应让整篇文章无法进入。脚本超时或库缺失时，图片仍应能直接打开。</p>
-<p>不过插件需有可重复挂载的边界。库晚到时第二次 mount，应增强当前文章，而不是给旧文章绑定监听；从文章回列表时，也不应保留遮罩、锁滚动状态或焦点陷阱。当前顺序是关闭搜索、销毁每页工具与日历、替换正文，再重新挂载当前页面；可选媒体库准备完成后还要检查导航标识与 main 身份。<code>media.js</code> 在 mount 时扫描已脱离文档的旧文章，调用动画清理与 gallery.destroy，再从集合和 WeakMap 移除。这里是下次挂载时清理，不是浏览器自动释放所有全局状态。</p>
-<p>不能只验收首页直接打开的文章。至少要走首页 → 文章 → 列表 → 另一篇文章，重复数次，再检查复制按钮数量、目录高亮、表格容器和灯箱关闭后的焦点返回。</p>
-<h2 id="音乐是一套异步状态，不是一个播放图标"><a href="#音乐是一套异步状态，不是一个播放图标" class="headerlink" title="音乐是一套异步状态，不是一个播放图标"></a>音乐是一套异步状态，不是一个播放图标</h2><p>播放器默认没有音源、<code>preload=&quot;none&quot;</code>，首次展开后准备本地音源；播放仍由用户主动点击开始。展开界面、加载源和开始播放是不同动作。浏览器可能拒绝 <code>play()</code>，网络可能进入 waiting，音频可能自然结束，因此不能在调用 <code>play()</code> 的瞬间直接把界面永久画成“正在播放”。</p>
-<p>源码使用以下状态：用户是否想继续播放、播放 Promise 是否待完成、是否缓冲、是否出错，以及当前请求编号。应从真实媒体事件和最新用户意图一起推导显示状态：缓冲时不旋转唱片，暂停后旧 Promise 的成功回调不应把界面改回播放。</p>
-<p>特别容易出现的竞态是：用户点击播放，立即暂停，再选择另一首；第一首的 Promise 晚到。递增请求编号能让旧回调失效，但还应结合 <code>playing</code> 事件与实际媒体状态，防止音频本身继续发声而界面显示暂停。这里不声称本文已经完成这组实测。</p>
-<p>曲目地址应来自受控本地列表，不能把用户参数任意转成音源。当前 <code>safeAudioUrl</code> 限定本站 <code>/audio/</code> 路径和 MP3&#x2F;OGG 格式，并排除查询串、片段、路径穿越等不符合规则的输入。这是特定站点的输入约束，不是适用于所有 URL 的通用安全解析器。</p>
-<h2 id="自然续播不能绕过主动播放与暂停"><a href="#自然续播不能绕过主动播放与暂停" class="headerlink" title="自然续播不能绕过主动播放与暂停"></a>自然续播不能绕过主动播放与暂停</h2><p>多曲目列表可以在自然结束后继续下一首，但前提应是用户已经主动播放且没有撤回意图。单纯收到 ended 事件不能作为“随时自动播放下一首”的许可；暂停、错误、换曲请求失效时应清除续播资格。</p>
-<p>当前代码在 <code>playing</code> 后允许自然续播，并在暂停或错误时清除；多曲目使用下一项循环。多曲目以 <code>(index + 1) % entries.length</code> 回到下一项，最后一首自然结束后回第一首；只有一首时停止。播放请求等待期间再次点击暂停，会撤回意图并让旧请求失效；错误后由用户重试。不要把它描述成浏览器一定允许的自动播放保证。</p>
-<p>播放器可以点触发按钮收起，也会在根节点外 pointerdown 或 Escape 时收起；这些入口只隐藏面板、更新 <code>aria-expanded</code>，不暂停、不归零。收起前焦点位于面板内部时，返回触发按钮。点击面板内进度或曲目不属于外部点击，不能意外关闭。切页时保留同一个 audio。减少动态效果只应停止唱片装饰动画，不应该自行停止用户选择的音乐。键盘进度控制还需要有效时长、有限数值和范围校验，未知 duration 时不能计算 NaN 百分比。</p>
-<h2 id="历史记录、锚点与焦点是导航的一部分"><a href="#历史记录、锚点与焦点是导航的一部分" class="headerlink" title="历史记录、锚点与焦点是导航的一部分"></a>历史记录、锚点与焦点是导航的一部分</h2><p>PJAX 替换了正文，却没有浏览器整页加载自动提供的全部语义。需要处理标题、canonical、描述等元信息，前进后退的页面状态、滚动位置，以及当前页面锚点。本站导航器维护 history 状态与滚动位置，并区分普通进入和历史恢复；同页片段通常交给目录或原生行为。</p>
-<p>目录更新 hash 时不能无条件覆盖整个 history state，否则导航器保存的信息会丢失。返回入口也不能只看 referrer：它可能为空或来自外站；缺少有效站内来源时，仍需一个明确的文章列表链接。</p>
-<p>还有一项不能遗漏的验收是焦点：新页面进入后，用户是否知道正文已改变；后退是否恢复可预测位置；搜索关闭后焦点是否回到触发入口。本文不把“URL 变了”当成可访问导航已完成，最终行为仍需实际键盘与辅助技术检查。</p>
-<h2 id="把成功路径和失败路径分开验收"><a href="#把成功路径和失败路径分开验收" class="headerlink" title="把成功路径和失败路径分开验收"></a>把成功路径和失败路径分开验收</h2><ol>
-<li>首次进入时没有自动音频请求或自动播放；展开、播放、暂停分别符合文案。</li>
-<li>支持的站内切页后 audio 节点保持不变，播放位置继续，页面工具更新。</li>
-<li>播放 Promise 被拒绝、缓冲和错误时，按钮、状态文案与旋转动画一致。</li>
-<li>快速播放&#x2F;暂停&#x2F;换曲与自然结束不会让旧请求恢复播放或覆盖新曲目。</li>
-<li>快速导航只显示最后选中的页面，取消不会触发旧页面的整页跳转。</li>
-<li>前进后退、文章锚点、返回入口、标题与元信息正确。</li>
-<li>可选媒体库加载失败仍可阅读并打开原图；导航失败转为普通跳转。</li>
-<li>重复换页后没有重复目录监听、复制按钮、表格包装或遗留灯箱状态。</li>
+<p><span id="先确定什么会被替换" class="heading-anchor" aria-hidden="true"></span><br><span id="固定页面外壳，只替换-main" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="划分长驻外壳与正文"><a href="#划分长驻外壳与正文" class="headerlink" title="划分长驻外壳与正文"></a>划分长驻外壳与正文</h2><p>下面的结构保留播放器，只允许导航层替换 main。这里还没有局部导航，普通链接仍会整页加载：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">main</span> <span class="attr">id</span>=<span class="string">&quot;page&quot;</span> <span class="attr">tabindex</span>=<span class="string">&quot;-1&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">article</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>当前文章<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>文章正文<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aside</span> <span class="attr">id</span>=<span class="string">&quot;player&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;音乐播放器&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">audio</span> <span class="attr">id</span>=<span class="string">&quot;site-audio&quot;</span> <span class="attr">preload</span>=<span class="string">&quot;none&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;play-toggle&quot;</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span>&gt;</span>播放<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;play-status&quot;</span> <span class="attr">role</span>=<span class="string">&quot;status&quot;</span>&gt;</span>尚未加载音频<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>没有 src 时不主动下载音频。播放器放在 main 外还不够，导航层也不能在每次换页后重建整个 body、重新初始化播放器或反复调用 <code>load()</code>。</p>
+<p>外站、下载、新标签页、组合键点击和同页锚点应保留原生行为。完整刷新、外站跳转或整页回退仍会重建 audio，不属于持续播放的保证范围。</p>
+<p><span id="全局生命周期和每页生命周期分开" class="heading-anchor" aria-hidden="true"></span><br><span id="插件失败不能阻塞正文" class="heading-anchor" aria-hidden="true"></span><br><span id="每页增强要返回清理函数" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="挂载与清理每页工具"><a href="#挂载与清理每页工具" class="headerlink" title="挂载与清理每页工具"></a>挂载与清理每页工具</h2><p>播放器只初始化一次；目录观察器、正文按钮和图片增强属于当前 main。每页增强返回 cleanup，换页前调用。</p>
+<p>下面是一个最小的折叠说明工具，可与正文中的 <code>data-note-toggle</code> 按钮配合。HTML 示例放在 main 内，JavaScript 作为站点脚本执行：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">data-note-toggle</span> <span class="attr">aria-controls</span>=<span class="string">&quot;page-note&quot;</span> <span class="attr">aria-expanded</span>=<span class="string">&quot;true&quot;</span>&gt;</span>补充说明<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;page-note&quot;</span>&gt;</span>这是当前文章的补充内容。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">mountPageTools</span>(<span class="params">main</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> lifetime = <span class="keyword">new</span> <span class="title class_">AbortController</span>();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> button <span class="keyword">of</span> main.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;[data-note-toggle]&#x27;</span>)) &#123;</span><br><span class="line">    <span class="keyword">const</span> id = button.<span class="title function_">getAttribute</span>(<span class="string">&#x27;aria-controls&#x27;</span>);</span><br><span class="line">    <span class="keyword">const</span> panel = id ? main.<span class="title function_">querySelector</span>(<span class="string">`#<span class="subst">$&#123;CSS.<span class="built_in">escape</span>(id)&#125;</span>`</span>) : <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (!panel) <span class="keyword">continue</span>;</span><br><span class="line">    button.<span class="title function_">setAttribute</span>(<span class="string">&#x27;aria-expanded&#x27;</span>, <span class="title class_">String</span>(!panel.<span class="property">hidden</span>));</span><br><span class="line">    button.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      panel.<span class="property">hidden</span> = !panel.<span class="property">hidden</span>;</span><br><span class="line">      button.<span class="title function_">setAttribute</span>(<span class="string">&#x27;aria-expanded&#x27;</span>, <span class="title class_">String</span>(!panel.<span class="property">hidden</span>));</span><br><span class="line">    &#125;, &#123; <span class="attr">signal</span>: lifetime.<span class="property">signal</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> lifetime.<span class="title function_">abort</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="title function_">cleanupPage</span> = (<span class="params"></span>) =&gt; &#123;&#125;;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">mountCurrentPage</span>(<span class="params">main</span>) &#123;</span><br><span class="line">  <span class="title function_">cleanupPage</span>(); <span class="comment">// 重复挂载前先卸载，避免同一按钮绑定两次。</span></span><br><span class="line">  cleanupPage = <span class="title function_">mountPageTools</span>(main);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">mountCurrentPage</span>(<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#page&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>真正替换 main 前，应先调用 <code>cleanupPage()</code>；新 main 插入后调用 <code>mountCurrentPage(newMain)</code>。复杂工具的 cleanup 还应断开 observer、取消计时器并关闭关联旧节点的浮层。</p>
+<p>可选插件单独捕获加载失败，不阻塞正文和导航。图片仍保留普通原图链接，即使灯箱无法启动也能访问；图解本身不需要依赖灯箱才能阅读。</p>
+<p><span id="请求取消与“最后一次导航获胜”是两道保护" class="heading-anchor" aria-hidden="true"></span><br><span id="历史记录、锚点与焦点是导航的一部分" class="heading-anchor" aria-hidden="true"></span><br><span id="完整的最小导航器" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="实现局部导航"><a href="#实现局部导航" class="headerlink" title="实现局部导航"></a>实现局部导航</h2><p>请求协调需要两道保护：AbortController 尽量取消旧请求，序号让已经返回的旧结果失去提交资格。失败分支也必须检查序号，否则较慢的旧请求失败后，仍可能把用户从新文章带走。</p>
+<p>下面的工厂<strong>只负责请求与提交顺序</strong>，不监听链接，也不操作 History。它要求调用方提供同步的 <code>applyDocument(next, finalURL)</code>；缺少这个实现时不能直接获得完整导航功能。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createPageLoader</span>(<span class="params">applyDocument</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> applyDocument !== <span class="string">&#x27;function&#x27;</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;applyDocument is required&#x27;</span>);</span><br><span class="line">  <span class="keyword">let</span> controller = <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">let</span> sequence = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">loadPage</span>(<span class="params">href</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> target = <span class="keyword">new</span> <span class="title function_">URL</span>(href, location.<span class="property">href</span>);</span><br><span class="line">    <span class="keyword">if</span> (target.<span class="property">origin</span> !== location.<span class="property">origin</span> || !<span class="regexp">/^https?:$/</span>.<span class="title function_">test</span>(target.<span class="property">protocol</span>)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;Only same-origin HTTP pages are supported&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> ticket = ++sequence;</span><br><span class="line">    controller?.<span class="title function_">abort</span>();</span><br><span class="line">    <span class="keyword">const</span> current = <span class="keyword">new</span> <span class="title class_">AbortController</span>();</span><br><span class="line">    controller = current;</span><br><span class="line">    <span class="comment">// 当前请求超时也要回退，不能把所有 AbortError 都当作新导航取消。</span></span><br><span class="line">    <span class="keyword">const</span> timeout = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> current.<span class="title function_">abort</span>(), <span class="number">8000</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(target.<span class="property">href</span>, &#123;</span><br><span class="line">        <span class="attr">signal</span>: current.<span class="property">signal</span>,</span><br><span class="line">        <span class="attr">credentials</span>: <span class="string">&#x27;same-origin&#x27;</span>,</span><br><span class="line">        <span class="attr">cache</span>: <span class="string">&#x27;no-cache&#x27;</span></span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">if</span> (ticket !== sequence) <span class="keyword">return</span>;</span><br><span class="line">      <span class="keyword">const</span> type = response.<span class="property">headers</span>.<span class="title function_">get</span>(<span class="string">&#x27;content-type&#x27;</span>) || <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">      <span class="keyword">const</span> finalURL = <span class="keyword">new</span> <span class="title function_">URL</span>(response.<span class="property">url</span>);</span><br><span class="line">      <span class="keyword">if</span> (!response.<span class="property">ok</span> || !<span class="regexp">/^text\/html(?:;|$)/i</span>.<span class="title function_">test</span>(type) ||</span><br><span class="line">          finalURL.<span class="property">origin</span> !== location.<span class="property">origin</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Unexpected page response&#x27;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      finalURL.<span class="property">hash</span> = target.<span class="property">hash</span>;</span><br><span class="line">      <span class="keyword">const</span> html = <span class="keyword">await</span> response.<span class="title function_">text</span>();</span><br><span class="line">      <span class="keyword">if</span> (ticket !== sequence || current.<span class="property">signal</span>.<span class="property">aborted</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (ticket === sequence) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Navigation timed out&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">const</span> next = <span class="keyword">new</span> <span class="title class_">DOMParser</span>().<span class="title function_">parseFromString</span>(html, <span class="string">&#x27;text/html&#x27;</span>);</span><br><span class="line">      <span class="keyword">if</span> (next.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;main#page&#x27;</span>).<span class="property">length</span> !== <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Expected one page container&#x27;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 不 await：文档应用接口应同步提交，避免异步提交再次引入竞态。</span></span><br><span class="line">      <span class="title function_">applyDocument</span>(next, finalURL);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">      <span class="keyword">if</span> (ticket !== sequence) <span class="keyword">return</span>;</span><br><span class="line">      location.<span class="title function_">assign</span>(target.<span class="property">href</span>);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      <span class="built_in">clearTimeout</span>(timeout);</span><br><span class="line">      <span class="keyword">if</span> (ticket === sequence) controller = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>applyDocument</code> 是站点集成接口，而不是省略了几行就能通用的替换函数。实现它时至少明确以下规则：</p>
+<ol>
+<li><strong>提交前校验</strong>：目标 main、文章结构和构建版本满足本主题约定；外壳版本不同则整页导航。</li>
+<li><strong>同步提交</strong>：清理旧页工具，替换 main，更新 title、canonical、description 及站点需要的其他元信息；不直接执行响应 HTML 中的脚本。</li>
+<li><strong>恢复交互</strong>：挂载新页工具；前进、后退、普通点击使用不同的 History 策略，不能一律 <code>pushState</code>。</li>
+<li><strong>滚动与焦点</strong>：带 hash 时定位真实目标；普通文章跳转将焦点移到新 main；历史返回按约定恢复位置。不能只替换内容却让读屏器仍停在旧位置。</li>
 </ol>
-<p>维护规范已区分 PJAX 站内切换与完整页面跳转：前者保留同一个音频实例，后者会重建页面并中断音乐。收起仅隐藏界面，暂停由明确按钮控制。播放连续性与缓冲反馈仍须在真实网络条件下验收，源码阅读并没有给出无缝播放的测量结果。</p>
-<p>实现依据为主题 <code>source/js/pjax.js</code>、<code>source/js/site.js</code>、<code>source/js/music.js</code> 与播放器所在模板。延伸参考：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play">MDN：HTMLMediaElement.play()</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">MDN：History API</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">MDN：AbortController</a>。源码核对日期为 2026-10-13。上述清单是可重复使用的验收方法，不是已经完成的测试日志；本文不提供未执行的线上结果。</p>
+<p>文档解析不是 HTML 消毒。这里只接收本站受信任的 HTML，不把第三方响应插入页面；即使来源相同，也应校验站点约定的结构和版本。链接过滤、popstate、滚动保存和焦点恢复不在此协调片段中，省略这些后不应称为完整导航器。</p>
+<p><span id="音乐是一套异步状态，不是一个播放图标" class="heading-anchor" aria-hidden="true"></span><br><span id="音频保持一个实例，播放尊重当前意图" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="保留音频与播放意图"><a href="#保留音频与播放意图" class="headerlink" title="保留音频与播放意图"></a>保留音频与播放意图</h2><p><code>audio.play()</code> 返回 Promise。用户按下播放后可能立刻暂停，旧 Promise 不应把界面又改回“正在播放”。把用户意图与实际事件分开，能避免用一个图标同时代表加载、播放、等待和失败。</p>
+<p>下面只演示<strong>单曲</strong>播放与暂停，配合前面的播放器 HTML 使用。先把音频路径换成自己有权公开、浏览器可访问的同源文件；它不是外部歌曲解析接口。脚本只初始化一次：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> audio = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#site-audio&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> playButton = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#play-toggle&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> playStatus = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#play-status&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> wantsPlayback = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">let</span> playSequence = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">renderButton</span>(<span class="params"></span>) &#123;</span><br><span class="line">  playButton.<span class="property">textContent</span> = wantsPlayback ? <span class="string">&#x27;暂停&#x27;</span> : <span class="string">&#x27;播放&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">playButton.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> ticket = ++playSequence;</span><br><span class="line">  wantsPlayback = !wantsPlayback;</span><br><span class="line">  <span class="title function_">renderButton</span>();</span><br><span class="line">  <span class="keyword">if</span> (!wantsPlayback) &#123;</span><br><span class="line">    audio.<span class="title function_">pause</span>();</span><br><span class="line">    playStatus.<span class="property">textContent</span> = <span class="string">&#x27;已暂停&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!audio.<span class="title function_">getAttribute</span>(<span class="string">&#x27;src&#x27;</span>)) audio.<span class="property">src</span> = <span class="string">&#x27;/media/example.mp3&#x27;</span>;</span><br><span class="line">  playStatus.<span class="property">textContent</span> = <span class="string">&#x27;正在请求播放&#x27;</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> audio.<span class="title function_">play</span>();</span><br><span class="line">    <span class="keyword">if</span> (ticket !== playSequence || !wantsPlayback) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!wantsPlayback) audio.<span class="title function_">pause</span>();</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 实际播放状态由 playing / waiting 等事件呈现。</span></span><br><span class="line">  &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (ticket !== playSequence) <span class="keyword">return</span>;</span><br><span class="line">    wantsPlayback = <span class="literal">false</span>;</span><br><span class="line">    <span class="title function_">renderButton</span>();</span><br><span class="line">    playStatus.<span class="property">textContent</span> = <span class="string">&#x27;播放未能开始，请检查音频或再次点击&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">audio.<span class="title function_">addEventListener</span>(<span class="string">&#x27;playing&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (!wantsPlayback) &#123; audio.<span class="title function_">pause</span>(); <span class="keyword">return</span>; &#125;</span><br><span class="line">  playStatus.<span class="property">textContent</span> = <span class="string">&#x27;正在播放&#x27;</span>;</span><br><span class="line">&#125;);</span><br><span class="line">audio.<span class="title function_">addEventListener</span>(<span class="string">&#x27;waiting&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (wantsPlayback) playStatus.<span class="property">textContent</span> = <span class="string">&#x27;正在缓冲&#x27;</span>;</span><br><span class="line">&#125;);</span><br><span class="line">audio.<span class="title function_">addEventListener</span>(<span class="string">&#x27;pause&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 也响应浏览器或系统发起的暂停；忽略已经恢复播放的旧 pause 事件。</span></span><br><span class="line">  <span class="keyword">if</span> (audio.<span class="property">paused</span>) <span class="title function_">stopIntent</span>(audio.<span class="property">ended</span> ? <span class="string">&#x27;播放结束&#x27;</span> : <span class="string">&#x27;已暂停&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">stopIntent</span>(<span class="params">message</span>) &#123;</span><br><span class="line">  ++playSequence;</span><br><span class="line">  wantsPlayback = <span class="literal">false</span>;</span><br><span class="line">  <span class="title function_">renderButton</span>();</span><br><span class="line">  playStatus.<span class="property">textContent</span> = message;</span><br><span class="line">&#125;</span><br><span class="line">audio.<span class="title function_">addEventListener</span>(<span class="string">&#x27;ended&#x27;</span>, <span class="function">() =&gt;</span> <span class="title function_">stopIntent</span>(<span class="string">&#x27;播放结束&#x27;</span>));</span><br><span class="line">audio.<span class="title function_">addEventListener</span>(<span class="string">&#x27;error&#x27;</span>, <span class="function">() =&gt;</span> <span class="title function_">stopIntent</span>(<span class="string">&#x27;音频加载失败&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>这个例子不实现播放列表、seek、跨会话位置保存或自动续播。需要唱片动画时，根据实际 <code>playing</code> 开始旋转，<code>waiting</code>、<code>pause</code>、<code>ended</code> 和 <code>error</code> 停止；减少动态效果偏好下关闭动画。不要在按下按钮的一刻就宣称音频已经播放。</p>
+<p><span id="自然续播不能绕过主动播放与暂停" class="heading-anchor" aria-hidden="true"></span><br><span id="扩展播放列表时，把续播资格也建成状态" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="管理换曲与续播资格"><a href="#管理换曲与续播资格" class="headerlink" title="管理换曲与续播资格"></a>管理换曲与续播资格</h2><p>播放列表需要比单曲更多状态：当前音源代号、当前播放请求、是否曾由用户启动，以及用户最新的播放意图。切换曲目时增加音源代号，旧音源的 Promise 或事件不能修改新曲状态。</p>
+<p>暂停时“下一首”可以只选曲，不自动播放；正在播放时才按当前意图尝试新曲。自然结束后的续播也要确认事件属于当前曲目、用户没有暂停，且曾实际开始过播放。错误不等于 ended，不能用加载失败触发无限跳过和请求。</p>
+<p>浏览器仍可能拒绝续播。失败时显示可再次操作的状态，不通过自动点击或绕过自动播放策略解决。</p>
+<p><span id="把成功路径和失败路径分开验收" class="heading-anchor" aria-hidden="true"></span><br><span id="用节点身份和故障路径检查实现" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="检查节点与失败路径"><a href="#检查节点与失败路径" class="headerlink" title="检查节点与失败路径"></a>检查节点与失败路径</h2><p>集成时可以先保存 audio 引用，局部导航后检查 <code>savedAudio === document.querySelector(&#39;#site-audio&#39;)</code>。预期节点身份不变，也没有因换页再次附加 src 或调用 load。这个检查只能证明节点被保留，不能证明所有网络条件下音频都不会缓冲。</p>
+<p>再分别检查：慢请求晚返回不会覆盖新页面；旧请求失败不触发整页回退；当前请求超时会回退；可选插件失败不阻塞正文；重复挂载后按钮仍只响应一次。音乐部分检查播放后立即暂停、播放被拒绝和音频加载错误，确认界面与最新意图一致。</p>
+<p>完整导航层还要在浏览器中验证后退、前进、锚点、焦点及无脚本访问。协调片段和状态测试不能代替这些导航行为，也不能代替真实媒体播放测试。</p>
+<h2 id="技术参考"><a href="#技术参考" class="headerlink" title="技术参考"></a>技术参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">MDN：History API</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">MDN：AbortController</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play">MDN：HTMLMediaElement.play()</a></li>
+</ul>
 </div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
 
-<nav class="post-neighbors" aria-label="前后文章">
-<a href="/posts/07-frontend-glass-accessibility-draft/"><span>上一篇</span><strong>静态博客前端（二）：外观切换、分层背景与可访问性回退</strong></a>
+      <aside class="article-aside" aria-label="文章侧栏">
+        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
 
-    </nav>
-    <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
-  </article>
-</div></div></main>
+        <section class="aside-card recent-card" aria-labelledby="recent-title">
+          <h2 class="aside-title" id="recent-title">推荐阅读</h2>
+          <ul class="recent-list">
+
+            <li><a href="/posts/07-frontend-glass-accessibility-draft/"><span>静态博客前端：分层外观与可访问性</span><time datetime="2026-09-08">09-08</time></a></li>
+
+            <li><a href="/posts/06-frontend-layout-typography-draft/"><span>静态博客前端：布局与排版</span><time datetime="2026-09-04">09-04</time></a></li>
+
+            <li><a href="/posts/03-server-survival-games/"><span>Server Survival 与 Datacenter Survival：请求与机房</span><time datetime="2026-09-01">09-01</time></a></li>
+
+            <li><a href="/posts/02-hexo-docker-nginx-publish/"><span>Hexo 与 Nginx：构建与安全发布</span><time datetime="2026-08-29">08-29</time></a></li>
+
+            <li><a href="/posts/01-ubuntu-server-secure-setup/"><span>Ubuntu SSH：公钥登录与端口迁移</span><time datetime="2026-08-27">08-27</time></a></li>
+
+          </ul>
+        </section>
+
+      </aside>
+    </div>
+  </div>
+</main>
 <div class="read-progress" data-read-progress role="presentation"></div>
-<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部">↑</button>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
 <footer class="site-footer">
   <div class="shell footer-inner">
     <div class="footer-brand">
       <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
     </div>
-    <p class="footer-note"><a href="/subscribe/">RSS 订阅</a><a href="/credits/">素材致谢</a><span>Powered by Hexo · 2026</span></p>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/subscribe/">RSS 订阅</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-note">
+      <span>本站内容为技术记录与随手笔记，文中命令均为示例，请在自己的环境中验证后再执行。</span>
+      <span>文字与原创插图版权归本站所有；第三方素材版权归原作者，详见素材致谢。</span>
+      <span class="footer-meta">
+        <span>Powered by Hexo · 2026</span>
+        <span class="footer-icp" title="取得备案号后在此填写">备案信息待补充</span>
+      </span>
+    </p>
   </div>
+
 </footer>
-<div class="music-player" data-music-player data-music-state="idle">
-  <button class="music-load vinyl-trigger secondary-action" type="button" data-music-load aria-controls="footer-music-panel" aria-expanded="false">
-    <span class="vinyl-mini" aria-hidden="true"></span>
-    <span class="music-load-text">音乐</span>
-  </button>
-  <div class="music-body" id="footer-music-panel" data-music-body hidden>
-    <p class="music-kicker">PIANO ROOM · 钢琴小憩</p>
-    <div class="vinyl-stage">
-      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true">
-        <span class="vinyl-groove"></span>
-        <span class="vinyl-label"></span>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
       </div>
-      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true">▶</span></button>
     </div>
-    <p class="music-title" data-music-title>钢琴小憩</p>
-    <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
-    <div class="music-progress" data-music-progress role="presentation">
-      <span class="music-progress-fill" data-music-progress-fill></span>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
     </div>
-    <div class="music-times">
-      <span data-music-current>0:00</span>
-      <span data-music-duration>--:--</span>
-    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1" aria-label="音乐音量"></label>
     <ol class="music-list" data-music-list role="list">
 
       <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
@@ -221,9 +344,8 @@
       </li>
 
     </ol>
-    <audio id="footer-music" data-music-audio preload="none" aria-label="钢琴小憩播放器" hidden></audio>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
     <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
-    <p class="music-hint">点击外部或按 Esc 收起，音乐继续播放。</p>
   </div>
   <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
 </div>
@@ -237,15 +359,11 @@
   </div>
 </div>
 <script src="/vendor/minisearch-7.2.0.js" defer></script>
-<script src="/js/search.js?v=20261013-editorial1" defer></script>
-<script src="/js/site.js?v=20261013-editorial1" defer></script>
-<script src="/js/quotes.js?v=20261013-editorial1" defer></script>
-
-<script src="/vendor/photoswipe-5.4.4/photoswipe.umd.min.js" defer></script>
-<script src="/vendor/photoswipe-5.4.4/photoswipe-lightbox.umd.min.js" defer></script>
-
-<script src="/js/media.js?v=20261013-editorial1" defer></script>
-<script src="/js/music.js?v=20261013-editorial1" defer></script>
-<script src="/js/pjax.js?v=20261013-editorial1" defer></script>
+<script src="/js/search.js?v=20261018-review4" defer></script>
+<script src="/js/site.js?v=20261018-review4" defer></script>
+<script src="/js/quotes.js?v=20261018-review4" defer></script>
+<script src="/js/media.js?v=20261018-review4" defer></script>
+<script src="/js/music.js?v=20261018-review4" defer></script>
+<script src="/js/pjax.js?v=20261018-review4" defer></script>
 </body>
 </html>

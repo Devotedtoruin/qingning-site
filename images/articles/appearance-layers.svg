@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+<title id="title">材质与配色独立，背景与文字分层</title><desc id="desc">纸页是实色，玻璃使用半透明底色和局部背景滤镜。浅色与深色配色独立选择。背景层不模糊，文字和控件保持不透明；无滤镜或辅助模式下回退实色。</desc>
+<rect width="1200" height="620" rx="20" fill="#fffdf7"/>
+<g font-family="system-ui, sans-serif" fill="#233a32">
+<text x="40" y="58" font-size="32" font-weight="700">阅读外观：材质独立于配色，文字独立于背景</text>
+<rect x="40" y="120" width="650" height="110" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
+<text x="365" y="165" font-size="26" text-anchor="middle" font-weight="700">顶层：文字与交互控件</text>
+<text x="365" y="204" font-size="24" text-anchor="middle">保持不透明，不随滑块变淡</text>
+<rect x="40" y="270" width="650" height="130" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
+<text x="365" y="316" font-size="26" text-anchor="middle" font-weight="700">中层：阅读面板</text>
+<text x="365" y="354" font-size="24" text-anchor="middle">纸页：实色，不使用背景滤镜</text>
+<text x="365" y="386" font-size="23" text-anchor="middle">玻璃：alpha = 1 − 透明度/100 + 局部滤镜</text>
+<rect x="40" y="440" width="650" height="115" rx="12" fill="#f4edda" stroke="#6d8075" stroke-width="2"/>
+<text x="365" y="488" font-size="26" text-anchor="middle" font-weight="700">底层：独立背景</text>
+<text x="365" y="526" font-size="24" text-anchor="middle">固定绘制，不对整页叠加模糊或 opacity</text>
+<rect x="770" y="120" width="390" height="190" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
+<text x="965" y="164" font-size="26" text-anchor="middle" font-weight="700">两个独立的选择</text>
+<text x="965" y="204" font-size="24" text-anchor="middle">材质：纸页 / 玻璃</text>
+<text x="965" y="243" font-size="24" text-anchor="middle">配色：浅色 / 深色</text>
+<text x="965" y="284" font-size="22" text-anchor="middle" fill="#4c5c54">更换配色不重置材质与透明度</text>
+<rect x="770" y="350" width="390" height="205" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
+<text x="965" y="395" font-size="26" text-anchor="middle" font-weight="700">透明度不可用时</text>
+<text x="965" y="435" font-size="23" text-anchor="middle">纸页、无滤镜、系统辅助回退</text>
+<text x="965" y="475" font-size="23" text-anchor="middle">使用实色，禁用并解释原因</text>
+<text x="965" y="515" font-size="23" text-anchor="middle">保留上次玻璃数值，不清空偏好</text>
+<text x="600" y="594" font-size="23" text-anchor="middle" fill="#4c5c54">同一内容组不叠多层玻璃；高对比模式尊重系统颜色</text>
+</g>
+</svg>

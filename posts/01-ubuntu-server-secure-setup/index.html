@@ -4,16 +4,17 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="配置普通管理账号、SSH 公钥认证和端口迁移，并核对登录策略与系统维护状态。">
-  <meta name="theme-color" content="#fffcf6">
-  <title>Ubuntu 24.04：SSH 配置与基础安全 | 青柠小站</title>
+  <meta name="description" content="在 Ubuntu 24.04 创建管理用户、配置公钥登录，再按 socket/service 分支安全迁移 SSH 端口。">
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261018-review4">
+  <title>Ubuntu SSH：公钥登录与端口迁移 | 青柠小站</title>
 
 
   <link rel="canonical" href="https://qingning.co/posts/01-ubuntu-server-secure-setup/">
   <meta property="og:url" content="https://qingning.co/posts/01-ubuntu-server-secure-setup/">
 
-  <meta property="og:title" content="Ubuntu 24.04：SSH 配置与基础安全 | 青柠小站">
-  <meta property="og:description" content="配置普通管理账号、SSH 公钥认证和端口迁移，并核对登录策略与系统维护状态。">
+  <meta property="og:title" content="Ubuntu SSH：公钥登录与端口迁移 | 青柠小站">
+  <meta property="og:description" content="在 Ubuntu 24.04 创建管理用户、配置公钥登录，再按 socket/service 分支安全迁移 SSH 端口。">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="青柠小站">
 
@@ -21,15 +22,16 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261013-editorial1">
-
-  <link rel="stylesheet" href="/vendor/photoswipe-5.4.4/photoswipe.css">
-
-  <script src="/js/appearance.js?v=20261013-editorial1"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261018-review4">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261018-review4">
+  <script src="/js/ui.js?v=20261018-review4"></script>
+  <script src="/js/backgrounds.js?v=20261018-review4"></script>
+  <script src="/js/appearance.js?v=20261018-review4"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-<body>
 
-<header class="site-header">
+<body data-layout="post">
+
+<header class="site-header" data-floating-header>
   <div class="shell header-inner">
     <div class="brand-block">
       <a class="brand" href="/" aria-label="青柠小站，返回首页">
@@ -37,251 +39,358 @@
         <strong>青柠小站</strong>
       </a>
       <div class="brand-quote brand-quote--header">
-  <p>收录一些文章、工具和偶然遇到的有趣事物。</p>
+  <p>收录偶然遇到的有趣事物。</p>
 </div>
 
     </div>
     <nav class="desktop-nav" aria-label="主导航">
 
-        <a href="/articles/">文章</a>
-
-        <a href="/categories/">分类</a>
-
-    </nav>
-    <div class="header-actions">
-      <details class="appearance-controls" data-appearance-controls>
-        <summary class="appearance-toggle" aria-label="选择外观、背景和面板透明度"><span aria-hidden="true">◐</span> 外观</summary>
-        <div class="appearance-panel">
-          <fieldset class="appearance-options"><legend>外观</legend><div class="appearance-choices">
-            <button type="button" data-appearance-choice="glass" aria-pressed="true">玻璃</button>
-            <button type="button" data-appearance-choice="paper" aria-pressed="false">纸页</button>
-            <button type="button" data-appearance-choice="night" aria-pressed="false">夜色</button>
-          </div></fieldset>
-          <fieldset class="appearance-options"><legend>背景</legend><div class="appearance-choices">
-            <button type="button" data-background-choice="forest" aria-pressed="true">林间晨光</button>
-            <button type="button" data-background-choice="gradient" aria-pressed="false">暖色渐变</button>
-            <button type="button" data-background-choice="illustration" aria-pressed="false">湖山插画</button>
-          </div></fieldset>
-          <label for="appearance-transparency">内容面板透明度</label>
-          <div class="appearance-control-row">
-            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="45" step="1" value="18" aria-describedby="appearance-help" data-appearance-range>
-            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">18%</output>
-          </div>
-          <p id="appearance-help">0% 为实色纸面；只调整内容面板，不改变背景照片或文字清晰度。</p>
-          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
-        </div>
-      </details>
-      <button class="icon-button" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
-      <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-    </div>
-  </div>
-  <nav class="mobile-nav" data-mobile-nav aria-label="移动导航">
-
       <a href="/articles/">文章</a>
 
       <a href="/categories/">分类</a>
 
+
+
+      <details class="mega-menu" data-mega-menu>
+        <summary class="mega-trigger" aria-label="探索分类与精选专栏">专题探索</summary>
+        <div class="mega-panel">
+          <div class="mega-col">
+            <p class="mega-kicker">分类专栏</p>
+            <ul class="mega-list">
+
+              <li><a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span>前端技术</span><span class="count">3</span></a></li>
+
+              <li><a href="/categories/%E9%A1%B9%E7%9B%AE/"><span>项目</span><span class="count">1</span></a></li>
+
+              <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span>学习笔记</span><span class="count">2</span></a></li>
+
+            </ul>
+          </div>
+
+          <div class="mega-col">
+            <p class="mega-kicker">高频标签</p>
+            <div class="mega-tags">
+
+              <a href="/tags/CSS/">#CSS<sup>2</sup></a>
+
+              <a href="/tags/Hexo/">#Hexo<sup>2</sup></a>
+
+              <a href="/tags/%E9%83%A8%E7%BD%B2/">#部署<sup>1</sup></a>
+
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8/">#服务器安全<sup>1</sup></a>
+
+              <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目<sup>1</sup></a>
+
+              <a href="/tags/%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7/">#可访问性<sup>1</sup></a>
+
+              <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80/">#响应式布局<sup>1</sup></a>
+
+              <a href="/tags/Docker/">#Docker<sup>1</sup></a>
+
+            </div>
+          </div>
+
+
+          <div class="mega-col mega-featured">
+            <p class="mega-kicker">精选推荐</p>
+            <a class="mega-spotlight" href="/posts/08-frontend-pjax-music-lifecycle-draft/">
+              <strong>静态博客前端：PJAX 与持续音乐</strong>
+              <span>阅读全文 ↗</span>
+            </a>
+          </div>
+
+        </div>
+      </details>
+
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16" /><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布壁纸</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="forest" aria-pressed="false">林间晨光</button>
+
+            <button type="button" data-background-choice="wallpaper2" aria-pressed="false" disabled>山湖倒影<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper3" aria-pressed="false" disabled>晨曦山峦<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper4" aria-pressed="false" disabled>宇宙星云<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper6" aria-pressed="false" disabled>海洋波浪<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper7" aria-pressed="false" disabled>夏日海滨<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper8" aria-pressed="false" disabled>动漫夏日<small>待添加</small></button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="45" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">45%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景照片或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger-pill" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><kbd class="search-kbd" aria-hidden="true">Ctrl K</kbd></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/categories/">分类</a>
+
   </nav>
 </header>
 
-<main class="page-main"><div class="shell article-shell"><div class="article-layout">
-  <nav class="article-toc" data-article-toc hidden aria-label="文章目录"><button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button><ol id="article-toc-list" data-toc-list></ol></nav>
-  <article class="article-main">
-    <header class="article-header">
-      <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
-      <p class="eyebrow"><time datetime="2026-08-27">2026-08-27</time> · 约 10 分钟阅读（粗估）</p>
-<p class="article-updated">更新于 <time datetime="2026-10-10">2026-10-10</time></p>
-      <h1>Ubuntu 24.04：SSH 配置与基础安全</h1>
-<p class="article-description">配置普通管理账号、SSH 公钥认证和端口迁移，并核对登录策略与系统维护状态。</p>
-      <div class="post-tags"><a href="/tags/Ubuntu/">#Ubuntu</a><a href="/tags/SSH/">#SSH</a><a href="/tags/Linux-%E5%AE%89%E5%85%A8/">#Linux 安全</a></div>
-    </header>
-    <div class="article-content"><p>本文以 Ubuntu Server 24.04 为例，完成普通管理员、公钥认证、SSH 端口迁移和基础软件维护。操作涉及 Windows 管理端、云网络控制台和服务器终端。修改 SSH 时保留控制台或现有会话，确认新连接可用后再关闭旧入口。</p>
-<h2 id="适用范围、风险与变量"><a href="#适用范围、风险与变量" class="headerlink" title="适用范围、风险与变量"></a>适用范围、风险与变量</h2><p>适用于 Ubuntu Server 24.04。开始前准备云控制台或可用的初始 SSH 会话，并预留一个新的 PowerShell 窗口测试连接。示例变量按实际环境填写。</p>
+
+<main class="page-main" id="main">
+  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="ambient-wash"></div></div>
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
+        <header class="article-header">
+          <p class="article-meta-line"><time datetime="2026-08-27">2026-08-27</time> · <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a> · 约 13 分钟阅读（粗估）</p>
+          <p class="article-updated">更新于 <time datetime="2026-10-16">2026-10-16</time></p>
+          <h1>Ubuntu SSH：公钥登录与端口迁移</h1>
+          <p class="article-description">在 Ubuntu 24.04 创建管理用户、配置公钥登录，再按 socket/service 分支安全迁移 SSH 端口。</p>
+          <div class="post-tags"><a href="/tags/Linux/">#Linux</a><a href="/tags/SSH/">#SSH</a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8/">#服务器安全</a></div>
+        </header>
+        <div class="article-content"><p>配置 SSH 可以分成三项任务：建立普通管理账号、让公钥认证可用、迁移监听端口。先完成账号和密钥，再改变网络入口，最后关闭不需要的认证方式，遇到问题时更容易判断是哪一层出了差错。</p>
+<p>本文适用于已安装 OpenSSH Server、使用 systemd 的 Ubuntu Server 24.04。你需要一个当前可用的管理账号及 sudo 权限、一台带 OpenSSH 客户端的电脑，以及独立于 SSH 的服务器控制台。不同云镜像的初始账号、认证策略和 socket 激活状态可能不同，操作前以实际配置为准。以下命令是配置示例，不代表已经在你的服务器上执行。更换端口能减少部分扫描噪声，不能代替公钥认证、更新和网络访问控制。</p>
+<figure class="article-diagram">
+  <a href="/images/articles/ubuntu-ssh-path.svg" target="_blank" rel="noopener"><img src="/images/articles/ubuntu-ssh-path.svg" alt="SSH 客户端经 socket 或 service 监听入口连接 Ubuntu，配置、监听、网络和独立新会话分别核对。" width="1200" height="560" loading="lazy" decoding="async"></a>
+  <figcaption>SSH 的监听入口与验证链路</figcaption>
+</figure>
+
+<p><span id="适用范围、风险与变量" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="准备管理入口与变量"><a href="#准备管理入口与变量" class="headerlink" title="准备管理入口与变量"></a>准备管理入口与变量</h2><p>操作期间保留原 SSH 会话，并先确认云控制台、串口或虚拟机控制台确实能够登录。原会话不能保证重启监听后仍然存在，控制台才是断线后的恢复入口。</p>
+<p>本文以旧端口 22、新端口 22222 为示例，并假设新管理用户使用 Ubuntu 默认的 <code>/home</code> 家目录。尖括号内容必须先替换；客户端后续命令沿用同一终端中的这些变量：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在客户端填写；端口只是示例，必须与服务器的实际配置一致。</span></span><br><span class="line">HOST=<span class="string">&#x27;&lt;服务器地址&gt;&#x27;</span></span><br><span class="line">ADMIN=<span class="string">&#x27;&lt;管理用户名&gt;&#x27;</span></span><br><span class="line">OLD_PORT=<span class="string">&#x27;22&#x27;</span></span><br><span class="line">NEW_PORT=<span class="string">&#x27;22222&#x27;</span></span><br><span class="line">KEY=<span class="string">&quot;<span class="variable">$HOME</span>/.ssh/&lt;专用私钥文件名&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在服务器上另行设置 <code>ADMIN=&#39;&lt;管理用户名&gt;&#39;</code>。用户名使用普通 Linux 用户名，不要把客户端变量当作会自动传入远端的环境变量。</p>
+<p>修改监听前，在服务器终端备份 SSH 配置与已有的 socket drop-in。备份放在仅 root 可访问的位置，不放进 Web 目录：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在服务器执行；新建独立备份目录，不覆盖已有备份。</span></span><br><span class="line">BACKUP=<span class="string">&quot;/root/ssh-backup-<span class="subst">$(date +%Y%m%d-%H%M%S)</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> install -d -m 700 <span class="string">&quot;<span class="variable">$BACKUP</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -a /etc/ssh <span class="string">&quot;<span class="variable">$BACKUP</span>/ssh&quot;</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">sudo</span> <span class="built_in">test</span> -d /etc/systemd/system/ssh.socket.d; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">sudo</span> <span class="built_in">cp</span> -a /etc/systemd/system/ssh.socket.d <span class="string">&quot;<span class="variable">$BACKUP</span>/ssh.socket.d&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">printf</span> <span class="string">&#x27;配置备份位置：%s\n&#x27;</span> <span class="string">&quot;<span class="variable">$BACKUP</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>记下备份位置、原监听端口以及 <code>systemctl is-enabled ssh.socket ssh.service</code> 的结果。后面的步骤不要求把 socket 模式改成 service 模式，也不改变两者的启用策略。</p>
+<p><span id="1-建立独立密钥和普通管理用户" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="建立独立密钥和普通管理用户"><a href="#建立独立密钥和普通管理用户" class="headerlink" title="建立独立密钥和普通管理用户"></a>建立独立密钥和普通管理用户</h2><p>先在客户端生成专用 Ed25519 密钥。给私钥设置口令；如果指定路径已经存在，停止并改用新的文件名，不覆盖旧密钥：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -a 64 -f <span class="string">&quot;<span class="variable">$KEY</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>生成的私钥留在客户端，只有同名 <code>.pub</code> 公钥进入服务器。不要把私钥粘贴到网页、文章或服务器上的 <code>authorized_keys</code>。</p>
+<p>在现有服务器管理会话中创建新用户，并加入 sudo 组：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在服务器执行；只对尚不存在的新账号运行 adduser。</span></span><br><span class="line">ADMIN=<span class="string">&#x27;&lt;管理用户名&gt;&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> adduser <span class="string">&quot;<span class="variable">$ADMIN</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> usermod -aG <span class="built_in">sudo</span> <span class="string">&quot;<span class="variable">$ADMIN</span>&quot;</span></span><br><span class="line"><span class="built_in">id</span> <span class="string">&quot;<span class="variable">$ADMIN</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>adduser</code> 会交互设置账号密码。这个密码也可用于 sudo；之后禁用的是 <strong>SSH 密码认证</strong>，不需要因此清除账号密码。<code>id</code> 的组列表应包含 <code>sudo</code>，新组成员关系在新登录会话中生效。</p>
+<p>如果当前策略允许新账号暂时使用 SSH 密码登录，在客户端安装公钥：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-copy-id -i <span class="string">&quot;<span class="variable">$KEY</span>.pub&quot;</span> -p <span class="string">&quot;<span class="variable">$OLD_PORT</span>&quot;</span> <span class="string">&quot;<span class="variable">$ADMIN</span>@<span class="variable">$HOST</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>初次连接前通过控制台核对主机密钥指纹，不要为了省略确认而关闭主机密钥检查。<code>ssh-copy-id</code> 成功后应提示尝试登录；这条提示还不能代替下一步的独立连接测试。</p>
+<p>如果镜像已经禁止密码登录，<strong>不要为了复制公钥重新开放密码认证</strong>。在客户端查看 <code>$KEY.pub</code>，通过已有管理会话或控制台把整行公钥加入新账号的文件。在服务器先准备目录与文件，再用编辑器追加公钥；保留文件中已有的有效条目：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在服务器执行；只追加公钥，不替换已有 authorized_keys。</span></span><br><span class="line">ADMIN_HOME=<span class="string">&quot;<span class="subst">$(getent passwd <span class="string">&quot;<span class="variable">$ADMIN</span>&quot;</span> | cut -d: -f6)</span>&quot;</span></span><br><span class="line">ADMIN_GROUP=<span class="string">&quot;<span class="subst">$(id -gn <span class="string">&quot;<span class="variable">$ADMIN</span>&quot;</span>)</span>&quot;</span></span><br><span class="line"><span class="built_in">test</span> -n <span class="string">&quot;<span class="variable">$ADMIN_HOME</span>&quot;</span> &amp;&amp; <span class="built_in">test</span> -d <span class="string">&quot;<span class="variable">$ADMIN_HOME</span>&quot;</span> || <span class="built_in">exit</span> 1</span><br><span class="line"><span class="built_in">sudo</span> install -d -m 700 -o <span class="string">&quot;<span class="variable">$ADMIN</span>&quot;</span> -g <span class="string">&quot;<span class="variable">$ADMIN_GROUP</span>&quot;</span> <span class="string">&quot;<span class="variable">$ADMIN_HOME</span>/.ssh&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">touch</span> <span class="string">&quot;<span class="variable">$ADMIN_HOME</span>/.ssh/authorized_keys&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chown</span> <span class="string">&quot;<span class="variable">$ADMIN</span>:<span class="variable">$ADMIN_GROUP</span>&quot;</span> <span class="string">&quot;<span class="variable">$ADMIN_HOME</span>/.ssh/authorized_keys&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> 600 <span class="string">&quot;<span class="variable">$ADMIN_HOME</span>/.ssh/authorized_keys&quot;</span></span><br><span class="line">sudoedit <span class="string">&quot;<span class="variable">$ADMIN_HOME</span>/.ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>公钥通常是一行，以 <code>ssh-ed25519</code> 开头；不能折成多行。目录属主不正确、权限过宽、家目录可被其他用户写入，都可能使 OpenSSH 拒绝使用该文件。</p>
+<p>回到客户端，<strong>新开一个终端</strong>，填写相同变量后仅允许公钥连接旧端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -i <span class="string">&quot;<span class="variable">$KEY</span>&quot;</span> -o IdentitiesOnly=<span class="built_in">yes</span> \</span><br><span class="line">  -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \</span><br><span class="line">  -p <span class="string">&quot;<span class="variable">$OLD_PORT</span>&quot;</span> <span class="string">&quot;<span class="variable">$ADMIN</span>@<span class="variable">$HOST</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>成功进入服务器后运行 <code>whoami</code> 和 <code>sudo -v</code>：前者应为新账号，后者应在必要时询问该账号的 sudo 密码并成功结束。这里即使出现私钥口令提示，也不等于服务器使用了 SSH 密码认证。</p>
+<p><span id="2-平滑迁移-SSH-端口" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="平滑迁移-SSH-端口"><a href="#平滑迁移-SSH-端口" class="headerlink" title="平滑迁移 SSH 端口"></a>平滑迁移 SSH 端口</h2><p>迁移顺序是：<strong>先放行新端口 → 同时保留新旧监听 → 从外部建立新连接 → 移除旧监听 → 收紧旧网络规则</strong>。</p>
+<p><span id="防火墙放行与连通性核对" class="heading-anchor" aria-hidden="true"></span></p>
+<h3 id="先放行网络，再改监听"><a href="#先放行网络，再改监听" class="headerlink" title="先放行网络，再改监听"></a>先放行网络，再改监听</h3><p>先在云安全组或上游防火墙中允许管理来源访问新 TCP 端口，保留旧规则。再检查主机防火墙；云规则和主机规则必须同时允许，修改其中一处不会自动修改另一处。</p>
+<p>如果服务器已经启用 UFW，可先查看规则，再按实际管理来源增加新端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw status verbose</span><br><span class="line"></span><br><span class="line"><span class="comment"># 仅用于已经启用的 UFW；先填写管理来源 CIDR，保留旧 SSH 规则。</span></span><br><span class="line">SOURCE_CIDR=<span class="string">&#x27;&lt;管理来源CIDR&gt;&#x27;</span></span><br><span class="line">NEW_PORT=<span class="string">&#x27;22222&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> ufw allow from <span class="string">&quot;<span class="variable">$SOURCE_CIDR</span>&quot;</span> to any port <span class="string">&quot;<span class="variable">$NEW_PORT</span>&quot;</span> proto tcp</span><br><span class="line"><span class="built_in">sudo</span> ufw status numbered</span><br></pre></td></tr></table></figure>
+
+<p>预期规则列表包含该来源到新端口的允许规则。UFW 未启用时，不在远程迁移中直接运行 <code>ufw enable</code>；使用其他防火墙的服务器应按其现有规则管理方式放行。</p>
+<p>接着在服务器查看实际监听与 systemd 单元：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status ssh.socket ssh.service --no-pager</span><br><span class="line">systemctl <span class="built_in">cat</span> ssh.socket</span><br><span class="line"><span class="built_in">sudo</span> ss -ltnp</span><br><span class="line"><span class="built_in">sudo</span> sshd -t</span><br></pre></td></tr></table></figure>
+
+<p><code>sshd -t</code> 成功通常没有输出；报错时先修正配置，不继续重载。<code>status</code> 中某个单元为 inactive 不一定是故障，需要结合 <code>ss</code> 判断端口由谁持有。下面两种分支只选择与当前系统相符的一种。</p>
+<p><span id="情况-A：ssh-socket-处于-active" class="heading-anchor" aria-hidden="true"></span></p>
+<h3 id="socket-激活"><a href="#socket-激活" class="headerlink" title="socket 激活"></a>socket 激活</h3><p>若 <code>ssh.socket</code> 正在持有监听端口，端口入口由 socket 单元控制。<code>sshd -T</code> 显示的 Port 不能代替真实监听检查。</p>
+<p>对于原本就在所有地址监听、没有特殊 IPv6 或设备绑定要求的服务器，建立 drop-in 文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在服务器执行；已有同名文件先与备份比较，不覆盖未知配置。</span></span><br><span class="line"><span class="built_in">sudo</span> install -d -m 755 /etc/systemd/system/ssh.socket.d</span><br><span class="line">sudoedit /etc/systemd/system/ssh.socket.d/listen.conf</span><br></pre></td></tr></table></figure>
+
+<p>填入以下过渡配置，端口按实际环境替换：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[Socket]</span></span><br><span class="line"><span class="comment"># 清空原列表后重新列出新旧端口；不要遗漏原本需要的监听地址。</span></span><br><span class="line"><span class="attr">ListenStream</span>=</span><br><span class="line"><span class="attr">ListenStream</span>=<span class="number">22</span></span><br><span class="line"><span class="attr">ListenStream</span>=<span class="number">22222</span></span><br></pre></td></tr></table></figure>
+
+<p>空的 <code>ListenStream=</code> 清空此前累积的列表。原配置若绑定专用地址，应保留相应地址形式，而不是改成全地址监听。</p>
+<p>在控制台可用、旧会话仍保留的条件下应用配置：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 变更监听可能断线；失败时从控制台恢复备份和旧端口。</span></span><br><span class="line"><span class="built_in">sudo</span> sshd -t &amp;&amp; <span class="built_in">sudo</span> systemctl daemon-reload &amp;&amp; \</span><br><span class="line">  <span class="built_in">sudo</span> systemctl restart ssh.socket ssh.service</span><br><span class="line"><span class="built_in">sudo</span> ss -ltnp</span><br></pre></td></tr></table></figure>
+
+<p>一起处理两个单元是因为已经运行的 <code>ssh.service</code> 可能仍持有旧的监听描述符。预期 <code>ss</code> 能看到新旧两个端口，并且地址范围符合原计划；仅看到单元 active 还不够。</p>
+<p><span id="情况-B：ssh-service-直接监听" class="heading-anchor" aria-hidden="true"></span></p>
+<h3 id="service-直接监听"><a href="#service-直接监听" class="headerlink" title="service 直接监听"></a>service 直接监听</h3><p>如果由 <code>ssh.service</code> 直接监听、没有活动的 socket 接管端口，则在 sshd 配置中同时保留两个 Port。先检查 <code>/etc/ssh/sshd_config</code> 及其 include 文件中已有的 <code>Port</code> 和 <code>ListenAddress</code>，再编辑相应文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在服务器执行；沿用当前配置组织，不另建相互冲突的监听片段。</span></span><br><span class="line">sudoedit /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>把下面的过渡端口放在全局配置区，不放进 <code>Match</code> 块：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Port 22</span><br><span class="line">Port 22222</span><br></pre></td></tr></table></figure>
+
+<p><code>Port</code> 可以多次指定，新增一个片段不会清除其他文件中的 Port。已有带端口的 <code>ListenAddress</code> 也需要逐一核对。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先校验，成功才重载；保留旧连接及控制台用于恢复。</span></span><br><span class="line"><span class="built_in">sudo</span> sshd -t &amp;&amp; <span class="built_in">sudo</span> systemctl reload ssh.service</span><br><span class="line"><span class="built_in">sudo</span> ss -ltnp</span><br></pre></td></tr></table></figure>
+
+<p>预期新旧端口都在监听。没有出现新端口时先核对 include 和 ListenAddress，不急着关闭旧入口。</p>
+<h3 id="验证后关闭旧入口"><a href="#验证后关闭旧入口" class="headerlink" title="验证后关闭旧入口"></a>验证后关闭旧入口</h3><p>从外部客户端新开终端，使用新端口、公钥及新管理用户连接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -i <span class="string">&quot;<span class="variable">$KEY</span>&quot;</span> -o IdentitiesOnly=<span class="built_in">yes</span> \</span><br><span class="line">  -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \</span><br><span class="line">  -p <span class="string">&quot;<span class="variable">$NEW_PORT</span>&quot;</span> <span class="string">&quot;<span class="variable">$ADMIN</span>@<span class="variable">$HOST</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>再次确认主机指纹、<code>whoami</code> 和 <code>sudo -v</code>。服务器本机连得上新端口不能证明外部安全组、路由和管理来源规则都正确。</p>
+<p>确认新入口可用后，在实际生效的 socket drop-in 或 sshd 配置中移除旧端口，按对应分支重新应用。用 <code>ss</code> 确认旧监听消失，再删除或收紧旧端口的网络规则；不要删除仍供其他服务使用的规则。</p>
+<p><span id="端口迁移回退" class="heading-anchor" aria-hidden="true"></span></p>
+<h3 id="连接失败时恢复"><a href="#连接失败时恢复" class="headerlink" title="连接失败时恢复"></a>连接失败时恢复</h3><p>新连接超时，先看安全组、主机防火墙和监听地址；连接被拒绝，先看端口是否真的在监听；<code>Permission denied</code> 则检查用户名、公钥与认证日志。这些现象帮助缩小范围，不单凭一条错误就认定根因。</p>
+<p>旧连接还在时，保留双端口配置并逐项检查。已经失联则进入控制台，对照备份恢复原文件：恢复原有内容，撤去本次新增但备份中不存在的配置，再按原分支应用。socket 分支需要 <code>daemon-reload</code> 及对应单元重启，service 分支在语法检查后重载。恢复监听后从外部重新连接，不只在控制台看状态。</p>
+<p><span id="3-仅允许公钥认证" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="仅允许公钥认证"><a href="#仅允许公钥认证" class="headerlink" title="仅允许公钥认证"></a>仅允许公钥认证</h2><p>普通用户在新端口的公钥登录和 sudo 都确认可用后，再单独收紧认证。编辑全局认证配置，目标值如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">PermitRootLogin no</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">PasswordAuthentication no</span><br><span class="line">KbdInteractiveAuthentication no</span><br></pre></td></tr></table></figure>
+
+<p>这些单值选项通常采用首次读到的值。Ubuntu 镜像可能在 <code>sshd_config.d</code> 中预设认证策略；文件名看起来排在后面，不代表会覆盖前面。检查主文件、include 顺序和 <code>Match</code> 条件，避免同一设置散落多处。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sshd -t</span><br><span class="line"><span class="built_in">sudo</span> sshd -T</span><br></pre></td></tr></table></figure>
+
+<p>在最终输出中确认 <code>permitrootlogin no</code>、<code>pubkeyauthentication yes</code>、<code>passwordauthentication no</code>、<code>kbdinteractiveauthentication no</code>。存在 Match 规则时，还需用 <code>sshd -T -C</code> 传入实际用户、来源地址和目标监听等连接条件，检查该连接的结果。</p>
+<p>确认无误再应用认证配置，并保留当前连接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 仅修改认证策略，无需借此改变 socket 的监听端口。</span></span><br><span class="line"><span class="built_in">sudo</span> sshd -t &amp;&amp; <span class="built_in">sudo</span> systemctl reload ssh.service</span><br></pre></td></tr></table></figure>
+
+<p>用新终端再次验证普通用户公钥登录。随后在客户端强制只尝试密码认证：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -o PreferredAuthentications=password \</span><br><span class="line">  -o PubkeyAuthentication=no -o KbdInteractiveAuthentication=no \</span><br><span class="line">  -p <span class="string">&quot;<span class="variable">$NEW_PORT</span>&quot;</span> <span class="string">&quot;<span class="variable">$ADMIN</span>@<span class="variable">$HOST</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>预期 SSH 密码认证被拒绝，不能登录。root 登录禁用同时以最终配置和日志核对；使用一把本来就未授权给 root 的密钥连接失败，并不能单独证明这项策略已生效。</p>
+<p><span id="4-软件索引、工具、升级与重启" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="软件索引、工具、升级与重启"><a href="#软件索引、工具、升级与重启" class="headerlink" title="软件索引、工具、升级与重启"></a>软件索引、工具、升级与重启</h2><p>SSH 入口稳定后，再安排系统更新，不把网络迁移、升级和重启挤在同一次操作里。服务器上先刷新索引并查看待升级列表：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line">apt list --upgradable</span><br></pre></td></tr></table></figure>
+
+<p><code>apt update</code> 只更新软件索引。确认维护窗口及变更后，运行 <code>sudo apt upgrade</code>，阅读交互摘要再决定是否继续；不在教程中用自动确认掩盖可能的服务重启。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 只读检查重启提示；没有文件不代表所有服务都无需检查。</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">test</span> -f /var/run/reboot-required; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">printf</span> <span class="string">&#x27;系统提示需要重启\n&#x27;</span></span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">test</span> -f /var/run/reboot-required.pkgs; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">cat</span> /var/run/reboot-required.pkgs</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>需要重启时先确认控制台和新 SSH 入口仍可用，安排维护时间后再重启。机器重新上线后，重新检查端口、普通账号公钥登录和 sudo。</p>
+<p><span id="常见问题与最终验收" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="检查登录与维护结果"><a href="#检查登录与维护结果" class="headerlink" title="检查登录与维护结果"></a>检查登录与维护结果</h2><p>可以按下面的顺序检查，而不是只看一次登录成功：</p>
 <table>
 <thead>
 <tr>
-<th>变量</th>
-<th>含义</th>
-<th>操作位置</th>
+<th>检查对象</th>
+<th>预期结果</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>ADMIN_USER</code></td>
-<td>普通管理用户</td>
-<td>服务器</td>
+<td><code>sshd -t</code></td>
+<td>无语法错误</td>
 </tr>
 <tr>
-<td><code>SERVER_ADDR</code></td>
-<td>服务器公网地址或域名</td>
-<td>PowerShell</td>
+<td><code>ss -ltnp</code></td>
+<td>只保留计划中的 SSH 地址与端口</td>
 </tr>
 <tr>
-<td><code>OLD_SSH_PORT</code> &#x2F; <code>NEW_SSH_PORT</code></td>
-<td>迁移前后 SSH 端口</td>
-<td>控制台、服务器、PowerShell</td>
+<td>外部新会话</td>
+<td>普通管理用户以公钥登录，sudo 可用</td>
 </tr>
 <tr>
-<td><code>KEY_FILE</code></td>
-<td>Windows 私钥文件名</td>
-<td>PowerShell</td>
+<td>最终认证配置</td>
+<td>禁止 root 和 SSH 密码登录，公钥可用</td>
+</tr>
+<tr>
+<td>网络规则</td>
+<td>管理来源可访问新入口，旧入口按计划收紧</td>
 </tr>
 </tbody></table>
-<p>PowerShell 先定义变量：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$AdminUser</span> = <span class="string">&#x27;&lt;管理员用户&gt;&#x27;</span></span><br><span class="line"><span class="variable">$ServerAddr</span> = <span class="string">&#x27;&lt;服务器地址&gt;&#x27;</span></span><br><span class="line"><span class="variable">$OldSshPort</span> = <span class="string">&#x27;&lt;旧SSH端口&gt;&#x27;</span></span><br><span class="line"><span class="variable">$NewSshPort</span> = <span class="string">&#x27;&lt;新SSH端口&gt;&#x27;</span></span><br><span class="line"><span class="variable">$KeyFile</span> = <span class="string">&quot;<span class="variable">$HOME</span>\.ssh\&lt;私钥文件&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>服务启动和认证日志可分别查看：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> journalctl -u ssh.service -u ssh.socket --since <span class="string">&#x27;-15 minutes&#x27;</span> --no-pager</span><br></pre></td></tr></table></figure>
 
-<p><span id="1-建立独立密钥和普通管理用户" class="heading-anchor" aria-hidden="true"></span></p>
-<h2 id="建立独立密钥和普通管理用户"><a href="#建立独立密钥和普通管理用户" class="headerlink" title="建立独立密钥和普通管理用户"></a>建立独立密钥和普通管理用户</h2><p>在 Windows PowerShell 创建一套服务器专用密钥。公钥文件默认在私钥路径后追加 <code>.pub</code>；私钥只保留在管理端。</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh<span class="literal">-keygen</span> <span class="literal">-t</span> ed25519 <span class="literal">-a</span> <span class="number">100</span> <span class="operator">-f</span> <span class="variable">$KeyFile</span> <span class="literal">-C</span> <span class="string">&#x27;&lt;用途说明&gt;&#x27;</span></span><br><span class="line"><span class="built_in">Get-Content</span> <span class="string">&quot;<span class="variable">$KeyFile</span>.pub&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在<strong>保留的初始服务器会话</strong>中创建用户。<code>adduser</code> 会交互设置服务器本地密码；不要记录或公开该密码。将 PowerShell 中读取的单行公钥粘贴到 heredoc 内。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ADMIN_USER=<span class="string">&#x27;&lt;管理员用户&gt;&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> adduser <span class="string">&quot;<span class="variable">$ADMIN_USER</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> usermod -aG <span class="built_in">sudo</span> <span class="string">&quot;<span class="variable">$ADMIN_USER</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> install -d -m 700 -o <span class="string">&quot;<span class="variable">$ADMIN_USER</span>&quot;</span> -g <span class="string">&quot;<span class="variable">$ADMIN_USER</span>&quot;</span> <span class="string">&quot;/home/<span class="variable">$ADMIN_USER</span>/.ssh&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">tee</span> <span class="string">&quot;/home/<span class="variable">$ADMIN_USER</span>/.ssh/authorized_keys&quot;</span> &gt;/dev/null &lt;&lt;<span class="string">&#x27;EOF_KEY&#x27;</span></span><br><span class="line">&lt;粘贴单行公钥&gt;</span><br><span class="line">EOF_KEY</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chown</span> <span class="string">&quot;<span class="variable">$ADMIN_USER</span>:<span class="variable">$ADMIN_USER</span>&quot;</span> <span class="string">&quot;/home/<span class="variable">$ADMIN_USER</span>/.ssh/authorized_keys&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> 600 <span class="string">&quot;/home/<span class="variable">$ADMIN_USER</span>/.ssh/authorized_keys&quot;</span></span><br><span class="line"><span class="built_in">id</span> <span class="string">&quot;<span class="variable">$ADMIN_USER</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> namei -l <span class="string">&quot;/home/<span class="variable">$ADMIN_USER</span>/.ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>确认账号、sudo 组和文件权限无误后，保持旧会话打开，转到新的 PowerShell 窗口测试登录。</p>
-<p>在<strong>第二个 PowerShell 窗口</strong>验证公钥和 sudo：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$OldSshPort</span> <span class="literal">-i</span> <span class="variable">$KeyFile</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
-<p>登录后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">id</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">whoami</span></span><br></pre></td></tr></table></figure>
-
-<p>预期<code>id</code>显示新用户，<code>sudo whoami</code>输出<code>root</code>。还可以用另一把未授权密钥确认访问会被拒绝：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$OldSshPort</span> <span class="literal">-i</span> <span class="string">&quot;<span class="variable">$HOME</span>\.ssh\&lt;其他私钥文件&gt;&quot;</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="literal">-o</span> BatchMode=yes <span class="literal">-o</span> PreferredAuthentications=publickey <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>负向测试仅尝试公钥认证，不应输入账号密码补救。先确认目标可达、主机指纹已核验，以及指定测试密钥能够被加载；带口令的测试密钥需要提前在受控的密钥代理中解锁。预期是服务器拒绝这把未授权公钥，而不是网络超时、主机验证失败或密钥无法解锁。</p>
-<p>若登录失败，在旧会话或控制台检查用户名、公钥是否完整，以及<code>.ssh</code>和<code>authorized_keys</code>的属主与权限。修复配置后重新测试，不要先删除唯一可用的授权。</p>
-<p><span id="2-平滑迁移-SSH-端口" class="heading-anchor" aria-hidden="true"></span></p>
-<h2 id="平滑迁移-SSH-端口"><a href="#平滑迁移-SSH-端口" class="headerlink" title="平滑迁移 SSH 端口"></a>平滑迁移 SSH 端口</h2><p>端口迁移遵循：<strong>新增网络规则 → 双端口监听 → 第二会话登录 → 单端口监听 → 第三会话登录 → 移除旧网络规则</strong>。非默认端口只减少常见扫描噪声，核心控制仍是密钥、私钥口令、禁止密码&#x2F;root 登录和最小 sudo。</p>
-<p>先在服务器识别实际监听单元。Ubuntu 24.04 可能使用 <code>ssh.socket</code>，不能假定只改 <code>sshd_config</code> 就会改变监听：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl is-enabled ssh.socket ssh.service</span><br><span class="line">systemctl status ssh.socket --no-pager</span><br><span class="line">systemctl <span class="built_in">cat</span> ssh.socket</span><br><span class="line">systemctl show ssh.socket -p Listen -p ActiveState</span><br><span class="line">ss -lntp | grep -E <span class="string">&#x27;:(&lt;旧SSH端口&gt;|&lt;新SSH端口&gt;)\b&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后在云网络控制台新增 TCP <code>NEW_SSH_PORT</code>入站规则，暂时保留<code>OLD_SSH_PORT</code>。保存规则后还要检查服务器监听，并从新的 PowerShell 窗口实际登录。</p>
-<p>在服务器写双端口 socket drop-in：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">OLD_SSH_PORT=<span class="string">&#x27;&lt;旧SSH端口&gt;&#x27;</span></span><br><span class="line">NEW_SSH_PORT=<span class="string">&#x27;&lt;新SSH端口&gt;&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> install -d -m 755 /etc/systemd/system/ssh.socket.d</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/systemd/system/ssh.socket.d/10-ports.conf &gt;/dev/null &lt;&lt;<span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="string">[Socket]</span></span><br><span class="line"><span class="string">ListenStream=</span></span><br><span class="line"><span class="string">ListenStream=$OLD_SSH_PORT</span></span><br><span class="line"><span class="string">ListenStream=$NEW_SSH_PORT</span></span><br><span class="line"><span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">cat</span> ssh.socket</span><br><span class="line"><span class="built_in">sudo</span> systemctl show ssh.socket -p Listen -p ActiveState</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart ssh.socket</span><br><span class="line"><span class="built_in">sudo</span> systemctl status ssh.socket --no-pager</span><br><span class="line">ss -lntp | grep -E <span class="string">&quot;:(<span class="variable">$OLD_SSH_PORT</span>|<span class="variable">$NEW_SSH_PORT</span>)\b&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>空的 <code>ListenStream=</code> 重置列表；随后两行明确保留旧端口并新增新端口。<code>daemon-reload</code>、<code>cat/show/restart/status</code> 的退出状态用于发现加载问题，<code>ss</code> 才证明监听层。</p>
-<p>在第二个新 PowerShell 窗口验证新端口和 sudo：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$NewSshPort</span> <span class="literal">-i</span> <span class="variable">$KeyFile</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>成功后先让服务器只监听新端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/systemd/system/ssh.socket.d/10-ports.conf &gt;/dev/null &lt;&lt;<span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="string">[Socket]</span></span><br><span class="line"><span class="string">ListenStream=</span></span><br><span class="line"><span class="string">ListenStream=$NEW_SSH_PORT</span></span><br><span class="line"><span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart ssh.socket</span><br><span class="line"><span class="built_in">sudo</span> systemctl status ssh.socket --no-pager</span><br><span class="line">ss -lntp | grep -E <span class="string">&quot;:(<span class="variable">$OLD_SSH_PORT</span>|<span class="variable">$NEW_SSH_PORT</span>)\b&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在<strong>第三个新 PowerShell 窗口</strong>再次登录新端口：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$NewSshPort</span> <span class="literal">-i</span> <span class="variable">$KeyFile</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>第三个会话成功，才在云网络控制台删除旧端口放行。最后的新连接到旧端口应失败：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$OldSshPort</span> <span class="literal">-i</span> <span class="variable">$KeyFile</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>若旧端口测试表现为超时，应结合网络规则和服务器<code>ss</code>输出确认是否已经关闭。</p>
-<h3 id="端口迁移回退"><a href="#端口迁移回退" class="headerlink" title="端口迁移回退"></a>端口迁移回退</h3><p>迁移失败时，先在网络控制台确认或恢复旧端口放行，再在保留会话恢复双端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/systemd/system/ssh.socket.d/10-ports.conf &gt;/dev/null &lt;&lt;<span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="string">[Socket]</span></span><br><span class="line"><span class="string">ListenStream=</span></span><br><span class="line"><span class="string">ListenStream=$OLD_SSH_PORT</span></span><br><span class="line"><span class="string">ListenStream=$NEW_SSH_PORT</span></span><br><span class="line"><span class="string">EOF_SOCKET</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart ssh.socket</span><br><span class="line"><span class="built_in">sudo</span> systemctl status ssh.socket --no-pager</span><br><span class="line">ss -lntp | grep -E <span class="string">&quot;:(<span class="variable">$OLD_SSH_PORT</span>|<span class="variable">$NEW_SSH_PORT</span>)\b&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>随后用独立新终端测试旧端口。没有有效旧会话或控制台时，不应删除唯一入口。</p>
-<p><span id="3-仅允许公钥认证" class="heading-anchor" aria-hidden="true"></span></p>
-<h2 id="仅允许公钥认证"><a href="#仅允许公钥认证" class="headerlink" title="仅允许公钥认证"></a>仅允许公钥认证</h2><p>确认新端口公钥登录正常后再收紧认证策略，并继续保留一个已登录会话。先查看现有配置；Ubuntu 的 OpenSSH 配置可能受多个文件影响，最终以<code>sshd -T</code>输出为准。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(</span><br><span class="line"><span class="built_in">set</span> -euo pipefail</span><br><span class="line"><span class="comment"># 将打印出的备份目录记录在私密维护记录中；回退时填写同一个目录。</span></span><br><span class="line">BACKUP_DIR=$(<span class="built_in">sudo</span> <span class="built_in">mktemp</span> -d /etc/ssh/auth-backup.XXXXXXXX)</span><br><span class="line"><span class="built_in">printf</span> <span class="string">&#x27;BACKUP_DIR=%s\n&#x27;</span> <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -a /etc/ssh/sshd_config <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>/sshd_config&quot;</span></span><br><span class="line">snippet=/etc/ssh/sshd_config.d/00-publickey-only.conf</span><br><span class="line"><span class="comment"># 符号链接可能指向其他配置；不要沿链接写入，先另行核对。</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">sudo</span> <span class="built_in">test</span> -L <span class="string">&quot;<span class="variable">$snippet</span>&quot;</span>; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">printf</span> <span class="string">&#x27;snippet 是符号链接，停止变更\n&#x27;</span> &gt;&amp;2</span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">sudo</span> <span class="built_in">test</span> -e <span class="string">&quot;<span class="variable">$snippet</span>&quot;</span> || <span class="built_in">sudo</span> <span class="built_in">test</span> -L <span class="string">&quot;<span class="variable">$snippet</span>&quot;</span>; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">sudo</span> <span class="built_in">cp</span> -a <span class="string">&quot;<span class="variable">$snippet</span>&quot;</span> <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>/snippet&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">sudo</span> <span class="built_in">touch</span> <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>/snippet.absent&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">tee</span> <span class="string">&quot;<span class="variable">$snippet</span>&quot;</span> &gt;/dev/null &lt;&lt;<span class="string">&#x27;EOF_SSHD&#x27;</span></span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span></span><br><span class="line">PasswordAuthentication no</span><br><span class="line">KbdInteractiveAuthentication no</span><br><span class="line">PermitRootLogin no</span><br><span class="line">EOF_SSHD</span><br><span class="line"><span class="built_in">sudo</span> sshd -t</span><br><span class="line"><span class="built_in">sudo</span> sshd -T | grep -Ei <span class="string">&#x27;^(pubkeyauthentication|passwordauthentication|kbdinteractiveauthentication|permitrootlogin)&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl reload ssh.service</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p>上述括号创建子 Shell；备份、写入或语法检查失败会终止本块，不会继续 reload，也不会退出保留的交互会话。<code>sshd -T</code> 输出还需人工核对；如有 <code>Match</code>，使用 <code>sudo sshd -T -C &#39;user=root,addr=&lt;客户端地址&gt;,host=&lt;客户端主机名&gt;&#39;</code> 等对应连接条件检查有效策略（先替换占位符），不要只看全局值。</p>
-<p>用新的 PowerShell 窗口做正向验证：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$NewSshPort</span> <span class="literal">-i</span> <span class="variable">$KeyFile</span> <span class="literal">-o</span> IdentitiesOnly=yes <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在新的 PowerShell 窗口分别做密码认证和 root 远程登录的负向测试：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ssh <span class="literal">-p</span> <span class="variable">$NewSshPort</span> <span class="literal">-o</span> PubkeyAuthentication=no <span class="literal">-o</span> PreferredAuthentications=password <span class="literal">-o</span> NumberOfPasswordPrompts=<span class="number">1</span> <span class="string">&quot;<span class="variable">$AdminUser</span>@<span class="variable">$ServerAddr</span>&quot;</span></span><br><span class="line">ssh <span class="literal">-p</span> <span class="variable">$NewSshPort</span> <span class="literal">-o</span> BatchMode=yes <span class="string">&quot;root@<span class="variable">$ServerAddr</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>root 测试失败也可能因为没有提供可用密钥，不能单凭失败证明禁止 root。应结合对应连接条件下的 <code>permitrootlogin no</code>、认证策略输出及服务端日志判断，且普通管理员的新会话必须仍能成功。</p>
-<p>回退前核对本次备份目录及原 snippet 状态：原来存在则恢复原文件，原来不存在才删除本次新增文件。主配置未被本步骤修改，不应无条件覆盖回去：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(</span><br><span class="line"><span class="built_in">set</span> -euo pipefail</span><br><span class="line">BACKUP_DIR=<span class="string">&#x27;&lt;本次记录的备份目录&gt;&#x27;</span></span><br><span class="line">snippet=/etc/ssh/sshd_config.d/00-publickey-only.conf</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">test</span> -d <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>&quot;</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">sudo</span> <span class="built_in">test</span> -e <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>/snippet&quot;</span> || <span class="built_in">sudo</span> <span class="built_in">test</span> -L <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>/snippet&quot;</span>; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">sudo</span> <span class="built_in">cp</span> -a --remove-destination <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>/snippet&quot;</span> <span class="string">&quot;<span class="variable">$snippet</span>&quot;</span></span><br><span class="line"><span class="keyword">elif</span> <span class="built_in">sudo</span> <span class="built_in">test</span> -f <span class="string">&quot;<span class="variable">$BACKUP_DIR</span>/snippet.absent&quot;</span>; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">sudo</span> <span class="built_in">rm</span> -f -- <span class="string">&quot;<span class="variable">$snippet</span>&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">printf</span> <span class="string">&#x27;备份状态不完整，停止回退\n&#x27;</span> &gt;&amp;2</span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">sudo</span> sshd -t</span><br><span class="line"><span class="built_in">sudo</span> sshd -T | grep -Ei <span class="string">&#x27;^(pubkeyauthentication|passwordauthentication|kbdinteractiveauthentication|permitrootlogin)&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl reload ssh.service</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p>再以新终端复验，最后才关闭回退会话。</p>
-<p><span id="4-软件索引、工具、升级与重启" class="heading-anchor" aria-hidden="true"></span></p>
-<h2 id="软件索引、工具、升级与重启"><a href="#软件索引、工具、升级与重启" class="headerlink" title="软件索引、工具、升级与重启"></a>软件索引、工具、升级与重启</h2><p>升级前确认 SSH 仍可从新窗口登录，并检查磁盘、内存和失败服务：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> -h /</span><br><span class="line">free -h</span><br><span class="line">systemctl --failed</span><br><span class="line">apt-cache policy git curl docker.io rsync</span><br></pre></td></tr></table></figure>
-
-<p><code>apt update</code> 会刷新本地包索引，是状态变更但不会升级已安装包；<code>apt install</code> 安装指定包；<code>apt upgrade</code> 升级已安装包。模拟依赖动作仍需要可用索引：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line">update_status=$?</span><br><span class="line"><span class="built_in">printf</span> <span class="string">&#x27;apt update exit=%s\n&#x27;</span> <span class="string">&quot;<span class="variable">$update_status</span>&quot;</span></span><br><span class="line"><span class="built_in">sudo</span> apt -s install git curl ca-certificates docker.io rsync</span><br><span class="line"><span class="built_in">sudo</span> apt -s upgrade</span><br></pre></td></tr></table></figure>
-
-<p>确认模拟结果和维护窗口后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install git curl ca-certificates docker.io rsync</span><br><span class="line"><span class="built_in">sudo</span> apt upgrade</span><br><span class="line"><span class="built_in">sudo</span> apt autoremove --dry-run</span><br></pre></td></tr></table></figure>
-
-<p>Compose 是否需要取决于业务和当前软件源，不应假定所有主机都有相同 Compose 包。检查重启标记：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">test</span> -e /var/run/reboot-required &amp;&amp; <span class="built_in">cat</span> /var/run/reboot-required || <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>如果核心库或内核更新要求重启，选择维护时段重启，随后重新建立 SSH 连接并检查：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">uname</span> -r</span><br><span class="line"><span class="built_in">uptime</span></span><br><span class="line">systemctl is-system-running || <span class="literal">true</span></span><br><span class="line">systemctl --failed</span><br></pre></td></tr></table></figure>
-
-<p><code>degraded</code> 是诊断信号，要结合失败单元判断；即使没有重启标记，也应复验关键服务和管理入口。</p>
-<h2 id="常见问题与最终验收"><a href="#常见问题与最终验收" class="headerlink" title="常见问题与最终验收"></a>常见问题与最终验收</h2><table>
-<thead>
-<tr>
-<th>现象</th>
-<th>先检查什么</th>
-<th>不能据此断定什么</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>新端口超时</td>
-<td>网络规则、<code>ss</code>、管理端地址</td>
-<td>不能只凭超时认定是安全组问题</td>
-</tr>
-<tr>
-<td>新用户被拒绝</td>
-<td>公钥、权限、用户名、日志</td>
-<td>本地文件存在不等于登录成功</td>
-</tr>
-<tr>
-<td><code>sshd -t</code> 成功</td>
-<td>再看 <code>sshd -T</code></td>
-<td>语法成功不等于策略生效</td>
-</tr>
-<tr>
-<td><code>systemctl</code> 非零</td>
-<td><code>systemctl --failed</code></td>
-<td>不自动等于系统不能维护</td>
-</tr>
-</tbody></table>
-<p>完成后确认：普通管理员可以通过新端口和公钥登录并使用 sudo；旧端口已经关闭；密码与 root 远程登录被拒绝；软件更新和服务状态无异常。</p>
-<blockquote>
-<p>Ubuntu 镜像和云平台的默认配置可能不同。修改前先查看当前 SSH unit 和生效配置，并始终保留控制台或已有会话。</p>
-</blockquote>
+<p>日志可能包含账号与来源地址，分享排错材料前应脱敏。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://documentation.ubuntu.com/server/how-to/security/openssh-server/">Ubuntu Server：OpenSSH server</a></li>
+<li><a target="_blank" rel="noopener" href="https://man.openbsd.org/sshd_config">OpenSSH：sshd_config</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.freedesktop.org/software/systemd/man/latest/systemd.socket.html">systemd.socket：ListenStream</a></li>
+</ul>
 </div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
 
-<nav class="post-neighbors" aria-label="前后文章">
+      <aside class="article-aside" aria-label="文章侧栏">
+        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
 
-<a href="/posts/02-hexo-docker-nginx-publish/"><span>下一篇</span><strong>Hexo 与 Nginx：静态博客构建与部署</strong></a>
-    </nav>
-    <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
-  </article>
-</div></div></main>
+        <section class="aside-card recent-card" aria-labelledby="recent-title">
+          <h2 class="aside-title" id="recent-title">推荐阅读</h2>
+          <ul class="recent-list">
+
+            <li><a href="/posts/08-frontend-pjax-music-lifecycle-draft/"><span>静态博客前端：PJAX 与持续音乐</span><time datetime="2026-09-11">09-11</time></a></li>
+
+            <li><a href="/posts/07-frontend-glass-accessibility-draft/"><span>静态博客前端：分层外观与可访问性</span><time datetime="2026-09-08">09-08</time></a></li>
+
+            <li><a href="/posts/06-frontend-layout-typography-draft/"><span>静态博客前端：布局与排版</span><time datetime="2026-09-04">09-04</time></a></li>
+
+            <li><a href="/posts/03-server-survival-games/"><span>Server Survival 与 Datacenter Survival：请求与机房</span><time datetime="2026-09-01">09-01</time></a></li>
+
+            <li><a href="/posts/02-hexo-docker-nginx-publish/"><span>Hexo 与 Nginx：构建与安全发布</span><time datetime="2026-08-29">08-29</time></a></li>
+
+          </ul>
+        </section>
+
+      </aside>
+    </div>
+  </div>
+</main>
 <div class="read-progress" data-read-progress role="presentation"></div>
-<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部">↑</button>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
 <footer class="site-footer">
   <div class="shell footer-inner">
     <div class="footer-brand">
       <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
     </div>
-    <p class="footer-note"><a href="/subscribe/">RSS 订阅</a><a href="/credits/">素材致谢</a><span>Powered by Hexo · 2026</span></p>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/subscribe/">RSS 订阅</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-note">
+      <span>本站内容为技术记录与随手笔记，文中命令均为示例，请在自己的环境中验证后再执行。</span>
+      <span>文字与原创插图版权归本站所有；第三方素材版权归原作者，详见素材致谢。</span>
+      <span class="footer-meta">
+        <span>Powered by Hexo · 2026</span>
+        <span class="footer-icp" title="取得备案号后在此填写">备案信息待补充</span>
+      </span>
+    </p>
   </div>
+
 </footer>
-<div class="music-player" data-music-player data-music-state="idle">
-  <button class="music-load vinyl-trigger secondary-action" type="button" data-music-load aria-controls="footer-music-panel" aria-expanded="false">
-    <span class="vinyl-mini" aria-hidden="true"></span>
-    <span class="music-load-text">音乐</span>
-  </button>
-  <div class="music-body" id="footer-music-panel" data-music-body hidden>
-    <p class="music-kicker">PIANO ROOM · 钢琴小憩</p>
-    <div class="vinyl-stage">
-      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true">
-        <span class="vinyl-groove"></span>
-        <span class="vinyl-label"></span>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
       </div>
-      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true">▶</span></button>
     </div>
-    <p class="music-title" data-music-title>钢琴小憩</p>
-    <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
-    <div class="music-progress" data-music-progress role="presentation">
-      <span class="music-progress-fill" data-music-progress-fill></span>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
     </div>
-    <div class="music-times">
-      <span data-music-current>0:00</span>
-      <span data-music-duration>--:--</span>
-    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1" aria-label="音乐音量"></label>
     <ol class="music-list" data-music-list role="list">
 
       <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
@@ -325,9 +434,8 @@
       </li>
 
     </ol>
-    <audio id="footer-music" data-music-audio preload="none" aria-label="钢琴小憩播放器" hidden></audio>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
     <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
-    <p class="music-hint">点击外部或按 Esc 收起，音乐继续播放。</p>
   </div>
   <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
 </div>
@@ -341,15 +449,11 @@
   </div>
 </div>
 <script src="/vendor/minisearch-7.2.0.js" defer></script>
-<script src="/js/search.js?v=20261013-editorial1" defer></script>
-<script src="/js/site.js?v=20261013-editorial1" defer></script>
-<script src="/js/quotes.js?v=20261013-editorial1" defer></script>
-
-<script src="/vendor/photoswipe-5.4.4/photoswipe.umd.min.js" defer></script>
-<script src="/vendor/photoswipe-5.4.4/photoswipe-lightbox.umd.min.js" defer></script>
-
-<script src="/js/media.js?v=20261013-editorial1" defer></script>
-<script src="/js/music.js?v=20261013-editorial1" defer></script>
-<script src="/js/pjax.js?v=20261013-editorial1" defer></script>
+<script src="/js/search.js?v=20261018-review4" defer></script>
+<script src="/js/site.js?v=20261018-review4" defer></script>
+<script src="/js/quotes.js?v=20261018-review4" defer></script>
+<script src="/js/media.js?v=20261018-review4" defer></script>
+<script src="/js/music.js?v=20261018-review4" defer></script>
+<script src="/js/pjax.js?v=20261018-review4" defer></script>
 </body>
 </html>

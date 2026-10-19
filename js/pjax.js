@@ -46,6 +46,8 @@
     document.__journalPjaxMounted = true;
 
     const origin = window.location.origin;
+    const buildVersion = (doc) => doc.querySelector('meta[name="journal-build"]')?.getAttribute('content') || '';
+    const shellVersion = buildVersion(document);
     const positions = new Map();
     const byUrl = new Map();
     const id = () => String(Date.now()) + '-' + String(Math.random());
@@ -123,7 +125,7 @@
       if (window.JournalCalendar && typeof window.JournalCalendar.mount === 'function') window.JournalCalendar.mount(document, window);
       if (window.JournalSite && typeof window.JournalSite.mountPage === 'function') window.JournalSite.mountPage(document, window);
       if (window.JournalMedia && typeof window.JournalMedia.mount === 'function') window.JournalMedia.mount(document, window);
-      if (window.JournalSearch && typeof window.JournalSearch.mount === 'function') window.JournalSearch.mount(document, window);
+      if (window.JournalMusic && typeof window.JournalMusic.mount === 'function') window.JournalMusic.mount(document, window);
     };
 
     const apply = (doc) => {
@@ -141,10 +143,12 @@
         const old = document.querySelector(selector);
         if (next && old) old.setAttribute(attr, next.getAttribute(attr));
         else if (next && !old) document.head.appendChild(next);
+        else if (old) old.remove();
       };
       sync('link[rel="canonical"]', 'href');
       sync('meta[property="og:url"]', 'content');
       sync('meta[name="description"]', 'content');
+      sync('meta[name="robots"]', 'content');
       sync('meta[property="og:title"]', 'content');
       sync('meta[property="og:description"]', 'content');
       sync('meta[property="og:type"]', 'content');
@@ -152,6 +156,18 @@
       if (css && !document.querySelector('link[href*="photoswipe"]')) document.head.appendChild(css);
       document.body.setAttribute('data-layout', (doc.body && doc.body.getAttribute('data-layout')) || '');
       return true;
+    };
+
+    const focusPage = () => {
+      const main = document.querySelector(MAIN);
+      const target = main && (main.querySelector('h1') || main);
+      if (!target || typeof target.focus !== 'function') return;
+      if (!target.hasAttribute('tabindex')) {
+        target.setAttribute('tabindex', '-1');
+        target.addEventListener('blur', () => target.removeAttribute('tabindex'), { once: true });
+      }
+      // Focus announces the new page; explicit scroll below owns top/hash/history.
+      target.focus({ preventScroll: true });
     };
 
     const scrollToPage = (url, fresh, top) => {
@@ -181,18 +197,27 @@
           reject(new Error('navigation timeout'));
         }, 10000);
       });
-      const request = Promise.resolve().then(() => window.fetch(url, { credentials: 'same-origin', signal: controller ? controller.signal : undefined }))
+      const request = Promise.resolve().then(() => window.fetch(url, { credentials: 'same-origin', cache: 'no-cache', signal: controller ? controller.signal : undefined }))
         .then((response) => {
           if (!response.ok) throw new Error('HTTP ' + response.status);
           const type = response.headers.get('content-type') || '';
           if (type && !/text\/html/.test(type)) throw new Error('not html');
-          return response.text();
+          const requested = new URL(url, origin);
+          const destination = new URL(response.url || requested.href, origin);
+          // fetch follows redirects. Never import a foreign shell into this origin.
+          if (!/^https?:$/.test(destination.protocol) || destination.origin !== origin) throw new Error('foreign redirect');
+          // Fetch URLs usually omit fragments; HTTP redirects inherit the original
+          // fragment unless the destination explicitly provides a replacement.
+          if (!destination.hash) destination.hash = requested.hash;
+          return response.text().then((html) => ({ html, finalUrl: destination.href }));
         });
       return Promise.race([request, timeout])
-        .then((html) => {
+        .then(({ html, finalUrl }) => {
           if (requestId !== navigationId) return;
           const doc = new window.DOMParser().parseFromString(html, 'text/html');
           if (!doc || !doc.querySelector(MAIN)) throw new Error('no main');
+          // A new release needs a new header/player/script shell, not just main.
+          if (buildVersion(doc) !== shellVersion) throw new Error('build changed');
           // Start optional assets before apply moves the stylesheet, but never await them.
           const enhancement = ensurePostVendor(doc);
           if (push) {
@@ -200,18 +225,19 @@
             current.url = window.location.href; // Preserve TOC fragment changes.
             remember(current);
             window.history.replaceState(historyState(current), '', current.url);
-            const next = { id: id(), url, from: current.url, internal: true, scrollY: 0 };
-            window.history.pushState({ __journalPjax: next }, '', url);
+            const next = { id: id(), url: finalUrl, from: current.url, internal: true, scrollY: 0 };
+            window.history.pushState({ __journalPjax: next }, '', finalUrl);
             current = next;
           } else {
-            current = restored || { id: id(), url, from: null, internal: false, scrollY: 0 };
-            window.history.replaceState(historyState(current), '', url);
+            current = restored ? { ...restored, url: finalUrl } : { id: id(), url: finalUrl, from: null, internal: false, scrollY: 0 };
+            window.history.replaceState(historyState(current), '', finalUrl);
           }
           remember(current);
           if (!apply(doc)) throw new Error('swap failed');
           setBackLink();
           remount();
-          scrollToPage(url, push, current.scrollY);
+          if (push) focusPage();
+          scrollToPage(finalUrl, push, current.scrollY);
           const pageMain = document.querySelector(MAIN);
           enhancement.then(() => {
             if (requestId !== navigationId || document.querySelector(MAIN) !== pageMain) return;

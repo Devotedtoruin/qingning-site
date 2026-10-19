@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+<title id="title">Hexo：源码、产物与静态托管</title><desc id="desc">Hexo 生成 public，检查后的公开文件直接交付到 release；产物仓库是可选的版本交付方式，不直接作为 HTTP 根目录。Nginx 只读挂载选定 release。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6d8075"/></marker></defs>
+<rect width="1200" height="640" rx="20" fill="#fffdf7"/>
+<g font-family="system-ui, sans-serif" fill="#233a32">
+<text x="40" y="58" font-size="32" font-weight="700">Hexo：源码、公开产物与静态托管</text>
+<rect x="40" y="125" width="270" height="125" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
+<text x="175" y="178" font-size="26" text-anchor="middle" font-weight="700">Hexo 源码</text>
+<text x="175" y="216" font-size="24" text-anchor="middle">文章、主题、配置</text>
+<rect x="450" y="125" width="270" height="125" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
+<text x="585" y="178" font-size="26" text-anchor="middle" font-weight="700">public/</text>
+<text x="585" y="216" font-size="24" text-anchor="middle">生成并检查公开文件</text>
+<rect x="860" y="125" width="300" height="125" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
+<text x="1010" y="178" font-size="26" text-anchor="middle" font-weight="700">releases/v1/</text>
+<text x="1010" y="216" font-size="24" text-anchor="middle">仅存放静态产物</text>
+<path d="M 325 187 L 435 187" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 735 187 L 845 187" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="790" y="108" font-size="23" text-anchor="middle">直接交付</text>
+<rect x="65" y="340" width="480" height="175" rx="12" fill="#f4edda" stroke="#6d8075" stroke-width="2"/>
+<text x="305" y="393" font-size="26" text-anchor="middle" font-weight="700">可选：独立产物仓库</text>
+<text x="305" y="435" font-size="24" text-anchor="middle">记录版本，再导出获准公开的文件</text>
+<text x="305" y="477" font-size="24" text-anchor="middle">Git 检出目录不直接提供 HTTP</text>
+<rect x="655" y="340" width="480" height="175" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
+<text x="895" y="393" font-size="26" text-anchor="middle" font-weight="700">Docker / Nginx</text>
+<text x="895" y="435" font-size="24" text-anchor="middle">只读挂载选定的 release</text>
+<text x="895" y="477" font-size="24" text-anchor="middle">提供 HTTP，不负责构建</text>
+<path d="M 1010 250 L 1010 285 L 895 285 L 895 325" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="600" y="564" font-size="26" text-anchor="middle">更新：准备新 release → 检查 → 重建服务 → HTTP 验证</text>
+<text x="600" y="605" font-size="24" text-anchor="middle" fill="#4c5c54">源码、备份、依赖和 Git 元数据都不进入公开根目录</text>
+</g>
+</svg>

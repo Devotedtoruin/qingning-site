@@ -4,16 +4,17 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="从请求路由、队列与扩容，到机房供电、散热与备用链路：借两款浏览器游戏梳理故障假设、观察指标和模拟的局限。">
-  <meta name="theme-color" content="#fffcf6">
-  <title>Server Survival 与 Datacenter Survival：两款运维模拟游戏 | 青柠小站</title>
+  <meta name="description" content="两款开源浏览器游戏的项目背景、试玩地址与基本玩法：搭云服务架构，或经营机房供电与散热。">
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261018-review4">
+  <title>Server Survival 与 Datacenter Survival：请求与机房 | 青柠小站</title>
 
 
   <link rel="canonical" href="https://qingning.co/posts/03-server-survival-games/">
   <meta property="og:url" content="https://qingning.co/posts/03-server-survival-games/">
 
-  <meta property="og:title" content="Server Survival 与 Datacenter Survival：两款运维模拟游戏 | 青柠小站">
-  <meta property="og:description" content="从请求路由、队列与扩容，到机房供电、散热与备用链路：借两款浏览器游戏梳理故障假设、观察指标和模拟的局限。">
+  <meta property="og:title" content="Server Survival 与 Datacenter Survival：请求与机房 | 青柠小站">
+  <meta property="og:description" content="两款开源浏览器游戏的项目背景、试玩地址与基本玩法：搭云服务架构，或经营机房供电与散热。">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="青柠小站">
 
@@ -21,15 +22,16 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261013-editorial1">
-
-  <link rel="stylesheet" href="/vendor/photoswipe-5.4.4/photoswipe.css">
-
-  <script src="/js/appearance.js?v=20261013-editorial1"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261018-review4">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261018-review4">
+  <script src="/js/ui.js?v=20261018-review4"></script>
+  <script src="/js/backgrounds.js?v=20261018-review4"></script>
+  <script src="/js/appearance.js?v=20261018-review4"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-<body>
 
-<header class="site-header">
+<body data-layout="post">
+
+<header class="site-header" data-floating-header>
   <div class="shell header-inner">
     <div class="brand-block">
       <a class="brand" href="/" aria-label="青柠小站，返回首页">
@@ -37,229 +39,272 @@
         <strong>青柠小站</strong>
       </a>
       <div class="brand-quote brand-quote--header">
-  <p>收录一些文章、工具和偶然遇到的有趣事物。</p>
+  <p>收录偶然遇到的有趣事物。</p>
 </div>
 
     </div>
     <nav class="desktop-nav" aria-label="主导航">
 
-        <a href="/articles/">文章</a>
-
-        <a href="/categories/">分类</a>
-
-    </nav>
-    <div class="header-actions">
-      <details class="appearance-controls" data-appearance-controls>
-        <summary class="appearance-toggle" aria-label="选择外观、背景和面板透明度"><span aria-hidden="true">◐</span> 外观</summary>
-        <div class="appearance-panel">
-          <fieldset class="appearance-options"><legend>外观</legend><div class="appearance-choices">
-            <button type="button" data-appearance-choice="glass" aria-pressed="true">玻璃</button>
-            <button type="button" data-appearance-choice="paper" aria-pressed="false">纸页</button>
-            <button type="button" data-appearance-choice="night" aria-pressed="false">夜色</button>
-          </div></fieldset>
-          <fieldset class="appearance-options"><legend>背景</legend><div class="appearance-choices">
-            <button type="button" data-background-choice="forest" aria-pressed="true">林间晨光</button>
-            <button type="button" data-background-choice="gradient" aria-pressed="false">暖色渐变</button>
-            <button type="button" data-background-choice="illustration" aria-pressed="false">湖山插画</button>
-          </div></fieldset>
-          <label for="appearance-transparency">内容面板透明度</label>
-          <div class="appearance-control-row">
-            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="45" step="1" value="18" aria-describedby="appearance-help" data-appearance-range>
-            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">18%</output>
-          </div>
-          <p id="appearance-help">0% 为实色纸面；只调整内容面板，不改变背景照片或文字清晰度。</p>
-          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
-        </div>
-      </details>
-      <button class="icon-button" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
-      <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-    </div>
-  </div>
-  <nav class="mobile-nav" data-mobile-nav aria-label="移动导航">
-
       <a href="/articles/">文章</a>
 
       <a href="/categories/">分类</a>
 
+
+
+      <details class="mega-menu" data-mega-menu>
+        <summary class="mega-trigger" aria-label="探索分类与精选专栏">专题探索</summary>
+        <div class="mega-panel">
+          <div class="mega-col">
+            <p class="mega-kicker">分类专栏</p>
+            <ul class="mega-list">
+
+              <li><a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span>前端技术</span><span class="count">3</span></a></li>
+
+              <li><a href="/categories/%E9%A1%B9%E7%9B%AE/"><span>项目</span><span class="count">1</span></a></li>
+
+              <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span>学习笔记</span><span class="count">2</span></a></li>
+
+            </ul>
+          </div>
+
+          <div class="mega-col">
+            <p class="mega-kicker">高频标签</p>
+            <div class="mega-tags">
+
+              <a href="/tags/CSS/">#CSS<sup>2</sup></a>
+
+              <a href="/tags/Hexo/">#Hexo<sup>2</sup></a>
+
+              <a href="/tags/%E9%83%A8%E7%BD%B2/">#部署<sup>1</sup></a>
+
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8/">#服务器安全<sup>1</sup></a>
+
+              <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目<sup>1</sup></a>
+
+              <a href="/tags/%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7/">#可访问性<sup>1</sup></a>
+
+              <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80/">#响应式布局<sup>1</sup></a>
+
+              <a href="/tags/Docker/">#Docker<sup>1</sup></a>
+
+            </div>
+          </div>
+
+
+          <div class="mega-col mega-featured">
+            <p class="mega-kicker">精选推荐</p>
+            <a class="mega-spotlight" href="/posts/08-frontend-pjax-music-lifecycle-draft/">
+              <strong>静态博客前端：PJAX 与持续音乐</strong>
+              <span>阅读全文 ↗</span>
+            </a>
+          </div>
+
+        </div>
+      </details>
+
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16" /><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布壁纸</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="forest" aria-pressed="false">林间晨光</button>
+
+            <button type="button" data-background-choice="wallpaper2" aria-pressed="false" disabled>山湖倒影<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper3" aria-pressed="false" disabled>晨曦山峦<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper4" aria-pressed="false" disabled>宇宙星云<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper6" aria-pressed="false" disabled>海洋波浪<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper7" aria-pressed="false" disabled>夏日海滨<small>待添加</small></button>
+
+            <button type="button" data-background-choice="wallpaper8" aria-pressed="false" disabled>动漫夏日<small>待添加</small></button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="45" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">45%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景照片或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger-pill" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><kbd class="search-kbd" aria-hidden="true">Ctrl K</kbd></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/categories/">分类</a>
+
   </nav>
 </header>
 
-<main class="page-main"><div class="shell article-shell"><div class="article-layout">
-  <nav class="article-toc" data-article-toc hidden aria-label="文章目录"><button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button><ol id="article-toc-list" data-toc-list></ol></nav>
-  <article class="article-main">
-    <header class="article-header">
-      <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
-      <p class="eyebrow"><time datetime="2026-09-01">2026-09-01</time> · 约 14 分钟阅读（粗估）</p>
-<p class="article-updated">更新于 <time datetime="2026-10-13">2026-10-13</time></p>
-      <h1>Server Survival 与 Datacenter Survival：两款运维模拟游戏</h1>
-<p class="article-description">从请求路由、队列与扩容，到机房供电、散热与备用链路：借两款浏览器游戏梳理故障假设、观察指标和模拟的局限。</p>
-      <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/%E6%A8%A1%E6%8B%9F%E6%B8%B8%E6%88%8F/">#模拟游戏</a></div>
-    </header>
-    <div class="article-content"><p>请求失败，可能是服务间没有可用路径，也可能是承载服务的机架断了电。<a target="_blank" rel="noopener" href="https://github.com/pshenok">pshenok</a> 的两款浏览器游戏分别把这两层问题摆到画面上：<strong>Server Survival</strong> 管服务、流量与请求处理，<strong>Datacenter Survival</strong> 管供电、散热与机架运行。</p>
-<p>本文是依据官方说明和固定版本源码整理的机制解读，<strong>不是本站试玩报告</strong>。下面的故障情景是待执行的观察方案，没有附会通关成绩、实测延迟或个人体验。在线入口会随项目更新，机制说明则限定在下列提交；若网页表现不同，先比较版本，而不是认定自己的操作一定有错。</p>
+
+<main class="page-main" id="main">
+  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="ambient-wash"></div></div>
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
+        <header class="article-header">
+          <p class="article-meta-line"><time datetime="2026-09-01">2026-09-01</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 4 分钟阅读（粗估）</p>
+          <p class="article-updated">更新于 <time datetime="2026-10-16">2026-10-16</time></p>
+          <h1>Server Survival 与 Datacenter Survival：请求与机房</h1>
+          <p class="article-description">两款开源浏览器游戏的项目背景、试玩地址与基本玩法：搭云服务架构，或经营机房供电与散热。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a></div>
+        </header>
+        <div class="article-content"><p><strong>Server Survival</strong> 和 <strong>Datacenter Survival</strong> 是开发者 <a target="_blank" rel="noopener" href="https://github.com/pshenok">Kostyantyn Pshenychnyy（pshenok）</a> 制作的两款开源浏览器游戏。一个让玩家搭云服务架构，另一个把视角移到服务器背后的供电和散热。按照下方固定版本的官方说明，两款都可直接在网页游玩，不用注册账号。</p>
 <table>
 <thead>
 <tr>
-<th>游戏</th>
+<th>项目</th>
 <th>在线游玩</th>
-<th>本文核对版本</th>
+<th>源码</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>Server Survival</td>
 <td><a target="_blank" rel="noopener" href="https://pshenok.github.io/server-survival/">打开游戏</a></td>
-<td><a target="_blank" rel="noopener" href="https://github.com/pshenok/server-survival/tree/7804e5969e28267cd33837e023eb46fa65da72b7">7804e596</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pshenok/server-survival">GitHub 仓库</a></td>
 </tr>
 <tr>
 <td>Datacenter Survival</td>
 <td><a target="_blank" rel="noopener" href="https://pshenok.github.io/datacenter-survival/">打开游戏</a></td>
-<td><a target="_blank" rel="noopener" href="https://github.com/pshenok/datacenter-survival/tree/3f2582972119828322ee3a1e57c1bf19256e8f02">3f258297</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pshenok/datacenter-survival">GitHub 仓库</a></td>
 </tr>
 </tbody></table>
-<p>官方 README 说明，两款均可直接在浏览器游玩，无需安装、构建或注册。Campaign 用逐关目标引出机制；自由实验入口适合一次只改变一个条件。不要把自由模式中关闭成本后的结果与生存模式直接比较。</p>
-<h2 id="Server-Survival：请求走到了哪里"><a href="#Server-Survival：请求走到了哪里" class="headerlink" title="Server Survival：请求走到了哪里"></a>Server Survival：请求走到了哪里</h2><figure class="article-media">
+<figure class="article-diagram">
+  <a href="/images/articles/survival-models.svg" target="_blank" rel="noopener"><img src="/images/articles/survival-models.svg" alt="Server Survival 模拟请求和服务拓扑；Datacenter Survival 模拟供电、机架与冷却。" width="1200" height="620" loading="lazy" decoding="async"></a>
+  <figcaption>两款游戏关注的系统层次</figcaption>
+</figure>
+
+<p><span id="Server-Survival：云架构塔防" class="heading-anchor" aria-hidden="true"></span><br><span id="项目背景与基本玩法" class="heading-anchor" aria-hidden="true"></span><br><span id="Server-Survival：请求走到了哪里" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="Server-Survival：云服务架构"><a href="#Server-Survival：云服务架构" class="headerlink" title="Server Survival：云服务架构"></a>Server Survival：云服务架构</h2><figure class="article-media">
   <a class="article-media-link" href="/images/games/server-survival.gif" data-pswp-width="800" data-pswp-height="457" target="_blank" rel="noopener">
-    <img src="/images/games/server-survival.webp" data-animated-src="/images/games/server-survival.gif" alt="Server Survival 官方演示：服务节点与连接关系" width="800" height="457" loading="lazy" decoding="async">
+    <img src="/images/games/server-survival.webp" data-animated-src="/images/games/server-survival.gif" alt="Server Survival 官方动图：请求在服务节点之间流动" width="800" height="457" loading="lazy" decoding="async">
   </a>
-  <figcaption>官方演示画面中的服务节点与连线，不是本站试玩截图。</figcaption>
+  <figcaption>Server Survival 官方演示</figcaption>
 </figure>
 
-<p>计算节点、数据库、缓存与队列各有不同职责。请求从入口沿有方向的连线流动，能否完成，取决于可达路径、请求类型、处理容量与服务状态。成功请求带来收入，失败或恶意流量泄漏影响声誉，节点还有持续维护费用。因此“连上了”和“处理成功了”是两个判断。</p>
-<h3 id="从入口开始搭出第一条请求路径"><a href="#从入口开始搭出第一条请求路径" class="headerlink" title="从入口开始搭出第一条请求路径"></a>从入口开始搭出第一条请求路径</h3><ol>
-<li>打开官方入口，选择 Campaign，再进入首关 The First Server；需要不受关卡目标限制的实验则选择 Sandbox。</li>
-<li>用时间控件暂停，先阅读目标和预算。工具栏按 Front Door、Compute、Data、Async、Ops 分类；选择服务后左键放置。</li>
-<li>首关可尝试依次放置 Firewall、Load Balancer、Compute 与 Relational DB，再选 Link（<code>C</code>），按上游 → 下游的顺序点击两个节点，连接 Internet → Firewall → Load Balancer → Compute → Database。这是一条待观察的搭建路径，不是保证零失败的通关攻略。</li>
-<li>回到 1 倍速，检查 READ 完成数、声誉、节点健康和失败徽标。若请求没有抵达数据库，先查方向和缺失连接；不要一开始就用 3 倍速掩盖过程。</li>
-<li>需要重新查看画面时，右键拖动平移，滚轮缩放，<code>R</code> 重置相机；<code>T</code> 切换俯视角。手机可点按放置、双指平移与缩放，但部分视角操作只支持键盘。</li>
-</ol>
-<h3 id="第一关并不是已经搭好的完整系统"><a href="#第一关并不是已经搭好的完整系统" class="headerlink" title="第一关并不是已经搭好的完整系统"></a>第一关并不是已经搭好的完整系统</h3><p>首关 <strong>The First Server</strong> 的主目标是完成至少 50 个 READ 请求，声誉达到至少 80%；零失败和速度目标属于奖励条件。这里有一个容易被介绍文字带偏的细节：固定版本的 <code>src/campaign/levels.js</code> 中，第一关 <code>preBuilt.services</code> 和 <code>connections</code> 都为空。Internet → Firewall → Load Balancer → Compute → Database 是理解和搭建的路径，不应写成开局已预置的整条链。</p>
-<p>该关并非只有 READ：配置还包含 WRITE 与少量 MALICIOUS。这意味着只盯着蓝色读请求，可能漏掉写入失败与防护问题。判断顺序应是：请求是否进入正确入口、连线方向是否正确、下游是否支持这种请求、实际有没有完成，再考虑是否缺容量。失败徽标有助于区分无路由、队列已满和只读节点拒绝写入，不必一看到失败就加服务器。</p>
-<h3 id="缓存和只读副本改变的是负载去向"><a href="#缓存和只读副本改变的是负载去向" class="headerlink" title="缓存和只读副本改变的是负载去向"></a>缓存和只读副本改变的是负载去向</h3><p>缓存减少到数据库的读取压力；只读副本把部分 READ 从主库分流。它们不是“所有数据库问题的通用修复”。固定版本 <code>src/sim/handlers/replica.js</code> 明确检查副本是否连接到数据库或 NoSQL 主节点；没有主节点会失败，副本也不会接受 WRITE。</p>
-<p>可以在 Sandbox 先固定流量构成，再比较有无缓存或副本的两份拓扑。故障假设是：<strong>数据库压力主要来自可分流读取，而非写入或缺路由</strong>。若增加副本后主库仍忙，需要继续看 READ 是否真的走向副本、WRITE 占比是否上升，以及入口或 Compute 是否成为新瓶颈。观察完成请求数、类型构成、失败原因与各节点负载，比仅看声誉变化更接近问题本身。</p>
-<p>真实系统还需处理复制延迟、读后写一致性、缓存失效与热点键。游戏把这些成本压缩为较少的状态，不能从“游戏中读取成功”推导生产环境可以无条件读副本。</p>
-<h3 id="队列把突发压力换成等待"><a href="#队列把突发压力换成等待" class="headerlink" title="队列把突发压力换成等待"></a>队列把突发压力换成等待</h3><p>Message Queue 的价值是缓冲，不是创造处理能力。固定版本的 <code>src/sim/handlers/sqs.js</code> 会检查下游容量；Compute 从队列拉取任务，队列不会不加限制地把所有请求推给计算节点。这里可以理解背压：下游忙时，上游暂存，避免立刻把压力放大。</p>
-<p>待验证的情景是先短时突发，再恢复原流量，观察队列是否逐步排空。若恢复后仍增长，问题更像是长期到达速率超过处理速率，而不是队列太小。在真实系统中，队列长度、最老任务年龄、消费速率、重试次数和死信数量要一起看；短时间无丢弃不代表任务符合时限。</p>
-<p>“队列更长，所以系统更可靠”也有条件。用户请求可能已经超时，重复执行可能造成副作用，持久化与确认策略可能影响丢失风险。游戏中的暂存反馈并不能替代消息中间件的持久性或幂等性设计。</p>
-<h3 id="扩容和限流要看生效时间"><a href="#扩容和限流要看生效时间" class="headerlink" title="扩容和限流要看生效时间"></a>扩容和限流要看生效时间</h3><p>官方说明中，Compute 会依据利用率扩缩容，队列驱动的计算组还会响应队列压力；新实例存在预热时间。扩容决策发生了，不等于当前一秒就多出可用容量。API Gateway 的限流则主动减少进入下游的请求，与让请求挤到失败有不同的反馈代价。</p>
-<p>可以提出两个分开的假设：突发太短，新增实例来不及投入；或者持续压力足够长，但瓶颈其实在数据库，增加 Compute 只让更多请求排到同一处。观察时应区分请求到达量、完成量、错误率、延迟、队列积压、预热实例和维护费用。Monitoring 节点提供实时指标和告警入口，不过游戏仪表不是生产监控系统的完整替身。</p>
-<p>固定版本 Campaign 共 25 关、5 章，逐步加入防御、可观测性、多区域及推理服务。这里不把某个游戏阈值当成生产建议：扩容阈值与熔断窗口必须结合业务时限、容量测试和成本重新设计。</p>
-<h2 id="Datacenter-Survival：机架为什么停了"><a href="#Datacenter-Survival：机架为什么停了" class="headerlink" title="Datacenter Survival：机架为什么停了"></a>Datacenter Survival：机架为什么停了</h2><figure class="article-media">
+<p>画布上的节点代表负载均衡、计算服务、数据库、缓存和消息队列，移动的小球代表请求。玩家购买组件、连接流向，让合法请求得到处理，同时守住预算、声誉和服务健康度。组件持续产生维护成本，并不是堆得越多越好。</p>
+<p><span id="从入口开始搭出第一条请求路径" class="heading-anchor" aria-hidden="true"></span><br><span id="第一关并不是已经搭好的完整系统" class="heading-anchor" aria-hidden="true"></span></p>
+<p>开始可选 <strong>Campaign</strong>，按关卡目标理解组件；该版本包含 25 关、5 章。<strong>Survival</strong> 在不断上涨的流量和随机事件下考验架构，<strong>Sandbox</strong> 则允许调整预算和流量，没有常规的游戏结束压力。关卡起始布局与任务不同，不需要先照搬一套庞大的通用拓扑。</p>
+<p><span id="缓存和只读副本改变的是负载去向" class="heading-anchor" aria-hidden="true"></span><br><span id="队列把突发压力换成等待" class="heading-anchor" aria-hidden="true"></span><br><span id="扩容和限流要看生效时间" class="heading-anchor" aria-hidden="true"></span></p>
+<p>游戏把 CDN、缓存、只读副本、队列和扩容做成可连接的节点：静态请求可交给 CDN，缓存或副本分担读负载，队列缓冲突发请求，Firewall 处理恶意流量。组件的适用请求类型与成本不同，先看失败标记和当前目标，再决定补哪一环。</p>
+<p>左键选择和放置组件，<code>C</code> 切换连线工具，连接有方向；右键拖动画面，滚轮缩放，<code>R</code> 重置视角。可以先暂停时间搭好路径，再用一倍速查看请求走向。</p>
+<p><span id="Datacenter-Survival：机房供电与散热模拟" class="heading-anchor" aria-hidden="true"></span><br><span id="项目背景与基本玩法-1" class="heading-anchor" aria-hidden="true"></span><br><span id="Datacenter-Survival：机架为什么停了" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="Datacenter-Survival：机房供电与冷却"><a href="#Datacenter-Survival：机房供电与冷却" class="headerlink" title="Datacenter Survival：机房供电与冷却"></a>Datacenter Survival：机房供电与冷却</h2><figure class="article-media">
   <a class="article-media-link" href="/images/games/datacenter-survival.gif" data-pswp-width="960" data-pswp-height="540" target="_blank" rel="noopener">
-    <img src="/images/games/datacenter-survival.webp" data-animated-src="/images/games/datacenter-survival.gif" alt="Datacenter Survival 官方演示：供电设施、机架与温度状态" width="960" height="540" loading="lazy" decoding="async">
+    <img src="/images/games/datacenter-survival.webp" data-animated-src="/images/games/datacenter-survival.gif" alt="Datacenter Survival 官方动图：供电设施、机架和热力状态" width="960" height="540" loading="lazy" decoding="async">
   </a>
-  <figcaption>官方演示画面中的供电设施、机架与温度状态，不是本站试玩截图。</figcaption>
+  <figcaption>Datacenter Survival 官方演示</figcaption>
 </figure>
 
-<p>机架有电且温度允许时才能正常承载工作。供电链、冷却和成本互相牵制：增加冷却会耗电；共享冷却可以降低重复开销，却把多个机架放进同一个故障影响范围。</p>
-<h3 id="先在实验场观察一条完整链路"><a href="#先在实验场观察一条完整链路" class="headerlink" title="先在实验场观察一条完整链路"></a>先在实验场观察一条完整链路</h3><ol>
-<li>打开官方入口，从菜单进入 The Lab。它不要求先通关，可在已有设备上观察，不必从空场地猜接线。</li>
-<li>沿 Grid Feed → Transformer → UPS → PDU → Rack 查看连接，辨认备用发电机与冷却设备所在位置，记录未改动时的需求、供电和温度。</li>
-<li>先只调整需求，观察机架与支路；再单独触发一次 grid outage（市电中断），看 UPS 缓冲、发电机接入和未服务功率。不要同时触发热浪与停电，否则难以区分因果。</li>
-<li>用 <code>T</code> 打开热力视图，再单独试 heatwave 或 CRAC failure；检查冷却是否有电、热点在哪里、哪些机架降额。右键或中键拖动、WASD 或方向键可平移画面。</li>
-<li>熟悉这些状态后再进 Campaign 首关 First Watt，按目标搭供电链。实验场没有目标倒计时，不代表生存模式没有预算与服务损失压力。</li>
-</ol>
-<p>以上操作入口依据固定版本官方 README；在线部署若改名或改变菜单，以实际界面为准。本文未执行这组实验。</p>
-<h3 id="容量取决于整条供电链"><a href="#容量取决于整条供电链" class="headerlink" title="容量取决于整条供电链"></a>容量取决于整条供电链</h3><p>官方说明的典型链路是 Grid Feed → Transformer → UPS → PDU → Rack，每个环节都有功率容量。上游超载会限制下游；继续过载还可能让断路器跳闸。这比“机架数量乘额定功率”多了一层约束：总供电够用，不代表某个 PDU 支路够用。</p>
-<p>第一关 <strong>First Watt</strong> 聚焦把电送到负载，后续再引入热、备用电力与诊断。面对“有些机架不工作”，先沿支路看连接、设备状态与容量，再判断市电是否整体中断。不能仅因为机房总需求低于总容量，就排除局部过载。</p>
-<p>待验证的情景是增加同一支路的需求，保留另一支路不变，观察故障是否集中到共享上游的机架。应记录需求功率、实际供电、未服务功率、故障徽标和损失归因，而不只是当前余额。真实设施还要考虑相位、保护协调、线缆、额定条件与维护规程；游戏里的连线不是电气设计图，更不能据此操作实际设备。</p>
-<h3 id="UPS-与发电机解决不同时间尺度的问题"><a href="#UPS-与发电机解决不同时间尺度的问题" class="headerlink" title="UPS 与发电机解决不同时间尺度的问题"></a>UPS 与发电机解决不同时间尺度的问题</h3><p>UPS 为切换间隙提供缓冲；备用发电机接续较长中断，但启动、接入和燃料都是条件。建了备用设备，不等于每个负载都接到了备用路径，也不等于剩余电量足够支撑切换。</p>
-<p><strong>The Lab</strong> 从开始即可进入，预置含 UPS、备用发电机、机架与 CRAC 的工作链路。它可调需求、环境温度和电价，也可主动触发热浪、电压跌落、市电中断、峰值电价窗口或 CRAC 故障；没有任务目标或倒计时。适合重复触发同一种中断，比较负载所在支路、UPS 剩余缓冲和发电机接入过程。本文没有执行这组比较，因此不宣称某配置实现了零中断。</p>
-<p>真实冗余还要看共同故障域。两路供电若共享同一上游，设备数量增加也未必隔离风险；能在故障时切换，与能够在计划维护时持续服务，又是不同要求。游戏关卡提供理解入口，不构成 Tier 认证或可维护性审计。</p>
-<h3 id="降温、PUE-和费用不是同一个目标"><a href="#降温、PUE-和费用不是同一个目标" class="headerlink" title="降温、PUE 和费用不是同一个目标"></a>降温、PUE 和费用不是同一个目标</h3><p>游戏中的热扩散与冷却覆盖使布局有意义。<code>T</code> 打开热力视图，可用于观察热点；它与 Server Survival 中切换俯视角的 <code>T</code> 不同。假设是冷却覆盖不当时，增加远处设备不如修正覆盖位置；还应检查冷却是否有电，而不是只数冷却器。</p>
-<p>PUE 是设施总用电与 IT 用电之比。在相同负载与观察窗口下，比较 PUE 才有解释力。不能把“PUE 下降”单独当成任务成功：机架是否持续工作、服务量是否满足需求、温度是否允许、总费用如何，都需要一起判断。现实的计量边界、统计周期和负载结构也影响可比性。</p>
-<p>固定版本还包含冷水机组与 CRAH 的共享回路，以及用水和 WUE 的反馈。共享设备带来规模效率，也形成共同失效点；节电并非唯一资源目标。一次冷却故障方案应同时记录热点、降额、服务损失与费用，避免把能效数值当成可靠性的替身。</p>
-<h2 id="把机制转成可检查的故障假设"><a href="#把机制转成可检查的故障假设" class="headerlink" title="把机制转成可检查的故障假设"></a>把机制转成可检查的故障假设</h2><p>以下是建议观察的问题，不是已经完成的实验结果。</p>
-<table>
-<thead>
-<tr>
-<th>情景</th>
-<th>先提出的假设</th>
-<th>要一起看的证据</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>请求突然大量失败</td>
-<td>路由或特定节点容量受限</td>
-<td>类型、失败徽标、节点负载、完成量</td>
-</tr>
-<tr>
-<td>加队列后不再立即丢弃</td>
-<td>短时积压可以被后续消费</td>
-<td>队列是否排空、等待时间、后续失败</td>
-</tr>
-<tr>
-<td>新实例出现仍很慢</td>
-<td>预热尚未完成或瓶颈在下游</td>
-<td>可用实例、数据库负载、完成量、费用</td>
-</tr>
-<tr>
-<td>一部分机架失电</td>
-<td>同支路共享上游受限</td>
-<td>支路、实际供电、断路器、损失归因</td>
-</tr>
-<tr>
-<td>温度上升</td>
-<td>冷却覆盖、供电或容量不足</td>
-<td>热力视图、冷却状态、服务降额</td>
-</tr>
-<tr>
-<td>备用设备存在仍中断</td>
-<td>路径、电量或接入条件不满足</td>
-<td>UPS 缓冲、接线、发电机状态与燃料</td>
-</tr>
-</tbody></table>
-<p>每次比较应记录版本、模式、初始拓扑、流量或需求、改变的变量和观察窗口。随机事件会影响结果；Datacenter Survival 的种子可固定事件内容，但官方架构说明也指出，帧率和起始帧可能造成时序偏差，因此不要承诺两台机器逐毫秒一致。不能把它的种子机制默认套到另一款游戏。</p>
-<h2 id="模拟最适合教因果，不适合替代验收"><a href="#模拟最适合教因果，不适合替代验收" class="headerlink" title="模拟最适合教因果，不适合替代验收"></a>模拟最适合教因果，不适合替代验收</h2><p>两款游戏共同强调的是先定位约束，再选择干预。逻辑层失败需要区分入口、路由、处理和下游；物理层失败需要区分连接、容量、备用路径和热环境。但简化模型省略了大量现实细节，游戏声誉不是正式 SLO，游戏预算不是供应商报价，游戏功率与温度也不是生产容量规划依据。</p>
-<p>源码与测试可说明作者实现和检查了什么，不等于本站独立重跑通过，更不等于模型已覆盖现实。固定版本架构文档甚至说明模拟存在有意保留的单 tick 滞后，提醒读者区分画面反馈、统计更新和物理因果。理解这一点，比把每个数值背成配置口诀更有价值。</p>
-<h2 id="来源与媒体许可"><a href="#来源与媒体许可" class="headerlink" title="来源与媒体许可"></a>来源与媒体许可</h2><p>本次核对使用固定提交，不使用未经核对的当前 main：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/pshenok/server-survival/blob/7804e5969e28267cd33837e023eb46fa65da72b7/README.md">Server Survival README</a>：模式、观察面板和机制范围。</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/pshenok/server-survival/blob/7804e5969e28267cd33837e023eb46fa65da72b7/src/campaign/levels.js">关卡定义</a>、<a target="_blank" rel="noopener" href="https://github.com/pshenok/server-survival/blob/7804e5969e28267cd33837e023eb46fa65da72b7/src/sim/handlers/sqs.js">队列处理</a>、<a target="_blank" rel="noopener" href="https://github.com/pshenok/server-survival/blob/7804e5969e28267cd33837e023eb46fa65da72b7/src/sim/handlers/replica.js">只读副本处理</a>：首关空拓扑、背压与读写边界。</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/pshenok/datacenter-survival/blob/3f2582972119828322ee3a1e57c1bf19256e8f02/README.md">Datacenter Survival README</a>、<a target="_blank" rel="noopener" href="https://github.com/pshenok/datacenter-survival/blob/3f2582972119828322ee3a1e57c1bf19256e8f02/docs/ARCHITECTURE.md">架构说明</a>：供电、热、实验场、种子与模型时序边界；该版本 Campaign 共 13 关、5 章。</li>
-</ul>
-<p>两款项目均采用 MIT License，作者为 Kostyantyn Pshenychnyy；Server Survival 版权年份为 2025，Datacenter Survival 为 2026。本文保留本站原 GIF、海报、封面路径和许可副本，不重新编码或把官方画面冒充实测。许可副本：<a href="/images/games/server-survival-LICENSE.txt">Server Survival</a>、<a href="/images/games/datacenter-survival-LICENSE.txt">Datacenter Survival</a>。固定版本资料核对日期为 2026-10-13；文章排序日期不表示这一天以前已在本站公开，在线入口的最新界面也不属于固定版本核验范围。</p>
+<p><span id="容量取决于整条供电链" class="heading-anchor" aria-hidden="true"></span><br><span id="UPS-与发电机解决不同时间尺度的问题" class="heading-anchor" aria-hidden="true"></span></p>
+<p>这次的组件是市电、变压器、UPS、PDU、机架和冷却设备。机架有电且温度合适时才能持续带来收入；供电链任何一环容量不足，都可能影响下游负载，严重过载还会触发断路器。UPS 负责短时接续，备用发电机则受启动和燃料限制。</p>
+<p><span id="降温、PUE-和费用不是同一个目标" class="heading-anchor" aria-hidden="true"></span></p>
+<p>机架耗电产生热量，冷却设备自己也消耗电力。除了给机架降温，还要平衡设备规模、PUE 和费用；<code>T</code> 键可切换热力图。CRAC 适合局部冷却，Chiller 与 CRAH 则引入共享冷水系统，不是规模越小也越划算。</p>
+<p><span id="先在实验场观察一条完整链路" class="heading-anchor" aria-hidden="true"></span></p>
+<p>该版本 <strong>Campaign</strong> 有 13 关；<strong>The Lab</strong> 提供已接好的供电链，包括 UPS、备用发电机、三个机架和一个 CRAC，还能手动触发停电、热浪或冷却故障。想先认识设备，可从 The Lab 开始；想按目标逐步搭建，则进入 Campaign。</p>
+<p><span id="把机制转成可检查的故障假设" class="heading-anchor" aria-hidden="true"></span><br><span id="做一次“撤掉缓冲”的观察" class="heading-anchor" aria-hidden="true"></span><br><span id="两个有趣的沙盒小实验" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="两款游戏怎么选"><a href="#两款游戏怎么选" class="headerlink" title="两款游戏怎么选"></a>两款游戏怎么选</h2><p>喜欢画服务拓扑、调请求分流和扩容，选 Server Survival；对供电支路、UPS 接续和机房温度更感兴趣，选 Datacenter Survival。两款都提供自由观察的模式，不必先安装服务端或准备真实云资源。</p>
+<p><span id="模拟最适合教因果，不适合替代验收" class="heading-anchor" aria-hidden="true"></span><br><span id="小结与开源许可" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="来源与媒体许可"><a href="#来源与媒体许可" class="headerlink" title="来源与媒体许可"></a>来源与媒体许可</h2><p>介绍依据固定版本的官方 README：<a target="_blank" rel="noopener" href="https://github.com/pshenok/server-survival/blob/7804e5969e28267cd33837e023eb46fa65da72b7/README.md">Server Survival · 7804e596</a>、<a target="_blank" rel="noopener" href="https://github.com/pshenok/datacenter-survival/blob/3f2582972119828322ee3a1e57c1bf19256e8f02/README.md">Datacenter Survival · 3f258297</a>。关卡数和操作说明针对这些版本，在线版本后续可能变化。游戏是简化模拟，不是生产容量规划、电气设计或故障验收工具；本文不把官方机制说明写成本站实测结果。</p>
+<p>两款项目均为 MIT License，作者 Kostyantyn Pshenychnyy；Server Survival 的版权年份为 2025，Datacenter Survival 为 2026。上方动图来自项目官方演示，不是本站试玩截图，原 GIF 保留。许可副本：<a href="/images/games/server-survival-LICENSE.txt">Server Survival</a>、<a href="/images/games/datacenter-survival-LICENSE.txt">Datacenter Survival</a>。</p>
 </div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
 
-<nav class="post-neighbors" aria-label="前后文章">
-<a href="/posts/02-hexo-docker-nginx-publish/"><span>上一篇</span><strong>Hexo 与 Nginx：静态博客构建与部署</strong></a>
-<a href="/posts/06-frontend-layout-typography-draft/"><span>下一篇</span><strong>静态博客前端（一）：从页面骨架到可阅读的布局排版</strong></a>
-    </nav>
-    <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
-  </article>
-</div></div></main>
+      <aside class="article-aside" aria-label="文章侧栏">
+        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+
+        <section class="aside-card recent-card" aria-labelledby="recent-title">
+          <h2 class="aside-title" id="recent-title">推荐阅读</h2>
+          <ul class="recent-list">
+
+            <li><a href="/posts/08-frontend-pjax-music-lifecycle-draft/"><span>静态博客前端：PJAX 与持续音乐</span><time datetime="2026-09-11">09-11</time></a></li>
+
+            <li><a href="/posts/07-frontend-glass-accessibility-draft/"><span>静态博客前端：分层外观与可访问性</span><time datetime="2026-09-08">09-08</time></a></li>
+
+            <li><a href="/posts/06-frontend-layout-typography-draft/"><span>静态博客前端：布局与排版</span><time datetime="2026-09-04">09-04</time></a></li>
+
+            <li><a href="/posts/02-hexo-docker-nginx-publish/"><span>Hexo 与 Nginx：构建与安全发布</span><time datetime="2026-08-29">08-29</time></a></li>
+
+            <li><a href="/posts/01-ubuntu-server-secure-setup/"><span>Ubuntu SSH：公钥登录与端口迁移</span><time datetime="2026-08-27">08-27</time></a></li>
+
+          </ul>
+        </section>
+
+      </aside>
+    </div>
+  </div>
+</main>
 <div class="read-progress" data-read-progress role="presentation"></div>
-<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部">↑</button>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
 <footer class="site-footer">
   <div class="shell footer-inner">
     <div class="footer-brand">
       <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
     </div>
-    <p class="footer-note"><a href="/subscribe/">RSS 订阅</a><a href="/credits/">素材致谢</a><span>Powered by Hexo · 2026</span></p>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/subscribe/">RSS 订阅</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-note">
+      <span>本站内容为技术记录与随手笔记，文中命令均为示例，请在自己的环境中验证后再执行。</span>
+      <span>文字与原创插图版权归本站所有；第三方素材版权归原作者，详见素材致谢。</span>
+      <span class="footer-meta">
+        <span>Powered by Hexo · 2026</span>
+        <span class="footer-icp" title="取得备案号后在此填写">备案信息待补充</span>
+      </span>
+    </p>
   </div>
+
 </footer>
-<div class="music-player" data-music-player data-music-state="idle">
-  <button class="music-load vinyl-trigger secondary-action" type="button" data-music-load aria-controls="footer-music-panel" aria-expanded="false">
-    <span class="vinyl-mini" aria-hidden="true"></span>
-    <span class="music-load-text">音乐</span>
-  </button>
-  <div class="music-body" id="footer-music-panel" data-music-body hidden>
-    <p class="music-kicker">PIANO ROOM · 钢琴小憩</p>
-    <div class="vinyl-stage">
-      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true">
-        <span class="vinyl-groove"></span>
-        <span class="vinyl-label"></span>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
       </div>
-      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true">▶</span></button>
     </div>
-    <p class="music-title" data-music-title>钢琴小憩</p>
-    <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
-    <div class="music-progress" data-music-progress role="presentation">
-      <span class="music-progress-fill" data-music-progress-fill></span>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
     </div>
-    <div class="music-times">
-      <span data-music-current>0:00</span>
-      <span data-music-duration>--:--</span>
-    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1" aria-label="音乐音量"></label>
     <ol class="music-list" data-music-list role="list">
 
       <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
@@ -303,9 +348,8 @@
       </li>
 
     </ol>
-    <audio id="footer-music" data-music-audio preload="none" aria-label="钢琴小憩播放器" hidden></audio>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
     <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
-    <p class="music-hint">点击外部或按 Esc 收起，音乐继续播放。</p>
   </div>
   <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
 </div>
@@ -319,15 +363,11 @@
   </div>
 </div>
 <script src="/vendor/minisearch-7.2.0.js" defer></script>
-<script src="/js/search.js?v=20261013-editorial1" defer></script>
-<script src="/js/site.js?v=20261013-editorial1" defer></script>
-<script src="/js/quotes.js?v=20261013-editorial1" defer></script>
-
-<script src="/vendor/photoswipe-5.4.4/photoswipe.umd.min.js" defer></script>
-<script src="/vendor/photoswipe-5.4.4/photoswipe-lightbox.umd.min.js" defer></script>
-
-<script src="/js/media.js?v=20261013-editorial1" defer></script>
-<script src="/js/music.js?v=20261013-editorial1" defer></script>
-<script src="/js/pjax.js?v=20261013-editorial1" defer></script>
+<script src="/js/search.js?v=20261018-review4" defer></script>
+<script src="/js/site.js?v=20261018-review4" defer></script>
+<script src="/js/quotes.js?v=20261018-review4" defer></script>
+<script src="/js/media.js?v=20261018-review4" defer></script>
+<script src="/js/music.js?v=20261018-review4" defer></script>
+<script src="/js/pjax.js?v=20261018-review4" defer></script>
 </body>
 </html>

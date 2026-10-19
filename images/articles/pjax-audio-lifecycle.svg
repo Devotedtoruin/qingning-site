@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+<title id="title">PJAX：替换 main，保留同一个 audio</title><desc id="desc">播放器与 audio 位于长驻外壳；局部导航先清理旧 main 工具，再换 main，最后挂载新工具。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6d8075"/></marker></defs>
+<rect width="1200" height="640" rx="20" fill="#fffdf7"/>
+<g font-family="system-ui, sans-serif" fill="#233a32">
+<text x="40" y="58" font-size="32" text-anchor="start" font-weight="700" fill="#233a32">PJAX：替换 main，保留同一个 audio</text>
+<rect x="40" y="105" width="1120" height="315" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
+<text x="65" y="145" font-size="28" text-anchor="start" font-weight="700" fill="#233a32">长驻外壳：header / footer / 播放器</text>
+<rect x="65" y="175" width="700" height="220" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
+<text x="415" y="215" font-size="28" text-anchor="middle" font-weight="700" fill="#233a32">只替换 main</text>
+<g>
+<rect x="90" y="250" width="260" height="105" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
+<text x="220.0" y="292.66" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">旧文章</text>
+<text x="220.0" y="328.66" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">旧目录与 observer</text>
+</g>
+<g>
+<rect x="480" y="250" width="260" height="105" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
+<text x="610.0" y="292.66" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">新文章</text>
+<text x="610.0" y="328.66" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">新目录与 observer</text>
+</g>
+<path d="M 365 302 L 465 302" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
+<g>
+<rect x="815" y="175" width="320" height="220" rx="12" fill="#f4edda" stroke="#6d8075" stroke-width="2"/>
+<text x="975.0" y="255.84" font-size="26" text-anchor="middle" font-weight="700" fill="#233a32">同一个 audio</text>
+<text x="975.0" y="293.84000000000003" font-size="26" text-anchor="middle" font-weight="400" fill="#233a32">不重建播放器</text>
+<text x="975.0" y="331.84000000000003" font-size="26" text-anchor="middle" font-weight="400" fill="#233a32">不重置播放进度</text>
+</g>
+<g>
+<rect x="40" y="475" width="340" height="105" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
+<text x="210.0" y="517.66" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">请求与解析</text>
+<text x="210.0" y="553.66" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">最后一次请求获胜</text>
+</g>
+<g>
+<rect x="430" y="475" width="340" height="105" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
+<text x="600.0" y="517.66" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">cleanup 旧工具</text>
+<text x="600.0" y="553.66" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">断开 observer / 监听</text>
+</g>
+<g>
+<rect x="820" y="475" width="340" height="105" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
+<text x="990.0" y="517.66" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">mount 新工具</text>
+<text x="990.0" y="553.66" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">新 main 获得焦点</text>
+</g>
+<path d="M 392 528 L 417 528" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 782 528 L 807 528" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="600" y="618" font-size="25" text-anchor="middle" font-weight="400" fill="#4c5c54">整页刷新或导航回退会重建外壳；不承诺继续播放</text>
+</g>
+</svg>

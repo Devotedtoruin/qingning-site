@@ -245,6 +245,7 @@
     input.addEventListener('input', render);
     dialog.addEventListener('click', (event) => { if (event.target === dialog) close(); });
     document.addEventListener('keydown', (event) => {
+      if ((event.metaKey || event.ctrlKey) && !event.altKey && (event.key === 'k' || event.key === 'K')) { event.preventDefault(); if (dialog.hidden) open(); else close(); return; }
       if (dialog.hidden) return;
       if (event.key === 'Escape') { event.preventDefault(); close(); }
       if (event.key !== 'Tab') return;
