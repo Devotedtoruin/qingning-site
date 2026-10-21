@@ -213,12 +213,16 @@
       ? window.JournalUI.register(document, window, { root, trigger: load, panel: body, isOpen: () => !body.hidden, setOpen })
       : () => {};
     const refreshUI = () => { if (unregister.refresh) unregister.refresh(); };
-    load.addEventListener('click', () => {
-      const open = body.hidden;
-      // Expanding is explicit intent to prepare a source, but never play it.
-      setPanelOpen(open);
-      if (open && !loaded) setSource(index);
+    // Shared by the dock trigger and home adapter. Disclosure prepares a source
+    // exactly once, refreshes shared dismissal/exclusivity, and never starts play.
+    const open = () => {
+      setPanelOpen(true);
+      if (!loaded) setSource(index);
       refreshUI(); paint();
+    };
+    load.addEventListener('click', () => {
+      if (body.hidden) open();
+      else { setPanelOpen(false); refreshUI(); }
     });
     if (closeButton) closeButton.addEventListener('click', () => {
       const returnFocus = root.contains(document.activeElement);
@@ -383,7 +387,7 @@
     });
 
     paint();
-    return { playAt, paint, unregister, setOpen, get index() { return index; }, entries };
+    return { playAt, step, togglePlayback, open, paint, unregister, setOpen, get index() { return index; }, entries };
   }
 
   const mounted = new WeakMap();

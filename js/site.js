@@ -2,7 +2,7 @@
    两类生命周期必须分开：
    - 全局一次：滚动进度、回到顶部、顶栏阴影、移动菜单、Mega Menu。这些监听器
      挂在 document/window/header 上，PJAX 换 <main> 后依然有效。
-   - 每页一次：分类胶囊筛选（含骨架屏与空状态）、目录、代码块复制、表格滚动、搜索挂载。
+   - 每页一次：分类筛选与空状态、目录、代码块复制、表格滚动、搜索挂载。
      这些作用于当前页面，PJAX 换页后必须重新执行；用元素级 WeakSet 去重，重复调用不会重复绑定。 */
 (() => {
   'use strict';
@@ -41,7 +41,7 @@
     const onScroll = () => {
       const doc = document.documentElement;
       const max = doc.scrollHeight - doc.clientHeight;
-      if (progress) progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + '%';
+      if (progress) progress.style.transform = 'scaleX(' + Math.min(1, Math.max(0, max > 0 ? doc.scrollTop / max : 0)) + ')';
       if (toTop) toTop.classList.toggle('is-visible', doc.scrollTop > 480);
       if (header) header.classList.toggle('is-scrolled', doc.scrollTop > 8);
       // 播放器胶囊：向下滚动时收起，向上滚动立刻回来；回到顶部附近始终显示。
@@ -112,7 +112,7 @@
     const buttons = Array.from(document.querySelectorAll('[data-menu-toggle]'));
     const header = document.querySelector('.site-header');
     if (!menu || !buttons.length || !header) return;
-    const isWide = () => typeof window.matchMedia === 'function' && window.matchMedia('(min-width: 900px)').matches;
+    const isWide = () => typeof window.matchMedia === 'function' && window.matchMedia('(min-width: 861px)').matches;
     const isOpen = () => menu.classList.contains('is-open');
     const setOpen = (open) => {
       open = !!open && !isWide();
@@ -182,65 +182,54 @@
     tablist.__tabsMounted = true;
     const tabs = Array.from(tablist.querySelectorAll('[data-category-filter]'));
     const cards = Array.from(feed.querySelectorAll('[data-home-post]'));
-    const skeleton = document.querySelector('[data-feed-skeleton]');
     const emptyState = document.querySelector('[data-filter-empty]');
     const resetBtn = document.querySelector('[data-filter-reset]');
-    let skeletonTimer = null;
-
-    const applyFilter = (category, animate) => {
+    const applyFilter = (category) => {
       tabs.forEach((tab) => {
         const active = tab.getAttribute('data-category-filter') === category;
         tab.classList.toggle('is-active', active);
         tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
       });
-      const reveal = () => {
-        if (skeleton) skeleton.hidden = true;
-        feed.classList.remove('is-filtering');
-        let visibleCount = 0;
-        cards.forEach((card) => {
-          const raw = card.getAttribute('data-post-categories') || '';
-          const list = raw ? raw.split('|') : [];
-          const match = category === 'all' || list.includes(category);
-          card.hidden = !match;
-          if (match) {
-            card.classList.toggle('is-featured', visibleCount === 0);
-            visibleCount += 1;
-          } else {
-            card.classList.remove('is-featured');
-          }
-        });
-        if (emptyState) emptyState.hidden = visibleCount > 0 || cards.length === 0;
-      };
-      if (skeletonTimer) { clearTimeout(skeletonTimer); skeletonTimer = null; }
-      if (animate && !prefersReduce() && skeleton && typeof setTimeout === 'function') {
-        skeleton.hidden = false;
-        feed.classList.add('is-filtering');
-        skeletonTimer = setTimeout(reveal, 160);
-      } else {
-        reveal();
-      }
+      let visibleCount = 0;
+      cards.forEach((card) => {
+        const list = (card.getAttribute('data-post-categories') || '').split('|');
+        const match = category === 'all' || list.includes(category);
+        card.hidden = !match;
+        card.classList.toggle('is-featured', match && visibleCount === 0);
+        if (match) visibleCount += 1;
+      });
+      if (emptyState) emptyState.hidden = visibleCount > 0 || cards.length === 0;
     };
-
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const category = tab.getAttribute('data-category-filter') || 'all';
-        applyFilter(category, true);
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => applyFilter(tab.getAttribute('data-category-filter') || 'all'));
+      tab.addEventListener('keydown', (event) => {
+        let next;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = tabs.length - 1;
+        else return;
+        event.preventDefault();
+        tabs[next].focus();
+        applyFilter(tabs[next].getAttribute('data-category-filter') || 'all');
       });
     });
-    if (resetBtn) {
-      resetBtn.addEventListener('click', () => applyFilter('all', false));
-    }
-    pageCleanups.push(() => {
-      if (skeletonTimer) clearTimeout(skeletonTimer);
-      delete tablist.__tabsMounted;
+    if (resetBtn) resetBtn.addEventListener('click', () => {
+      applyFilter('all');
+      tabs[0].focus();
     });
+    applyFilter('all');
+    pageCleanups.push(() => { delete tablist.__tabsMounted; });
   }
 
   // 首页「此刻」面板：本地时间与日期。每页重挂，计时器随页面销毁。
   function mountLiveClock(document, window) {
     const clock = document.querySelector('[data-live-clock]');
     const dateEl = document.querySelector('[data-live-date]');
-    if (!clock && !dateEl) return;
+    const owner = clock || dateEl;
+    if (!owner || owner.__liveClockMounted) return;
+    owner.__liveClockMounted = true;
     const pad = (n) => String(n).padStart(2, '0');
     const paint = () => {
       const now = new Date();
@@ -255,23 +244,53 @@
         uptime.textContent = days + ' 天';
       }
     };
-    paint();
-    const timer = window.setInterval(paint, 1000);
-    pageCleanups.push(() => window.clearInterval(timer));
+    let timer = null;
+    const sync = () => {
+      if (timer !== null) window.clearInterval(timer);
+      timer = null;
+      if (document.hidden) return;
+      paint();
+      timer = window.setInterval(paint, 1000);
+    };
+    document.addEventListener('visibilitychange', sync);
+    sync();
+    pageCleanups.push(() => {
+      if (timer !== null) window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', sync);
+      delete owner.__liveClockMounted;
+    });
   }
 
   // 首页播放器卡：把卡片按钮接到已有的 music 播放器实例上。
   function mountMusicCard(document, window) {
-    if (!document.querySelector('.music-card')) return;
+    const card = document.querySelector('.music-card');
+    if (!card || card.__musicCardMounted) return;
+    card.__musicCardMounted = true;
     let tries = 0;
+    let retry = null;
+    let observer = null;
+    let alive = true;
+    const disposers = [];
+    const listen = (target, fn) => {
+      if (!target) return;
+      target.addEventListener('click', fn);
+      disposers.push(() => target.removeEventListener('click', fn));
+    };
+    pageCleanups.push(() => {
+      alive = false;
+      if (retry !== null) window.clearTimeout(retry);
+      if (observer) observer.disconnect();
+      disposers.forEach(dispose => dispose());
+      delete card.__musicCardBound;
+      delete card.__musicCardMounted;
+    });
     const bind = () => {
-      const card = document.querySelector('.music-card');
-      if (!card || card.__musicCardBound) return;
+      if (!alive || card.__musicCardBound) return;
       const player = window.JournalMusic && window.JournalMusic.mount
         ? (window.JournalMusic.mount(document, window) || {}).players?.[0]
         : null;
       if (!player) {
-        if (tries++ < 20) window.setTimeout(bind, 120);
+        if (tries++ < 20) retry = window.setTimeout(bind, 120);
         return;
       }
       card.__musicCardBound = true;
@@ -297,43 +316,22 @@
         if (playBtn) playBtn.setAttribute('aria-label', state === 'playing' ? '暂停' : '播放');
       };
 
-      if (playBtn) playBtn.addEventListener('click', () => {
-        const root = document.querySelector('[data-music-player]');
-        const state = root ? root.getAttribute('data-music-state') : 'idle';
-        if (state === 'playing' || state === 'buffering') {
-          // 播放中再点就是暂停：交给 dock 的同一个开关，避免两条播放状态。
-          const dockToggle = document.querySelector('[data-music-toggle]');
-          if (dockToggle) dockToggle.click();
-        } else {
-          player.playAt(player.index);
-        }
-        window.setTimeout(refresh, 120);
-      });
-      if (prevBtn) prevBtn.addEventListener('click', () => {
-        const n = player.entries.length;
-        player.playAt((player.index - 1 + n) % n);
-        refresh();
-      });
-      if (nextBtn) nextBtn.addEventListener('click', () => {
-        const n = player.entries.length;
-        player.playAt((player.index + 1) % n);
-        refresh();
-      });
-      if (expandBtn) expandBtn.addEventListener('click', () => {
+      listen(playBtn, () => { player.togglePlayback(); refresh(); });
+      listen(prevBtn, () => { player.step(-1); refresh(); });
+      listen(nextBtn, () => { player.step(1); refresh(); });
+      listen(expandBtn, () => {
         // 首页的胶囊默认淡出；展开动作同时把它切到可见，并让面板拿到焦点。
-        player.setOpen(true);
+        player.open();
         const panel = document.querySelector('[data-music-body]');
         if (panel && !panel.hidden) {
           const closeBtn = panel.querySelector('[data-music-close]');
           if (closeBtn && typeof closeBtn.focus === 'function') closeBtn.focus({ preventScroll: true });
         }
-        window.setTimeout(refresh, 120);
+        refresh();
       });
-      player.paint = refresh;
-      const obs = new window.MutationObserver(refresh);
+      observer = new window.MutationObserver(refresh);
       const root = document.querySelector('[data-music-player]');
-      if (root) obs.observe(root, { attributes: true, attributeFilter: ['data-music-state'] });
-      pageCleanups.push(() => obs.disconnect());
+      if (root) observer.observe(root, { attributes: true, attributeFilter: ['data-music-state'] });
       refresh();
     };
     bind();
@@ -491,13 +489,29 @@
     const button = toc.querySelector('[data-toc-toggle]');
     if (!list.id) list.id = 'article-toc-list';
     if (button) button.setAttribute('aria-controls', list.id);
-    const isWide = () => window.matchMedia('(min-width: 900px)').matches;
+    const isWide = () => window.matchMedia('(min-width: 1024px)').matches;
+    const articleHeader = document.querySelector('.article-header');
+    const aside = document.querySelector('.article-aside');
+    const positionToc = () => {
+      if (!articleHeader || !aside) return;
+      if (isWide()) aside.insertBefore(toc, aside.firstChild);
+      else articleHeader.parentNode.insertBefore(toc, articleHeader.nextSibling);
+    };
     const setCollapsed = (collapsed) => {
       toc.classList.toggle('is-collapsed', collapsed);
       list.hidden = collapsed;
       if (button) button.setAttribute('aria-expanded', String(!collapsed));
     };
-    const applyDefault = () => setCollapsed(!isWide());
+    const applyDefault = () => {
+      const active = document.activeElement;
+      const hadFocus = toc.contains(active);
+      positionToc();
+      setCollapsed(!isWide());
+      if (hadFocus) {
+        const target = list.hidden && list.contains(active) ? button : active;
+        if (target && typeof target.focus === 'function') target.focus({ preventScroll: true });
+      }
+    };
     if (button) listen(button, 'click', () => setCollapsed(!list.hidden));
     applyDefault();
     let lastWide = isWide();
@@ -566,25 +580,16 @@
       return;
     }
     const DEFAULT_META = meta.textContent;
-    let engine = null;
-    let loading = null;
+    const retry = root.querySelector('[data-top-search-retry]');
     let active = -1;
-    let records = [];
-
-    let announced = false;
-    const load = () => {
-      if (engine) return Promise.resolve(engine);
-      if (loading) return loading;
-      if (!announced) { announced = true; meta.textContent = '正在加载检索索引…'; }
-      loading = Promise.resolve()
-        .then(() => window.fetch('/search.json', { cache: 'default' }))
-        .then((response) => {
-          if (!response || !response.ok) throw new Error('index');
-          return response.json();
-        })
-        .then((data) => { engine = api.createIndex(data, window.MiniSearch); return engine; })
-        .finally(() => { loading = null; });
-      return loading;
+    let expanded = false;
+    let alive = true;
+    let composing = false;
+    let loader;
+    const disposers = [];
+    const listen = (target, type, handler) => {
+      target.addEventListener(type, handler);
+      disposers.push(() => target.removeEventListener(type, handler));
     };
 
     const escapeToken = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -605,24 +610,36 @@
       return frag;
     };
 
-    const close = () => {
+    const clearResults = () => {
       results.hidden = true;
       results.textContent = '';
       active = -1;
-      records = [];
       input.setAttribute('aria-expanded', 'false');
+      input.removeAttribute('aria-activedescendant');
     };
-
+    const close = () => {
+      expanded = false;
+      loader.close();
+      clearResults();
+      if (retry) retry.hidden = true;
+      root.removeAttribute('data-search-feedback');
+      results.setAttribute('aria-busy', 'false');
+      meta.textContent = DEFAULT_META;
+    };
     const render = () => {
+      if (!alive || !expanded) return;
       const query = input.value.trim();
-      if (!query) { close(); meta.textContent = DEFAULT_META; return; }
-      if (!engine) {
-        load().then(() => { if (input.value.trim()) render(); })
-          .catch(() => { meta.textContent = '检索索引加载失败，请稍后再试'; close(); });
-        return;
-      }
+      if (!query) { close(); return; }
+      const { state, index } = loader.getSnapshot();
+      clearResults();
+      results.setAttribute('aria-busy', String(state === 'loading'));
+      root.toggleAttribute('data-search-feedback', state === 'loading' || state === 'error');
+      if (retry) retry.hidden = state !== 'error';
+      if (state === 'loading') { meta.textContent = '正在加载检索索引…'; return; }
+      if (state === 'error') { meta.textContent = '检索索引加载失败，请重试。'; return; }
+      if (!index) return;
       const tokens = api.queryTokens(query);
-      records = engine.search(query, 8);
+      const records = index.search(query, 8);
       results.textContent = '';
       active = records.length ? 0 : -1;
       if (!records.length) {
@@ -636,6 +653,7 @@
         const link = document.createElement('a');
         link.className = 'search-result';
         link.href = record.url;
+        link.id = results.id + '-option-' + index;
         link.setAttribute('role', 'option');
         link.setAttribute('aria-selected', String(index === active));
         if (index === active) link.classList.add('is-active');
@@ -652,6 +670,8 @@
       });
       results.hidden = false;
       input.setAttribute('aria-expanded', 'true');
+      const selected = results.querySelector('.search-result.is-active');
+      if (selected) input.setAttribute('aria-activedescendant', selected.id);
       meta.textContent = records.length ? '找到 ' + records.length + ' 条' : '没有匹配结果';
     };
 
@@ -664,38 +684,48 @@
         option.setAttribute('aria-selected', String(index === active));
       });
       const target = options[active];
+      if (target) input.setAttribute('aria-activedescendant', target.id);
       if (target && typeof target.scrollIntoView === 'function') target.scrollIntoView({ block: 'nearest' });
     };
-
+    loader = api.createLoader({ fetch: typeof window.fetch === 'function' ? window.fetch.bind(window) : null,
+      AbortController: window.AbortController, MiniSearch: window.MiniSearch, onChange: render });
+    const show = () => {
+      if (composing) return;
+      if (!input.value.trim()) { close(); return; }
+      expanded = true;
+      loader.open();
+      render();
+    };
     const form = root.querySelector('form');
-    if (form) form.addEventListener('submit', (event) => {
+    if (form) listen(form, 'submit', (event) => {
       event.preventDefault();
-      const first = results.querySelector('.search-result');
-      if (first && first.getAttribute('href')) window.location.assign(first.getAttribute('href'));
+      if (composing) return;
+      const options = results.querySelectorAll('.search-result');
+      const selected = options[active];
+      if (selected) selected.click();
     });
-    input.addEventListener('input', render);
-    input.addEventListener('keydown', (event) => {
+    listen(input, 'input', show);
+    listen(input, 'focus', show);
+    listen(input, 'compositionstart', () => { composing = true; });
+    listen(input, 'compositionend', () => { composing = false; show(); });
+    listen(input, 'keydown', (event) => {
+      if (event.isComposing || composing || event.keyCode === 229) return;
       if (event.key === 'ArrowDown') { event.preventDefault(); move(1); }
       else if (event.key === 'ArrowUp') { event.preventDefault(); move(-1); }
-      else if (event.key === 'Escape' && !results.hidden) {
+      else if (event.key === 'Enter') {
         event.preventDefault();
-        close();
-        meta.textContent = DEFAULT_META;
+        const selected = results.querySelectorAll('.search-result')[active];
+        if (selected) selected.click();
       }
+      else if (event.key === 'Escape') { event.preventDefault(); close(); }
     });
-    const onOutside = (event) => { if (!root.contains(event.target)) close(); };
-    document.addEventListener('pointerdown', onOutside);
+    if (retry) listen(retry, 'click', () => { expanded = true; loader.retry(); });
+    listen(document, 'pointerdown', (event) => { if (!root.contains(event.target)) close(); });
     pageCleanups.push(() => {
-      document.removeEventListener('pointerdown', onOutside);
+      alive = false;
+      close();
+      disposers.forEach(dispose => dispose());
       delete root.__topSearchMounted;
-    });
-    // 预先取一次索引；成功即恢复默认提示，失败留到用户输入时再说明。
-    load().then(() => {
-      if (input.value.trim()) render();
-      else { meta.textContent = '可检索 ' + engine.records.length + ' 篇公开文章'; announced = false; }
-    }).catch(() => {
-      meta.textContent = DEFAULT_META;
-      announced = false;
     });
   }
 
@@ -744,22 +774,48 @@
       dots.forEach((dot, i) => {
         dot.classList.toggle('is-active', i === index);
         dot.setAttribute('aria-selected', String(i === index));
+        dot.tabIndex = i === index ? 0 : -1;
       });
     };
     let timer = null;
-    const stop = () => { if (timer) { window.clearInterval(timer); timer = null; } };
-    const restart = () => {
+    let hovered = false;
+    let focused = false;
+    const motion = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    const disposers = [];
+    const listen = (target, type, fn) => {
+      target.addEventListener(type, fn);
+      disposers.push(() => target.removeEventListener(type, fn));
+    };
+    const stop = () => { if (timer !== null) window.clearInterval(timer); timer = null; };
+    const sync = () => {
       stop();
-      if (prefersReduce()) return;
+      if (hovered || focused || document.hidden || (motion && motion.matches)) return;
       timer = window.setInterval(() => paint((current + 1) % slides.length), 5000);
     };
-    dots.forEach((dot, index) => dot.addEventListener('click', () => { paint(index); restart(); }));
-    root.addEventListener('pointerenter', stop);
-    root.addEventListener('pointerleave', restart);
-    root.addEventListener('focusin', stop);
-    root.addEventListener('focusout', restart);
-    restart();
-    pageCleanups.push(() => { stop(); delete root.__heroMounted; });
+    dots.forEach((dot, index) => {
+      dot.tabIndex = index === 0 ? 0 : -1;
+      listen(dot, 'click', () => { paint(index); sync(); });
+      listen(dot, 'keydown', (event) => {
+        let next;
+        if (event.key === 'ArrowRight') next = (index + 1) % dots.length;
+        else if (event.key === 'ArrowLeft') next = (index - 1 + dots.length) % dots.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = dots.length - 1;
+        else return;
+        event.preventDefault();
+        dots[next].focus();
+        paint(next);
+        sync();
+      });
+    });
+    listen(root, 'pointerenter', () => { hovered = true; sync(); });
+    listen(root, 'pointerleave', () => { hovered = false; sync(); });
+    listen(root, 'focusin', () => { focused = true; sync(); });
+    listen(root, 'focusout', (event) => { focused = root.contains(event.relatedTarget); sync(); });
+    listen(document, 'visibilitychange', sync);
+    if (motion && typeof motion.addEventListener === 'function') listen(motion, 'change', sync);
+    sync();
+    pageCleanups.push(() => { stop(); disposers.forEach(dispose => dispose()); delete root.__heroMounted; });
   }
 
   /* ---------- 首页日夜切换卡：复用外观面板的配色枚举，状态以 data-scheme 为准 ---------- */

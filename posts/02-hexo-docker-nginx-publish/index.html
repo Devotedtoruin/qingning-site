@@ -9,7 +9,7 @@
   <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
 
   <meta name="theme-color" content="#f4f5f1">
-  <meta name="journal-build" content="20261018-review4">
+  <meta name="journal-build" content="20261021-quality1">
   <title>Hexo 与 Nginx：构建与安全发布 | 青柠小站</title>
 
 
@@ -25,15 +25,16 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261018-review4">
-  <link rel="stylesheet" href="/css/backgrounds.css?v=20261018-review4">
-  <script src="/js/ui.js?v=20261018-review4"></script>
-  <script src="/js/backgrounds.js?v=20261018-review4"></script>
-  <script src="/js/appearance.js?v=20261018-review4"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261021-quality1">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261021-quality1">
+  <script src="/js/ui.js?v=20261021-quality1"></script>
+  <script src="/js/backgrounds.js?v=20261021-quality1"></script>
+  <script src="/js/appearance.js?v=20261021-quality1"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body data-layout="post">
 
+<a class="skip-link" href="#main">跳至正文</a>
 <header class="site-header" data-floating-header>
   <div class="shell header-inner">
     <div class="brand-block">
@@ -155,8 +156,8 @@
 </header>
 
 
-<main class="page-main" id="main">
-  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="ambient-wash"></div></div>
+<main class="page-main" id="main" tabindex="-1">
+  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="ambient-wash"></div></div>
   <div class="shell article-shell">
     <div class="article-layout">
       <article class="article-main">
@@ -168,6 +169,10 @@
           <p class="article-description">把 Hexo 生成的静态文件交给 Docker/Nginx：从首次启动到 HTTP 404、目录权限和版本回退。</p>
           <div class="post-tags"><a href="/tags/Hexo/">#Hexo</a><a href="/tags/Docker/">#Docker</a><a href="/tags/Nginx/">#Nginx</a><a href="/tags/%E9%83%A8%E7%BD%B2/">#部署</a></div>
         </header>
+        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
         <div class="article-content"><p>Hexo 负责把文章和主题生成静态文件，Nginx 负责提供 HTTP 服务。部署时不必把整个 Hexo 项目放进容器：只交付检查过的公开产物，既能缩小公开范围，也让更新和回退更清楚。</p>
 <p>下面以一台已安装 Docker Engine 与 Compose 插件的 Linux 服务器为例，演示通过 80 端口提供静态博客。构建端已有可用的 Hexo 项目、符合该项目要求的 Node.js 和按锁文件安装的依赖。域名、DNS 和 HTTPS 证书另行配置；本文的 HTTP 示例不等于已经完成公网 HTTPS 部署。命令是可按环境调整的示例，不是本站服务器的执行记录。</p>
 <figure class="article-diagram">
@@ -239,10 +244,6 @@
       </article>
 
       <aside class="article-aside" aria-label="文章侧栏">
-        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
-          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
-          <ol id="article-toc-list" data-toc-list></ol>
-        </nav>
 
         <section class="aside-card recent-card" aria-labelledby="recent-title">
           <h2 class="aside-title" id="recent-title">推荐阅读</h2>
@@ -374,11 +375,11 @@
   </div>
 </div>
 <script src="/vendor/minisearch-7.2.0.js" defer></script>
-<script src="/js/search.js?v=20261018-review4" defer></script>
-<script src="/js/site.js?v=20261018-review4" defer></script>
-<script src="/js/quotes.js?v=20261018-review4" defer></script>
-<script src="/js/media.js?v=20261018-review4" defer></script>
-<script src="/js/music.js?v=20261018-review4" defer></script>
-<script src="/js/pjax.js?v=20261018-review4" defer></script>
+<script src="/js/search.js?v=20261021-quality1" defer></script>
+<script src="/js/site.js?v=20261021-quality1" defer></script>
+<script src="/js/quotes.js?v=20261021-quality1" defer></script>
+<script src="/js/media.js?v=20261021-quality1" defer></script>
+<script src="/js/music.js?v=20261021-quality1" defer></script>
+<script src="/js/pjax.js?v=20261021-quality1" defer></script>
 </body>
 </html>

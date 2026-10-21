@@ -9,7 +9,7 @@
   <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
 
   <meta name="theme-color" content="#f4f5f1">
-  <meta name="journal-build" content="20261018-review4">
+  <meta name="journal-build" content="20261021-quality1">
   <title>静态博客前端：布局与排版 | 青柠小站</title>
 
 
@@ -25,15 +25,16 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261018-review4">
-  <link rel="stylesheet" href="/css/backgrounds.css?v=20261018-review4">
-  <script src="/js/ui.js?v=20261018-review4"></script>
-  <script src="/js/backgrounds.js?v=20261018-review4"></script>
-  <script src="/js/appearance.js?v=20261018-review4"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261021-quality1">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261021-quality1">
+  <script src="/js/ui.js?v=20261021-quality1"></script>
+  <script src="/js/backgrounds.js?v=20261021-quality1"></script>
+  <script src="/js/appearance.js?v=20261021-quality1"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body data-layout="post">
 
+<a class="skip-link" href="#main">跳至正文</a>
 <header class="site-header" data-floating-header>
   <div class="shell header-inner">
     <div class="brand-block">
@@ -155,8 +156,8 @@
 </header>
 
 
-<main class="page-main" id="main">
-  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="ambient-wash"></div></div>
+<main class="page-main" id="main" tabindex="-1">
+  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="ambient-wash"></div></div>
   <div class="shell article-shell">
     <div class="article-layout">
       <article class="article-main">
@@ -168,6 +169,10 @@
           <p class="article-description">用一份最小文章页实现受限行宽、Grid 收缩、局部横向滚动，以及能在宽窄屏切换的章节目录。</p>
           <div class="post-tags"><a href="/tags/Hexo/">#Hexo</a><a href="/tags/CSS/">#CSS</a><a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80/">#响应式布局</a></div>
         </header>
+        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
         <div class="article-content"><p>长文排版不只是调整字号。代码需要保留空格，数据表需要足够的列宽，目录又不能在手机上抢走整屏空间。把这些内容都交给页面级横向滚动，往往会让整篇文章难以阅读。</p>
 <p>本文用普通 HTML、CSS 和少量 JavaScript 搭一份最小文章页。它包含可直接配合使用的结构、宽度规则和目录折叠逻辑，不依赖框架或 Hexo 专用 API。示例只实现基础布局与目录，不包含滚动高亮、搜索和局部导航；接入具体主题时，需要按真实生成的 DOM 调整选择器。</p>
 <figure class="article-diagram">
@@ -222,10 +227,6 @@
       </article>
 
       <aside class="article-aside" aria-label="文章侧栏">
-        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
-          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
-          <ol id="article-toc-list" data-toc-list></ol>
-        </nav>
 
         <section class="aside-card recent-card" aria-labelledby="recent-title">
           <h2 class="aside-title" id="recent-title">推荐阅读</h2>
@@ -357,11 +358,11 @@
   </div>
 </div>
 <script src="/vendor/minisearch-7.2.0.js" defer></script>
-<script src="/js/search.js?v=20261018-review4" defer></script>
-<script src="/js/site.js?v=20261018-review4" defer></script>
-<script src="/js/quotes.js?v=20261018-review4" defer></script>
-<script src="/js/media.js?v=20261018-review4" defer></script>
-<script src="/js/music.js?v=20261018-review4" defer></script>
-<script src="/js/pjax.js?v=20261018-review4" defer></script>
+<script src="/js/search.js?v=20261021-quality1" defer></script>
+<script src="/js/site.js?v=20261021-quality1" defer></script>
+<script src="/js/quotes.js?v=20261021-quality1" defer></script>
+<script src="/js/media.js?v=20261021-quality1" defer></script>
+<script src="/js/music.js?v=20261021-quality1" defer></script>
+<script src="/js/pjax.js?v=20261021-quality1" defer></script>
 </body>
 </html>

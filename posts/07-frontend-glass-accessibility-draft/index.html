@@ -9,7 +9,7 @@
   <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
 
   <meta name="theme-color" content="#f4f5f1">
-  <meta name="journal-build" content="20261018-review4">
+  <meta name="journal-build" content="20261021-quality1">
   <title>静态博客前端：分层外观与可访问性 | 青柠小站</title>
 
 
@@ -25,15 +25,16 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261018-review4">
-  <link rel="stylesheet" href="/css/backgrounds.css?v=20261018-review4">
-  <script src="/js/ui.js?v=20261018-review4"></script>
-  <script src="/js/backgrounds.js?v=20261018-review4"></script>
-  <script src="/js/appearance.js?v=20261018-review4"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261021-quality1">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261021-quality1">
+  <script src="/js/ui.js?v=20261021-quality1"></script>
+  <script src="/js/backgrounds.js?v=20261021-quality1"></script>
+  <script src="/js/appearance.js?v=20261021-quality1"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body data-layout="post">
 
+<a class="skip-link" href="#main">跳至正文</a>
 <header class="site-header" data-floating-header>
   <div class="shell header-inner">
     <div class="brand-block">
@@ -155,8 +156,8 @@
 </header>
 
 
-<main class="page-main" id="main">
-  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="ambient-wash"></div></div>
+<main class="page-main" id="main" tabindex="-1">
+  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="ambient-wash"></div></div>
   <div class="shell article-shell">
     <div class="article-layout">
       <article class="article-main">
@@ -168,6 +169,10 @@
           <p class="article-description">把纸页与玻璃作为材质、浅色与深色作为独立配色，示范透明度偏好保存、禁用解释和实色回退。</p>
           <div class="post-tags"><a href="/tags/CSS/">#CSS</a><a href="/tags/%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7/">#可访问性</a></div>
         </header>
+        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
         <div class="article-content"><p>阅读界面中的“外观”至少包含两件事：面板是什么材质，文字使用哪套配色。纸页可以是浅色，也可以是深色；玻璃同样如此。把“夜色”与“纸页、玻璃”放在同一组选项中，会让颜色与材质互相覆盖，控件的含义也变得模糊。</p>
 <p>本文以一个独立阅读面板为例：默认浅色纸页，纸页始终实色；选择玻璃后才启用透明度。示例使用普通 HTML、CSS 和 JavaScript，不依赖站点专用脚本。它演示状态与回退，不宣称任何照片在任意透明度下都能保持足够对比度。</p>
 <figure class="article-diagram">
@@ -242,10 +247,6 @@
       </article>
 
       <aside class="article-aside" aria-label="文章侧栏">
-        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
-          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
-          <ol id="article-toc-list" data-toc-list></ol>
-        </nav>
 
         <section class="aside-card recent-card" aria-labelledby="recent-title">
           <h2 class="aside-title" id="recent-title">推荐阅读</h2>
@@ -377,11 +378,11 @@
   </div>
 </div>
 <script src="/vendor/minisearch-7.2.0.js" defer></script>
-<script src="/js/search.js?v=20261018-review4" defer></script>
-<script src="/js/site.js?v=20261018-review4" defer></script>
-<script src="/js/quotes.js?v=20261018-review4" defer></script>
-<script src="/js/media.js?v=20261018-review4" defer></script>
-<script src="/js/music.js?v=20261018-review4" defer></script>
-<script src="/js/pjax.js?v=20261018-review4" defer></script>
+<script src="/js/search.js?v=20261021-quality1" defer></script>
+<script src="/js/site.js?v=20261021-quality1" defer></script>
+<script src="/js/quotes.js?v=20261021-quality1" defer></script>
+<script src="/js/media.js?v=20261021-quality1" defer></script>
+<script src="/js/music.js?v=20261021-quality1" defer></script>
+<script src="/js/pjax.js?v=20261021-quality1" defer></script>
 </body>
 </html>

@@ -31,7 +31,7 @@
   const legacyScheme = () => read('qingning.appearance') === 'night' ? 'dark' : null;
   let scheme = enumValue(read(SCHEME_KEY) || legacyScheme(), SCHEMES, 'system');
   let background = enumValue(read(BACKGROUND_KEY), BACKGROUNDS, defaultBackground);
-  // 透明度：整数 0-90，缺省 30（= 底色 alpha 0.70）。只有合法存储值才算“自定义”。
+  // 透明度：整数 0-90，缺省 45（= 底色 alpha 0.55）；不支持滤镜时保留此偏好并回落实色。
   const transparencyValue = raw => typeof raw === 'string' && /^-?\d+$/.test(raw) && Number.isSafeInteger(Number(raw))
     ? Math.min(TRANSPARENCY_MAX, Math.max(TRANSPARENCY_MIN, Number(raw))) : null;
   const storedTransparency = transparencyValue(read(TRANSPARENCY_KEY));

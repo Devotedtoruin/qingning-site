@@ -9,7 +9,7 @@
   <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
 
   <meta name="theme-color" content="#f4f5f1">
-  <meta name="journal-build" content="20261018-review4">
+  <meta name="journal-build" content="20261021-quality1">
   <title>静态博客前端：PJAX 与持续音乐 | 青柠小站</title>
 
 
@@ -25,15 +25,16 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261018-review4">
-  <link rel="stylesheet" href="/css/backgrounds.css?v=20261018-review4">
-  <script src="/js/ui.js?v=20261018-review4"></script>
-  <script src="/js/backgrounds.js?v=20261018-review4"></script>
-  <script src="/js/appearance.js?v=20261018-review4"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261021-quality1">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261021-quality1">
+  <script src="/js/ui.js?v=20261021-quality1"></script>
+  <script src="/js/backgrounds.js?v=20261021-quality1"></script>
+  <script src="/js/appearance.js?v=20261021-quality1"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body data-layout="post">
 
+<a class="skip-link" href="#main">跳至正文</a>
 <header class="site-header" data-floating-header>
   <div class="shell header-inner">
     <div class="brand-block">
@@ -155,8 +156,8 @@
 </header>
 
 
-<main class="page-main" id="main">
-  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="ambient-wash"></div></div>
+<main class="page-main" id="main" tabindex="-1">
+  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="ambient-wash"></div></div>
   <div class="shell article-shell">
     <div class="article-layout">
       <article class="article-main">
@@ -168,6 +169,10 @@
           <p class="article-description">从长驻 audio 和可清理的每页工具入手，用有界请求协调示例解释 PJAX 竞态、失败回退与播放意图。</p>
           <div class="post-tags"><a href="/tags/JavaScript/">#JavaScript</a><a href="/tags/PJAX/">#PJAX</a></div>
         </header>
+        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
         <div class="article-content"><p>音乐在文章之间继续播放，关键不是换页后重新寻找上次的秒数，而是让浏览器始终保留同一个 audio 节点。PJAX 通常指获取目标页面的 HTML，只替换其中一部分，并同步浏览器导航状态。它让页面外壳长驻，也因此引入请求竞态、工具卸载和历史记录等问题。</p>
 <p>本文拆开讲解这几项职责，给出每页工具、请求协调和单曲播放的有限示例。它们不是一份完整的 PJAX 导航器：链接拦截、文档应用、历史记录与滚动恢复需要由站点导航层实现。普通链接仍是基础，脚本失败时应允许整页访问。</p>
 <figure class="article-diagram">
@@ -227,10 +232,6 @@
       </article>
 
       <aside class="article-aside" aria-label="文章侧栏">
-        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
-          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
-          <ol id="article-toc-list" data-toc-list></ol>
-        </nav>
 
         <section class="aside-card recent-card" aria-labelledby="recent-title">
           <h2 class="aside-title" id="recent-title">推荐阅读</h2>
@@ -362,11 +363,11 @@
   </div>
 </div>
 <script src="/vendor/minisearch-7.2.0.js" defer></script>
-<script src="/js/search.js?v=20261018-review4" defer></script>
-<script src="/js/site.js?v=20261018-review4" defer></script>
-<script src="/js/quotes.js?v=20261018-review4" defer></script>
-<script src="/js/media.js?v=20261018-review4" defer></script>
-<script src="/js/music.js?v=20261018-review4" defer></script>
-<script src="/js/pjax.js?v=20261018-review4" defer></script>
+<script src="/js/search.js?v=20261021-quality1" defer></script>
+<script src="/js/site.js?v=20261021-quality1" defer></script>
+<script src="/js/quotes.js?v=20261021-quality1" defer></script>
+<script src="/js/media.js?v=20261021-quality1" defer></script>
+<script src="/js/music.js?v=20261021-quality1" defer></script>
+<script src="/js/pjax.js?v=20261021-quality1" defer></script>
 </body>
 </html>

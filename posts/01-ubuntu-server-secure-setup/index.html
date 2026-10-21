@@ -9,7 +9,7 @@
   <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
 
   <meta name="theme-color" content="#f4f5f1">
-  <meta name="journal-build" content="20261018-review4">
+  <meta name="journal-build" content="20261021-quality1">
   <title>Ubuntu SSH：公钥登录与端口迁移 | 青柠小站</title>
 
 
@@ -25,15 +25,16 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261018-review4">
-  <link rel="stylesheet" href="/css/backgrounds.css?v=20261018-review4">
-  <script src="/js/ui.js?v=20261018-review4"></script>
-  <script src="/js/backgrounds.js?v=20261018-review4"></script>
-  <script src="/js/appearance.js?v=20261018-review4"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261021-quality1">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261021-quality1">
+  <script src="/js/ui.js?v=20261021-quality1"></script>
+  <script src="/js/backgrounds.js?v=20261021-quality1"></script>
+  <script src="/js/appearance.js?v=20261021-quality1"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body data-layout="post">
 
+<a class="skip-link" href="#main">跳至正文</a>
 <header class="site-header" data-floating-header>
   <div class="shell header-inner">
     <div class="brand-block">
@@ -155,8 +156,8 @@
 </header>
 
 
-<main class="page-main" id="main">
-  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="bg-slide" data-bg-slide></div><div class="ambient-wash"></div></div>
+<main class="page-main" id="main" tabindex="-1">
+  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="ambient-wash"></div></div>
   <div class="shell article-shell">
     <div class="article-layout">
       <article class="article-main">
@@ -168,6 +169,10 @@
           <p class="article-description">在 Ubuntu 24.04 创建管理用户、配置公钥登录，再按 socket/service 分支安全迁移 SSH 端口。</p>
           <div class="post-tags"><a href="/tags/Linux/">#Linux</a><a href="/tags/SSH/">#SSH</a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8/">#服务器安全</a></div>
         </header>
+        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
         <div class="article-content"><p>配置 SSH 可以分成三项任务：建立普通管理账号、让公钥认证可用、迁移监听端口。先完成账号和密钥，再改变网络入口，最后关闭不需要的认证方式，遇到问题时更容易判断是哪一层出了差错。</p>
 <p>本文适用于已安装 OpenSSH Server、使用 systemd 的 Ubuntu Server 24.04。你需要一个当前可用的管理账号及 sudo 权限、一台带 OpenSSH 客户端的电脑，以及独立于 SSH 的服务器控制台。不同云镜像的初始账号、认证策略和 socket 激活状态可能不同，操作前以实际配置为准。以下命令是配置示例，不代表已经在你的服务器上执行。更换端口能减少部分扫描噪声，不能代替公钥认证、更新和网络访问控制。</p>
 <figure class="article-diagram">
@@ -317,10 +322,6 @@
       </article>
 
       <aside class="article-aside" aria-label="文章侧栏">
-        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
-          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
-          <ol id="article-toc-list" data-toc-list></ol>
-        </nav>
 
         <section class="aside-card recent-card" aria-labelledby="recent-title">
           <h2 class="aside-title" id="recent-title">推荐阅读</h2>
@@ -452,11 +453,11 @@
   </div>
 </div>
 <script src="/vendor/minisearch-7.2.0.js" defer></script>
-<script src="/js/search.js?v=20261018-review4" defer></script>
-<script src="/js/site.js?v=20261018-review4" defer></script>
-<script src="/js/quotes.js?v=20261018-review4" defer></script>
-<script src="/js/media.js?v=20261018-review4" defer></script>
-<script src="/js/music.js?v=20261018-review4" defer></script>
-<script src="/js/pjax.js?v=20261018-review4" defer></script>
+<script src="/js/search.js?v=20261021-quality1" defer></script>
+<script src="/js/site.js?v=20261021-quality1" defer></script>
+<script src="/js/quotes.js?v=20261021-quality1" defer></script>
+<script src="/js/media.js?v=20261021-quality1" defer></script>
+<script src="/js/music.js?v=20261021-quality1" defer></script>
+<script src="/js/pjax.js?v=20261021-quality1" defer></script>
 </body>
 </html>
