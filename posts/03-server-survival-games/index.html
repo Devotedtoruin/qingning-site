@@ -9,7 +9,7 @@
   <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
 
   <meta name="theme-color" content="#f4f5f1">
-  <meta name="journal-build" content="20261021-quality1">
+  <meta name="journal-build" content="20261022-redesign3">
   <title>Server Survival 与 Datacenter Survival：请求与机房 | 青柠小站</title>
 
 
@@ -25,124 +25,59 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261021-quality1">
-  <link rel="stylesheet" href="/css/backgrounds.css?v=20261021-quality1">
-  <script src="/js/ui.js?v=20261021-quality1"></script>
-  <script src="/js/backgrounds.js?v=20261021-quality1"></script>
-  <script src="/js/appearance.js?v=20261021-quality1"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261022-redesign3">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261022-redesign3">
+  <script src="/js/ui.js?v=20261022-redesign3"></script>
+  <script src="/js/backgrounds.js?v=20261022-redesign3"></script>
+  <script src="/js/appearance.js?v=20261022-redesign3"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body data-layout="post">
 
 <a class="skip-link" href="#main">跳至正文</a>
 <header class="site-header" data-floating-header>
-  <div class="shell header-inner">
-    <div class="brand-block">
-      <a class="brand" href="/" aria-label="青柠小站，返回首页">
-        <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="40" height="40"></span>
-        <strong>青柠小站</strong>
-      </a>
-      <div class="brand-quote brand-quote--header">
-  <p>收录偶然遇到的有趣事物。</p>
-</div>
-
-    </div>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
     <nav class="desktop-nav" aria-label="主导航">
 
       <a href="/articles/">文章</a>
 
       <a href="/categories/">分类</a>
 
-
-
-      <details class="mega-menu" data-mega-menu>
-        <summary class="mega-trigger" aria-label="探索分类与精选专栏">专题探索</summary>
-        <div class="mega-panel">
-          <div class="mega-col">
-            <p class="mega-kicker">分类专栏</p>
-            <ul class="mega-list">
-
-              <li><a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span>前端技术</span><span class="count">3</span></a></li>
-
-              <li><a href="/categories/%E9%A1%B9%E7%9B%AE/"><span>项目</span><span class="count">1</span></a></li>
-
-              <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span>学习笔记</span><span class="count">2</span></a></li>
-
-            </ul>
-          </div>
-
-          <div class="mega-col">
-            <p class="mega-kicker">高频标签</p>
-            <div class="mega-tags">
-
-              <a href="/tags/CSS/">#CSS<sup>2</sup></a>
-
-              <a href="/tags/Hexo/">#Hexo<sup>2</sup></a>
-
-              <a href="/tags/%E9%83%A8%E7%BD%B2/">#部署<sup>1</sup></a>
-
-              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8/">#服务器安全<sup>1</sup></a>
-
-              <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目<sup>1</sup></a>
-
-              <a href="/tags/%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7/">#可访问性<sup>1</sup></a>
-
-              <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80/">#响应式布局<sup>1</sup></a>
-
-              <a href="/tags/Docker/">#Docker<sup>1</sup></a>
-
-            </div>
-          </div>
-
-
-          <div class="mega-col mega-featured">
-            <p class="mega-kicker">精选推荐</p>
-            <a class="mega-spotlight" href="/posts/08-frontend-pjax-music-lifecycle-draft/">
-              <strong>静态博客前端：PJAX 与持续音乐</strong>
-              <span>阅读全文 ↗</span>
-            </a>
-          </div>
-
-        </div>
-      </details>
-
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
     </nav>
     <div class="header-actions">
       <details class="appearance-controls" data-appearance-controls>
-        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16" /><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
         <div class="appearance-panel">
           <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
             <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
             <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
             <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
           </div></fieldset>
-          <fieldset class="appearance-options"><legend>画布壁纸</legend><div class="appearance-choices appearance-backgrounds">
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
 
-            <button type="button" data-background-choice="forest" aria-pressed="false">林间晨光</button>
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
 
-            <button type="button" data-background-choice="wallpaper2" aria-pressed="false" disabled>山湖倒影<small>待添加</small></button>
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
 
-            <button type="button" data-background-choice="wallpaper3" aria-pressed="false" disabled>晨曦山峦<small>待添加</small></button>
-
-            <button type="button" data-background-choice="wallpaper4" aria-pressed="false" disabled>宇宙星云<small>待添加</small></button>
-
-            <button type="button" data-background-choice="wallpaper6" aria-pressed="false" disabled>海洋波浪<small>待添加</small></button>
-
-            <button type="button" data-background-choice="wallpaper7" aria-pressed="false" disabled>夏日海滨<small>待添加</small></button>
-
-            <button type="button" data-background-choice="wallpaper8" aria-pressed="false" disabled>动漫夏日<small>待添加</small></button>
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
 
           </div></fieldset>
           <label for="appearance-transparency">内容面板透明度</label>
           <div class="appearance-control-row">
-            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="45" aria-describedby="appearance-help" data-appearance-range>
-            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">45%</output>
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
           </div>
-          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景照片或文字清晰度。</p>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
           <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
         </div>
       </details>
-      <button class="icon-button search-trigger-pill" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><kbd class="search-kbd" aria-hidden="true">Ctrl K</kbd></button>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
       <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
@@ -152,24 +87,37 @@
 
     <a href="/categories/">分类</a>
 
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
   </nav>
 </header>
 
 
-<main class="page-main" id="main" tabindex="-1">
-  <div class="ambient-canvas" aria-hidden="true" data-bg-slider><div class="bg-slide is-active" data-bg-slide></div><div class="ambient-wash"></div></div>
+<main class="page-main article-page" id="main" tabindex="-1">
   <div class="shell article-shell">
     <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-01">2026年9月1日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-10-22">2026年10月22日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 4 分钟</dd></div>
+        </dl>
+      </aside>
       <article class="article-main">
-        <a class="article-back" data-article-back href="/articles/">← 返回上一页</a>
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
         <header class="article-header">
-          <p class="article-meta-line"><time datetime="2026-09-01">2026-09-01</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 4 分钟阅读（粗估）</p>
-          <p class="article-updated">更新于 <time datetime="2026-10-16">2026-10-16</time></p>
           <h1>Server Survival 与 Datacenter Survival：请求与机房</h1>
+          <p class="article-meta"><time datetime="2026-09-01">2026年9月1日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 4 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-10-22">2026年10月22日</time></p>
           <p class="article-description">两款开源浏览器游戏的项目背景、试玩地址与基本玩法：搭云服务架构，或经营机房供电与散热。</p>
           <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a></div>
         </header>
-        <nav class="aside-card article-toc" data-article-toc hidden aria-label="文章目录">
+
+        <figure class="article-cover"><img src="/images/covers/survival-games.webp" alt="Server Survival 与 Datacenter Survival 官方演示画面的并排截帧" width="1600" height="1065" loading="eager" decoding="async"></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
           <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
           <ol id="article-toc-list" data-toc-list></ol>
         </nav>
@@ -234,27 +182,7 @@
 </div>
         <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
       </article>
-
-      <aside class="article-aside" aria-label="文章侧栏">
-
-        <section class="aside-card recent-card" aria-labelledby="recent-title">
-          <h2 class="aside-title" id="recent-title">推荐阅读</h2>
-          <ul class="recent-list">
-
-            <li><a href="/posts/08-frontend-pjax-music-lifecycle-draft/"><span>静态博客前端：PJAX 与持续音乐</span><time datetime="2026-09-11">09-11</time></a></li>
-
-            <li><a href="/posts/07-frontend-glass-accessibility-draft/"><span>静态博客前端：分层外观与可访问性</span><time datetime="2026-09-08">09-08</time></a></li>
-
-            <li><a href="/posts/06-frontend-layout-typography-draft/"><span>静态博客前端：布局与排版</span><time datetime="2026-09-04">09-04</time></a></li>
-
-            <li><a href="/posts/02-hexo-docker-nginx-publish/"><span>Hexo 与 Nginx：构建与安全发布</span><time datetime="2026-08-29">08-29</time></a></li>
-
-            <li><a href="/posts/01-ubuntu-server-secure-setup/"><span>Ubuntu SSH：公钥登录与端口迁移</span><time datetime="2026-08-27">08-27</time></a></li>
-
-          </ul>
-        </section>
-
-      </aside>
+      <aside class="article-aside" aria-label="文章目录"></aside>
     </div>
   </div>
 </main>
@@ -270,17 +198,10 @@
       <a href="/articles/">全部文章</a>
       <a href="/categories/">分类</a>
       <a href="/tags/">标签</a>
-      <a href="/subscribe/">RSS 订阅</a>
+      <a href="/atom.xml">RSS</a>
       <a href="/credits/">素材致谢</a>
     </nav>
-    <p class="footer-note">
-      <span>本站内容为技术记录与随手笔记，文中命令均为示例，请在自己的环境中验证后再执行。</span>
-      <span>文字与原创插图版权归本站所有；第三方素材版权归原作者，详见素材致谢。</span>
-      <span class="footer-meta">
-        <span>Powered by Hexo · 2026</span>
-        <span class="footer-icp" title="取得备案号后在此填写">备案信息待补充</span>
-      </span>
-    </p>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
   </div>
 
 </footer>
@@ -319,36 +240,8 @@
         <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
       </li>
 
-      <li class="music-item" data-track data-src="/audio/meditation-impromptu-02.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
-        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 02"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Meditation Impromptu 02</span></button>
-      </li>
-
-      <li class="music-item" data-track data-src="/audio/meditation-impromptu-03.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
-        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 03"><span class="music-item-index" aria-hidden="true">4</span><span class="music-item-title">Meditation Impromptu 03</span></button>
-      </li>
-
       <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
-        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">5</span><span class="music-item-title">Avec Soin</span></button>
-      </li>
-
-      <li class="music-item" data-track data-src="/audio/clean-soul.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
-        <button class="music-item-play" type="button" data-track-play aria-label="播放：Clean Soul"><span class="music-item-index" aria-hidden="true">6</span><span class="music-item-title">Clean Soul</span></button>
-      </li>
-
-      <li class="music-item" data-track data-src="/audio/piano-between.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
-        <button class="music-item-play" type="button" data-track-play aria-label="播放：Piano Between"><span class="music-item-index" aria-hidden="true">7</span><span class="music-item-title">Piano Between</span></button>
-      </li>
-
-      <li class="music-item" data-track data-src="/audio/dreamy-flashback.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
-        <button class="music-item-play" type="button" data-track-play aria-label="播放：Dreamy Flashback"><span class="music-item-index" aria-hidden="true">8</span><span class="music-item-title">Dreamy Flashback</span></button>
-      </li>
-
-      <li class="music-item" data-track data-src="/audio/heartbreaking.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
-        <button class="music-item-play" type="button" data-track-play aria-label="播放：Heartbreaking"><span class="music-item-index" aria-hidden="true">9</span><span class="music-item-title">Heartbreaking</span></button>
-      </li>
-
-      <li class="music-item" data-track data-src="/audio/long-note-two.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
-        <button class="music-item-play" type="button" data-track-play aria-label="播放：Long Note Two"><span class="music-item-index" aria-hidden="true">10</span><span class="music-item-title">Long Note Two</span></button>
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
       </li>
 
     </ol>
@@ -367,11 +260,11 @@
   </div>
 </div>
 <script src="/vendor/minisearch-7.2.0.js" defer></script>
-<script src="/js/search.js?v=20261021-quality1" defer></script>
-<script src="/js/site.js?v=20261021-quality1" defer></script>
-<script src="/js/quotes.js?v=20261021-quality1" defer></script>
-<script src="/js/media.js?v=20261021-quality1" defer></script>
-<script src="/js/music.js?v=20261021-quality1" defer></script>
-<script src="/js/pjax.js?v=20261021-quality1" defer></script>
+<script src="/js/search.js?v=20261022-redesign3" defer></script>
+<script src="/js/site.js?v=20261022-redesign3" defer></script>
+<script src="/js/quotes.js?v=20261022-redesign3" defer></script>
+<script src="/js/media.js?v=20261022-redesign3" defer></script>
+<script src="/js/music.js?v=20261022-redesign3" defer></script>
+<script src="/js/pjax.js?v=20261022-redesign3" defer></script>
 </body>
 </html>

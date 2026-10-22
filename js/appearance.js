@@ -11,7 +11,7 @@
   const LEGACY_KEYS = ['qingning.appearance'];
   const TRANSPARENCY_MIN = 0;
   const TRANSPARENCY_MAX = 90;
-  const TRANSPARENCY_DEFAULT = 45;
+  const TRANSPARENCY_DEFAULT = 30;
   const SCHEMES = ['light', 'dark', 'system'];
   const config = window.JournalBackgrounds;
   const enabled = config ? config.choices.filter(choice => choice.enabled).map(choice => choice.id) : [];

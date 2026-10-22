@@ -1,56 +1,56 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
 <title id="title">SSH：连接入口与验证链</title><desc id="desc">客户端经 socket 或 service 监听到服务器；配置检查、监听检查、网络规则与新会话逐层验证。</desc>
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6d8075"/></marker></defs>
-<rect width="1200" height="560" rx="20" fill="#fffdf7"/>
-<g font-family="system-ui, sans-serif" fill="#233a32">
-<text x="40" y="58" font-size="32" text-anchor="start" font-weight="700" fill="#233a32">SSH：连接入口与验证链</text>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4b574b"/></marker></defs>
+<rect width="1200" height="560" rx="20" fill="#f9f8f3"/>
+<g font-family="system-ui, sans-serif" fill="#202b23">
+<text x="40" y="58" font-size="32" text-anchor="start" font-weight="700" fill="#202b23">SSH：连接入口与验证链</text>
 <g>
-<rect x="40" y="175" width="255" height="135" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
-<text x="167.5" y="232.34" font-size="26" text-anchor="middle" font-weight="700" fill="#233a32">本地 SSH 客户端</text>
-<text x="167.5" y="270.34000000000003" font-size="26" text-anchor="middle" font-weight="400" fill="#233a32">公钥与独立新会话</text>
+<rect x="40" y="175" width="255" height="135" rx="12" fill="#eef1e8" stroke="#4b574b" stroke-width="2"/>
+<text x="167.5" y="232.34" font-size="26" text-anchor="middle" font-weight="700" fill="#202b23">本地 SSH 客户端</text>
+<text x="167.5" y="270.34000000000003" font-size="26" text-anchor="middle" font-weight="400" fill="#202b23">公钥与独立新会话</text>
 </g>
 <g>
-<rect x="400" y="110" width="320" height="105" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
-<text x="560.0" y="152.34" font-size="26" text-anchor="middle" font-weight="700" fill="#233a32">ssh.socket</text>
-<text x="560.0" y="190.34" font-size="26" text-anchor="middle" font-weight="400" fill="#233a32">ListenStream 控制监听</text>
+<rect x="400" y="110" width="320" height="105" rx="12" fill="#eef1e8" stroke="#4b574b" stroke-width="2"/>
+<text x="560.0" y="152.34" font-size="26" text-anchor="middle" font-weight="700" fill="#202b23">ssh.socket</text>
+<text x="560.0" y="190.34" font-size="26" text-anchor="middle" font-weight="400" fill="#202b23">ListenStream 控制监听</text>
 </g>
 <g>
-<rect x="400" y="270" width="320" height="105" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
-<text x="560.0" y="312.34" font-size="26" text-anchor="middle" font-weight="700" fill="#233a32">ssh.service</text>
-<text x="560.0" y="350.34" font-size="26" text-anchor="middle" font-weight="400" fill="#233a32">Port / ListenAddress</text>
+<rect x="400" y="270" width="320" height="105" rx="12" fill="#eef1e8" stroke="#4b574b" stroke-width="2"/>
+<text x="560.0" y="312.34" font-size="26" text-anchor="middle" font-weight="700" fill="#202b23">ssh.service</text>
+<text x="560.0" y="350.34" font-size="26" text-anchor="middle" font-weight="400" fill="#202b23">Port / ListenAddress</text>
 </g>
 <g>
-<rect x="865" y="175" width="295" height="135" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
-<text x="1012.5" y="232.34" font-size="26" text-anchor="middle" font-weight="700" fill="#233a32">Ubuntu 服务器</text>
-<text x="1012.5" y="270.34000000000003" font-size="26" text-anchor="middle" font-weight="400" fill="#233a32">账号、认证与 sudo</text>
+<rect x="865" y="175" width="295" height="135" rx="12" fill="#eef1e8" stroke="#4b574b" stroke-width="2"/>
+<text x="1012.5" y="232.34" font-size="26" text-anchor="middle" font-weight="700" fill="#202b23">Ubuntu 服务器</text>
+<text x="1012.5" y="270.34000000000003" font-size="26" text-anchor="middle" font-weight="400" fill="#202b23">账号、认证与 sudo</text>
 </g>
-<path d="M 295 230 L 345 230 L 345 162 L 388 162" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 295 255 L 345 255 L 345 322 L 388 322" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 720 162 L 785 162 L 785 220 L 853 220" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 720 322 L 785 322 L 785 265 L 853 265" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="560" y="86" font-size="24" text-anchor="middle" font-weight="400" fill="#4c5c54">按实际监听单元二选一</text>
+<path d="M 295 230 L 345 230 L 345 162 L 388 162" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 295 255 L 345 255 L 345 322 L 388 322" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 720 162 L 785 162 L 785 220 L 853 220" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 720 322 L 785 322 L 785 265 L 853 265" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="560" y="86" font-size="24" text-anchor="middle" font-weight="400" fill="#4b574b">按实际监听单元二选一</text>
 <g>
-<rect x="40" y="425" width="235" height="90" rx="12" fill="#f4edda" stroke="#6d8075" stroke-width="2"/>
-<text x="157.5" y="460.16" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">配置检查</text>
-<text x="157.5" y="496.16" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">sshd -t / -T</text>
-</g>
-<g>
-<rect x="335" y="425" width="235" height="90" rx="12" fill="#f4edda" stroke="#6d8075" stroke-width="2"/>
-<text x="452.5" y="460.16" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">实际监听</text>
-<text x="452.5" y="496.16" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">ss / systemctl</text>
+<rect x="40" y="425" width="235" height="90" rx="12" fill="#f1efe7" stroke="#4b574b" stroke-width="2"/>
+<text x="157.5" y="460.16" font-size="24" text-anchor="middle" font-weight="700" fill="#202b23">配置检查</text>
+<text x="157.5" y="496.16" font-size="24" text-anchor="middle" font-weight="400" fill="#202b23">sshd -t / -T</text>
 </g>
 <g>
-<rect x="630" y="425" width="235" height="90" rx="12" fill="#f4edda" stroke="#6d8075" stroke-width="2"/>
-<text x="747.5" y="460.16" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">网络规则</text>
-<text x="747.5" y="496.16" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">云端与主机</text>
+<rect x="335" y="425" width="235" height="90" rx="12" fill="#f1efe7" stroke="#4b574b" stroke-width="2"/>
+<text x="452.5" y="460.16" font-size="24" text-anchor="middle" font-weight="700" fill="#202b23">实际监听</text>
+<text x="452.5" y="496.16" font-size="24" text-anchor="middle" font-weight="400" fill="#202b23">ss / systemctl</text>
 </g>
 <g>
-<rect x="925" y="425" width="235" height="90" rx="12" fill="#f4edda" stroke="#6d8075" stroke-width="2"/>
-<text x="1042.5" y="460.16" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">独立新连接</text>
-<text x="1042.5" y="496.16" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">登录与 sudo</text>
+<rect x="630" y="425" width="235" height="90" rx="12" fill="#f1efe7" stroke="#4b574b" stroke-width="2"/>
+<text x="747.5" y="460.16" font-size="24" text-anchor="middle" font-weight="700" fill="#202b23">网络规则</text>
+<text x="747.5" y="496.16" font-size="24" text-anchor="middle" font-weight="400" fill="#202b23">云端与主机</text>
 </g>
-<path d="M 287 470 L 323 470" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 582 470 L 618 470" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 877 470 L 913 470" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
+<g>
+<rect x="925" y="425" width="235" height="90" rx="12" fill="#f1efe7" stroke="#4b574b" stroke-width="2"/>
+<text x="1042.5" y="460.16" font-size="24" text-anchor="middle" font-weight="700" fill="#202b23">独立新连接</text>
+<text x="1042.5" y="496.16" font-size="24" text-anchor="middle" font-weight="400" fill="#202b23">登录与 sudo</text>
+</g>
+<path d="M 287 470 L 323 470" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 582 470 L 618 470" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 877 470 L 913 470" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
 </g>
 </svg>

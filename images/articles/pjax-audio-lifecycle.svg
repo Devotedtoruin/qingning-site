@@ -1,47 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
-<title id="title">PJAX：替换 main，保留同一个 audio</title><desc id="desc">播放器与 audio 位于长驻外壳；局部导航先清理旧 main 工具，再换 main，最后挂载新工具。</desc>
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6d8075"/></marker></defs>
-<rect width="1200" height="640" rx="20" fill="#fffdf7"/>
-<g font-family="system-ui, sans-serif" fill="#233a32">
-<text x="40" y="58" font-size="32" text-anchor="start" font-weight="700" fill="#233a32">PJAX：替换 main，保留同一个 audio</text>
-<rect x="40" y="105" width="1120" height="315" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
-<text x="65" y="145" font-size="28" text-anchor="start" font-weight="700" fill="#233a32">长驻外壳：header / footer / 播放器</text>
-<rect x="65" y="175" width="700" height="220" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
-<text x="415" y="215" font-size="28" text-anchor="middle" font-weight="700" fill="#233a32">只替换 main</text>
-<g>
-<rect x="90" y="250" width="260" height="105" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
-<text x="220.0" y="292.66" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">旧文章</text>
-<text x="220.0" y="328.66" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">旧目录与 observer</text>
-</g>
-<g>
-<rect x="480" y="250" width="260" height="105" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
-<text x="610.0" y="292.66" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">新文章</text>
-<text x="610.0" y="328.66" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">新目录与 observer</text>
-</g>
-<path d="M 365 302 L 465 302" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<g>
-<rect x="815" y="175" width="320" height="220" rx="12" fill="#f4edda" stroke="#6d8075" stroke-width="2"/>
-<text x="975.0" y="255.84" font-size="26" text-anchor="middle" font-weight="700" fill="#233a32">同一个 audio</text>
-<text x="975.0" y="293.84000000000003" font-size="26" text-anchor="middle" font-weight="400" fill="#233a32">不重建播放器</text>
-<text x="975.0" y="331.84000000000003" font-size="26" text-anchor="middle" font-weight="400" fill="#233a32">不重置播放进度</text>
-</g>
-<g>
-<rect x="40" y="475" width="340" height="105" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
-<text x="210.0" y="517.66" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">请求与解析</text>
-<text x="210.0" y="553.66" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">最后一次请求获胜</text>
-</g>
-<g>
-<rect x="430" y="475" width="340" height="105" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
-<text x="600.0" y="517.66" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">cleanup 旧工具</text>
-<text x="600.0" y="553.66" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">断开 observer / 监听</text>
-</g>
-<g>
-<rect x="820" y="475" width="340" height="105" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
-<text x="990.0" y="517.66" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">mount 新工具</text>
-<text x="990.0" y="553.66" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">新 main 获得焦点</text>
-</g>
-<path d="M 392 528 L 417 528" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 782 528 L 807 528" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="600" y="618" font-size="25" text-anchor="middle" font-weight="400" fill="#4c5c54">整页刷新或导航回退会重建外壳；不承诺继续播放</text>
+<title id="title">局部导航：长驻外壳与每页工具</title>
+<desc id="desc">顶栏、三首曲目的长驻音频和播放器保留在外壳中；导航只替换 main 内的正文和每页工具。旧工具先清理，再挂载新工具，请求失败时回退整页访问。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#4b574b"/></marker></defs>
+<rect width="1200" height="640" fill="#f9f8f3"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" fill="#202b23">
+  <text x="48" y="62" font-size="48" font-weight="600">局部导航：长驻外壳与每页工具</text>
+  <text x="48" y="94" font-size="26" fill="#4b574b">换页时只替换正文；音频、顶栏和悬浮控件保持同一个节点。</text>
+
+  <rect x="48" y="126" width="1104" height="76" rx="12" fill="#eef1e8"/>
+  <text x="70" y="156" font-size="23" font-weight="600">顶栏</text>
+  <text x="70" y="180" font-size="18" fill="#4b574b">品牌 · 导航 · 外观 · 搜索</text>
+  <rect x="690" y="142" width="210" height="44" rx="10" fill="#fffefa" stroke="#c9d0c5"/>
+  <text x="795" y="169" font-size="19" text-anchor="middle" fill="#334a2b">长驻 audio 节点</text>
+  <rect x="914" y="142" width="214" height="44" rx="10" fill="#fffefa" stroke="#c9d0c5"/>
+  <text x="1021" y="162" font-size="18" text-anchor="middle">播放器 dock · 3 首</text>
+  <text x="1021" y="178" font-size="17" text-anchor="middle" fill="#4b574b">不随正文重建</text>
+
+  <g transform="translate(48 226)">
+    <rect x="0" y="0" width="560" height="280" rx="14" fill="#eef1e8"/>
+    <text x="24" y="32" font-size="23" font-weight="600" fill="#334a2b">旧页面 · 即将替换</text>
+    <rect x="24" y="50" width="512" height="198" rx="10" fill="#fffefa" stroke="#c9d0c5"/>
+    <text x="280" y="82" font-size="22" font-weight="600" text-anchor="middle">main</text>
+    <rect x="48" y="102" width="180" height="10" rx="5" fill="#dde3d9"/>
+    <rect x="48" y="124" width="250" height="10" rx="5" fill="#dde3d9"/>
+    <rect x="48" y="160" width="464" height="62" rx="8" fill="#eef1e8"/>
+    <text x="280" y="196" font-size="18" text-anchor="middle" fill="#4b574b">正文 · 目录 · 图片工具 · 复制按钮</text>
+    <text x="24" y="272" font-size="18" fill="#4b574b">先执行本页 cleanup，再移除旧 main</text>
+  </g>
+
+  <path d="M616 360 L664 360" stroke="#4b574b" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="640" y="344" font-size="18" text-anchor="middle" fill="#4b574b">fetch</text>
+
+  <g transform="translate(680 226)">
+    <rect x="0" y="0" width="472" height="280" rx="14" fill="#eef1e8"/>
+    <text x="24" y="32" font-size="23" font-weight="600" fill="#334a2b">新页面 · 只替换 main</text>
+    <rect x="24" y="50" width="424" height="198" rx="10" fill="#fffefa" stroke="#c9d0c5"/>
+    <text x="236" y="82" font-size="22" font-weight="600" text-anchor="middle">main</text>
+    <rect x="48" y="102" width="160" height="10" rx="5" fill="#dde3d9"/>
+    <rect x="48" y="124" width="240" height="10" rx="5" fill="#dde3d9"/>
+    <rect x="48" y="160" width="376" height="62" rx="8" fill="#eef1e8"/>
+    <text x="236" y="196" font-size="18" text-anchor="middle" fill="#4b574b">新正文 · 新目录 · 新工具挂载</text>
+    <text x="24" y="272" font-size="18" fill="#4b574b">失败：中止请求或整页导航，不留下半页状态</text>
+  </g>
+
+  <rect x="48" y="536" width="1104" height="64" rx="12" fill="#e4ebdd"/>
+  <text x="600" y="563" font-size="22" font-weight="600" text-anchor="middle" fill="#334a2b">竞态保护：最后一次导航获胜；清理函数必须可重复调用</text>
+  <text x="600" y="585" font-size="18" text-anchor="middle" fill="#4b574b">播放意图与音频节点留在外壳，正文工具跟随 main 生命周期。</text>
 </g>
 </svg>

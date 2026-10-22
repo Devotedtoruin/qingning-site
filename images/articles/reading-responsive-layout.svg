@@ -1,38 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
-<title id="title">阅读布局：宽屏双列与窄屏单列重排</title><desc id="desc">宽屏采用 Grid 双列（左侧 sticky 目录 + 右侧 minmax(0,1fr) 正文）；窄屏收拢为单列，顶部目录可折叠，代码块与表格在局部横向滚动。</desc>
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6d8075"/></marker></defs>
-<rect width="1200" height="680" rx="20" fill="#fffdf7"/>
-<g font-family="system-ui, sans-serif" fill="#233a32">
-<text x="40" y="58" font-size="32" text-anchor="start" font-weight="700" fill="#233a32">阅读布局：宽屏双列与窄屏单列重排</text>
-<text x="415" y="111" font-size="28" text-anchor="middle" font-weight="700" fill="#233a32">宽屏：212px + minmax(0, 1fr)</text>
-<text x="995" y="111" font-size="28" text-anchor="middle" font-weight="700" fill="#233a32">窄屏：单列折叠</text>
-<rect x="40" y="140" width="750" height="425" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
-<rect x="65" y="165" width="175" height="370" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
-<rect x="265" y="165" width="500" height="370" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
-<text x="152" y="213" font-size="25" text-anchor="middle" font-weight="700" fill="#233a32">目录 (sticky)</text>
-<text x="152" y="253" font-size="22" text-anchor="middle" font-weight="400" fill="#4c5c54">随滚动高亮</text>
-<text x="515" y="209" font-size="27" text-anchor="middle" font-weight="700" fill="#233a32">article：正文列</text>
-<text x="515" y="253" font-size="25" text-anchor="middle" font-weight="400" fill="#233a32">min-width: 0 允许列收缩</text>
-<text x="515" y="294" font-size="25" text-anchor="middle" font-weight="400" fill="#233a32">控制单行字数与行高</text>
-<g>
-<rect x="290" y="330" width="450" height="100" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
-<text x="515" y="370" font-size="24" text-anchor="middle" font-weight="700" fill="#233a32">长代码块与宽数据表</text>
-<text x="515" y="406" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">overflow-x: auto 局部横向滚动</text>
-</g>
-<path d="M 335 470 L 690 470" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="515" y="512" font-size="24" text-anchor="middle" font-weight="400" fill="#4c5c54">不撑破外层视口</text>
-<g>
-<rect x="835" y="140" width="325" height="115" rx="12" fill="#eef4ef" stroke="#6d8075" stroke-width="2"/>
-<text x="997.5" y="187" font-size="25" text-anchor="middle" font-weight="700" fill="#233a32">目录：默认收起</text>
-<text x="997.5" y="225" font-size="23" text-anchor="middle" font-weight="400" fill="#233a32">按需展开跳转</text>
-</g>
-<path d="M 997 260 L 997 278" fill="none" stroke="#6d8075" stroke-width="3" marker-end="url(#arrow)"/>
-<g>
-<rect x="835" y="285" width="325" height="280" rx="12" fill="#fffdf7" stroke="#6d8075" stroke-width="2"/>
-<text x="997.5" y="375" font-size="26" text-anchor="middle" font-weight="700" fill="#233a32">article：正文</text>
-<text x="997.5" y="415" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">段落自适应换行</text>
-<text x="997.5" y="455" font-size="24" text-anchor="middle" font-weight="400" fill="#233a32">代码与表格局部滚动</text>
-</g>
-<text x="600" y="622" font-size="26" text-anchor="middle" font-weight="400" fill="#233a32">同一套 DOM 在宽屏分列、窄屏单列，外层页面始终无横向滚动条</text>
+<title id="title">阅读布局：信息栏、正文与目录</title>
+<desc id="desc">宽屏为 152 像素信息栏、可收缩正文和 196 像素目录三列；1024 至 1199 像素收为正文与目录两列；小于 1024 像素收为单列，目录折叠到正文之前。代码块和宽表格只在自身容器内横向滚动。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#4b574b"/></marker></defs>
+<rect width="1200" height="680" fill="#f9f8f3"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" fill="#202b23">
+  <text x="48" y="62" font-size="48" font-weight="600">阅读布局：信息栏、正文与目录</text>
+  <text x="48" y="94" font-size="26" fill="#4b574b">一个 DOM，三种列宽；内容先成立，目录再吸附。</text>
+
+  <rect x="48" y="126" width="748" height="390" rx="16" fill="#eef1e8"/>
+  <text x="422" y="160" font-size="24" font-weight="600" text-anchor="middle" fill="#3f5a36">≥ 1200px · 三栏</text>
+
+  <rect x="72" y="180" width="142" height="306" rx="10" fill="#f9f8f3"/>
+  <text x="143" y="214" font-size="23" font-weight="600" text-anchor="middle">信息栏</text>
+  <text x="143" y="240" font-size="19" text-anchor="middle" fill="#4b574b">发布 · 更新</text>
+  <text x="143" y="262" font-size="19" text-anchor="middle" fill="#4b574b">分类 · 阅读</text>
+  <rect x="88" y="288" width="110" height="1" fill="#c9d0c5"/>
+  <text x="143" y="316" font-size="19" text-anchor="middle" fill="#4b574b">sticky</text>
+
+  <rect x="232" y="180" width="372" height="306" rx="10" fill="#fffefa" stroke="#c9d0c5"/>
+  <text x="418" y="214" font-size="24" font-weight="600" text-anchor="middle">正文</text>
+  <text x="418" y="240" font-size="19" text-anchor="middle" fill="#4b574b">max-width: 760px</text>
+  <rect x="254" y="260" width="328" height="1" fill="#dde3d9"/>
+  <rect x="254" y="278" width="300" height="9" rx="4" fill="#dde3d9"/>
+  <rect x="254" y="298" width="328" height="9" rx="4" fill="#dde3d9"/>
+  <rect x="254" y="318" width="280" height="9" rx="4" fill="#dde3d9"/>
+  <rect x="254" y="352" width="328" height="92" rx="8" fill="#eef1e8"/>
+  <text x="418" y="392" font-size="19" text-anchor="middle" fill="#3f5a36">代码与表格局部滚动</text>
+  <text x="418" y="414" font-size="19" text-anchor="middle" fill="#4b574b">overflow-x: auto</text>
+
+  <rect x="622" y="180" width="150" height="306" rx="10" fill="none" stroke="#c9d0c5"/>
+  <text x="697" y="214" font-size="23" font-weight="600" text-anchor="middle">目录</text>
+  <rect x="638" y="234" width="118" height="26" rx="5" fill="#e4ebdd"/>
+  <text x="697" y="251" font-size="18" text-anchor="middle" fill="#334a2b">当前章节</text>
+  <text x="697" y="282" font-size="18" text-anchor="middle" fill="#4b574b">第一章</text>
+  <text x="697" y="306" font-size="18" text-anchor="middle" fill="#4b574b">第二章</text>
+  <text x="697" y="330" font-size="18" text-anchor="middle" fill="#4b574b">第三章</text>
+  <path d="M622 420L622 470" stroke="#4b574b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <text x="422" y="470" font-size="19" text-anchor="middle" fill="#4b574b">152px</text>
+  <text x="422" y="490" font-size="19" text-anchor="middle" fill="#4b574b">+ minmax(0, 1fr) + 196px</text>
+
+  <rect x="820" y="126" width="332" height="180" rx="16" fill="#eef1e8"/>
+  <text x="986" y="158" font-size="24" font-weight="600" text-anchor="middle" fill="#3f5a36">1024–1199px · 两栏</text>
+  <rect x="842" y="178" width="210" height="102" rx="8" fill="#fffefa" stroke="#c9d0c5"/>
+  <text x="947" y="214" font-size="22" font-weight="600" text-anchor="middle">正文</text>
+  <text x="947" y="238" font-size="18" text-anchor="middle" fill="#4b574b">minmax(0, 1fr)</text>
+  <rect x="1066" y="178" width="64" height="102" rx="8" fill="none" stroke="#c9d0c5"/>
+  <text x="1098" y="216" font-size="18" text-anchor="middle">目录</text>
+  <text x="1098" y="240" font-size="17" text-anchor="middle" fill="#4b574b">sticky</text>
+
+  <rect x="820" y="326" width="332" height="190" rx="16" fill="#eef1e8"/>
+  <text x="986" y="358" font-size="24" font-weight="600" text-anchor="middle" fill="#3f5a36">&lt; 1024px · 单列</text>
+  <rect x="842" y="376" width="288" height="34" rx="7" fill="#fffefa" stroke="#c9d0c5"/>
+  <text x="986" y="398" font-size="19" text-anchor="middle">本页目录 · 默认收起</text>
+  <rect x="842" y="422" width="288" height="72" rx="8" fill="#fffefa" stroke="#c9d0c5"/>
+  <text x="986" y="451" font-size="22" font-weight="600" text-anchor="middle">正文</text>
+  <text x="986" y="474" font-size="18" text-anchor="middle" fill="#4b574b">页边距只保留一层</text>
+
+  <rect x="48" y="556" width="1104" height="82" rx="14" fill="#e4ebdd"/>
+  <text x="600" y="588" font-size="24" font-weight="600" text-anchor="middle" fill="#334a2b">验收：1440 / 1200 / 1024 / 768 / 390px</text>
+  <text x="600" y="614" font-size="19" text-anchor="middle" fill="#4b574b">页面本身不横向滚动；代码、表格与目录各自处理溢出。</text>
 </g>
 </svg>
