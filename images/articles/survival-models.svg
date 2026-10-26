@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+<title id="title">两款 Survival：逻辑服务与物理设施</title><desc id="desc">左侧为请求、队列、计算与数据库；右侧为供电、UPS、机架和冷却，区分两种模型的缓冲与瓶颈。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4b574b"/></marker></defs>
+<rect width="1200" height="620" rx="20" fill="#f9f8f3"/>
+<g font-family="system-ui, sans-serif" fill="#202b23">
+<text x="40" y="58" font-size="32" text-anchor="start" font-weight="700" fill="#202b23">两款 Survival：逻辑服务与物理设施</text>
+<rect x="40" y="100" width="540" height="445" rx="12" fill="#eef1e8" stroke="#4b574b" stroke-width="2"/>
+<rect x="620" y="100" width="540" height="445" rx="12" fill="#f1efe7" stroke="#4b574b" stroke-width="2"/>
+<text x="310" y="145" font-size="29" text-anchor="middle" font-weight="700" fill="#202b23">Server Survival</text>
+<text x="890" y="145" font-size="29" text-anchor="middle" font-weight="700" fill="#202b23">Datacenter Survival</text>
+<g>
+<rect x="115" y="180" width="390" height="66" rx="12" fill="#f9f8f3" stroke="#4b574b" stroke-width="2"/>
+<text x="310.0" y="221.84" font-size="26" text-anchor="middle" font-weight="700" fill="#202b23">请求入口</text>
+</g>
+<g>
+<rect x="115" y="275" width="390" height="66" rx="12" fill="#f9f8f3" stroke="#4b574b" stroke-width="2"/>
+<text x="310.0" y="316.84" font-size="26" text-anchor="middle" font-weight="700" fill="#202b23">Queue → Compute</text>
+</g>
+<g>
+<rect x="115" y="370" width="390" height="66" rx="12" fill="#f9f8f3" stroke="#4b574b" stroke-width="2"/>
+<text x="310.0" y="411.84" font-size="26" text-anchor="middle" font-weight="700" fill="#202b23">数据库</text>
+</g>
+<path d="M 310 248 L 310 266" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 310 343 L 310 361" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
+<g>
+<rect x="695" y="180" width="390" height="66" rx="12" fill="#f9f8f3" stroke="#4b574b" stroke-width="2"/>
+<text x="890.0" y="221.84" font-size="26" text-anchor="middle" font-weight="700" fill="#202b23">市电 → UPS</text>
+</g>
+<g>
+<rect x="695" y="275" width="390" height="66" rx="12" fill="#f9f8f3" stroke="#4b574b" stroke-width="2"/>
+<text x="890.0" y="316.84" font-size="26" text-anchor="middle" font-weight="700" fill="#202b23">PDU → Rack</text>
+</g>
+<g>
+<rect x="695" y="370" width="390" height="66" rx="12" fill="#f9f8f3" stroke="#4b574b" stroke-width="2"/>
+<text x="890.0" y="411.84" font-size="26" text-anchor="middle" font-weight="700" fill="#202b23">冷却 → 可交付负载</text>
+</g>
+<path d="M 890 248 L 890 266" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 890 343 L 890 361" fill="none" stroke="#4b574b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="310" y="492" font-size="24" text-anchor="middle" font-weight="400" fill="#202b23">缓冲积压，但不增加处理速率</text>
+<text x="890" y="492" font-size="24" text-anchor="middle" font-weight="400" fill="#202b23">缓冲停电，但不延长到无限</text>
+<text x="600" y="590" font-size="28" text-anchor="middle" font-weight="700" fill="#202b23">共同问题：容量、缓冲时间与故障影响范围</text>
+</g>
+</svg>

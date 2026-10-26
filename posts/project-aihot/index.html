@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="自己找热点、自己写日报的行业资讯站框架。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>AIHOT：自己找热点、自己写日报的行业资讯站框架 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-aihot/">
+  <meta property="og:url" content="https://qingning.co/posts/project-aihot/">
+
+  <meta property="og:title" content="AIHOT：自己找热点、自己写日报的行业资讯站框架 | 青柠小站">
+  <meta property="og:description" content="自己找热点、自己写日报的行业资讯站框架。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-28">2026年9月28日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-10-02">2026年10月2日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 6 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>AIHOT：自己找热点、自己写日报的行业资讯站框架</h1>
+          <p class="article-meta"><time datetime="2026-09-28">2026年9月28日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 6 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-10-02">2026年10月2日</time></p>
+          <p class="article-description">自己找热点、自己写日报的行业资讯站框架。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">#效率工具</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-aihot/cover.webp" alt="AIHOT 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/KKKKhazix/AIHOT/main/docs/assets/banner-light.png" target="_blank" rel="noopener">来源</a> · 以仓库为准</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>AIHOT 是数字生命卡兹克开源的行业热点站框架，MIT 许可，也是 aihot.news 线上站点使用的引擎。作者自述是设计师出身，这套代码由他和 AI 一起重写。仓库把信源接入、模型筛选、写作、聚簇、热度和日报的整套流程都放了出来，换掉信源和精选标准，就能做成另一个行业的热点站。</p>
+<h2 id="把行业热点站做成一条流水线"><a href="#把行业热点站做成一条流水线" class="headerlink" title="把行业热点站做成一条流水线"></a>把行业热点站做成一条流水线</h2><p>垂直资讯站真正难的不是搭页面，而是每天从大量来源里挑出值得看的内容，去掉重复，写成可读的摘要，再按热度排出来。AIHOT 把这套工作拆成六步：采集、预筛、两次评分、写作、聚簇、热点与成刊。每一步的提示词都在仓库里，入选门槛也公开，想改标准不必动代码。</p>
+<figure class="article-diagram">
+  <img src="/images/projects/project-aihot/screen-01.webp" alt="AIHOT 的六步流程示意：采集、预筛、两次评分、写作、聚簇、热点与成刊" width="1400" height="613" loading="lazy" decoding="async">
+  <figcaption>官方流程图：一条资料从信源进入，经筛选、写作和聚簇后进入热点榜与日报。</figcaption>
+</figure>
+
+<h2 id="六类信源与两次评分"><a href="#六类信源与两次评分" class="headerlink" title="六类信源与两次评分"></a>六类信源与两次评分</h2><p>信源支持 RSS、网页列表、JSON 接口、X 账号、微信公众号，以及自己脚本推送的内容。来源分三级：官方一手、官方账号与准官方、媒体与个人，各级使用不同的入选门槛，抓取频率会按产出自动调整。</p>
+<p>一条资料进来先判重、预筛，可能重要的再按同一份标准独立打两次分，过了门槛且不是已有新闻的重复才进入精选。写作阶段生成中文标题、答案先行的摘要和推荐理由，外文内容可以全文翻译；分类、标签和新闻事实单独抽取，避免模型把原文没提到的公司写进标题。</p>
+<p>聚簇解决“同一件事被十家媒体转发”的问题：先用向量或文字重合度找候选，再让模型判断是同一事件、后续进展还是两件事，拿不准的合并后再复核。热度按事件算，不按文章算；48 小时内每个独立来源只算一次，24 小时减半。日报默认每天 08:00 出刊，周报和月报从日报汇编，时间可以在 <code>site/site.ts</code> 的 <code>EDITION_TIMES</code> 里改。</p>
+<h2 id="本地跑起来"><a href="#本地跑起来" class="headerlink" title="本地跑起来"></a>本地跑起来</h2><p>需要 Docker、Node.js 24，以及一个 OpenAI 兼容的模型 API Key。默认配置按 DeepSeek 写，换千问、智谱等供应商时改 <code>.env</code> 里的 <code>LLM_BASE_URL</code>、<code>LLM_MODEL</code> 和 <code>LLM_EXTRA_JSON</code>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/KKKKhazix/AIHOT.git myhot</span><br><span class="line"><span class="built_in">cd</span> myhot</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成 .env；把占位符换成自己的模型 API Key</span></span><br><span class="line">node scripts/init-env.ts --llm-key <span class="string">&quot;&lt;模型 API Key&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建并启动站点、数据库和后台任务</span></span><br><span class="line">docker compose up -d --build</span><br></pre></td></tr></table></figure>
+
+<p>打开 <code>http://localhost:3000</code>，后台在 <code>/admin</code>，管理员密码在 <code>.env</code> 的 <code>ADMIN_PASSWORD</code> 里。首次导入的资料大约半小时处理完。以上命令按官方 README 整理，未在本机完整实测；中国大陆网络、域名和 HTTPS 另有部署文档。</p>
+<h2 id="改成自己的行业"><a href="#改成自己的行业" class="headerlink" title="改成自己的行业"></a>改成自己的行业</h2><p>仓库带了 18 个公开的海外 AI 资讯源作示范，真正的信源要换成自己行业的。改动集中在两个目录：<code>site/site.ts</code> 管站名、行业词、出刊时间和首页文案；<code>industry/</code> 管分类、主题、信源、提示词和入选门槛。评分标准在 <code>industry/prompts/selection-score.md</code>，最值得花时间校准；README 建议用一两百条自己标注的资料跑 <code>scripts/eval-selection.ts</code>，看选得准不准再回去改。</p>
+<p>不想逐文件读，也可以把仓库交给 Claude Code 或 Codex，让它按 <code>AGENTS.md</code> 和 <code>docs/customize.md</code> 执行改造，再跑类型检查、测试和 smoke 脚本。</p>
+<h2 id="一个垂直媒体的日报场景"><a href="#一个垂直媒体的日报场景" class="headerlink" title="一个垂直媒体的日报场景"></a>一个垂直媒体的日报场景</h2><p>一家做劳动法的机构可以只盯法规更新、法院公告和几家行业媒体，把“哪些案子会影响用工”写进评分标准。每天早上编辑打开日报，先看聚簇后的事件，再抽查几篇摘要的准确性；需要深度解读的内容仍由人写。站点同时提供 RSS、公开 API、MCP 和 <code>llms.txt</code>，读者用浏览器或 Agent 都能取到同一份内容。</p>
+<h2 id="和-RSS-阅读器、通用-AI-写作工具的区别"><a href="#和-RSS-阅读器、通用-AI-写作工具的区别" class="headerlink" title="和 RSS 阅读器、通用 AI 写作工具的区别"></a>和 RSS 阅读器、通用 AI 写作工具的区别</h2><p>FreshRSS 一类阅读器擅长聚合，但不做两次评分、事件归并和成刊；通用 AI 写作工具能生成摘要，却没有稳定的信源管道、去重和发布节奏。AIHOT 更接近一条编辑部流水线：采集、筛选、写作、编排都在一个仓库里。它仍不是完整的 CMS 或新闻采编系统，不能替代事实核查和编辑判断。</p>
+<h2 id="成本、准确性与维护"><a href="#成本、准确性与维护" class="headerlink" title="成本、准确性与维护"></a>成本、准确性与维护</h2><p>每一步都调用模型，资料量上来后 API 费用会同步增长；后台提供了预算熔断，但预算和模型选择仍要自己定。摘要和分类可能出错，提示词和门槛需要用本地样本反复校准，不能装完就放任不管。仓库没有 AIHOT 的真实信源名单和运营数据，示范源只有 18 个海外 AI 来源，跑起来能看到流程，不代表直接拥有一个成熟媒体。</p>
+<p>作者说明代码不是精心打磨的通用框架，线上更新会尽量同步但不保证每次同步；模型榜、重置监控等 AI 行业专属功能只留在 AIHOT 线上。许可为 MIT，但 AIHOT 的名称和 Logo 不在授权范围内，二次发布要换成自己的品牌。</p>
+<h2 id="适合的团队"><a href="#适合的团队" class="headerlink" title="适合的团队"></a>适合的团队</h2><p>适合有明确行业信源、懂一点内容运营、愿意持续校准评分标准的开发者或小团队。只想订阅资讯的人，用现成 RSS 阅读器更轻；需要完整采编流程和法务审核的机构媒体，应把 AIHOT 当成辅助工具而不是编辑系统。</p>
+<h2 id="入口与文档"><a href="#入口与文档" class="headerlink" title="入口与文档"></a>入口与文档</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/KKKKhazix/AIHOT">KKKKhazix&#x2F;AIHOT</a></li>
+<li>线上原站：<a target="_blank" rel="noopener" href="https://aihot.news/">aihot.news</a></li>
+<li>改造文档：<a target="_blank" rel="noopener" href="https://github.com/KKKKhazix/AIHOT/blob/main/docs/customize.md">docs&#x2F;customize.md</a></li>
+<li>部署文档：<a target="_blank" rel="noopener" href="https://github.com/KKKKhazix/AIHOT/blob/main/docs/deploy.md">docs&#x2F;deploy.md</a></li>
+<li>许可：以仓库为准，README 标注 MIT；名称与 Logo 不在授权范围</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

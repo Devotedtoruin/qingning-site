@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="让 coding agent 用 HTML 做视频的开源 AI 视频智能体。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>OpenFilm：让 coding agent 用 HTML 做视频的开源 AI 视频智能体 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-openfilm/">
+  <meta property="og:url" content="https://qingning.co/posts/project-openfilm/">
+
+  <meta property="og:title" content="OpenFilm：让 coding agent 用 HTML 做视频的开源 AI 视频智能体 | 青柠小站">
+  <meta property="og:description" content="让 coding agent 用 HTML 做视频的开源 AI 视频智能体。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-10-04">2026年10月4日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-10-08">2026年10月8日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 6 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>OpenFilm：让 coding agent 用 HTML 做视频的开源 AI 视频智能体</h1>
+          <p class="article-meta"><time datetime="2026-10-04">2026年10月4日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 6 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-10-08">2026年10月8日</time></p>
+          <p class="article-description">让 coding agent 用 HTML 做视频的开源 AI 视频智能体。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/%E8%A7%86%E9%A2%91/">#视频</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-openfilm/cover.webp" alt="OpenFilm 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/openfilm/openfilm/main/docs/openfilm.webp" target="_blank" rel="noopener">来源</a> · MIT</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>OpenFilm 是 openfilm 组织在 2026 年 10 月开源的 AI 视频智能体，目标是让 Codex、Claude Code 这类 coding agent 直接“写”出一部片子。它把影片拆成网页：每个镜头是一个 HTML 页面，用 <code>frame(t)</code> 画出任意时刻的画面；整部片子是一个 <code>film.html</code>，按轨道把页面、视频、图片和声音剪在一起。项目用 TypeScript 编写，MIT 许可，官网 openfilm.dev。本文按官方 README 整理，未在本机完整实测；命令和导出参数以当前版本为准。</p>
+<h2 id="一部片子就是一个文件夹"><a href="#一部片子就是一个文件夹" class="headerlink" title="一部片子就是一个文件夹"></a>一部片子就是一个文件夹</h2><p>README 给出的结构很直接：一个文件夹里有 <code>film.html</code>，每个 <code>&lt;section&gt;</code> 是一条轨道，按时间线顺序排列，第一轨道在最上层。每个 clip 是一个元素，可以是网页、视频、图片或音频。播放哪一段用 media fragment 指定，例如 <code>#t=12,18</code>；从哪里开始用 <code>at</code>；位置和尺寸写在 <code>style</code> 的 <code>left</code>、<code>top</code>、<code>width</code>、<code>height</code> 里，外观交给 CSS。README 的示例甚至把 HTML、CSS 和轨道混在同一个文件里，读起来像一份可以播放的网页。</p>
+<p>页面只需实现一个约定：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="variable language_">window</span>.<span class="property">film</span> = &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">frame</span>(<span class="params">t</span>) &#123; <span class="comment">/* 画出第 t 秒的完整画面 */</span> &#125;,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">duration</span>: <span class="number">4</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">ready</span>: <span class="title function_">loadFonts</span>(),</span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>README 强调一条规则：同一个 <code>t</code> 必须画出同一张图，帧可以乱序、并行、跨帧请求。这样同一份工程在任何尺寸、任何机器上渲染结果一致。浏览器能画的东西都能用：three.js、WebGL、canvas、SVG、CSS、GSAP、视频。其他能生成画面的工具，比如 Python、Blender 或视频模型，以视频或图片的形式作为素材进入时间线。</p>
+<h2 id="安装与常用命令"><a href="#安装与常用命令" class="headerlink" title="安装与常用命令"></a>安装与常用命令</h2><p>需要 Node 22.2 以上和 ffmpeg，首次运行会下载约 100 MB 的无头 Chromium。最省事的安装是交给 Agent：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx skills add openfilm/openfilm</span><br></pre></td></tr></table></figure>
+
+<p>然后直接对 Agent 说“给我的 CLI 做一条 20 秒发布视频，带音乐”。如果 Agent 不支持 Skills，让它运行 <code>npx -y openfilm@latest</code> 并阅读打印出来的手册。也可以全局安装后用命令操作：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx -y openfilm@latest            <span class="comment"># 给 Agent 看的完整手册</span></span><br><span class="line">openfilm open [folder | url]      <span class="comment"># 在 Studio 里打开一部片子</span></span><br><span class="line">openfilm look [what] [t | a-b]    <span class="comment"># 检查画面、音轨或某个时间范围</span></span><br><span class="line">openfilm render [a-b]             <span class="comment"># 输出 MP4，支持 --4k、--blur、--alpha</span></span><br><span class="line">openfilm get [what]               <span class="comment"># 从已接入的服务取配音、音乐、图片、视频</span></span><br><span class="line">openfilm doctor                   <span class="comment"># 输出本机环境报告</span></span><br></pre></td></tr></table></figure>
+
+<p><code>openfilm look</code> 是容易被忽略的一环。它把检查表里的每一帧画两遍，用两种打乱的顺序，指出结果发生变化的帧，同时报告页面错误、字体加载失败、音频缺失和被画框裁掉的文字。视频生成模型最不可靠的地方是“看起来差不多”，这个检查把一部分问题变成可复现的报告。</p>
+<h2 id="Studio-里手改"><a href="#Studio-里手改" class="headerlink" title="Studio 里手改"></a>Studio 里手改</h2><p>Studio 是在本机浏览器里运行的编辑器，README 建议用 Chromium 内核的 Chrome 或 Edge，因为预览和导出使用同一个引擎。画面里的文字、图层、时间线上的片段、位置、音量、速度和字幕都能改；修改会写回影片文件，Agent 下次编辑时能看到并保留。也可以保存命名版本，随时回退。</p>
+<p>导出格式包括视频、GIF、音频或分轨、字幕、静帧、幻灯片、透明视频，以及给 Final Cut Pro、Premiere Pro、DaVinci Resolve 的时间线。桌面版是 Studio 加一个旁边的聊天窗口，可以从 openfilm.dev 或 Releases 下载，自带 ffmpeg 和无头浏览器。制作、编辑和渲染不需要账号；AI 配音、音乐、图片和视频要自己接 ElevenLabs、OpenAI、Google、fal 等服务，并在 Studio 的设置里填自己的 Key。</p>
+<h2 id="典型场景"><a href="#典型场景" class="headerlink" title="典型场景"></a>典型场景</h2><p>一个开发团队要给新版本做 20 秒发布视频。产品经理把功能点写成一段说明，Claude Code 按 OpenFilm 的 Skill 生成 <code>film.html</code>，Studio 自动打开。设计师在时间线上换掉两张截图、调整标题字号和音乐淡出，最后 <code>openfilm render --4k</code> 出片。整个过程不需要打开传统 NLE，也不需要把素材上传到云端；如果某句字幕被裁切，<code>openfilm look</code> 会直接指出来。</p>
+<h2 id="和-Remotion-的分工"><a href="#和-Remotion-的分工" class="headerlink" title="和 Remotion 的分工"></a>和 Remotion 的分工</h2><p>README 明确把 Remotion、HyperFrames 归为“框架”，并说 OpenFilm 不需要框架，一个 <code>frame(t)</code> 函数就够。实际差别在抽象层：Remotion 用 React 组件和 hooks 组织视频，适合已有 React 工程和复杂数据驱动的批量渲染；OpenFilm 让 Agent 直接写网页，结构更接近“一个文件夹加若干 HTML”，检查和渲染由 CLI 兜底。两者都能程序化出片，选择取决于团队更愿意维护 React 项目还是网页文件。</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>项目 2026 年 10 月才创建，README 之外缺少长期使用案例，导出质量和复杂合成的边界需要自己测。无头 Chromium、ffmpeg 和 Node 的组合对机器有要求；<code>frame(t)</code> 的确定性规则意味着不能随手写依赖上一帧状态的动画，任何有状态的效果都要改写成按时间计算。生成式素材按服务商计费，项目本身不提供模型。它也不是传统剪辑器：需要逐帧精修、专业调色或多轨音频混音时，仍然要回到 NLE。</p>
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><p>适合已经用 coding agent 写代码、想把视频当作代码资产管理的开发者、技术布道和产品团队；也适合需要把视频生产接进脚本或 CI 的工程团队。需要传统剪辑手感、精细合成和成熟团队协作的后期人员，不适合用它替代 NLE。</p>
+<h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/openfilm/openfilm">openfilm&#x2F;openfilm</a></li>
+<li>官网与桌面版：<a target="_blank" rel="noopener" href="https://openfilm.dev/">openfilm.dev</a></li>
+<li>示例影片：<a target="_blank" rel="noopener" href="https://github.com/openfilm/examples">openfilm&#x2F;examples</a></li>
+<li>规范：仓库内 <code>packages/openfilm/MANUAL.md</code>（给 Agent）与 <code>SPEC.md</code>（给播放器、渲染器实现者）</li>
+<li>许可证：MIT；名称与标志有商标限制</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

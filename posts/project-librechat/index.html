@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="把多个模型放进同一个界面的聊天应用。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>LibreChat：把多个模型放进同一个界面的聊天应用 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-librechat/">
+  <meta property="og:url" content="https://qingning.co/posts/project-librechat/">
+
+  <meta property="og:title" content="LibreChat：把多个模型放进同一个界面的聊天应用 | 青柠小站">
+  <meta property="og:description" content="把多个模型放进同一个界面的聊天应用。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-05">2026年9月5日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-09">2026年9月9日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>LibreChat：把多个模型放进同一个界面的聊天应用</h1>
+          <p class="article-meta"><time datetime="2026-09-05">2026年9月5日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-09">2026年9月9日</time></p>
+          <p class="article-description">把多个模型放进同一个界面的聊天应用。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">#效率工具</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-librechat/cover.webp" alt="LibreChat 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://www.librechat.ai/api/og" target="_blank" rel="noopener">来源</a> · 以仓库为准</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>LibreChat 是一个可自托管的 AI 聊天平台，把 OpenAI、Anthropic、Google、Azure、AWS Bedrock、Vertex AI 以及任意 OpenAI 兼容接口放进同一个界面。项目由 LibreChat-AI 组织维护，TypeScript 编写，2023 年 2 月创建，提供多用户认证、对话管理、Agents、MCP、代码解释器和 Artifacts。它与“再套一层聊天框”不同，重点在于把多家模型、工具和团队权限放在一套可部署的系统里。本文按官方 README 整理，未在本机完整实测；具体功能和部署要求以当前版本文档为准。</p>
+<h2 id="一个界面接多家模型"><a href="#一个界面接多家模型" class="headerlink" title="一个界面接多家模型"></a>一个界面接多家模型</h2><p>README 列出的模型来源包括 Anthropic（Claude）、AWS Bedrock、OpenAI、Azure OpenAI、Google、Vertex AI、OpenAI Responses API，以及 Ollama、Groq、Cohere、Mistral、OpenRouter、DeepSeek、Qwen 等兼容端点。自定义端点不需要额外代理，填 Base URL 和 Key 即可。</p>
+<p>对话层面提供预设、消息分支、编辑后重新提交、对话分叉、全文搜索、导入导出和断线续传。对同时用多家模型的用户，最大的变化是不用在几个网页之间复制上下文：同一个对话里可以切换端点和预设，历史记录留在自己的数据库。导入功能兼容 LibreChat、ChatGPT 和 Chatbot UI 的对话格式。</p>
+<h2 id="Agents、MCP-与代码解释器"><a href="#Agents、MCP-与代码解释器" class="headerlink" title="Agents、MCP 与代码解释器"></a>Agents、MCP 与代码解释器</h2><p>Agents 是当前版本的重点功能之一。可以在界面里创建不写代码的助手，挂载 MCP Server、文件搜索、代码执行和 Skills；Agent 可以分享给指定用户或组，也有社区 Agent 市场。子代理把任务交给带独立上下文的子运行，Agent Management API 允许用 OIDC 客户端管理 Agent、文件和 Skill。</p>
+<p>代码解释器基于 ClickHouse&#x2F;code-interpreter，支持 Python、Node.js、Go、C&#x2F;C++、Java、PHP、Rust 和 Fortran 的沙箱执行，文件可以上传、处理和下载。Artifacts 能直接在聊天里生成 React、HTML 和 Mermaid 内容，Mermaid 图可导出 SVG 或 PNG。Web Search 把搜索、抓取和重排组合起来，为模型补充上下文。语音方面支持语音转文字和文字转语音，可接 OpenAI、Azure OpenAI 和 ElevenLabs。</p>
+<h2 id="部署与运维"><a href="#部署与运维" class="headerlink" title="部署与运维"></a>部署与运维</h2><p>README 提供 Docker Compose 方案，也给出 Railway、Zeabur、Sealos 的一键部署按钮。自托管需要准备数据库、Redis 和存储；Redis 用于断线续传和横向扩展，媒体文件可以接 S3 与 CloudFront。端点、模型和功能开关通过 <code>librechat.yaml</code> 配置，管理面板可以在浏览器里管理用户、组、角色和配置覆盖，不必每次改文件重启。</p>
+<p>多用户场景支持 OAuth2、LDAP 和邮箱登录，带审核与 token 花费统计。可观测性方面可以接 OpenTelemetry 和 Langfuse，查看模型调用、工具轮次和成本。README 特别提醒升级前读 changelog，因为版本之间会有破坏性变更。</p>
+<h2 id="典型场景"><a href="#典型场景" class="headerlink" title="典型场景"></a>典型场景</h2><p>一个十人小团队不想让每个人各自订阅几个 AI 网页版，于是用 Docker 在内网部署 LibreChat。管理员配置好 OpenAI 和 Anthropic 的 Key，成员用公司账号登录；有人在 Agent 里挂上内部文档的检索，有人用代码解释器跑数据分析。对话和文件留在自己的服务器，离职时账号一停即可。对外分享时，可以只把某个 Agent 分享给指定用户或组，不必把整个后台交出去。</p>
+<h2 id="和官方客户端、轻量前端的差别"><a href="#和官方客户端、轻量前端的差别" class="headerlink" title="和官方客户端、轻量前端的差别"></a>和官方客户端、轻量前端的差别</h2><p>ChatGPT、Claude 的官方客户端体验最完整，但只服务自家模型，数据在厂商侧；LibreChat 把选择权和数据主权交给自己，代价是运维。与只面向本地 Ollama 的轻量聊天前端相比，LibreChat 的功能面更宽，带多用户、权限、MCP 和审计，但也更重。它不提供模型本身，所有推理仍走你配置的 API 或本地运行时。</p>
+<h2 id="限制与风险"><a href="#限制与风险" class="headerlink" title="限制与风险"></a>限制与风险</h2><p>自托管意味着数据库、密钥、备份、升级和安全补丁都要自己负责。不同提供商的能力并不对齐，图像、推理、工具调用是否可用取决于端点和模型。版本迭代快，README 明确要求升级前看 changelog；生产环境还应配置反向代理、TLS、速率限制和日志脱敏。代码解释器和 Agent 工作区能执行代码，必须限制可访问的文件和网络范围，避免把沙箱变成跳板。许可证以仓库为准，商用前要确认条款。</p>
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><p>适合需要统一多个模型、要求数据留在自有环境、并且有能力维护 Docker 服务的团队；也适合想给非技术同事提供 AI 入口、同时保留权限和审计的管理员。只想偶尔聊几句、不愿维护服务器的个人，用官方客户端更省事。</p>
+<h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/LibreChat-AI/LibreChat">LibreChat-AI&#x2F;LibreChat</a></li>
+<li>官网：<a target="_blank" rel="noopener" href="https://librechat.ai/">librechat.ai</a></li>
+<li>文档：<a target="_blank" rel="noopener" href="https://librechat.ai/docs">librechat.ai&#x2F;docs</a></li>
+<li>更新日志：<a target="_blank" rel="noopener" href="https://librechat.ai/changelog">librechat.ai&#x2F;changelog</a></li>
+<li>许可证：以仓库为准</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">自托管与 AI 生活工具</title>
+  <desc id="desc">信封、记忆节点、聊天气泡和金融图表组合在一起。</desc>
+  <rect width="1200" height="750" fill="#e6e9e1"/>
+  <rect x="90" y="120" width="520" height="330" rx="26" fill="#fbfaf5"/>
+  <rect x="90" y="120" width="520" height="92" rx="26" fill="#2f5d3a"/>
+  <rect x="90" y="186" width="520" height="26" fill="#2f5d3a"/>
+  <path d="M120 150h460M120 150l210 120 230-120" stroke="#f3f0e6" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+  <rect x="150" y="270" width="220" height="12" rx="6" fill="#1c241d" opacity=".7"/>
+  <rect x="150" y="304" width="380" height="9" rx="4.5" fill="#1c241d" opacity=".25"/>
+  <rect x="150" y="328" width="330" height="9" rx="4.5" fill="#1c241d" opacity=".25"/>
+  <rect x="150" y="372" width="150" height="42" rx="10" fill="#dde8d7"/>
+  <rect x="320" y="372" width="150" height="42" rx="10" fill="#a95532" opacity=".85"/>
+  <rect x="680" y="120" width="430" height="240" rx="26" fill="#202a20"/>
+  <circle cx="750" cy="190" r="26" fill="#a9d18e"/>
+  <circle cx="860" cy="190" r="26" fill="#e2a17e"/>
+  <circle cx="970" cy="190" r="26" fill="#f3f0e6"/>
+  <path d="M750 190h110M860 190h110" stroke="#f3f0e6" stroke-width="4" opacity=".4"/>
+  <rect x="720" y="250" width="350" height="10" rx="5" fill="#a9d18e" opacity=".55"/>
+  <rect x="720" y="276" width="280" height="10" rx="5" fill="#f3f0e6" opacity=".3"/>
+  <rect x="720" y="302" width="320" height="10" rx="5" fill="#f3f0e6" opacity=".3"/>
+  <rect x="680" y="410" width="430" height="210" rx="26" fill="#fbfaf5"/>
+  <path d="M720 560l40-36 36 22 48-62 42 28 52-48 58 36" stroke="#2f5d3a" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="1040" cy="470" r="44" fill="#dde8d7"/>
+  <path d="M1022 470l12 12 22-26" stroke="#2f5d3a" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

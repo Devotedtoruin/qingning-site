@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">开源视频与 3D 工具</title>
+  <desc id="desc">视频时间线、播放按钮和一个 3D 线框方块，表示剪辑、生成与三维内容。</desc>
+  <rect width="1200" height="750" fill="#e6e9e1"/>
+  <rect x="80" y="120" width="760" height="470" rx="26" fill="#202a20"/>
+  <rect x="120" y="160" width="680" height="250" rx="16" fill="#101711"/>
+  <circle cx="460" cy="285" r="54" fill="#f3f0e6"/>
+  <path d="M444 257l44 28-44 28z" fill="#2f5d3a"/>
+  <rect x="120" y="444" width="680" height="10" rx="5" fill="#f3f0e6" opacity=".18"/>
+  <rect x="120" y="472" width="180" height="54" rx="10" fill="#2f5d3a"/>
+  <rect x="312" y="472" width="240" height="54" rx="10" fill="#a95532"/>
+  <rect x="564" y="472" width="170" height="54" rx="10" fill="#3d6b43"/>
+  <rect x="120" y="540" width="680" height="8" rx="4" fill="#f3f0e6" opacity=".2"/>
+  <rect x="300" y="540" width="8" height="40" rx="4" fill="#e2a17e"/>
+  <path d="M900 210l110 64v128l-110 64-110-64V274z" fill="none" stroke="#2f5d3a" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M900 210v128m0 0l110-64m-110 64l-110-64m110 64v128" stroke="#2f5d3a" stroke-width="6" opacity=".55"/>
+  <rect x="840" y="530" width="250" height="110" rx="18" fill="#fbfaf5"/>
+  <rect x="870" y="562" width="120" height="10" rx="5" fill="#1c241d" opacity=".6"/>
+  <rect x="870" y="588" width="180" height="9" rx="4.5" fill="#1c241d" opacity=".25"/>
+</svg>

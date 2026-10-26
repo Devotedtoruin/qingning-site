@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">分层外观：画布、遮罩、纸面与玻璃</title>
+  <desc id="desc">四层矩形从后向前叠放：深绿画布、浅色遮罩、实色纸面和一条半透明玻璃顶栏。</desc>
+  <rect width="1200" height="750" fill="#e6e9e1"/>
+  <rect x="92" y="86" width="1016" height="578" rx="34" fill="#1c241d"/>
+  <path d="M92 500c150-90 260 40 420-36s280 24 596-96v296H92Z" fill="#2f5d3a"/>
+  <path d="M92 556c190-56 300 50 470-4s320 26 546-68v180H92Z" fill="#3d6b43" opacity=".8"/>
+  <circle cx="930" cy="190" r="54" fill="#f3f0e6" opacity=".16"/>
+  <rect x="150" y="142" width="900" height="466" rx="28" fill="#f3f0e6" opacity=".26"/>
+  <rect x="234" y="196" width="732" height="436" rx="26" fill="#fbfaf5"/>
+  <rect x="234" y="196" width="732" height="92" rx="26" fill="#fbfaf5" opacity=".66"/>
+  <rect x="234" y="262" width="732" height="26" fill="#fbfaf5" opacity=".66"/>
+  <rect x="282" y="226" width="118" height="10" rx="5" fill="#1c241d" opacity=".5"/>
+  <rect x="866" y="226" width="52" height="10" rx="5" fill="#1c241d" opacity=".28"/>
+  <rect x="282" y="336" width="380" height="18" rx="9" fill="#1c241d" opacity=".8"/>
+  <rect x="282" y="376" width="300" height="9" rx="4.5" fill="#1c241d" opacity=".3"/>
+  <rect x="282" y="400" width="340" height="9" rx="4.5" fill="#1c241d" opacity=".3"/>
+  <rect x="282" y="446" width="250" height="92" rx="14" fill="#dde8d7"/>
+  <text x="304" y="506" font-family="Georgia, 'Noto Serif SC', serif" font-size="52" font-weight="600" fill="#2f5d3a">纸面</text>
+  <rect x="698" y="446" width="232" height="92" rx="14" fill="#202a20"/>
+  <text x="726" y="506" font-family="Georgia, 'Noto Serif SC', serif" font-size="44" font-weight="600" fill="#a9d18e">玻璃</text>
+  <rect x="282" y="580" width="636" height="4" fill="#a95532"/>
+  <circle cx="1010" cy="610" r="64" fill="none" stroke="#fbfaf5" stroke-width="2" opacity=".35"/>
+  <circle cx="1010" cy="610" r="40" fill="none" stroke="#fbfaf5" stroke-width="1.5" opacity=".25"/>
+</svg>

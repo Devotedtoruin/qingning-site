@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="把 Wallpaper Engine 壁纸接进 DSH 的插件。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>dsh-wallpaper-engine：把 Wallpaper Engine 壁纸接进 DSH 的插件 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-dsh-wallpaper-engine/">
+  <meta property="og:url" content="https://qingning.co/posts/project-dsh-wallpaper-engine/">
+
+  <meta property="og:title" content="dsh-wallpaper-engine：把 Wallpaper Engine 壁纸接进 DSH 的插件 | 青柠小站">
+  <meta property="og:description" content="把 Wallpaper Engine 壁纸接进 DSH 的插件。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-21">2026年9月21日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-25">2026年9月25日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>dsh-wallpaper-engine：把 Wallpaper Engine 壁纸接进 DSH 的插件</h1>
+          <p class="article-meta"><time datetime="2026-09-21">2026年9月21日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-25">2026年9月25日</time></p>
+          <p class="article-description">把 Wallpaper Engine 壁纸接进 DSH 的插件。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-dsh-wallpaper-engine/cover.webp" alt="dsh-wallpaper-engine 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://github.com/elysia395/dsh-wallpaper-engine/releases/download/media-v1/better-sidebar-font.png" target="_blank" rel="noopener">来源</a> · MIT</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>elysia395 的 dsh-wallpaper-engine 把本机 Wallpaper Engine 的场景、网页和视频壁纸搬进 DSH 的网页界面，再叠加液态玻璃、字体、吉祥物和可分享的外观预设。插件不向模型注册工具，也不注入提示文本，README 明确说不增加 token 开销——它改的是界面，不是 agent 能力。</p>
+<h2 id="三类壁纸，以及一类不支持"><a href="#三类壁纸，以及一类不支持" class="headerlink" title="三类壁纸，以及一类不支持"></a>三类壁纸，以及一类不支持</h2><p>Scene 壁纸由插件内置的 WebWallGL 实时渲染，支持粒子、puppet 骨骼、SceneScript、鼠标交互和音频反应，不要求 Wallpaper Engine 在后台运行；渲染失败会逐级降级到内嵌 MP4 或静态帧。Web 壁纸通过网页挂载、WE API 注入和沙箱隔离运行，效果取决于网页本身和浏览器能力。Video 壁纸直接交给浏览器播放，配合转码、帧率上限和暂停控制。</p>
+<p>Application 类型需要启动第三方可执行程序，插件明确不支持，也不会把它放进壁纸库或轮播候选。自定义 JPG、PNG、MP4 可以上传，文件保存在本机。</p>
+<h2 id="安装有两条路"><a href="#安装有两条路" class="headerlink" title="安装有两条路"></a>安装有两条路</h2><p>从 1.4.0 起八个包已发布到 npm，网页宿主可以直接装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dsh plugin --profile web add dsh-plugin-wallpaper-engine</span><br></pre></td></tr></table></figure>
+
+<p>桌面宿主把 <code>web</code> 换成 <code>desktop</code>，安装前完全退出应用，装完重启。想用尚未发版的源码，则下载仓库 ZIP，进入包含 <code>package.json</code> 的目录后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">node scripts/install-source.mjs --profile desktop --dsh-home <span class="string">&quot;&lt;目标 DSH 数据目录&gt;&quot;</span> --app-closed</span><br></pre></td></tr></table></figure>
+
+<p>脚本会把主包和七个子包登记成目标 profile 的持久 <code>link:</code> 依赖，安装完成后不要删除或移动源码目录。前置条件是 Node.js 22.12.0 及以上、DSH 0.2 内核和 pnpm；源码安装前可以加 <code>--dry-run</code> 核对目标和八条链接。</p>
+<h2 id="外观设置不止换图"><a href="#外观设置不止换图" class="headerlink" title="外观设置不止换图"></a>外观设置不止换图</h2><p>设置页分为壁纸库、外观、播放、系统、扩展、关于六块。外观里能调玻璃效果的配色、透明度、雾化和边框，也能按颜色角色与排版角色细调字体；扩展里有会话头像、点击与拖尾、3D 视差，不需要的可以逐项关闭。吉祥物转盘内置十只立绘，也支持导入自己的素材；3D 圆环切换时会要求确认是否清除自定义立绘。</p>
+<p>壁纸库支持按内容分级和类型筛选、批量隐藏与恢复、自动轮播。轮播至少需要两张可播放壁纸，下一张准备完成后再交接，失败候选自动跳过；系统开启“减少动态效果”时会用硬切。暂停或清除当前壁纸不会删除源文件。</p>
+<figure class="article-diagram"><img src="/images/projects/project-dsh-wallpaper-engine/screen-01.webp" alt="dsh-wallpaper-engine 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>壁纸库、筛选与自动轮播界面（仓库演示动图）</figcaption></figure>
+
+<h2 id="一个桌面端的使用场景"><a href="#一个桌面端的使用场景" class="headerlink" title="一个桌面端的使用场景"></a>一个桌面端的使用场景</h2><p>长时间在 DSH 里读代码、跑任务时，把壁纸换成低动态的场景，开启遮挡暂停，窗口被挡住时停止解码和渲染；写文档时换成静态图，减少 GPU 占用；听歌时打开音频反应，让壁纸随系统输出回环的频谱变化。音乐联动读取的是输出回环而不是麦克风，Now Playing 能显示歌名、歌手、专辑和封面；在线歌词默认关闭，开启后才会在本地歌词缺失时向 LRCLIB 查询。</p>
+<h2 id="与-Wallpaper-Engine-本体、浏览器主题的差别"><a href="#与-Wallpaper-Engine-本体、浏览器主题的差别" class="headerlink" title="与 Wallpaper Engine 本体、浏览器主题的差别"></a>与 Wallpaper Engine 本体、浏览器主题的差别</h2><p>Wallpaper Engine 管的是桌面壁纸，换不到网页界面里；浏览器主题通常只改配色和背景图，不处理 Scene 或 Web 壁纸。dsh-wallpaper-engine 把渲染搬进 DSH 页面，因此能同时改壁纸、玻璃、字体和吉祥物。若只想让桌面动起来，继续用 Wallpaper Engine 本体即可，不必多装一层插件。</p>
+<h2 id="限制与资源占用"><a href="#限制与资源占用" class="headerlink" title="限制与资源占用"></a>限制与资源占用</h2><p>场景渲染依赖浏览器 WebGL 和显卡驱动，复杂工坊项目可能存在兼容差异，README 也不保证每张壁纸与 Wallpaper Engine 本体完全一致。macOS 没有 Wallpaper Engine 官方客户端，只能上传图片、视频，或把自定义壁纸目录指向已有的 WE 项目。ffmpeg 不可获取时转码和帧率上限失效，视频仍可按原片播放。插件会按需下载运行时并查询仓库信息，开启在线歌词还会访问外部服务，所以不是“完全离线”插件。设置保存在宿主端 <code>~/.dsh-wallpaper-engine/config.json</code>，可用 <code>DSH_WE_DATA_DIR</code> 等环境变量改位置。本文按官方 README 与仓库元数据整理，未在本机完整实测。</p>
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><p>适合在桌面端长时间使用 DSH、愿意为界面观感付出一点 GPU 和配置成本的人。移动端、低配机器，或者只关心 agent 输出速度的用户，收益有限，默认主题反而更稳。</p>
+<h2 id="官方入口"><a href="#官方入口" class="headerlink" title="官方入口"></a>官方入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/elysia395/dsh-wallpaper-engine">elysia395&#x2F;dsh-wallpaper-engine</a></li>
+<li>npm：<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/dsh-plugin-wallpaper-engine">dsh-plugin-wallpaper-engine</a></li>
+<li>新手指南：<a target="_blank" rel="noopener" href="https://github.com/elysia395/dsh-wallpaper-engine/blob/main/README.beginner.md">README.beginner.md</a></li>
+<li>许可证：MIT</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

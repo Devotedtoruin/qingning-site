@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="vibe coding 驾驶舱：文件、终端和改动一起看。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>FanBox：把文件、终端和改动放进一个驾驶舱 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-fanbox/">
+  <meta property="og:url" content="https://qingning.co/posts/project-fanbox/">
+
+  <meta property="og:title" content="FanBox：把文件、终端和改动放进一个驾驶舱 | 青柠小站">
+  <meta property="og:description" content="vibe coding 驾驶舱：文件、终端和改动一起看。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-19">2026年9月19日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-23">2026年9月23日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>FanBox：把文件、终端和改动放进一个驾驶舱</h1>
+          <p class="article-meta"><time datetime="2026-09-19">2026年9月19日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-23">2026年9月23日</time></p>
+          <p class="article-description">vibe coding 驾驶舱：文件、终端和改动一起看。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-fanbox/cover.webp" alt="FanBox 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/alchaincyf/fanbox/master/assets/screenshot-volt.png" target="_blank" rel="noopener">来源</a> · MIT</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>FanBox 是花叔 Huashu 做的 macOS 桌面应用，定位是 coding agent 的“驾驶舱”：左边浏览文件和预览，右边或下方跑真实终端，中间用一块面板看清 Agent 这一回合改了哪些文件。它不是又一个 IDE，而是把“找回项目、启动 Agent、验收改动”这条链路收进一个窗口。</p>
+<figure class="article-diagram"><img src="/images/projects/project-fanbox/screen-01.webp" alt="FanBox 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>FanBox 的官方界面图：文件、预览和终端并排，适合边看 Agent 干活边验收。</figcaption></figure>
+
+<h2 id="一条从文件到验收的路径"><a href="#一条从文件到验收的路径" class="headerlink" title="一条从文件到验收的路径"></a>一条从文件到验收的路径</h2><p>文件区支持 <code>⌘K</code> 模糊搜索，输入 <code>内容:关键词</code> 会切到全文搜索，<code>⌘↵</code> 可以用外部编辑器打开整个项目。Markdown、HTML、代码、图片、视频、PDF、HEIC 和压缩包都能原地预览；文件夹卡片会标出 node、web、py、rs、go 等项目类型，适合同时开了很多小项目的人。</p>
+<p>真正区别普通文件管理器的是“跟随”和“本回合”。开启跟随后，预览会跟着 Agent 正在写的文件走：代码滚动到新写入的行，HTML 边写边渲染，Markdown 实时更新；一旦你手动浏览，控制权立刻回到手里。本回合面板按终端和 Agent 分组，列出改动文件与增删行数，点开是 Monaco 的并排 diff，可以还原单个文件、回滚整回合，也可以拖动底部时间轴回放。Markdown 还能按渲染后的“读者视图”对比，图片则给前后滑杆。</p>
+<h2 id="终端与-Agent-状态"><a href="#终端与-Agent-状态" class="headerlink" title="终端与 Agent 状态"></a>终端与 Agent 状态</h2><p>内嵌终端基于 node-pty 和 xterm.js，能正常跑 Claude Code、vim、htop 和中文宽字符。把文件从列表拖进终端，会插入路径作为上下文；终端输出里的路径可以点击回打开。FanBox 启动 Claude Code 或 Codex 时会挂上它们的官方 hooks，因此“正在干活、等你确认、等你输入、已完成”是事件而不是猜终端文字。两个以上终端同时开着时，标签栏下会出现“在等你”的会话列表，<code>⌘⌥L</code> 可以跳到下一个需要你的会话。</p>
+<p>内置 11 个 Agent 启动器，包括 Claude Code、Codex、Hermes Agent、OpenClaw、Kimi Code、opencode 等，默认只显示 Claude Code 和 Codex。未安装的条目可以一键复制安装命令；<code>~/.fanbox/config.json</code> 的 <code>agents</code> 数组可以改命令或追加新 Agent。</p>
+<h2 id="安装与运行"><a href="#安装与运行" class="headerlink" title="安装与运行"></a>安装与运行</h2><p>桌面版从 GitHub Releases 下载 <code>.dmg</code>，拖进“应用程序”。官方构建是 Apple Silicon 原生，已签名、公证，双击即可打开。Windows 只有社区移植版，作者明确表示自己没有 Windows 机器，无法为体验和安全负责，使用前要自行评估。</p>
+<p>只想快速看文件时，可以跑网页版：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">node server.js</span><br></pre></td></tr></table></figure>
+
+<p>然后打开 <code>http://localhost:4567</code>。网页版零依赖、零构建，但只有浏览、搜索和预览；终端和编辑器依赖 Electron。开发模式则是 <code>npm install</code> 后执行 <code>npm run app</code>。</p>
+<h2 id="一个“下午起了十个项目”的场景"><a href="#一个“下午起了十个项目”的场景" class="headerlink" title="一个“下午起了十个项目”的场景"></a>一个“下午起了十个项目”的场景</h2><p>Agent 很快就能生成一堆小项目，麻烦的是第二天回来找不到哪个目录对应哪个想法，也记不清昨天改了哪些文件。FanBox 的项目记忆会按文件夹列出历史会话，用你的第一句话当标题，并显示每次会话改过的文件；点“续上”会在内嵌终端执行 <code>claude --resume</code> 或 <code>codex resume</code>。看到本回合的 diff 后，可以直接在行上写批注，再以“文件:行 + 代码围栏 + 批注”的格式粘回 Agent 终端。</p>
+<h2 id="和-VS-Code、Finder-的分工"><a href="#和-VS-Code、Finder-的分工" class="headerlink" title="和 VS Code、Finder 的分工"></a>和 VS Code、Finder 的分工</h2><p>Finder 负责文件管理，VS Code 负责编辑和插件生态，FanBox 把精力放在找回、预览、轻改和指挥 Agent 上。它不跟 Finder 拼文件操作，也不跟 VS Code 拼编辑器；没有云、远程和账号，后端只监听本机回环地址。若你的主要工作是写代码和调试，完整 IDE 仍然更合适；若主要工作是盯着多个 Agent 产出并验收，FanBox 的界面更贴近这条流程。</p>
+<h2 id="限制与风险"><a href="#限制与风险" class="headerlink" title="限制与风险"></a>限制与风险</h2><p>官方目前只支持 macOS，Windows 版本不是作者维护。它也不是完整 IDE，网页版缺少终端和编辑能力。AI 整理只用元数据生成提案，不读文件内容，但仍应逐条确认后再执行；删除走系统废纸篓，重要项目还是要有独立备份。用量面板会访问 Claude 和 Codex 的官方额度接口，更新检查会访问 GitHub，完全离线时这些功能不可用。</p>
+<p>适合长时间与 Claude Code、Codex 协作、经常需要看 diff 和回滚的开发者，以及同时维护多个小项目的人。只用单个 Agent、单个仓库的简单脚本工作流，可能感受不到它的价值。</p>
+<h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><p>仓库：<a target="_blank" rel="noopener" href="https://github.com/alchaincyf/fanbox">https://github.com/alchaincyf/fanbox</a> 。下载：<a target="_blank" rel="noopener" href="https://github.com/alchaincyf/fanbox/releases/latest">https://github.com/alchaincyf/fanbox/releases/latest</a> 。README 含界面截图、快捷键和隐私说明。许可证为 MIT。本文按官方 README、发布页和仓库元数据整理，未在本机完整实测。</p>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

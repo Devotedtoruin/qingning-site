@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="根据主题一键生成短视频的自动化工具。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>MoneyPrinterTurbo：根据主题一键生成短视频的自动化工具 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-moneyprinterturbo/">
+  <meta property="og:url" content="https://qingning.co/posts/project-moneyprinterturbo/">
+
+  <meta property="og:title" content="MoneyPrinterTurbo：根据主题一键生成短视频的自动化工具 | 青柠小站">
+  <meta property="og:description" content="根据主题一键生成短视频的自动化工具。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-05">2026年9月5日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-09">2026年9月9日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>MoneyPrinterTurbo：根据主题一键生成短视频的自动化工具</h1>
+          <p class="article-meta"><time datetime="2026-09-05">2026年9月5日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-09">2026年9月9日</time></p>
+          <p class="article-description">根据主题一键生成短视频的自动化工具。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/%E8%A7%86%E9%A2%91/">#视频</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-moneyprinterturbo/cover.webp" alt="MoneyPrinterTurbo 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/harry0703/MoneyPrinterTurbo/main/docs/webui.jpg" target="_blank" rel="noopener">来源</a> · MIT</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>MoneyPrinterTurbo 是 harry0703 维护的 AI 短视频生成工具。输入一个主题或关键词，它会调用大模型写脚本、抓取或生成素材、合成配音与字幕，最后用 FFmpeg 拼成一条可以直接发布的竖屏或横屏视频。项目用 Python 编写，2024 年 3 月创建，MIT 许可，主要面向需要批量产出知识类、口播类短视频的内容团队和独立开发者。本文按官方 README 整理，未在本机完整实测；模型列表、命令和配置项以当前版本为准。</p>
+<h2 id="从主题到成片的流水线"><a href="#从主题到成片的流水线" class="headerlink" title="从主题到成片的流水线"></a>从主题到成片的流水线</h2><p>生成流程被拆成几个可以单独替换的环节。脚本由 Kimi、OpenAI、Claude、Gemini、DeepSeek、通义千问、Azure OpenAI、火山方舟、xAI、MiniMax 等模型生成或改写；素材可以来自 Pexels、Pixabay、Coverr 的库存视频，也可以上传本地图片和视频，或接入 Seedance、MiniMax H3、WaveSpeed、OFox 等文生视频服务；配音支持免费的 Edge TTS，也支持 Azure Speech、SiliconFlow、Gemini、MiniMax、ElevenLabs、Fish Audio 等服务。字幕的字体、位置、颜色、大小、描边和背景样式，以及背景音乐音量，都能在 WebUI 里调整。</p>
+<p>成片提供 9:16（1080×1920）、16:9（1920×1080）和 1:1（1080×1080）三种画幅。README 还列出了生成后自动上传 TikTok、Instagram 和 YouTube Shorts 的选项。</p>
+<h2 id="四种使用入口"><a href="#四种使用入口" class="headerlink" title="四种使用入口"></a>四种使用入口</h2><p>README 把入口分成 AI Agent、WebUI、API 和 CLI 四类。最省事的是让支持 Skill 的 Agent 读取仓库里的 SKILL.md，自动完成安装、配置和生成；也可以安装官方 PyPI 包 <code>mpt</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m pip install mpt</span><br><span class="line">mpt webui</span><br></pre></td></tr></table></figure>
+
+<p>指定端口且不自动打开浏览器时用 <code>mpt webui --port 8503 --headless</code>。Docker 部署则先准备 <code>config.toml</code>，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose -f docker-compose.release.yml up</span><br></pre></td></tr></table></figure>
+
+<p>WebUI 默认在 8501 端口，API 文档在 8080 的 <code>/docs</code> 和 <code>/redoc</code>。API 覆盖视频生成、脚本、关键词、音频、字幕、任务查询和下载等接口；独立网页前端跨域调用时，需要通过环境变量 <code>CORS_ALLOWED_ORIGINS</code> 显式放行来源，curl、Postman 和服务端调用不受影响。</p>
+<figure class="article-diagram"><img src="/images/projects/project-moneyprinterturbo/screen-01.webp" alt="MoneyPrinterTurbo 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>README 中的 API 文档截图：视频生成流程被拆成多个可单独调用的任务接口</figcaption></figure>
+
+<p>没有浏览器环境时，CLI 可以完成同样的流程：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">uv run python cli.py --video-subject <span class="string">&quot;人工智能如何改变日常生活&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>--batch-file</code> 支持一次提交最多 100 个任务，清单里的相对路径以清单所在目录为基准，单个任务失败不会中断后续条目，结束后输出统一的 JSON 汇总。批量出片和接入自动化流程时，这比在网页上逐条点击更合适。</p>
+<h2 id="一个典型场景"><a href="#一个典型场景" class="headerlink" title="一个典型场景"></a>一个典型场景</h2><p>假设一个账号每周要发十条一分钟以内的科普口播。运营人员在表格里列出主题，用批量任务一次生成，再在 WebUI 里挑出素材匹配较好的几条，手动替换个别片段。相比逐条找素材、录音、对字幕，省下的是重复劳动，而不是创意本身。成片仍要人工复检，尤其是数字、专有名词和容易引起误解的画面。</p>
+<h2 id="和手动剪辑、模板工具的差别"><a href="#和手动剪辑、模板工具的差别" class="headerlink" title="和手动剪辑、模板工具的差别"></a>和手动剪辑、模板工具的差别</h2><p>剪映、CapCut 这类工具把控制权交给剪辑者，转场、节奏和画面挑选都可以精修；MoneyPrinterTurbo 的优势在吞吐量，一条视频的画面由素材库匹配决定，风格统一但细节粗糙。它也不等同于 Remotion 这类程序化框架：后者要求写代码定义每一帧，前者把编排交给模型和模板。三者可以组合，用 MoneyPrinterTurbo 出粗剪，再进剪辑软件精修。</p>
+<h2 id="限制与风险"><a href="#限制与风险" class="headerlink" title="限制与风险"></a>限制与风险</h2><p>素材匹配按关键词检索，脚本和画面经常只是“相关”而不“贴合”，成片仍需要人工筛选。库存素材和 AI 生成素材各有授权条款，商用前要逐项核对；TTS 和声音克隆同样涉及声音授权。自动发布依赖平台账号和接口规则，账号安全与平台对自动化内容的政策需要自己承担。本地批量生成对 CPU、内存和磁盘占用不小，启用 faster-whisper 等本地转录时更明显。README 给出的最低配置是 4 核 CPU、4 GB 内存，推荐 6 到 8 核、8 GB 内存；GPU 不是必需，但批量处理时能明显提速。</p>
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><p>适合需要稳定产出模板化短视频、并且愿意在生成后做人工复检的内容团队、自媒体运营和做视频流水线的开发者。追求品牌级画面、精确节奏或复杂合成的广告制作，不适合用它直接交付。</p>
+<h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/harry0703/MoneyPrinterTurbo">harry0703&#x2F;MoneyPrinterTurbo</a></li>
+<li>PyPI：<a target="_blank" rel="noopener" href="https://pypi.org/project/mpt/"><code>mpt</code></a>。README 特别说明，PyPI 上名为 MoneyPrinterTurbo 的包由第三方维护</li>
+<li>示例成片：<a target="_blank" rel="noopener" href="https://harry0703.github.io/mpt-assets/">mpt-assets 展示页</a></li>
+<li>许可证：MIT</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

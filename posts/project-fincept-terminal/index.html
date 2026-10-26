@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="开源金融终端，提供市场分析、投资研究和经济数据。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>Fincept Terminal：开源金融终端 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-fincept-terminal/">
+  <meta property="og:url" content="https://qingning.co/posts/project-fincept-terminal/">
+
+  <meta property="og:title" content="Fincept Terminal：开源金融终端 | 青柠小站">
+  <meta property="og:description" content="开源金融终端，提供市场分析、投资研究和经济数据。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-06">2026年9月6日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-10">2026年9月10日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>Fincept Terminal：开源金融终端</h1>
+          <p class="article-meta"><time datetime="2026-09-06">2026年9月6日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-10">2026年9月10日</time></p>
+          <p class="article-description">开源金融终端，提供市场分析、投资研究和经济数据。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">#效率工具</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-fincept-terminal/cover.webp" alt="Fincept Terminal 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/Fincept-Corporation/FinceptTerminal/main/images/EquityResearch.png" target="_blank" rel="noopener">来源</a> · 以仓库为准</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>Fincept Terminal 是 Fincept Corporation 开发的桌面金融终端，用 C++20 和 Qt6 编写，内嵌 Python 3.11 做分析，打包成单一二进制，不依赖 Electron 或浏览器运行时。仓库里的开源版采用 AGPL-3.0-or-later，面向学习、个人使用和学术研究；面向机构的闭源 Enterprise 版另行销售。</p>
+<h2 id="一个不基于-Electron-的金融终端"><a href="#一个不基于-Electron-的金融终端" class="headerlink" title="一个不基于 Electron 的金融终端"></a>一个不基于 Electron 的金融终端</h2><p>金融数据终端长期是高价、封闭的代名词。另一条路是用 Python 把数据源、Notebook 和图表拼起来，灵活但每换一个数据集就要重写胶水代码。Fincept 想做的是中间形态：原生桌面应用，内置行情、宏观数据、分析模型、AI Agent 和交易接口，装完就能在一个界面里完成研究流程。</p>
+<h2 id="数据、分析与-AI-的三块拼图"><a href="#数据、分析与-AI-的三块拼图" class="headerlink" title="数据、分析与 AI 的三块拼图"></a>数据、分析与 AI 的三块拼图</h2><p>分析侧包含 DCF、组合优化、VaR&#x2F;Sharpe、衍生品定价、固定收益和另类资产，另有一套 18 模块的 QuantLib 套件。AI 侧提供 37 个面向交易者、投资者、经济和地缘政治的 Agent，模型 Key 自带，支持 OpenAI、Anthropic、Gemini、Groq、DeepSeek、OpenRouter 和 Ollama。</p>
+<p>数据侧列出 100 多个连接器，覆盖 FRED、IMF、World Bank、DBnomics、AkShare、Polygon、Kraken、Yahoo Finance 和政府公开 API。交易侧有加密和股票行情、模拟交易引擎，以及 16 个券商集成。自动化侧提供可视化节点编辑器、MCP 工具和 AI Quant Lab，后者用于机器学习、因子发现和强化学习实验。</p>
+<figure class="article-diagram">
+  <img src="/images/projects/project-fincept-terminal/screen-01.webp" alt="Fincept Terminal 的官方横幅，展示主仪表盘、行情列表和新闻面板" width="1400" height="467" loading="lazy" decoding="async">
+  <figcaption>官方横幅：主仪表盘、行情列表和新闻面板集中在同一个桌面窗口里。</figcaption>
+</figure>
+
+<h2 id="安装与源码构建"><a href="#安装与源码构建" class="headerlink" title="安装与源码构建"></a>安装与源码构建</h2><p>GitHub Releases 提供 Windows x64 安装包、Linux 的 <code>.run</code>、<code>.deb</code>、<code>.rpm</code>，以及 macOS Apple Silicon 的 DMG。源码构建在 Linux 和 macOS 上用 <code>setup.sh</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 构建工具链版本必须与文档一致；不支持的版本可能直接编译失败</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/Fincept-Corporation/FinceptTerminal.git</span><br><span class="line"><span class="built_in">cd</span> FinceptTerminal</span><br><span class="line">./setup.sh</span><br></pre></td></tr></table></figure>
+
+<p>README 把工具链钉在 CMake 3.27.7、Ninja 1.11.1、Qt 6.8.3、Python 3.11.9，Windows 和手动构建的步骤在 <code>docs/GETTING_STARTED.md</code>。以上按官方 README 整理，未在本机完整实测；依赖体积和编译时间要有心理准备。</p>
+<h2 id="独立研究者的工作日"><a href="#独立研究者的工作日" class="headerlink" title="独立研究者的工作日"></a>独立研究者的工作日</h2><p>早上先用 FRED 和 World Bank 的连接器拉一组宏观数据，在终端里画趋势；下午对一家公司做 DCF，把关键假设存成不同情景；收盘前用模拟交易引擎试一套调仓规则。遇到不熟悉的指标，可以让经济或地缘政治 Agent 解释背景，再回到原始数据核对。节点编辑器适合把重复的取数、计算和图表步骤串起来，不必每次重写脚本。</p>
+<h2 id="与-Bloomberg、Notebook-的分工"><a href="#与-Bloomberg、Notebook-的分工" class="headerlink" title="与 Bloomberg、Notebook 的分工"></a>与 Bloomberg、Notebook 的分工</h2><p>Bloomberg 这类商业终端卖的是实时行情、机构级数据、合规和支持，价格也按机构预算设计；README 直接把两者的席位成本放在一起对照。Fincept 的开源版不承诺同等级的数据覆盖和实时性，优势是代码可见、可改、可自建研究流程。和纯 Notebook 方案相比，终端把连接器、图表、组合和交易接口预先接好，代价是灵活性和可编程深度不如自己写 Python。</p>
+<h2 id="AGPL-与“免费版”的真实成本"><a href="#AGPL-与“免费版”的真实成本" class="headerlink" title="AGPL 与“免费版”的真实成本"></a>AGPL 与“免费版”的真实成本</h2><p>AGPL-3.0 是强 copyleft，不是宽松许可：分发修改后的版本，或把它作为服务提供给他人访问，都要按同一许可公开改动。个人使用、不对外分发，不产生这些义务。公司若要用于商业部署或对外提供服务，README 指向 Enterprise；继续使用开源版，则要履行 AGPL 的公开义务。</p>
+<p>免费指的是代码许可，不是使用成本。数据源有自己的授权和 API 额度，模型按 token 计费，README 明确说开源版的真实成本是自己的数据和 LLM 账单。开源仓库每月发布一次，团队日常开发在 Enterprise，修复节奏和功能完整性会有差距；macOS 只提供 Apple Silicon 包，Intel Mac 用户要自己构建。</p>
+<h2 id="谁该用开源版"><a href="#谁该用开源版" class="headerlink" title="谁该用开源版"></a>谁该用开源版</h2><p>适合学生、个人投资者、学术研究者和需要自建研究环境的独立分析师。需要机构级实时行情、合规审计、SLA 或多人权限管理的团队，应评估 Enterprise，而不是指望开源版补齐这些能力。终端展示的数据和分析不构成投资建议，交易前仍要独立核对。</p>
+<h2 id="入口与许可"><a href="#入口与许可" class="headerlink" title="入口与许可"></a>入口与许可</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/Fincept-Corporation/FinceptTerminal">Fincept-Corporation&#x2F;FinceptTerminal</a></li>
+<li>官网：<a target="_blank" rel="noopener" href="https://fincept.in/">fincept.in</a></li>
+<li>使用手册：<a target="_blank" rel="noopener" href="https://fincept.in/manual">fincept.in&#x2F;manual</a></li>
+<li>下载：<a target="_blank" rel="noopener" href="https://github.com/Fincept-Corporation/FinceptTerminal/releases">GitHub Releases</a></li>
+<li>许可：以仓库为准，README 标注 AGPL-3.0-or-later</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

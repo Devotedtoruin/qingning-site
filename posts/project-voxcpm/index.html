@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="多语言 TTS、音色设计和语音克隆模型。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>VoxCPM：多语言 TTS、音色设计和语音克隆模型 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-voxcpm/">
+  <meta property="og:url" content="https://qingning.co/posts/project-voxcpm/">
+
+  <meta property="og:title" content="VoxCPM：多语言 TTS、音色设计和语音克隆模型 | 青柠小站">
+  <meta property="og:description" content="多语言 TTS、音色设计和语音克隆模型。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-10">2026年9月10日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-14">2026年9月14日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 6 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>VoxCPM：多语言 TTS、音色设计和语音克隆模型</h1>
+          <p class="article-meta"><time datetime="2026-09-10">2026年9月10日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 6 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-14">2026年9月14日</time></p>
+          <p class="article-description">多语言 TTS、音色设计和语音克隆模型。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/%E8%A7%86%E9%A2%91/">#视频</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-voxcpm/cover.webp" alt="VoxCPM 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/OpenBMB/VoxCPM/main/assets/voxcpm2_model.png" target="_blank" rel="noopener">来源</a> · Apache-2.0</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>VoxCPM 是 OpenBMB 开源的语音合成模型。当前主版本 VoxCPM2 为 2B 参数，基于 MiniCPM-4 骨干，用 200 多万小时多语言语音训练，官方称支持 30 种语言、音色设计、可控克隆和 48kHz 输出。它采用 tokenizer-free 的扩散自回归架构，直接生成连续语音表示，权重与代码以 Apache-2.0 发布。Python 包名是 <code>voxcpm</code>，模型可从 Hugging Face 或 ModelScope 下载。本文按官方 README 整理，未在本机完整实测；性能数字为 README 参考值，实际以硬件和版本为准。</p>
+<h2 id="不用-tokenizer-的-TTS"><a href="#不用-tokenizer-的-TTS" class="headerlink" title="不用 tokenizer 的 TTS"></a>不用 tokenizer 的 TTS</h2><p>常见 TTS 先把音频离散成 token，再让语言模型预测 token。VoxCPM 跳过这一步，在 AudioVAE V2 的潜空间里工作，流程分为 LocEnc、TSLM、RALM、LocDiT 四段。README 的说法是，这样能保留更丰富的韵律和表现力，并原生输出 48kHz 音频；输入 16kHz 参考音频也能直接得到 48kHz 结果，不需要外接超分。</p>
+<p>对使用者来说，架构细节不一定重要，重要的是它把“文本转语音”和“从参考音频延续音色”放在同一个模型里，减少了拼接多个模型的工程量。README 还提供流式接口 <code>generate_streaming</code>，适合边生成边播放的对话场景。</p>
+<h2 id="三种用法"><a href="#三种用法" class="headerlink" title="三种用法"></a>三种用法</h2><p><strong>直接合成</strong>：安装 <code>voxcpm</code> 包并准备好模型后，Python API 只需几行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install voxcpm</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> voxcpm <span class="keyword">import</span> VoxCPM</span><br><span class="line"><span class="keyword">import</span> soundfile <span class="keyword">as</span> sf</span><br><span class="line"></span><br><span class="line">model = VoxCPM.from_pretrained(<span class="string">&quot;openbmb/VoxCPM2&quot;</span>, load_denoiser=<span class="literal">False</span>)</span><br><span class="line">wav = model.generate(text=<span class="string">&quot;要合成的文本&quot;</span>, cfg_value=<span class="number">2.0</span>, inference_timesteps=<span class="number">10</span>, seed=<span class="number">42</span>)</span><br><span class="line">sf.write(<span class="string">&quot;demo.wav&quot;</span>, wav, model.tts_model.sample_rate)</span><br></pre></td></tr></table></figure>
+
+<p><strong>音色设计</strong>：不需要参考音频，把描述写在文本开头的括号里，例如 <code>(A young woman, gentle and sweet voice)Hello...</code>，模型会按性别、年龄、语气、情绪和语速生成新音色。README 说明它支持 30 种语言，输入文本不需要语言标签。</p>
+<p><strong>可控克隆</strong>：给一段参考音频克隆音色，还能在文本前加风格指令调整情绪和速度；如果同时提供参考音频和逐字稿，把音频传给 <code>prompt_wav_path</code>、文本传给 <code>prompt_text</code>，为了相似度再把同一段音频传给 <code>reference_wav_path</code>，则走“终极克隆”，更完整地保留音色、节奏和表达细节。</p>
+<p>CLI 把常用操作包好了：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">voxcpm design --text <span class="string">&quot;...&quot;</span> --output out.wav</span><br><span class="line">voxcpm design --text <span class="string">&quot;...&quot;</span> --control <span class="string">&quot;Young female voice, warm and gentle&quot;</span> --seed 42 --output out.wav</span><br><span class="line">voxcpm <span class="built_in">clone</span> --text <span class="string">&quot;...&quot;</span> --reference-audio path/to/voice.wav --output out.wav</span><br><span class="line">voxcpm batch --input examples/input.txt --output-dir outs</span><br></pre></td></tr></table></figure>
+
+<p>批量模式适合把脚本按行喂进去，一次生成多条旁白；<code>--timestamps</code> 还能输出词级或字符级时间戳，方便后续对齐字幕，但需要先安装 <code>voxcpm[timestamps]</code>。README 说明字符时间戳是由词对齐推导的，属于尽力而为。</p>
+<h2 id="部署与性能"><a href="#部署与性能" class="headerlink" title="部署与性能"></a>部署与性能</h2><p>安装要求 Python 3.10 到 3.12、PyTorch 2.5 以上、CUDA 12 以上。官方给出的显存需求约为 8 GB（VoxCPM2），RTX 4090 上 RTF 约 0.30，经 Nano-vLLM 加速约 0.13。这些是 README 的参考值，实际取决于文本长度、批大小和硬件。高并发场景可以用 Nano-vLLM 或 vLLM-Omni 部署，后者提供 OpenAI 兼容接口和流式分块。</p>
+<p>没有 GPU 时也能用 CPU 或 Apple Silicon 的 MPS 跑 Web Demo：<code>python app.py --port 8808</code>，再用 <code>--device</code> 指定 <code>auto</code>、<code>cpu</code>、<code>mps</code> 或 <code>cuda</code>。速度要自己评估，长文本在 CPU 上通常不适合实时场景。</p>
+<h2 id="微调"><a href="#微调" class="headerlink" title="微调"></a>微调</h2><p>README 说明支持全量 SFT 和 LoRA 微调，5 到 10 分钟音频就能适配特定说话人、语言或领域。对需要固定品牌声音的团队，这比每次靠提示词碰运气更稳；但微调需要准备转写、切分和训练环境，仍是一项工程任务。LoRA 的好处是参数少、可以热切换，适合为多个说话人维护一套底座。</p>
+<figure class="article-diagram"><img src="/images/projects/project-voxcpm/screen-01.webp" alt="VoxCPM 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>配图清单中的 VoxCPM 官方素材实际是标志与声波图形，不是界面截图；功能与架构以 README 和文档为准</figcaption></figure>
+
+<h2 id="典型场景"><a href="#典型场景" class="headerlink" title="典型场景"></a>典型场景</h2><p>一个做多语言产品视频的团队，用 VoxCPM2 生成中文、英文、日文旁白，再用音色设计为不同角色创建声音。固定主播的音色通过 LoRA 微调锁定，脚本更新后批量合成，最后由剪辑工具对齐画面。相比逐条找配音演员，成本和时间更可控，声音素材也留在自己的机器上。</p>
+<h2 id="和商业-TTS-的差别"><a href="#和商业-TTS-的差别" class="headerlink" title="和商业 TTS 的差别"></a>和商业 TTS 的差别</h2><p>ElevenLabs 这类商业服务提供成熟的托管 API、丰富的控制项和按量计费；VoxCPM 把模型权重交给自己部署，数据不出本机，长期成本主要是 GPU。Edge TTS 免费，但没有音色设计和克隆能力。选择取决于你是否愿意维护推理环境，以及对声音授权和数据隐私的要求。</p>
+<h2 id="风险与限制"><a href="#风险与限制" class="headerlink" title="风险与限制"></a>风险与限制</h2><p>README 明确禁止用 VoxCPM 冒充他人、诈骗或制造虚假信息，AI 生成内容应清楚标注。音色设计和可控克隆在不同运行之间会有波动，官方建议生成 1 到 3 次再挑结果。30 种语言之外的质量没有保证；高保真克隆涉及真人声音，必须取得授权并遵守当地法律。模型较大，显存不足时推理会失败，改用 CPU 则速度明显下降。README 也建议生产部署前针对具体场景做安全评估。</p>
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><p>适合需要多语言旁白、角色音色、私有部署或声音克隆（已获授权）的内容团队、游戏和 Agent 开发者，以及愿意自己维护 GPU 推理的工程团队。只需要偶尔把文字转成语音、且不想碰命令行的用户，用系统自带朗读或商业 TTS 更直接。</p>
+<h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/OpenBMB/VoxCPM">OpenBMB&#x2F;VoxCPM</a></li>
+<li>文档：<a target="_blank" rel="noopener" href="https://voxcpm.readthedocs.io/en/latest/">voxcpm.readthedocs.io</a></li>
+<li>在线体验：<a target="_blank" rel="noopener" href="https://huggingface.co/spaces/OpenBMB/VoxCPM-Demo">Hugging Face Space</a></li>
+<li>模型：<a target="_blank" rel="noopener" href="https://huggingface.co/openbmb/VoxCPM2">Hugging Face</a> &#x2F; <a target="_blank" rel="noopener" href="https://modelscope.cn/models/OpenBMB/VoxCPM2">ModelScope</a></li>
+<li>许可证：Apache-2.0</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

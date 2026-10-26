@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="基于 283 万字中文语料的去 AI 味 Skill。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>lieflat-less-ai-tone：基于 283 万字中文语料的去 AI 味 Skill | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-lieflat-less-ai-tone/">
+  <meta property="og:url" content="https://qingning.co/posts/project-lieflat-less-ai-tone/">
+
+  <meta property="og:title" content="lieflat-less-ai-tone：基于 283 万字中文语料的去 AI 味 Skill | 青柠小站">
+  <meta property="og:description" content="基于 283 万字中文语料的去 AI 味 Skill。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-22">2026年9月22日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-26">2026年9月26日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 6 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>lieflat-less-ai-tone：基于 283 万字中文语料的去 AI 味 Skill</h1>
+          <p class="article-meta"><time datetime="2026-09-22">2026年9月22日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 6 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-26">2026年9月26日</time></p>
+          <p class="article-description">基于 283 万字中文语料的去 AI 味 Skill。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-lieflat-less-ai-tone/cover.webp" alt="lieflat-less-ai-tone 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/larashero3-dotcom/lieflat-less-ai-tone/main/assets/less-ai-tone-hero-zh.png" target="_blank" rel="noopener">来源</a> · 以仓库为准</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>lieflat-less-ai-tone（去 AI 味.skill）由 larashero3-dotcom 维护，在 moxt.ai 制作。它先用语料统计检验“AI 味”到底由哪些特征构成，再把通过检验的部分写成改写规则。和常见的“删破折号、删设问”清单不同，每条规则都能对应到频率比和可复算脚本。按官方 README 整理，未在本机完整实测。</p>
+<h2 id="283-万字语料换来的几个结论"><a href="#283-万字语料换来的几个结论" class="headerlink" title="283 万字语料换来的几个结论"></a>283 万字语料换来的几个结论</h2><p>研究构建了 629 篇文章的对照语料，共 2,826,972 个汉字、95,551 句、45,721 段。其中 300 篇由五个模型在受控条件下生成，329 篇来自人类作者。候选特征有 26 项，最终只有 11 项通过区分度检验，区分力最强的是“段首零回指评论”，生成侧频率是人类的 4.4 倍。</p>
+<p>几项流行判断被数据推翻：人类使用比喻的频率是生成文本的 2.4 倍，正文设问句是 17 倍。也就是说，机械地删掉设问，反而会让文本更像机器写的。模型之间的差异也很大，破折号在 DeepSeek 每千字 5.16 次、Claude 4.25 次、GPT 0.11 次，极差约四十倍，不存在单一的“AI 文风”。</p>
+<p>这些数字来自项目自己的语料与算子，README 也承认语料因版权和隐私不公开，第三方无法直接复核。</p>
+<h2 id="规则只做-11-件事"><a href="#规则只做-11-件事" class="headerlink" title="规则只做 11 件事"></a>规则只做 11 件事</h2><p>通过检验的特征集中在篇章和结构层：对举结构、顿号并列过密、相邻句结构同构、破折号、冒号滥用、序数词充当小标题、拟人化喻体、概括表述覆盖已有数据、起首语、五类译文句式，以及段首零回指评论。</p>
+<p>改写时有三重约束。第一是白名单：只处理这 11 项，没命中的句子逐字保留，标题层级、段落次序、列表、表格和代码块位置都不动。第二是信息守恒：不得新增姓名、数字、日期、引语、来源或因果关系，也不得删除原文的观点、结论和限定成分；把“可能提升”改成“提升”算篡改判断强度，不算风格清理。第三是排除语义判断：比喻是否贴切、设问是否必要、案例是否堆砌，这些都无法写成可执行算子，一律不做。</p>
+<p>规则全文在仓库的 <code>SKILL.md</code> 里，算子定义在脚本开头，方便逐条核对。</p>
+<h2 id="安装与两种使用方式"><a href="#安装与两种使用方式" class="headerlink" title="安装与两种使用方式"></a>安装与两种使用方式</h2><p>通过 Agent Skills 安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx skills add larashero3-dotcom/lieflat-less-ai-tone</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接在 MoxtHub 打开这个 Skill，借助 Moxt 的长上下文空间处理长文；不想装工具时，把 <code>SKILL.md</code> 当 system prompt 粘贴到支持自定义指令的模型里也能用。</p>
+<p>同作者的 writing-dna-skill 与本规则集是两道工序：前者负责风格逼近，后者负责清除生成痕迹。如果目录里已经有蒸馏产物 <code>语言DNA.md</code>，会优先读取它；两者冲突时以蒸馏产物为准，因为那记录的是目标作者的实际写法。</p>
+<h2 id="复算而不是只读结论"><a href="#复算而不是只读结论" class="headerlink" title="复算而不是只读结论"></a>复算而不是只读结论</h2><p>仓库提供三个脚本，分别覆盖句层、段落层和译文句式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 scripts/compare-human-ai.py --human &lt;目录...&gt; --ai &lt;目录...&gt;</span><br><span class="line">python3 scripts/check-structure.py --human &lt;目录...&gt; --ai &lt;目录...&gt;</span><br><span class="line">python3 scripts/check-translationese.py &lt;目录...&gt;</span><br></pre></td></tr></table></figure>
+
+<p>脚本只读取目录里的 <code>.md</code> 文件，不附带语料，也不拿目录名当输出标签。换成自己的语料就能复算指标；如果结论对不上，README 建议先检查话题与文体是否对齐、分母是否匹配被测单位。</p>
+<h2 id="一个长文润色场景"><a href="#一个长文润色场景" class="headerlink" title="一个长文润色场景"></a>一个长文润色场景</h2><p>一篇四千字的博客初稿，事实、引语和数字都已核对。跑一遍规则集，预期只改命中项：把“不是 A 而是 B”的对举拆开，补上段首缺失的指代，删掉空转的冒号列表，保留原有论据和限定。修改后逐段对照，确认没有新增事实、没有把推测写成结论、没有为了“像人”而加口头禅或错别字。</p>
+<p>合同、论文、法规这类文本不适合用它做主要润色。术语、格式和引用规范比文风重要，规则集也不处理这些。</p>
+<h2 id="与“去-AI-味提示词”和风格蒸馏的分工"><a href="#与“去-AI-味提示词”和风格蒸馏的分工" class="headerlink" title="与“去 AI 味提示词”和风格蒸馏的分工"></a>与“去 AI 味提示词”和风格蒸馏的分工</h2><p>网上流传的提示词清单往往要求删除破折号、设问和比喻；这项研究显示，至少设问和比喻在人类写作中更常见，照单全删可能适得其反。writing-dna-skill 解决“像谁写”，本规则集解决“哪里像模型写的”，顺序是先逼近风格，再清除痕迹。</p>
+<p>绕过 AI 检测不是它的用途。改写不会改变使用 AI 的事实，需要披露的场景仍然要披露。</p>
+<h2 id="方法和使用边界"><a href="#方法和使用边界" class="headerlink" title="方法和使用边界"></a>方法和使用边界</h2><p>语料不公开，结论无法被第三方完整复现；人类侧样本规模有限，生成侧与人类侧的话题也没有严格配对；结论有时效性，模型迭代会改变频率；语义层的问题超出正则算子的能力。README 还记录了六次因算子覆盖过宽导致的测量失误，其中两项初测方向与修正后相反，这部分比结论本身更值得读。</p>
+<p>规则能降低某些生成痕迹，但不能保证文本质量，也不能保证事实正确。信息守恒是约束，不是自动校验。</p>
+<h2 id="项目入口"><a href="#项目入口" class="headerlink" title="项目入口"></a>项目入口</h2><ul>
+<li>仓库与规则集：<a target="_blank" rel="noopener" href="https://github.com/larashero3-dotcom/lieflat-less-ai-tone">larashero3-dotcom&#x2F;lieflat-less-ai-tone</a></li>
+<li>MoxtHub：<a target="_blank" rel="noopener" href="https://moxt.ai/zh-CN/hub?type=skill&id=lieflat-less-ai-tone">去 AI 味.skill</a></li>
+<li>许可：以仓库为准</li>
+<li>适合：中文长文作者、编辑、品牌文案，以及想先看证据再决定怎么改的人</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

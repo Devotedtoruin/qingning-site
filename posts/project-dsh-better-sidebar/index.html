@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="可扩展的 DSH 侧边栏，内置文件、终端、Git 和子代理。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>DSH-better-sidebar：可扩展的 DSH 侧边栏 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-dsh-better-sidebar/">
+  <meta property="og:url" content="https://qingning.co/posts/project-dsh-better-sidebar/">
+
+  <meta property="og:title" content="DSH-better-sidebar：可扩展的 DSH 侧边栏 | 青柠小站">
+  <meta property="og:description" content="可扩展的 DSH 侧边栏，内置文件、终端、Git 和子代理。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-19">2026年9月19日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-23">2026年9月23日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>DSH-better-sidebar：可扩展的 DSH 侧边栏</h1>
+          <p class="article-meta"><time datetime="2026-09-19">2026年9月19日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-23">2026年9月23日</time></p>
+          <p class="article-description">可扩展的 DSH 侧边栏，内置文件、终端、Git 和子代理。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-dsh-better-sidebar/cover.webp" alt="DSH-better-sidebar 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/omdsh-dev/DSH-better-sidebar/main/docs/screenshots/files-tree.png" target="_blank" rel="noopener">来源</a> · MIT</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>omdsh-dev 的 DSH-better-sidebar 把文件、Git、编辑器、终端、侧边对话和子代理任务收进一个侧边栏，并额外提供一块可拖拽分栏的底部工作台。它不是一个独立应用，而是挂在 DeepSeek Harness 上的插件，给 DSH 补上“边看边改”的那一半。</p>
+<h2 id="装之前先对版本"><a href="#装之前先对版本" class="headerlink" title="装之前先对版本"></a>装之前先对版本</h2><p>插件对宿主版本卡得比较细。以当前 README 为例，DSH 0.2.1-rc.1 及以上装最新版：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dsh plugin --profile web add dsh-better-sidebar@latest</span><br></pre></td></tr></table></figure>
+
+<p>装完要硬刷新浏览器（<code>Ctrl/Cmd + Shift + R</code>）。如果宿主仍是 0.2.0-rc.2，README 要求固定到 <code>dsh-better-sidebar@0.26.1</code>；更早的 DSH 也各自对应不同版本，<code>latest</code> 不能跨版本混用。DSH 的 profile 相互独立，装到另一套时侧边栏不会出现，最直接的自检就是看界面里有没有这组标签。</p>
+<h2 id="侧边栏里放了什么"><a href="#侧边栏里放了什么" class="headerlink" title="侧边栏里放了什么"></a>侧边栏里放了什么</h2><p>文件树是懒加载的，带 Git 状态颜色、目录实时监听、全局搜索和拖拽上传；选中文件后可以在 CodeMirror 编辑器里直接修改，Markdown 预览支持 Mermaid，HTML 预览跑在沙箱 iframe 中。Git 面板分 Source Control 和只读提交图两块：前者按 Merge、Staged、Changes 分组，后者显示分支、引用标签和提交详情，但不会执行 checkout 或 fetch。终端能力由 DSH 本身提供，这个插件不自带 PTY。</p>
+<figure class="article-diagram"><img src="/images/projects/project-dsh-better-sidebar/screen-01.webp" alt="DSH-better-sidebar 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>文件树右键菜单中的 Open with 与打包下载入口（仓库截图）</figcaption></figure>
+
+<p>任务页是另一个常被忽略的部分：子代理会以拓扑图或树形展示，后台任务列出退出码、实时输出，还能强制结束。侧边对话仍标着 beta，但已经能继承父会话上下文、独立运行，并一键提升为顶层会话。底部工作台与原生右侧栏可以同时存在，拖拽标签到面板边缘即可分栏，每个会话的布局会持久化。</p>
+<p>键盘操作也按编辑器习惯排：<code>Ctrl/Cmd + S</code> 保存、<code>Ctrl/Cmd + F</code> 查找、<code>Ctrl + Enter</code> 提交 Git，中键关闭标签。这些细节决定了它能不能真的替代“编辑器 + 终端 + 聊天”的三窗口切换。</p>
+<h2 id="给其他插件的扩展点"><a href="#给其他插件的扩展点" class="headerlink" title="给其他插件的扩展点"></a>给其他插件的扩展点</h2><p>侧边栏本身是开放的。插件通过 <code>ctx.betterSidebar</code> 注册新标签页或文件查看器，内置的六个标签页和四个查看器用的也是同一套 API：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123;&#125; <span class="keyword">from</span> <span class="string">&#x27;dsh-better-sidebar&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> inject = [<span class="string">&#x27;betterSidebar&#x27;</span>]</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">apply</span>(<span class="params"><span class="attr">ctx</span>: <span class="title class_">Context</span></span>) &#123;</span><br><span class="line">  ctx.<span class="title function_">effect</span>(<span class="function">() =&gt;</span> ctx.<span class="property">betterSidebar</span>.<span class="title function_">registerTab</span>(&#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="string">&#x27;my-plugin:db&#x27;</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;Database&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="function">(<span class="params">&#123; scope &#125;</span>) =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">DbView</span> <span class="attr">sessionId</span>=<span class="string">&#123;scope.sessionId&#125;</span> /&gt;</span></span>,</span><br><span class="line">  &#125;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这意味着第三方可以把数据库、文档、评审页直接放进侧栏，而不是另开一个窗口。README 把这类扩展单独列了清单，安装前可以先看有没有现成实现。</p>
+<h2 id="一个典型工作日"><a href="#一个典型工作日" class="headerlink" title="一个典型工作日"></a>一个典型工作日</h2><p>打开仓库后，左侧继续和 agent 对话，右侧文件树定位到报错文件，改完在底部终端跑测试，再切到 Git 面板看本次改动。需要问一个不影响主线的问题时，开侧边对话，确认后再提升为主会话。整个过程不需要在 VS Code 和 DSH 之间复制粘贴路径。</p>
+<h2 id="与编辑器侧栏的分工"><a href="#与编辑器侧栏的分工" class="headerlink" title="与编辑器侧栏的分工"></a>与编辑器侧栏的分工</h2><p>VS Code 的侧栏在编辑、调试和插件生态上更完整；DSH-better-sidebar 的优势是把“会话”放在同一屏，文件操作和 agent 上下文不会断。它也不替代 DSH 自带预览：原生预览偏只读，这个插件补的是可编辑与批量文件操作。若工作主要是精细重构和调试，仍应在编辑器里完成，再把结果带回 DSH。</p>
+<h2 id="权限边界要自己看"><a href="#权限边界要自己看" class="headerlink" title="权限边界要自己看"></a>权限边界要自己看</h2><p>README 明确写着：从 v0.23.0 起，文件系统路由不做 workspace containment 检查，能读写宿主用户可达的任意路径，只受操作系统权限约束。HTML 预览默认在 opaque-origin 沙箱中，但沙箱可以在设置里按功能关闭。Git 侧只读提交图，不提供 push、pull、fetch；文件树只监听已展开的目录；移动端窄屏没有底部面板，标签会合并进全宽抽屉。本文按官方 README 与仓库元数据整理，未在本机完整实测。</p>
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><p>适合把 DSH 当主力工作台、需要在一个窗口里看文件、跑命令、审 diff 的人，也适合想给团队做内部侧栏页面的插件作者。只偶尔用 DSH 聊天、或者更愿意留在 IDE 里的用户，装上后大概率只会多一层界面。</p>
+<h2 id="官方入口"><a href="#官方入口" class="headerlink" title="官方入口"></a>官方入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/omdsh-dev/DSH-better-sidebar">omdsh-dev&#x2F;DSH-better-sidebar</a></li>
+<li>npm：<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/dsh-better-sidebar">dsh-better-sidebar</a></li>
+<li>许可证：MIT</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

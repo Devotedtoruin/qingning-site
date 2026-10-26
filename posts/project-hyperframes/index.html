@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="写 HTML 就能渲染视频的 Agent 视频引擎。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>HyperFrames：写 HTML 就能渲染视频的 Agent 视频引擎 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-hyperframes/">
+  <meta property="og:url" content="https://qingning.co/posts/project-hyperframes/">
+
+  <meta property="og:title" content="HyperFrames：写 HTML 就能渲染视频的 Agent 视频引擎 | 青柠小站">
+  <meta property="og:description" content="写 HTML 就能渲染视频的 Agent 视频引擎。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-14">2026年9月14日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-18">2026年9月18日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>HyperFrames：写 HTML 就能渲染视频的 Agent 视频引擎</h1>
+          <p class="article-meta"><time datetime="2026-09-14">2026年9月14日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-18">2026年9月18日</time></p>
+          <p class="article-description">写 HTML 就能渲染视频的 Agent 视频引擎。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/%E8%A7%86%E9%A2%91/">#视频</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-hyperframes/cover.webp" alt="HyperFrames 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://static.heygen.ai/hyperframes-oss/docs/images/design-templates/biennale-yellow.png" target="_blank" rel="noopener">来源</a> · Apache-2.0</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>HyperFrames 由 HeyGen 开源，Apache-2.0 许可。它把 HTML、CSS、媒体和可逐帧定位的动画编译成确定性的 MP4：同一个输入得到同一段视频。仓库把它称为“为 agent 而生”的视频引擎，既能在本地用 CLI 跑，也能让 Claude Code、Codex、Cursor 这类 coding agent 通过技能包直接写片子。</p>
+<figure class="article-diagram"><img src="/images/projects/project-hyperframes/screen-01.webp" alt="HyperFrames 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>HyperFrames 设计模板中的 BlockFrame 版式（仓库素材）</figcaption></figure>
+
+<h2 id="HTML-就是工程文件"><a href="#HTML-就是工程文件" class="headerlink" title="HTML 就是工程文件"></a>HTML 就是工程文件</h2><p>一个合成就是一个带 <code>data-</code> 属性的 HTML 文件：容器声明画布尺寸和 composition id，视频、标题和音频各自标注开始时间、持续时间和轨道号。动画可以用 GSAP、CSS、Lottie、Three.js、Anime.js、WAAPI，或者自己写帧适配器；渲染器在无头 Chrome 里逐帧 seek，再交给 FFmpeg 编码。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;stage&quot;</span> <span class="attr">data-composition-id</span>=<span class="string">&quot;launch&quot;</span> <span class="attr">data-start</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-width</span>=<span class="string">&quot;1920&quot;</span> <span class="attr">data-height</span>=<span class="string">&quot;1080&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">video</span> <span class="attr">class</span>=<span class="string">&quot;clip&quot;</span> <span class="attr">data-start</span>=<span class="string">&quot;0&quot;</span> <span class="attr">data-duration</span>=<span class="string">&quot;6&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">data-track-index</span>=<span class="string">&quot;0&quot;</span> <span class="attr">src</span>=<span class="string">&quot;intro.mp4&quot;</span> <span class="attr">muted</span> <span class="attr">playsinline</span>&gt;</span><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">id</span>=<span class="string">&quot;title&quot;</span> <span class="attr">class</span>=<span class="string">&quot;clip&quot;</span> <span class="attr">data-start</span>=<span class="string">&quot;1&quot;</span> <span class="attr">data-duration</span>=<span class="string">&quot;4&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-track-index</span>=<span class="string">&quot;1&quot;</span>&gt;</span>Launch day<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>没有打包步骤，<code>index.html</code> 可以直接在浏览器里播放和预览。这一点对 agent 很关键：模型本来就会写 HTML，不需要先学会 React 组件树或某个私有时间线格式。</p>
+<h2 id="命令行三步"><a href="#命令行三步" class="headerlink" title="命令行三步"></a>命令行三步</h2><p>本地新建项目只需 Node.js 22 及以上和 FFmpeg：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hyperframes init my-video</span><br><span class="line"><span class="built_in">cd</span> my-video</span><br><span class="line">npx hyperframes preview   <span class="comment"># 浏览器预览，改动自动刷新</span></span><br><span class="line">npx hyperframes render    <span class="comment"># 输出 MP4</span></span><br></pre></td></tr></table></figure>
+
+<p>CLI 还负责 lint、查看单帧、编辑时间线、云端渲染和发布，命令默认非交互，适合放进 CI。渲染既可在本机跑，也可以部署 AWS Lambda 做分布式渲染；<code>@hyperframes/*</code> 这套包把解析、捕获、编码和混音拆开，需要嵌进自己的流水线时可以按包调用。对 CI 来说，确定性比峰值帧率更重要：同一份 HTML 和素材重复渲染应得到相同帧，方便做关键帧快照和视觉回归。</p>
+<h2 id="Agent-的技能包"><a href="#Agent-的技能包" class="headerlink" title="Agent 的技能包"></a>Agent 的技能包</h2><p><code>npx hyperframes skills update</code> 会装核心技能集，让 agent 按“策划、写 HTML、接可 seek 动画、加媒体、lint、预览、渲染”的流程工作。Claude Code 也可以走插件市场：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">claude plugin marketplace add heygen-com/hyperframes</span><br><span class="line">claude plugin install hyperframes@hyperframes</span><br></pre></td></tr></table></figure>
+
+<p>仓库发布七个技能，核心是 <code>/hyperframes</code>、<code>/hyperframes-cli</code>、<code>/hyperframes-registry</code> 和 <code>/media-use</code>；Figma、幻灯片、Remotion 迁移三个按需安装。Registry 里约有 450 个可编辑的区块和组件，<code>npx hyperframes add data-chart</code> 这类命令能把图表、转场、字幕直接装进项目，不必从空白 HTML 开始。</p>
+<h2 id="一个批量模板视频的场景"><a href="#一个批量模板视频的场景" class="headerlink" title="一个批量模板视频的场景"></a>一个批量模板视频的场景</h2><p>每周把同一套数据做成产品更新短片：用一份 HTML 模板接收 JSON，标题、数字和图表由脚本替换，<code>render</code> 输出 MP4 后交给发布流程。因为渲染是确定性的，可以在 CI 里对关键帧做回归对比；需要换风格时，复制一份 <code>frame.md</code> 或设计模板，而不是重写组件。产品发布、数据动画、带字幕的社交视频都属于这一类。</p>
+<h2 id="与-Remotion-的选择题"><a href="#与-Remotion-的选择题" class="headerlink" title="与 Remotion 的选择题"></a>与 Remotion 的选择题</h2><p>两者都用无头 Chrome 加 FFmpeg 渲染。Remotion 以 React 组件为作者模型，需要打包器；HyperFrames 以纯 HTML 加 data 属性为作者模型，没有构建步骤，agent 交接时给的就是 HTML 文件。Remotion 的 Lambda 渲染更成熟，HyperFrames 也提供本地与 Lambda 两条路径。许可证也不同：HyperFrames 是 Apache-2.0，Remotion 使用其源码可见的 Remotion License。团队已有 React 设计系统时，Remotion 更顺；更想让 agent 直接产出可读文件时，HyperFrames 的路径更短。已有 Remotion 工程可以走官方 <code>/remotion-to-hyperframes</code> 技能做逐帧核对迁移。</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>HyperFrames 不是完整的非线性剪辑器，复杂剪辑、精细音频混合仍要交给专门工具；Studio 在 README 里标为“可用但仍在演进”。渲染依赖 Node、FFmpeg 和足够的 CPU&#x2F;GPU 资源，长片子要预留时间。设计模板与 <code>frame.md</code> 只是起点，品牌规范仍要自己整理。渲染失败时 CLI 会给出 JSON 结构的错误信息，agent 可以据此判断是合成解析、捕获还是编码阶段出的问题。HTML 的 data 属性和可 seek 动画需要按规范写，普通网页动画不会自动变成逐帧确定的视频。开发仓库用 Git LFS 存了约 240 MB 的回归测试 MP4，完整克隆前先装 LFS，只读源码可以跳过 LFS 内容。本文按官方 README 与仓库元数据整理，未在本机完整实测。</p>
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><p>适合需要批量生成模板化视频、数据动画、产品演示的团队，以及希望让 coding agent 直接交付视频工程的开发者。日常剪辑、需要多轨精修的用户，仍应使用剪辑软件。</p>
+<h2 id="官方入口"><a href="#官方入口" class="headerlink" title="官方入口"></a>官方入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/heygen-com/hyperframes">heygen-com&#x2F;hyperframes</a></li>
+<li>在线体验：<a target="_blank" rel="noopener" href="https://www.hyperframes.dev/">hyperframes.dev</a></li>
+<li>文档：<a target="_blank" rel="noopener" href="https://hyperframes.heygen.com/introduction">hyperframes.heygen.com&#x2F;introduction</a></li>
+<li>许可证：Apache-2.0</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

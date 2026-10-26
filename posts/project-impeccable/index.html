@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="一套设计语言和 61 条检测规则，用来发现 AI 界面的模板感。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>Impeccable：一套设计语言和 61 条检测规则 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-impeccable/">
+  <meta property="og:url" content="https://qingning.co/posts/project-impeccable/">
+
+  <meta property="og:title" content="Impeccable：一套设计语言和 61 条检测规则 | 青柠小站">
+  <meta property="og:description" content="一套设计语言和 61 条检测规则，用来发现 AI 界面的模板感。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-10">2026年9月10日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-14">2026年9月14日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>Impeccable：一套设计语言和 61 条检测规则</h1>
+          <p class="article-meta"><time datetime="2026-09-10">2026年9月10日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-14">2026年9月14日</time></p>
+          <p class="article-description">一套设计语言和 61 条检测规则，用来发现 AI 界面的模板感。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-impeccable/cover.webp" alt="Impeccable 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://impeccable.style/og-image-v6.png" target="_blank" rel="noopener">来源</a> · Apache-2.0</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>Impeccable 是 Paul Bakaus 做的设计语言，仓库在 pbakaus&#x2F;impeccable，官网是 impeccable.style。它要处理的不是“AI 不会写 CSS”，而是模型在同一批模板里打转：到处 Inter、紫蓝渐变、卡片套卡片、彩色底上的灰字。做法是把产品事实、24 个设计命令和一套确定性检测器放进同一个工作流。按官方 README 整理，未在本机完整实测。</p>
+<h2 id="先写-PRODUCT-md，再谈视觉"><a href="#先写-PRODUCT-md，再谈视觉" class="headerlink" title="先写 PRODUCT.md，再谈视觉"></a>先写 PRODUCT.md，再谈视觉</h2><p>在项目根目录运行 <code>npx impeccable install</code>，然后在 AI 工具里执行 <code>/impeccable init</code>。这个初始化步骤会检查项目，只追问真正缺失的产品事实，最后写出 <code>PRODUCT.md</code>，记录受众、用途、运行环境、约束、语气和证据。后续命令读取这份文件，避免把“产品是什么”和“这一屏想长什么样”混在一起。</p>
+<p>视觉方向另记在 <code>DESIGN.md</code>：已有设计系统、或新做出来的系统，都从这里查。这样的拆分对多人协作有用，产品事实不会随着一次改版被覆盖。</p>
+<h2 id="24-个命令怎么用"><a href="#24-个命令怎么用" class="headerlink" title="24 个命令怎么用"></a>24 个命令怎么用</h2><p>所有命令都挂在 <code>/impeccable</code> 下，例如：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">/impeccable audit blog</span><br><span class="line">/impeccable critique landing</span><br><span class="line">/impeccable polish settings</span><br><span class="line">/impeccable harden checkout</span><br></pre></td></tr></table></figure>
+
+<p><code>audit</code> 查技术质量，包括可访问性、性能和响应式；<code>critique</code> 做 UX 评审；<code>polish</code> 是上线前的最后一轮；<code>harden</code> 补错误处理、国际化、文本溢出和边界情况。其余命令覆盖排版、布局、色彩、动效、降噪、增强、适配等方向。经常用某一条时，可以 <code>/impeccable pin audit</code> 生成 <code>/audit</code> 快捷命令。</p>
+<h2 id="检测器：规则数量与退出码"><a href="#检测器：规则数量与退出码" class="headerlink" title="检测器：规则数量与退出码"></a>检测器：规则数量与退出码</h2><p>README 当前写的是 62 条确定性规则，项目清单和本文标题写的是 61 条，数量会随版本变化，以 README 和 <code>--list-rules</code> 为准。检测器不调用大模型，也不需要 API key：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx impeccable detect src/</span><br><span class="line">npx impeccable detect https://example.com</span><br><span class="line">npx impeccable detect --json .</span><br><span class="line">npx impeccable detect --github src/</span><br></pre></td></tr></table></figure>
+
+<p>退出码有明确含义：<code>0</code> 表示扫描完成且没有主要问题，<code>2</code> 表示完成但发现问题，<code>1</code> 表示至少一个目标扫描失败。人类可读的诊断默认写到 stderr，需要重定向；<code>--json</code> 给脚本用，<code>--github</code> 输出 GitHub Actions 注解。规则覆盖两类问题：AI 界面常见的侧边色条、紫色渐变、回弹缓动、暗色光晕，以及行宽过长、内边距局促、点击区域过小、标题层级跳级等通用质量问题。</p>
+<p>一次干净扫描只是证据，不等于视觉和可访问性都没问题，README 也这么提醒。</p>
+<h2 id="浏览器里的迭代与-hook"><a href="#浏览器里的迭代与-hook" class="headerlink" title="浏览器里的迭代与 hook"></a>浏览器里的迭代与 hook</h2><p><code>live</code> 模式通过开发服务器或本地静态 HTML 修改元素，适合在浏览器里对比视觉变体。它只面向本地 checkout，不支持把 helper 注入已部署的生产站点，也不应该为了跑通而关闭浏览器安全策略或放宽 CSP。生产页面要检查时，用 <code>npx impeccable detect https://example.com</code> 或浏览器扩展，这两者只读渲染结果，不会改源码。</p>
+<p>在 Claude Code、GitHub Copilot、Codex、Cursor 和 Grok Build 上，安装或更新还会写入各自的原生 hook；直接编辑 UI 文件后，检测器会把发现送回 agent。Codex 需要打开 <code>/hooks</code> 批准项目 hook，更新改动 <code>.codex/hooks.json</code> 后可能还要再批一次。</p>
+<h2 id="一个上线前的审查流程"><a href="#一个上线前的审查流程" class="headerlink" title="一个上线前的审查流程"></a>一个上线前的审查流程</h2><p>AI 生成落地页后，先 <code>/impeccable audit landing</code> 找可访问性和响应式问题，再 <code>/impeccable critique landing</code> 看层级、清晰度和情绪表达；按照发现修改后跑 <code>/impeccable polish landing</code>。如果项目在 CI 里，可以加一条 <code>npx impeccable detect --json .</code>，把退出码当作门槛。顺序上仍应先有 <code>PRODUCT.md</code>，否则检测器只能告诉你“像模板”，说不出该往哪个方向改。</p>
+<h2 id="与-frontend-design、Lighthouse-的分工"><a href="#与-frontend-design、Lighthouse-的分工" class="headerlink" title="与 frontend-design、Lighthouse 的分工"></a>与 frontend-design、Lighthouse 的分工</h2><p>README 说明 Impeccable 起点是 Anthropic 的 frontend-design Skill，之后补上了初始化流程、命令体系和确定性检测器。和 axe、Lighthouse 这类工具相比，后者更专注可访问性、性能和最佳实践指标；Impeccable 还会指出字体选择、渐变、卡片嵌套这些设计套路。两者可以同时用，但都不能替代真实用户和设计判断。</p>
+<h2 id="规则不是审美裁判"><a href="#规则不是审美裁判" class="headerlink" title="规则不是审美裁判"></a>规则不是审美裁判</h2><p>规则本身带审美倾向，和成熟品牌规范冲突时未必该改。检测器支持按项目忽略，例如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx impeccable ignores add-value overused-font Inter --reason <span class="string">&quot;Brand font&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>用户研究、信息架构和品牌策略不在它的覆盖范围内。另一个需要留意的是遥测：新设计开始时会向 impeccable.style 请求一组视觉方向，这是功能本身；除非退出，否则还会匿名记录哪组方向被选中。可以运行 <code>npx impeccable telemetry off</code>，或设置 <code>DO_NOT_TRACK=1</code> &#x2F; <code>IMPECCABLE_NO_TELEMETRY=1</code>。live 模式还会以当前用户权限执行项目里的校验脚本，陌生仓库要先看脚本内容。</p>
+<h2 id="项目入口"><a href="#项目入口" class="headerlink" title="项目入口"></a>项目入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/pbakaus/impeccable">pbakaus&#x2F;impeccable</a></li>
+<li>官网与文档：<a target="_blank" rel="noopener" href="https://impeccable.style/">impeccable.style</a>，案例：<a target="_blank" rel="noopener" href="https://impeccable.style/cases/neo-mirai">Neo Mirai</a></li>
+<li>许可：Apache-2.0</li>
+<li>适合：经常让 AI 生成界面、希望在上线前做一轮系统设计和检测的前端团队</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

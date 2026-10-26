@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="把 Hexo 生成的 public 交给 Docker/Nginx：目录怎么放、404 怎么写、更新和回退怎么做。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>Hexo 与 Nginx：构建与安全发布 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/02-hexo-docker-nginx-publish/">
+  <meta property="og:url" content="https://qingning.co/posts/02-hexo-docker-nginx-publish/">
+
+  <meta property="og:title" content="Hexo 与 Nginx：构建与安全发布 | 青柠小站">
+  <meta property="og:description" content="把 Hexo 生成的 public 交给 Docker/Nginx：目录怎么放、404 怎么写、更新和回退怎么做。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-04">2026年9月4日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-08">2026年9月8日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></dd></div>
+          <div><dt>阅读</dt><dd>约 9 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>Hexo 与 Nginx：构建与安全发布</h1>
+          <p class="article-meta"><time datetime="2026-09-04">2026年9月4日</time> · <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a> · 约 9 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-08">2026年9月8日</time></p>
+          <p class="article-description">把 Hexo 生成的 public 交给 Docker/Nginx：目录怎么放、404 怎么写、更新和回退怎么做。</p>
+          <div class="post-tags"><a href="/tags/Hexo/">#Hexo</a><a href="/tags/Docker/">#Docker</a><a href="/tags/Nginx/">#Nginx</a><a href="/tags/%E9%83%A8%E7%BD%B2/">#部署</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/articles/server-racks-pexels-5480781-1600.webp" alt="数据中心的服务器机柜，作静态站点发布环境的装饰配图" width="1600" height="1065" loading="eager" decoding="async"></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>Hexo 的部署其实只有两件事：在本地把文章生成静态文件，再让 Nginx 指向这些文件。真正容易出问题的，是目录权限、404 状态码和版本回退这些细节。</p>
+<p>一个常见的误区是把整个 Hexo 项目扔进容器。容器只需要公开的 <code>public/</code>，源码、依赖、<code>.git</code> 和备份都不应该出现在网站根目录里。把交付物缩小到“已检查的静态文件”，更新和回退都会简单很多。</p>
+<p>下面以一台已经安装 Docker Engine 和 Compose 插件的 Linux 服务器为例，通过 80 端口提供 HTTP 服务。域名、DNS 和 HTTPS 证书另行配置；文中的 HTTP 示例不等于已经完成公网 HTTPS 部署。</p>
+<aside class="learning-callout"><strong>学习路线 · 02</strong> 这篇属于“从服务器到前端”的学习路线。<a href="/learning/">查看完整路线 <span aria-hidden="true">→</span></a></aside>
+
+
+<figure class="article-diagram">
+  <a href="/images/articles/hexo-publish-boundaries.svg" target="_blank" rel="noopener"><img src="/images/articles/hexo-publish-boundaries.svg" alt="Hexo 源码生成 public，公开静态文件直接交付或经可选产物仓库导出，Nginx 只读挂载独立发布目录。" width="1200" height="640" loading="lazy" decoding="async"></a>
+  <figcaption>源码、公开产物与 HTTP 根目录的分工</figcaption>
+</figure>
+
+<p><span id="适用范围与变量" class="heading-anchor" aria-hidden="true"></span><br><span id="准备目录与变量" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="先定目录结构"><a href="#先定目录结构" class="headerlink" title="先定目录结构"></a>先定目录结构</h2><p>用发布账号自己的目录，不要先用 root 建目录，再让普通用户往里复制。一个够用的结构如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">~/static-blog/</span><br><span class="line">  compose.yaml</span><br><span class="line">  nginx.conf</span><br><span class="line">  releases/</span><br><span class="line">    v1/             # 第一份经过检查的静态文件</span><br><span class="line">    v2/             # 后续版本，不原地覆盖 v1</span><br></pre></td></tr></table></figure>
+
+<p>Nginx 每次只挂载一个 release。源码、依赖、备份和 <code>.git</code> 都放在这个目录之外；用不用 Git 交付，都不影响这条边界。</p>
+<p>如果服务器规范要求把站点放在 <code>/srv</code>，让管理员提前建好目录、设置属主，并检查每一级父目录的遍历权限。目录权限不对，Nginx 容器再正确也会返回 403。</p>
+<p><span id="修改位置" class="heading-anchor" aria-hidden="true"></span><br><span id="在源码修改内容与配置" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="在源码里改，不碰生成目录"><a href="#在源码里改，不碰生成目录" class="headerlink" title="在源码里改，不碰生成目录"></a>在源码里改，不碰生成目录</h2><p>文章、主题和站点配置都在 Hexo 项目里维护。不要直接改 <code>public/</code>，下次生成会被覆盖。</p>
+<p>站点配置里的 <code>url</code> 填将来对外访问的正式地址，固定链接规则最好在第一次发布前定下来。改了主题或配置后，记得重新生成产物。</p>
+<p>自定义 404 也应该有源文件。如果项目里还没有错误页，可以在 <code>source/404.html</code> 放一个最小页面；主题已经提供 404 的话，直接用主题的，不要额外覆盖。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>页面未找到<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>页面未找到<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这个地址没有对应的页面。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span>回到首页<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里假设站点部署在域名根路径。如果部署在子目录，页面链接、资源路径和 Hexo 的 <code>root</code> 配置要一起调整。</p>
+<p><span id="本地预览与构建" class="heading-anchor" aria-hidden="true"></span><br><span id="预览并验收同一份产物" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="生成并检查-public"><a href="#生成并检查-public" class="headerlink" title="生成并检查 public"></a>生成并检查 public</h2><p>在 Hexo 项目根目录运行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./node_modules/.bin/hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>默认产物在 <code>public/</code>。首次发布最好从干净的构建开始；旧工作区可能残留已经从源码删掉的页面，不能因为这次生成成功就全部公开。</p>
+<p>生成后至少检查这几项：</p>
+<ul>
+<li><code>public/index.html</code>、<code>public/404.html</code> 和实际文章路径能打开。</li>
+<li>样式、图片和脚本来自这次产物，不是旧缓存。</li>
+<li>草稿、私有配置、依赖和备份没有混进文件清单。</li>
+<li>搜索、订阅或 sitemap 如果启用了，也一起检查。</li>
+</ul>
+<p>本地预览只用于看页面，不代表公网已经更新。</p>
+<p><span id="历史交付方式" class="heading-anchor" aria-hidden="true"></span><br><span id="交付到受管理的产物仓库" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="把文件送到服务器"><a href="#把文件送到服务器" class="headerlink" title="把文件送到服务器"></a>把文件送到服务器</h2><p>最简单的办法是把检查过的 <code>public/</code> 传到服务器的新 release 目录，SFTP、rsync 或 CI 产物下载都可以。小站不需要为了跑 Nginx 专门建一个产物仓库。</p>
+<p>如果希望用 Git 记录每次发布，可以建一个独立的产物仓库。注意：服务器上的检出目录仍然不要直接当网站根目录。从选定版本里导出允许公开的文件，再交给 release。只排除 <code>.git/</code> 还不够，仓库里的部署脚本、说明文档和托管平台配置文件也可能不应该公开。</p>
+<p><span id="发布端首次准备" class="heading-anchor" aria-hidden="true"></span><br><span id="准备检出与空静态目录" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="在服务器上准备-release"><a href="#在服务器上准备-release" class="headerlink" title="在服务器上准备 release"></a>在服务器上准备 release</h2><p>假设产物已经传到服务器，并且目录里只有允许公开的静态文件。登录发布账号，创建一个尚不存在的版本目录：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在服务器执行；尖括号替换为本次检查过的产物目录。</span></span><br><span class="line">ARTIFACT_DIR=<span class="string">&#x27;&lt;已检查的静态产物目录&gt;&#x27;</span></span><br><span class="line">SITE_DIR=<span class="string">&quot;<span class="variable">$HOME</span>/static-blog&quot;</span></span><br><span class="line">RELEASE=<span class="string">&quot;<span class="variable">$SITE_DIR</span>/releases/v1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">test</span> -f <span class="string">&quot;<span class="variable">$ARTIFACT_DIR</span>/index.html&quot;</span> &amp;&amp; <span class="built_in">test</span> -f <span class="string">&quot;<span class="variable">$ARTIFACT_DIR</span>/404.html&quot;</span> || <span class="built_in">exit</span> 1</span><br><span class="line"><span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$SITE_DIR</span>/releases&quot;</span></span><br><span class="line"><span class="comment"># 不带 -p：v1 已存在时停下来，避免两个版本混在一起。</span></span><br><span class="line"><span class="built_in">mkdir</span> <span class="string">&quot;<span class="variable">$RELEASE</span>&quot;</span> || <span class="built_in">exit</span> 1</span><br><span class="line"><span class="built_in">cp</span> -a <span class="string">&quot;<span class="variable">$ARTIFACT_DIR</span>/.&quot;</span> <span class="string">&quot;<span class="variable">$RELEASE</span>/&quot;</span> || <span class="built_in">exit</span> 1</span><br><span class="line"><span class="built_in">chmod</span> -R u=rwX,go=rX <span class="string">&quot;<span class="variable">$RELEASE</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>容器里的 Nginx 工作进程需要读取文件、遍历目录。这里让公开文件可读、目录可遍历，但不给其他账号写权限。不要用 <code>chmod -R 777</code>。<code>:ro</code> 只限制容器写挂载内容，不会自动修好宿主机上的读取权限。</p>
+<p>复制失败就先查原因，不要继续启动容器。重新复制时另选一个新版本目录，不要把半成品当成完整版本。</p>
+<p><span id="首次-Docker-Nginx-托管" class="heading-anchor" aria-hidden="true"></span><br><span id="首次启动-Docker-与-Nginx" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="写-Nginx-配置"><a href="#写-Nginx-配置" class="headerlink" title="写 Nginx 配置"></a>写 Nginx 配置</h2><p>在 <code>~/static-blog/nginx.conf</code> 保存下面的配置。它只提供静态文件，不启用目录列表，也不把所有未知路径改写成首页：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> _;</span><br><span class="line">    <span class="attribute">root</span> /usr/share/nginx/html;</span><br><span class="line">    <span class="attribute">index</span> index.html;</span><br><span class="line">    <span class="attribute">server_tokens</span> <span class="literal">off</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> <span class="regexp">~ /\.</span> &#123;</span><br><span class="line">        <span class="attribute">deny</span> all;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ =<span class="number">404</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">error_page</span> <span class="number">404</span> /<span class="number">404</span>.html;</span><br><span class="line">    <span class="section">location</span> = /<span class="number">404</span>.html &#123;</span><br><span class="line">        internal;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>try_files</code> 最后的 <code>=404</code> 先产生“未找到”状态，<code>error_page</code> 再用自定义文件呈现内容，HTTP 状态仍然是 404。如果把 <code>/404.html</code> 写成普通候选文件，找不到页面时可能返回 200：浏览器看到的是错误页，搜索引擎却以为请求成功。</p>
+<p>点路径拒绝规则只是一道额外防线，不能代替公开文件审核。需要 HTTP-01 证书验证时，要另外给 <code>/.well-known/acme-challenge/</code> 留受限例外。</p>
+<p>再在同一个目录保存 <code>compose.yaml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:1.28.0-alpine</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./releases/v1:/usr/share/nginx/html:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./nginx.conf:/etc/nginx/conf.d/default.conf:ro</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br></pre></td></tr></table></figure>
+
+<p><code>nginx:1.28.0-alpine</code> 只是固定版本的示例，不代表它是当前最新版或长期受支持的版本。实际部署时选经过评估的受支持版本，按需要记录镜像 digest；后续更新也要明确版本，不要用浮动的 <code>latest</code> 代替更新计划。</p>
+<p><code>80:80</code> 会把宿主机所有地址的 80 端口映射到容器。先确认端口没有被现有服务占用，再按访问范围配置防火墙和安全组。如果宿主机已经有反向代理，可以改成 <code>127.0.0.1:8080:80</code>，由代理对外提供 HTTPS。</p>
+<p><span id="后续接入与验收" class="heading-anchor" aria-hidden="true"></span><br><span id="验证托管与外部访问" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="启动并验证"><a href="#启动并验证" class="headerlink" title="启动并验证"></a>启动并验证</h2><p>在配置目录检查并启动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$HOME</span>/static-blog&quot;</span></span><br><span class="line">docker compose config -q || <span class="built_in">exit</span> 1</span><br><span class="line">docker compose run --<span class="built_in">rm</span> --no-deps web nginx -t || <span class="built_in">exit</span> 1</span><br><span class="line">docker compose up -d</span><br><span class="line">docker compose ps</span><br></pre></td></tr></table></figure>
+
+<p>预期 <code>nginx -t</code> 报告语法检查成功，<code>compose ps</code> 里 web 服务处于运行状态并显示 80 端口映射。启动失败先看 <code>docker compose logs web</code>；<code>address already in use</code> 应该去查端口占用，不要直接停掉不认识的进程。</p>
+<p>先在服务器本机检查状态码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -I http://127.0.0.1/</span><br><span class="line">curl -I http://127.0.0.1/a-page-that-does-not-exist</span><br><span class="line">curl -I http://127.0.0.1/.git/config</span><br></pre></td></tr></table></figure>
+
+<p>首页应该是 200，不存在的页面是 404，点路径被拒绝时通常是 403。再用普通 GET 打开不存在的路径，确认看到的是自定义错误页，而不是只看响应头。配置里的 <code>internal</code> 表示 <code>/404.html</code> 只用于内部错误处理，不是普通文章入口。</p>
+<p>然后从服务器外访问公网地址，检查首页、文章、图片、CSS、JS 和错误页。使用域名时核对 DNS；接入 HTTPS 后，再确认证书、HTTP 到 HTTPS 的跳转和页面里的资源地址。容器状态、本机请求和外部访问检查的是不同层面，不能互相替代。</p>
+<p><span id="更新、重建与回退" class="heading-anchor" aria-hidden="true"></span><br><span id="同步静态内容与回退" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="更新和回退"><a href="#更新和回退" class="headerlink" title="更新和回退"></a>更新和回退</h2><p>更新时构建并检查新的产物，复制到 <code>releases/v2/</code>，保留 v1。把 Compose 的挂载源从 <code>./releases/v1</code> 改成 <code>./releases/v2</code>，检查后重建服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># v2 已确认完整，配置已指向 v2，v1 仍然保留；切换时可能短暂中断 HTTP。</span></span><br><span class="line">docker compose config -q &amp;&amp; \</span><br><span class="line">  docker compose run --<span class="built_in">rm</span> --no-deps web nginx -t &amp;&amp; \</span><br><span class="line">  docker compose up -d --force-recreate web</span><br></pre></td></tr></table></figure>
+
+<p>重新走一遍 HTTP 检查，确认正文和资源来自 v2。失败就把挂载源改回 v1，再做同样的检查和重建。不要只替换宿主机软链接，就假定运行中的 bind mount 已经转向新目录。</p>
+<p>只改 <code>nginx.conf</code> 时，可以这样重载：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose <span class="built_in">exec</span> web nginx -t &amp;&amp; \</span><br><span class="line">  docker compose <span class="built_in">exec</span> web nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p>静态文件发布、配置重载和容器重建是三种不同操作。这个示例里的 release 切换不需要重新构建镜像。旧版本保留多久，由存储和回退策略决定；新版本还没验收前，不要清理旧版本。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>先查什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>403 Forbidden</td>
+<td>release 目录和文件权限、每一级父目录的遍历权限、SELinux&#x2F;AppArmor</td>
+</tr>
+<tr>
+<td>404 但文件存在</td>
+<td><code>root</code> 路径、挂载路径、<code>try_files</code>、文件名大小写</td>
+</tr>
+<tr>
+<td>502 Bad Gateway</td>
+<td>这个示例里通常不是 Nginx 本身，检查是否有上层反向代理指向了错误端口</td>
+</tr>
+<tr>
+<td><code>address already in use</code></td>
+<td>宿主机 80 端口占用，<code>ss -ltnp</code> 查到进程后再决定怎么处理</td>
+</tr>
+<tr>
+<td>改了配置没生效</td>
+<td>是否执行了 <code>nginx -t</code> 和 reload；容器是否重建</td>
+</tr>
+</tbody></table>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hexo.io/docs/generating">Hexo：生成静态文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://nginx.org/en/docs/http/ngx_http_core_module.html#try_files">Nginx：try_files 与 error_page</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/storage/bind-mounts/">Docker：bind mounts</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/nginx">Docker Official Image：Nginx</a></li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a> · <a href="/learning/">学习路线 <span aria-hidden="true">→</span></a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">阅读布局：信息栏、正文与目录</title>
+  <desc id="desc">三块面板并排：窄信息栏、宽正文纸面和窄目录，正文中有一段代码和一条横向滚动提示。</desc>
+  <rect width="1200" height="750" fill="#f3f0e6"/>
+  <rect x="70" y="120" width="160" height="510" rx="22" fill="#dde8d7"/>
+  <rect x="96" y="158" width="108" height="10" rx="5" fill="#2f5d3a" opacity=".55"/>
+  <rect x="96" y="190" width="76" height="8" rx="4" fill="#2f5d3a" opacity=".35"/>
+  <rect x="96" y="214" width="92" height="8" rx="4" fill="#2f5d3a" opacity=".35"/>
+  <rect x="96" y="270" width="108" height="1" fill="#2f5d3a" opacity=".25"/>
+  <rect x="96" y="296" width="64" height="8" rx="4" fill="#2f5d3a" opacity=".45"/>
+  <rect x="96" y="320" width="88" height="8" rx="4" fill="#2f5d3a" opacity=".35"/>
+  <rect x="96" y="344" width="72" height="8" rx="4" fill="#2f5d3a" opacity=".35"/>
+
+  <rect x="286" y="82" width="560" height="586" rx="28" fill="#fbfaf5"/>
+  <rect x="330" y="132" width="470" height="16" rx="8" fill="#1c241d" opacity=".82"/>
+  <rect x="330" y="168" width="360" height="9" rx="4.5" fill="#1c241d" opacity=".28"/>
+  <rect x="330" y="192" width="410" height="9" rx="4.5" fill="#1c241d" opacity=".28"/>
+  <text x="330" y="330" font-family="Georgia, 'Noto Serif SC', serif" font-size="132" font-weight="600" fill="#2f5d3a">Aa</text>
+  <rect x="330" y="378" width="470" height="4" fill="#a95532"/>
+  <rect x="330" y="414" width="430" height="9" rx="4.5" fill="#1c241d" opacity=".26"/>
+  <rect x="330" y="438" width="390" height="9" rx="4.5" fill="#1c241d" opacity=".26"/>
+  <rect x="330" y="492" width="470" height="112" rx="14" fill="#202a20"/>
+  <rect x="356" y="520" width="250" height="8" rx="4" fill="#a9d18e" opacity=".8"/>
+  <rect x="356" y="542" width="330" height="8" rx="4" fill="#f3f0e6" opacity=".55"/>
+  <rect x="356" y="564" width="190" height="8" rx="4" fill="#f3f0e6" opacity=".35"/>
+  <path d="M742 576h40m-10-10 10 10-10 10" stroke="#e2a17e" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="884" y="150" width="190" height="450" rx="22" fill="#e6e9e1"/>
+  <rect x="912" y="188" width="104" height="9" rx="4.5" fill="#2f5d3a" opacity=".55"/>
+  <rect x="912" y="222" width="134" height="8" rx="4" fill="#2f5d3a" opacity=".3"/>
+  <rect x="912" y="246" width="118" height="8" rx="4" fill="#2f5d3a" opacity=".3"/>
+  <rect x="912" y="270" width="126" height="8" rx="4" fill="#2f5d3a" opacity=".3"/>
+  <rect x="912" y="312" width="134" height="8" rx="4" fill="#a95532" opacity=".65"/>
+  <rect x="912" y="336" width="104" height="8" rx="4" fill="#2f5d3a" opacity=".3"/>
+  <rect x="912" y="360" width="120" height="8" rx="4" fill="#2f5d3a" opacity=".3"/>
+  <rect x="912" y="404" width="134" height="1" fill="#2f5d3a" opacity=".2"/>
+  <rect x="912" y="428" width="92" height="8" rx="4" fill="#2f5d3a" opacity=".3"/>
+  <rect x="912" y="452" width="112" height="8" rx="4" fill="#2f5d3a" opacity=".3"/>
+</svg>

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="压缩日志、表格和测试输出的 token 优化 Skill。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>caveman：压缩日志、表格和测试输出的 token 优化 Skill | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-caveman/">
+  <meta property="og:url" content="https://qingning.co/posts/project-caveman/">
+
+  <meta property="og:title" content="caveman：压缩日志、表格和测试输出的 token 优化 Skill | 青柠小站">
+  <meta property="og:description" content="压缩日志、表格和测试输出的 token 优化 Skill。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-15">2026年9月15日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-19">2026年9月19日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 4 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>caveman：压缩日志、表格和测试输出的 token 优化 Skill</h1>
+          <p class="article-meta"><time datetime="2026-09-15">2026年9月15日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 4 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-19">2026年9月19日</time></p>
+          <p class="article-description">压缩日志、表格和测试输出的 token 优化 Skill。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-caveman/cover.webp" alt="caveman 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/JuliusBrussee/caveman/main/docs/assets/learn-report.png" target="_blank" rel="noopener">来源</a> · 以仓库为准</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>caveman 由 JuliusBrussee 发起，README 把它写成“少说、少读，代码保持原样”的 token 优化工具。它既可以作为 Agent Skill 安装，也能作为 CLI 或代理接管本机的 coding agent。项目从一句玩笑长成一套多层工具，但核心一直没变：别让模型把上下文浪费在重复解释和噪声日志上。</p>
+<figure class="article-diagram"><img src="/images/projects/project-caveman/screen-01.webp" alt="caveman 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>ThePrimeagen 对 caveman 的演示视频封面，README 用它作为外部反馈的入口。</figcaption></figure>
+
+<h2 id="三块能力，不是一句“请简洁”"><a href="#三块能力，不是一句“请简洁”" class="headerlink" title="三块能力，不是一句“请简洁”"></a>三块能力，不是一句“请简洁”</h2><p>第一块是输出风格。<code>/caveman</code>、<code>/ultracave</code>、<code>/megacave</code> 用不同强度要求回答先给动作和原因，一句只讲一件事；代码、命令、路径和报错必须逐字保留，否定词和数字不能丢。README 特别说明它不改写用户提示词，因为已有研究认为把用户输入也“压缩”反而会让回答变差。</p>
+<p>第二块是输入压缩。日志、JSON、CSV、YAML 和测试输出在进入模型前先被压缩成保留关键信号的版本，原始文件仍留在磁盘，Agent 需要时可以回读。<code>caveman shrink -- pnpm test</code> 可以直接把一条命令的噪声输出变短，<code>/caveman-compress &lt;file&gt;</code> 则用于压缩 <code>CLAUDE.md</code> 这类记忆文件，并保留备份。</p>
+<p>第三块是代码模式里的 Blocks。Agent 经常把同一段脚本写一遍、跑一遍、丢掉，下次重写；Blocks 把 <code>test-summary</code>、<code>json-peek</code>、<code>first-error</code> 等常用脚本留在仓库里，下次直接复用。<code>caveman-blocks scan</code> 可以看本机最近重复写了什么，<code>caveman-blocks init</code> 把规则写进项目的 <code>AGENTS.md</code>。这部分 README 标注为预发布，且目前只支持 Python。</p>
+<h2 id="安装和几个常用命令"><a href="#安装和几个常用命令" class="headerlink" title="安装和几个常用命令"></a>安装和几个常用命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx @caveman-ai/cli@latest</span><br></pre></td></tr></table></figure>
+
+<p>安装器会找到本机的 agent 和登录方式，确认后写入配置，要求 Node.js 22.13 以上。只想用回答风格、不要代理时，可以只装 Skill：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx skills add JuliusBrussee/caveman -g</span><br></pre></td></tr></table></figure>
+
+<p>常用检查命令是 <code>caveman status</code> 看哪些能力开启，<code>caveman doctor</code> 逐条报问题，<code>caveman learn</code> 分析 token 花在哪里。<code>caveman off browse</code> 这类命令可以单独关掉某一层。它声称支持 30 多个 agent，具体名单以仓库的 <code>INSTALL.md</code> 为准。</p>
+<h2 id="长任务排障时最能看出差别"><a href="#长任务排障时最能看出差别" class="headerlink" title="长任务排障时最能看出差别"></a>长任务排障时最能看出差别</h2><p>一次前端构建失败，终端里几千行依赖告警、重复堆栈和最终一条类型错误。直接把这些内容粘给 Agent，上下文很快被填满，模型还可能盯着无关告警解释。用 caveman 的输入压缩先过滤噪声，再让它按错误发生的文件和时间线排查；需要逐字核对时，再打开原始日志。输出层则要求它先给下一步动作，省掉“让我来分析一下”之类的铺垫。压缩前后都应保留原始文件路径和完整命令，方便随时回查。</p>
+<h2 id="和-tail、jq-与通用简洁提示的对比"><a href="#和-tail、jq-与通用简洁提示的对比" class="headerlink" title="和 tail、jq 与通用简洁提示的对比"></a>和 <code>tail</code>、<code>jq</code> 与通用简洁提示的对比</h2><p><code>tail</code> 只保留末尾，适合看最后一条错误，但会丢掉前面的上下文；<code>jq</code> 能结构化筛选 JSON，却要自己写查询；通用的“请简洁”提示词能减少客套，但管不到输入侧。caveman 把输出、输入和脚本复用拆开，适合长会话。README 自己也承认，“请简洁”已经是很强的基线：在某些测试里 <code>/caveman</code> 的中位数只比它再省 3%，<code>/ultracave</code> 才拉开更大差距。</p>
+<h2 id="限制和风险"><a href="#限制和风险" class="headerlink" title="限制和风险"></a>限制和风险</h2><p>压缩是有损的。审计日志、法律文本、需要逐字比对的合同，以及必须保留全部堆栈的故障，都不适合交给自动压缩。README 还写明 HTML 目前没有压缩器，某些文件类型可能没有收益；按请求计费的场景，回答变短也未必省钱。CLI 默认发送使用统计，可用 <code>caveman telemetry off</code> 或 <code>DO_NOT_TRACK=1</code> 关闭。</p>
+<p>性能数字来自项目自己的对照测试，换模型、换任务和换版本都可能不同，不应把 README 的百分比当成保证。最适合经常让 Agent 读构建日志、测试报告和长表格的开发者；如果你需要完整保留推理过程，或者工作流要求每字可审计，应该绕开这类压缩。</p>
+<h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><p>仓库：<a target="_blank" rel="noopener" href="https://github.com/JuliusBrussee/caveman">https://github.com/JuliusBrussee/caveman</a> 。官方文档：<a target="_blank" rel="noopener" href="https://docs.caveman.so/caveman">https://docs.caveman.so/caveman</a> 。许可证以仓库为准，README 当前标注 Apache-2.0。本文按官方 README、安装说明和仓库元数据整理，未在本机完整实测。</p>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

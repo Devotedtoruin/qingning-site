@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="用信息栏、正文与目录三列组织长文：宽屏分栏、窄屏单列，代码和表格只在局部滚动。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>静态博客前端：布局与排版 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/06-frontend-layout-typography-draft/">
+  <meta property="og:url" content="https://qingning.co/posts/06-frontend-layout-typography-draft/">
+
+  <meta property="og:title" content="静态博客前端：布局与排版 | 青柠小站">
+  <meta property="og:description" content="用信息栏、正文与目录三列组织长文：宽屏分栏、窄屏单列，代码和表格只在局部滚动。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-07">2026年9月7日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-11">2026年9月11日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</a></dd></div>
+          <div><dt>阅读</dt><dd>约 8 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>静态博客前端：布局与排版</h1>
+          <p class="article-meta"><time datetime="2026-09-07">2026年9月7日</time> · <a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</a> · 约 8 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-11">2026年9月11日</time></p>
+          <p class="article-description">用信息栏、正文与目录三列组织长文：宽屏分栏、窄屏单列，代码和表格只在局部滚动。</p>
+          <div class="post-tags"><a href="/tags/Hexo/">#Hexo</a><a href="/tags/CSS/">#CSS</a><a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80/">#响应式布局</a></div>
+        </header>
+
+        
+        <figure class="article-cover is-diagram"><img src="/images/covers/frontend-layout.svg" alt="信息栏、正文纸面与目录三列，正文中留出一段可横向滚动的代码" width="1200" height="750" loading="eager" decoding="async"></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>长文排版最怕三件事：正文行宽太宽，读到后面容易串行；代码和表格把整页撑出横向滚动；目录在手机上占掉半屏，正文还没开始就要先划过去。</p>
+<p>这篇用普通 HTML、CSS 和少量 JavaScript 搭一套文章页骨架，解决的就是这三个问题。它不依赖框架，也不包含滚动高亮、搜索和 PJAX；接到具体主题时，按真实生成的 DOM 调整选择器就行。</p>
+<aside class="learning-callout"><strong>学习路线 · 06</strong> 这篇属于“从服务器到前端”的学习路线。<a href="/learning/">查看完整路线 <span aria-hidden="true">→</span></a></aside>
+
+
+<figure class="article-diagram">
+  <a href="/images/articles/reading-responsive-layout.svg" target="_blank" rel="noopener"><img src="/images/articles/reading-responsive-layout.svg" alt="宽屏为信息栏、正文与目录三列；1024 至 1199 像素为正文与目录两列；窄屏收为单列，目录折叠。" width="1200" height="680" loading="lazy" decoding="async"></a>
+  <figcaption>同一份 DOM 在三种宽度下的列结构</figcaption>
+</figure>
+
+<p><span id="先分清模板负责什么" class="heading-anchor" aria-hidden="true"></span><br><span id="先搭出不依赖脚本的文章页" class="heading-anchor" aria-hidden="true"></span><br><span id="搭建文章骨架" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="先搭一个能读的骨架"><a href="#先搭一个能读的骨架" class="headerlink" title="先搭一个能读的骨架"></a>先搭一个能读的骨架</h2><p>目录在文档里放在正文之前，章节 ID 唯一且稳定。这样即使脚本没加载，静态目录仍然能跳转。折叠按钮先隐藏，避免脚本失败后留下一个点了没反应的控件。</p>
+<p>右侧的目录栏先留空，等脚本确认正文里确实有章节，再把目录移进去。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;article-layout&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aside</span> <span class="attr">class</span>=<span class="string">&quot;article-rail&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;文章信息&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dl</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">dt</span>&gt;</span>发布<span class="tag">&lt;/<span class="name">dt</span>&gt;</span><span class="tag">&lt;<span class="name">dd</span>&gt;</span><span class="tag">&lt;<span class="name">time</span> <span class="attr">datetime</span>=<span class="string">&quot;2026-09-04&quot;</span>&gt;</span>2026年9月4日<span class="tag">&lt;/<span class="name">time</span>&gt;</span><span class="tag">&lt;/<span class="name">dd</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">dt</span>&gt;</span>分类<span class="tag">&lt;/<span class="name">dt</span>&gt;</span><span class="tag">&lt;<span class="name">dd</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/categories/frontend/&quot;</span>&gt;</span>前端技术<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">dd</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">dt</span>&gt;</span>阅读<span class="tag">&lt;/<span class="name">dt</span>&gt;</span><span class="tag">&lt;<span class="name">dd</span>&gt;</span>约 7 分钟<span class="tag">&lt;/<span class="name">dd</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dl</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">&quot;article-main&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">header</span> <span class="attr">class</span>=<span class="string">&quot;article-header&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>一份最小文章页<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;article-description&quot;</span>&gt;</span>正文先成立，目录和辅助信息随后增强。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">&quot;article-toc&quot;</span> <span class="attr">data-article-toc</span> <span class="attr">aria-label</span>=<span class="string">&quot;文章目录&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">data-toc-toggle</span> <span class="attr">aria-expanded</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">              <span class="attr">aria-controls</span>=<span class="string">&quot;toc-list&quot;</span>&gt;</span>本页目录<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ol</span> <span class="attr">id</span>=<span class="string">&quot;toc-list&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#preparation&quot;</span>&gt;</span>准备内容<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#example&quot;</span>&gt;</span>阅读示例<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#data&quot;</span>&gt;</span>数据表<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;article-content&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h2</span> <span class="attr">id</span>=<span class="string">&quot;preparation&quot;</span>&gt;</span>准备内容<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>正文正常换行，长地址也不能撑开整个页面。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h2</span> <span class="attr">id</span>=<span class="string">&quot;example&quot;</span>&gt;</span>阅读示例<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">pre</span> <span class="attr">tabindex</span>=<span class="string">&quot;0&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;示例代码&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">code</span>&gt;</span>const message = &#x27;保留空格与换行规则&#x27;;<span class="tag">&lt;/<span class="name">code</span>&gt;</span><span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h3</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span>数据表<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;table-scroll&quot;</span> <span class="attr">tabindex</span>=<span class="string">&quot;0&quot;</span> <span class="attr">role</span>=<span class="string">&quot;region&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;示例数据表&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">caption</span>&gt;</span>示例参数<span class="tag">&lt;/<span class="name">caption</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">thead</span>&gt;</span><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">th</span> <span class="attr">scope</span>=<span class="string">&quot;col&quot;</span>&gt;</span>名称<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;<span class="name">th</span> <span class="attr">scope</span>=<span class="string">&quot;col&quot;</span>&gt;</span>说明<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span><span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">tbody</span>&gt;</span><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>阅读列<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>超宽内容在自身容器内滚动<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span><span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">aside</span> <span class="attr">class</span>=<span class="string">&quot;article-aside&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;文章目录&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><span id="Grid-最容易忽略的是能否收缩" class="heading-anchor" aria-hidden="true"></span><br><span id="限制阅读宽度，而不是无限填满屏幕" class="heading-anchor" aria-hidden="true"></span><br><span id="用-Grid-分配空间，再允许内容收缩" class="heading-anchor" aria-hidden="true"></span><br><span id="分配阅读宽度" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="给正文一个可收缩的宽度"><a href="#给正文一个可收缩的宽度" class="headerlink" title="给正文一个可收缩的宽度"></a>给正文一个可收缩的宽度</h2><p>先限制整页容器，再限制正文行宽。<code>1fr</code> 的自动最小尺寸可能被长代码撑住，正文列要用 <code>minmax(0, 1fr)</code>，Grid 子项也要允许缩小。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">* &#123; <span class="attribute">box-sizing</span>: border-box; &#125;</span><br><span class="line"><span class="selector-tag">body</span> &#123; <span class="attribute">margin</span>: <span class="number">0</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.article-shell</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="built_in">min</span>(<span class="number">1180px</span>, <span class="built_in">calc</span>(<span class="number">100%</span> - <span class="number">2rem</span>));</span><br><span class="line">  <span class="attribute">margin-inline</span>: auto;</span><br><span class="line">  <span class="attribute">padding-block</span>: <span class="number">2.5rem</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.article-layout</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: grid;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="built_in">minmax</span>(<span class="number">0</span>, <span class="number">760px</span>);</span><br><span class="line">  <span class="attribute">justify-content</span>: center;</span><br><span class="line">  <span class="attribute">gap</span>: <span class="number">2.5rem</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.article-main</span> &#123;</span><br><span class="line">  <span class="attribute">min-width</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">3rem</span> <span class="number">3.25rem</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">1.25rem</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#f9f8f3</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.article-rail</span>, <span class="selector-class">.article-aside</span> &#123; <span class="attribute">display</span>: none; &#125;</span><br><span class="line"><span class="selector-class">.article-content</span> &#123; <span class="attribute">max-width</span>: <span class="number">47.5rem</span>; <span class="attribute">font</span>: <span class="number">1.0625rem</span>/<span class="number">1.88</span> system-ui, sans-serif; &#125;</span><br><span class="line"><span class="selector-class">.article-content</span> <span class="selector-pseudo">:is</span>(<span class="selector-tag">h2</span>, <span class="selector-tag">h3</span>) &#123; <span class="attribute">scroll-margin-top</span>: <span class="number">5.5rem</span>; &#125;</span><br><span class="line"><span class="selector-class">.article-content</span> <span class="selector-tag">img</span> &#123; <span class="attribute">max-width</span>: <span class="number">100%</span>; <span class="attribute">height</span>: auto; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">1024px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.article-layout</span><span class="selector-class">.has-toc</span> &#123; <span class="attribute">grid-template-columns</span>: <span class="built_in">minmax</span>(<span class="number">0</span>, <span class="number">1</span>fr) <span class="number">13.75rem</span>; <span class="attribute">gap</span>: <span class="number">2rem</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">1200px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.article-layout</span> &#123; <span class="attribute">grid-template-columns</span>: <span class="number">9.5rem</span> <span class="built_in">minmax</span>(<span class="number">0</span>, <span class="number">760px</span>); <span class="attribute">gap</span>: <span class="number">1.875rem</span>; &#125;</span><br><span class="line">  <span class="selector-class">.article-layout</span><span class="selector-class">.has-toc</span> &#123;</span><br><span class="line">    <span class="attribute">grid-template-columns</span>: <span class="number">9.5rem</span> <span class="built_in">minmax</span>(<span class="number">0</span>, <span class="number">1</span>fr) <span class="number">12.25rem</span>;</span><br><span class="line">    <span class="attribute">justify-content</span>: start;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.article-rail</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">position</span>: sticky;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">5.5rem</span>;</span><br><span class="line">    <span class="attribute">align-self</span>: start;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.article-aside</span> &#123; <span class="attribute">display</span>: block; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>三列不是固定像素的总和：中间列用 <code>minmax(0, 1fr)</code>，在 1200px 视口里仍然能收缩。信息栏只在最宽布局出现，日期和分类不会同时出现在标题下方和左侧栏。</p>
+<p>中文正文可以从 16–18px、1.75–1.9 行高开始，再按字体和行宽微调。不要照搬某个“标准答案”；字体不同，合适的行宽也会变。</p>
+<p><span id="普通表格与代码高亮表格不能共用一套规则" class="heading-anchor" aria-hidden="true"></span><br><span id="把横向滚动留给代码和数据表" class="heading-anchor" aria-hidden="true"></span><br><span id="处理代码与表格溢出" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="让代码和表格自己滚动"><a href="#让代码和表格自己滚动" class="headerlink" title="让代码和表格自己滚动"></a>让代码和表格自己滚动</h2><p>正文里的长地址要允许换行，代码要保留原始空格，表格则交给包装层滚动。三条规则分开写，互不干扰：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.article-content</span> &#123; <span class="attribute">overflow-wrap</span>: anywhere; &#125;</span><br><span class="line"><span class="selector-class">.article-content</span> pre, <span class="selector-class">.table-scroll</span> &#123;</span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">overflow-x</span>: auto;</span><br><span class="line">  <span class="attribute">margin-block</span>: <span class="number">1.5rem</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.article-content</span> pre &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">2.1rem</span> <span class="number">1.25rem</span> <span class="number">1.1rem</span>;</span><br><span class="line">  <span class="attribute">white-space</span>: pre;</span><br><span class="line">  <span class="attribute">overflow-wrap</span>: normal;</span><br><span class="line">  <span class="attribute">border-radius</span>: .<span class="number">625rem</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#eef1e8</span>;</span><br><span class="line">  <span class="attribute">font</span>: .<span class="number">85rem</span>/<span class="number">1.7</span> ui-monospace, monospace;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.table-scroll</span> &#123;</span><br><span class="line">  <span class="attribute">border-block</span>: <span class="number">1px</span> solid <span class="number">#d7ddd3</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.table-scroll</span> <span class="selector-tag">table</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: max-content;</span><br><span class="line">  <span class="attribute">min-width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">border-collapse</span>: collapse;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.table-scroll</span> <span class="selector-pseudo">:is</span>(<span class="selector-tag">th</span>, <span class="selector-tag">td</span>) &#123;</span><br><span class="line">  <span class="attribute">padding</span>: .<span class="number">65rem</span> .<span class="number">8rem</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#d7ddd3</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: start;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有个容易踩的坑：Hexo 的代码高亮器会把代码包进一个 <code>table</code>。如果你给所有 <code>table</code> 统一写了 <code>display: block; overflow-x: auto</code>，再在 <code>.highlight table</code> 里改回 <code>display: table; overflow: visible</code>，窄屏时代码就会把整页撑宽。</p>
+<p>正确做法是让高亮表格自己成为滚动容器：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.highlight</span> &#123; <span class="attribute">position</span>: relative; <span class="attribute">max-width</span>: <span class="number">100%</span>; <span class="attribute">min-width</span>: <span class="number">0</span>; &#125;</span><br><span class="line"><span class="selector-class">.highlight</span> <span class="selector-tag">table</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">overflow-x</span>: auto;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.highlight</span> <span class="selector-tag">table</span> <span class="selector-tag">tbody</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: table;</span><br><span class="line">  <span class="attribute">width</span>: max-content;</span><br><span class="line">  <span class="attribute">min-width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.highlight</span> pre &#123; <span class="attribute">overflow</span>: visible; <span class="attribute">max-width</span>: none; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码块上方的空白用来放语言标签，不需要再用一条外框把代码包成第二张卡片。复制按钮可以绝对定位在代码块右上角，但不要让它跟着横向滚动跑出可视区。</p>
+<p>Table 的 <code>caption</code> 也别忘了。它既是表格说明，也是无障碍读屏器最先读到的内容。</p>
+<p><span id="目录的位置和阅读顺序要一起设计" class="heading-anchor" aria-hidden="true"></span><br><span id="生成章节目录" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="从真实标题生成目录"><a href="#从真实标题生成目录" class="headerlink" title="从真实标题生成目录"></a>从真实标题生成目录</h2><p>下面的脚本从正文的 <code>h2</code>、<code>h3</code> 生成目录，宽屏放进右侧栏，窄屏放回正文标题之后。它只读取 <code>textContent</code>，不改写可能被外部引用的标题 ID。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> layout = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.article-layout&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> toc = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;[data-article-toc]&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> list = toc?.<span class="title function_">querySelector</span>(<span class="string">&#x27;[data-toc-list]&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> toggle = toc?.<span class="title function_">querySelector</span>(<span class="string">&#x27;[data-toc-toggle]&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> header = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.article-header&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> content = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.article-content&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> aside = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.article-aside&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (toc &amp;&amp; list &amp;&amp; toggle &amp;&amp; header &amp;&amp; content &amp;&amp; aside) &#123;</span><br><span class="line">  <span class="keyword">const</span> headings = [...content.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;h2[id], h3[id]&#x27;</span>)];</span><br><span class="line">  list.<span class="title function_">replaceChildren</span>(...headings.<span class="title function_">map</span>(<span class="function">(<span class="params">heading</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> link = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">    link.<span class="property">href</span> = <span class="string">&#x27;#&#x27;</span> + <span class="built_in">encodeURIComponent</span>(heading.<span class="property">id</span>);</span><br><span class="line">    link.<span class="property">textContent</span> = heading.<span class="property">textContent</span>;</span><br><span class="line">    <span class="keyword">const</span> item = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;li&#x27;</span>);</span><br><span class="line">    item.<span class="title function_">append</span>(link);</span><br><span class="line">    <span class="keyword">return</span> item;</span><br><span class="line">  &#125;));</span><br><span class="line">  toc.<span class="property">hidden</span> = headings.<span class="property">length</span> === <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> wide = <span class="title function_">matchMedia</span>(<span class="string">&#x27;(min-width: 1024px)&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">place</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (wide.<span class="property">matches</span>) aside.<span class="title function_">append</span>(toc);</span><br><span class="line">    <span class="keyword">else</span> header.<span class="title function_">after</span>(toc);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="title function_">place</span>();</span><br><span class="line">  layout?.<span class="property">classList</span>.<span class="title function_">toggle</span>(<span class="string">&#x27;has-toc&#x27;</span>, headings.<span class="property">length</span> &gt; <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  toggle.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> open = toggle.<span class="title function_">getAttribute</span>(<span class="string">&#x27;aria-expanded&#x27;</span>) !== <span class="string">&#x27;true&#x27;</span>;</span><br><span class="line">    toggle.<span class="title function_">setAttribute</span>(<span class="string">&#x27;aria-expanded&#x27;</span>, <span class="title class_">String</span>(open));</span><br><span class="line">    list.<span class="property">hidden</span> = !open;</span><br><span class="line">  &#125;);</span><br><span class="line">  wide.<span class="title function_">addEventListener</span>(<span class="string">&#x27;change&#x27;</span>, place);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>has-toc</code> 只在目录确实有内容时添加，否则宽屏会白白预留一列。按钮只控制移动端的折叠；宽屏目录始终展开。接到 PJAX 站点时，把这段封装成挂载函数，并在卸载时移除 <code>matchMedia</code> 监听。</p>
+<p><span id="阅读时间和邻文在构建时计算" class="heading-anchor" aria-hidden="true"></span><br><span id="浮动工具应避开页脚，而不是挤大正文" class="heading-anchor" aria-hidden="true"></span><br><span id="把辅助信息留在它所属的位置" class="heading-anchor" aria-hidden="true"></span><br><span id="放置元信息与浮动工具" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="元信息和浮动工具放哪里"><a href="#元信息和浮动工具放哪里" class="headerlink" title="元信息和浮动工具放哪里"></a>元信息和浮动工具放哪里</h2><p>发布日期、更新时间和阅读时长放在信息栏；标题区只保留标题、摘要和标签。这样宽屏不会在标题下方重复一组日期，窄屏也不需要额外折叠。</p>
+<p>浮动播放器或返回顶部按钮要避开正文和目录的阅读区域。窄屏面板用 <code>100dvh</code> 限制高度，底部留出安全区；播放器收起时只占一个小胶囊，展开时也不该盖住整列目录。</p>
+<p><span id="用验收场景代替“看起来差不多”" class="heading-anchor" aria-hidden="true"></span><br><span id="用长内容检验这份骨架" class="heading-anchor" aria-hidden="true"></span><br><span id="检验长文布局" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="用长内容验收"><a href="#用长内容验收" class="headerlink" title="用长内容验收"></a>用长内容验收</h2><p>在示例页里放一条长 URL、一段长代码和一张十列表格，然后按下面的宽度检查：</p>
+<ul>
+<li><strong>1440px</strong>：信息栏、正文、目录三列；目录 sticky，正文行宽稳定。</li>
+<li><strong>1200px</strong>：三列仍然放得下，中间列没有被长代码撑破。</li>
+<li><strong>1024–1199px</strong>：信息栏收起，正文和目录两列；日期回到标题下方。</li>
+<li><strong>768px 和 390px</strong>：单列，目录在正文前折叠；页面本身不横向滚动。</li>
+<li>键盘能展开目录、跟随锚点并进入滚动区域，焦点始终可见。</li>
+<li>禁用 JavaScript 后，正文和静态目录仍然可读，链接仍然能跳转。</li>
+</ul>
+<p>尺寸和 DOM 检查只能验证规则。字体观感、触控滚动和 sticky 的真实行为，还是要在浏览器里看一眼。</p>
+<p><span id="继续阅读与技术参考" class="heading-anchor" aria-hidden="true"></span></p>
+<h2 id="技术参考"><a href="#技术参考" class="headerlink" title="技术参考"></a>技术参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/minmax">MDN：minmax()</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow">MDN：overflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList/change_event">MDN：MediaQueryList 的 change 事件</a></li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a> · <a href="/learning/">学习路线 <span aria-hidden="true">→</span></a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

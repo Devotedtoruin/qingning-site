@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Vercel 的 Web 界面设计指南，也是 agent-skills 里的网页审查 Skill。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>web-design-guidelines：Vercel 的 Web 界面设计指南 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-web-design-guidelines/">
+  <meta property="og:url" content="https://qingning.co/posts/project-web-design-guidelines/">
+
+  <meta property="og:title" content="web-design-guidelines：Vercel 的 Web 界面设计指南 | 青柠小站">
+  <meta property="og:description" content="Vercel 的 Web 界面设计指南，也是 agent-skills 里的网页审查 Skill。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-09">2026年9月9日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-13">2026年9月13日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 6 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>web-design-guidelines：Vercel 的 Web 界面设计指南</h1>
+          <p class="article-meta"><time datetime="2026-09-09">2026年9月9日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 6 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-13">2026年9月13日</time></p>
+          <p class="article-description">Vercel 的 Web 界面设计指南，也是 agent-skills 里的网页审查 Skill。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/CSS/">#CSS</a><a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-web-design-guidelines/cover.webp" alt="web-design-guidelines 的字排封面，类别：AI Skill" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：本站生成 · 本站原创</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>web-design-guidelines 是 Vercel Labs 维护的 Web 界面指南，仓库为 vercel-labs&#x2F;web-interface-guidelines，官网在 vercel.com&#x2F;design&#x2F;guidelines。它是一份持续更新的、非穷尽的清单，把界面里容易被忽略的决定写成可检查条目；Vercel 的 agent-skills 里另有一个同名 Skill，可以拿它审查 UI 代码。按官方 README 整理，未在本机完整实测。</p>
+<h2 id="清单覆盖什么"><a href="#清单覆盖什么" class="headerlink" title="清单覆盖什么"></a>清单覆盖什么</h2><p>README 把条目分成交互、动效、布局、内容、表单、性能、设计、Vercel 专属和“与 Agent 集成”几块。多数条目与框架无关，少数针对 React&#x2F;Next.js。Vercel 专属那一节明确说明它反映的是 Vercel 的品牌和产品偏好，不是通用规则。</p>
+<p>这份指南的写法不是抽象原则，而是能直接落到属性上的判断。例如焦点环要用 <code>:focus-visible</code>，粘性页头不能盖住获得焦点的元素；点击目标至少 24px，移动端至少 44px；移动端输入框字号至少 16px，否则 iOS Safari 会自动放大；不要禁用浏览器缩放，也不要阻止粘贴。</p>
+<h2 id="交互、动效与布局"><a href="#交互、动效与布局" class="headerlink" title="交互、动效与布局"></a>交互、动效与布局</h2><p>交互部分强调键盘可达、焦点管理和可预测性：所有流程能用键盘完成，遵循 WAI-ARIA 模式；破坏性操作要确认或给撤销窗口；能用 <code>&lt;a&gt;</code> 导航就不要用 <code>&lt;button&gt;</code> 或 <code>&lt;div&gt;</code> 冒充链接；异步更新用 <code>aria-live</code> 播报；筛选、标签页、分页和展开面板的状态尽量写进 URL，保证刷新、分享和前进后退都能复原。</p>
+<p>动效部分要求尊重 <code>prefers-reduced-motion</code>，优先 CSS，其次 Web Animations API，最后才是 JS 库；只动 <code>transform</code> 和 <code>opacity</code> 这类合成友好的属性；不要写 <code>transition: all</code>；自动播放超过五秒的动效要提供暂停、停止或隐藏。布局部分则要求元素有明确对齐关系、检查移动端到超宽屏、处理安全区、避免无意义的滚动条，并尽量让 flex&#x2F;grid 自己算尺寸，而不是用 JS 测量。</p>
+<h2 id="表单与内容"><a href="#表单与内容" class="headerlink" title="表单与内容"></a>表单与内容</h2><p>表单条目很具体：每个控件都要有 <code>&lt;label&gt;</code>；只有一个输入框时 Enter 提交，多控件时作用于最后一个；发送请求期间才禁用提交按钮，不要一开始就禁用；错误显示在字段旁边，提交后聚焦第一个错误；设置 <code>autocomplete</code> 和有意义的 <code>name</code>；用正确的 <code>type</code> 和 <code>inputmode</code>；占位符以省略号结尾并给出示例值；离开前提示未保存的修改。</p>
+<p>内容部分要求所有状态都有设计，包括空、稀疏、密集和错误；标题要反映当前页面；图标按钮要有可访问名称；语义元素优先于 ARIA；提供“跳到正文”链接；数字比较用等宽数字；日期、货币和数字按用户 locale 格式化。</p>
+<h2 id="性能与设计细节"><a href="#性能与设计细节" class="headerlink" title="性能与设计细节"></a>性能与设计细节</h2><p>性能条目包括：在 iOS 低电量模式和 macOS Safari 上测试；测性能时关闭扩展并做 CPU&#x2F;网络限速；减少重渲染和布局抖动；POST&#x2F;PATCH&#x2F;DELETE 的网络预算控制在 500ms 内；大列表虚拟化；只预加载首屏图片，其余懒加载；图片写明尺寸避免 CLS；对字体做 preconnect、预加载和子集化；把长任务移到 Web Worker；循环动画优先用 <code>&lt;video&gt;</code> 而不是 GIF。</p>
+<p>设计条目的例子：阴影至少两层，模拟环境光和直射光；边框和阴影配合使用；子元素圆角不大于父元素并保持同心；非中性背景上的边框、阴影和文字要同色相；图表用色盲友好的配色；对比度优先用 APCA 而不是 WCAG 2；hover、active、focus 状态的对比度要高于静止状态；用 <code>theme-color</code> 和 <code>color-scheme</code> 让浏览器 UI 与页面一致。</p>
+<h2 id="怎么让-Agent-用上"><a href="#怎么让-Agent-用上" class="headerlink" title="怎么让 Agent 用上"></a>怎么让 Agent 用上</h2><p>安装审查 Skill：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx skills add https://github.com/vercel-labs/agent-skills --skill web-design-guidelines</span><br></pre></td></tr></table></figure>
+
+<p>也可以把仓库里的 <code>AGENTS.md</code> 下载到项目根目录，让 agent 在生成阶段就带上这些约束。前者适合生成后审查，后者适合从第一行代码开始约束；两者都做也可以。</p>
+<h2 id="一次生成后的审查"><a href="#一次生成后的审查" class="headerlink" title="一次生成后的审查"></a>一次生成后的审查</h2><p>AI 刚生成一个设置表单，按这份指南逐项看：焦点环是否可见、label 是否关联、错误是否贴着字段、移动端字号会不会触发缩放、提交时按钮是否只在请求期间禁用、危险操作有没有确认、加载状态是否加了 150–300ms 的显示延迟和最短可见时间。把问题按“会阻断操作”和“只是不够好”分开，先修前者。</p>
+<h2 id="与-Impeccable、axe-Lighthouse-的分工"><a href="#与-Impeccable、axe-Lighthouse-的分工" class="headerlink" title="与 Impeccable、axe&#x2F;Lighthouse 的分工"></a>与 Impeccable、axe&#x2F;Lighthouse 的分工</h2><p>Impeccable 提供一套设计语言和确定性检测器，偏重识别 AI 界面的模板感；这份指南覆盖面更广，包含表单、文案、性能和 React&#x2F;Next.js 细节，并附带一个审查 Skill。axe、Lighthouse 能自动测可访问性和性能指标，但不会告诉你“焦点环被粘性页头盖住了”这类具体交互问题。三者可以叠加，不能互相替代。</p>
+<h2 id="它不是品牌指南"><a href="#它不是品牌指南" class="headerlink" title="它不是品牌指南"></a>它不是品牌指南</h2><p>清单是非穷尽的，逐条打勾也不会自动产生品牌识别和视觉层级。Vercel 专属的 Title Case、偏好 <code>&amp;</code>、第二人称等规则，是 Vercel 自己的写法，不应直接套到所有产品。自动聚焦、工具提示、动效这些条目也要结合场景判断；规则冲突时，以用户能否顺利完成任务为准。</p>
+<h2 id="项目入口"><a href="#项目入口" class="headerlink" title="项目入口"></a>项目入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/vercel-labs/web-interface-guidelines">vercel-labs&#x2F;web-interface-guidelines</a></li>
+<li>在线指南：<a target="_blank" rel="noopener" href="https://vercel.com/design/guidelines">vercel.com&#x2F;design&#x2F;guidelines</a></li>
+<li>许可：MIT</li>
+<li>适合：用 AI 生成或改版 Web 界面、需要在交付前做系统审查的前端和设计工程师</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

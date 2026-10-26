@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="拖拽即转的离线文件转换器。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>Filee：拖拽即转的离线文件转换器 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-filee/">
+  <meta property="og:url" content="https://qingning.co/posts/project-filee/">
+
+  <meta property="og:title" content="Filee：拖拽即转的离线文件转换器 | 青柠小站">
+  <meta property="og:description" content="拖拽即转的离线文件转换器。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-29">2026年9月29日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-10-03">2026年10月3日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>Filee：拖拽即转的离线文件转换器</h1>
+          <p class="article-meta"><time datetime="2026-09-29">2026年9月29日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-10-03">2026年10月3日</time></p>
+          <p class="article-description">拖拽即转的离线文件转换器。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">#效率工具</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-filee/cover.webp" alt="Filee 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/KnifeLemon/Filee/main/docs/media/banner-en.jpg" target="_blank" rel="noopener">来源</a> · 以仓库为准</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>Filee 是 KnifeLemon（Myeonggu Kim）开发的开源文件转换器，用 C# 和 Avalonia 编写，MIT 许可。它把“选文件、选格式、点转换”压缩成一个拖拽动作：按住 Ctrl（macOS 上是 Option），把文件拖到光标处弹出的格式环上松手，转换在本地完成，结果保存在原文件旁边。项目 2026 年 9 月创建，官网 filee.sh，Windows、Linux 和 macOS 预览版都已提供。本文按官方 README 整理，未在本机完整实测；格式支持和安装步骤以当前版本为准。</p>
+<h2 id="光标处的格式环"><a href="#光标处的格式环" class="headerlink" title="光标处的格式环"></a>光标处的格式环</h2><p>Filee 没有传统的主窗口流程。按住修饰键拖动文件时，光标位置会出现一个圆环，只显示与当前文件类型匹配的目标格式；把文件丢到某个格式上，进度环走完，新文件就出现在同一目录。按 Tab 或滚动滚轮可以把圆环翻到背面，看到不常用的格式和工具。</p>
+<p>每种文件类型有独立的工具栏，可以拖拽排列，并保存预设：图片的质量、尺寸、DPI，PDF 的页码和压缩，视频音频的编码参数，输出目录和文件名规则。转换前还能裁切图片，支持多文件并行，自动寻找多步转换路径，例如 HWP → HWPX → DOCX。监视文件夹会持续转换落入其中的新文件，最近的转换记录带缩略图，可以直接打开结果或换一个应用打开。</p>
+<h2 id="格式与可选引擎"><a href="#格式与可选引擎" class="headerlink" title="格式与可选引擎"></a>格式与可选引擎</h2><p>README 按类别列出了很长的支持范围：图片（含 HEIC、RAW、PSD、DICOM）、矢量图、PDF、Word、Excel、PowerPoint、HWP&#x2F;HWPX、电子书、视频、音频、字幕、压缩包、CAD、字体、JSON&#x2F;YAML&#x2F;TOML、3D 模型和地理数据。按 README 的说法有两百多种，具体到某个冷门格式，仍要看当前版本的格式表。</p>
+<p>大部分格式开箱可用，不依赖 Office、Hancom Office 或 LibreOffice。需要额外引擎的格式会在第一次使用时才下载：Ghostscript 处理 EPS&#x2F;PS，LibreOffice 处理部分旧文档格式，Pandoc 处理 Markdown 等文本格式，calibre 处理 MOBI&#x2F;AZW3，FFmpeg 处理视频音频。安装包因此不必一开始就很大，但离线环境要提前准备好这些引擎。</p>
+<h2 id="命令行与批处理"><a href="#命令行与批处理" class="headerlink" title="命令行与批处理"></a>命令行与批处理</h2><p>安装程序会同时装上 <code>filee</code> 命令，参数和图形界面共用同一套引擎与预设：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">filee convert photo.heic --to jpg</span><br><span class="line">filee convert *.png --to webp --quality 80 -o converted</span><br><span class="line">filee watch D:\Inbox --to pdf --move-originals</span><br></pre></td></tr></table></figure>
+
+<p>第一条适合单张 iPhone 照片转 JPG，第二条批量压缩图片，第三条监视一个目录并把进来的文件转成 PDF。<code>filee help</code> 列出全部命令和选项，官网 filee.sh&#x2F;cli 有完整说明。</p>
+<figure class="article-diagram"><img src="/images/projects/project-filee/screen-01.webp" alt="Filee 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>官方演示图：按住修饰键拖入文件，光标处只列出与文件类型匹配的格式</figcaption></figure>
+
+<h2 id="隐私"><a href="#隐私" class="headerlink" title="隐私"></a>隐私</h2><p>README 的隐私政策写得很具体：转换全部在本机完成，不上传文件；不收集使用数据，不发遥测。联网只发生在三种情况：启动后和每隔几小时向 GitHub 查询新版本（可在设置里关闭）、下载你选择的转换引擎和 OCR 语言包、点击链接时打开浏览器。对需要处理合同、证件或内部文档的人来说，这比在线转换器少了一层数据外泄风险。</p>
+<h2 id="典型场景"><a href="#典型场景" class="headerlink" title="典型场景"></a>典型场景</h2><p>行政同事收到一份 HWP 格式的韩国合作方文档，需要转成 DOCX 再编辑。把文件拖到 Filee 的格式环上，等几秒得到 DOCX，用 Word 打开检查表格和字体。全程没有把文件上传到任何网站，也不需要在电脑上安装 Hancom Office。转换完的 DOCX 就放在原文件旁边，命名和目录都能在预设里固定。</p>
+<h2 id="和在线转换器的差别"><a href="#和在线转换器的差别" class="headerlink" title="和在线转换器的差别"></a>和在线转换器的差别</h2><p>iLovePDF、CloudConvert 这类在线工具胜在不用安装、格式覆盖广，但文件要离开本机，免费版还有大小和次数限制。Filee 把转换放回本地，代价是安装包、可选引擎和平台适配。与 LibreOffice 的“打开再另存为”相比，Filee 的路径更短，适合重复的批量任务，但不提供 Office 套件的编辑能力。</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>macOS 版仍是预览，安装包未公证，首次启动要在系统设置里允许；Linux 上的拖拽手势依赖 X11，Wayland 只能用放置区或文件管理器右键菜单。复杂字体、版式和宏在转换后可能失真，重要文档要人工复核。部分格式需要额外引擎，首次使用要联网下载。Windows 10 长期未更新的机器可能因 CET 保护与 .NET 冲突而无法启动，README 给出更新系统或对 Filee 单独关闭 UserShadowStack 的两种处理方式。它也不是排版或印刷工具，不能替代专业出版流程。</p>
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><p>适合经常在多种文档格式之间转换、又在意文件隐私的普通用户和办公室团队；也适合需要批量转换或把转换接进脚本的开发者。需要印刷级排版、复杂宏兼容或企业集中管理的场景，应使用专业文档工具。</p>
+<h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/KnifeLemon/Filee">KnifeLemon&#x2F;Filee</a></li>
+<li>官网与交互演示：<a target="_blank" rel="noopener" href="https://filee.sh/">filee.sh</a></li>
+<li>下载：<a target="_blank" rel="noopener" href="https://github.com/KnifeLemon/Filee/releases/latest">Releases</a></li>
+<li>许可证：MIT（以仓库 LICENSE 为准）</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

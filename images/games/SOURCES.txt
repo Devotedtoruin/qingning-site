@@ -1,0 +1,21 @@
+Game demonstration frames used in the draft article
+
+Server Survival
+Project: https://github.com/pshenok/server-survival
+Commit: 7804e5969e28267cd33837e023eb46fa65da72b7
+Original: assets/gameplay.gif
+Git blob SHA-1: bcaaa29d9ac3eb505d69a01e853a7e9c56f6e733
+Frame selected: 126 of 150 (zero-based); static WebP 800x457.
+Copyright (c) 2025 Kostyantyn Pshenychnyy. MIT License, see server-survival-LICENSE.txt.
+
+Datacenter Survival
+Project: https://github.com/pshenok/datacenter-survival
+Commit: 3f2582972119828322ee3a1e57c1bf19256e8f02
+Original: assets/demo.gif
+Git blob SHA-1: a5fd76933d8a6cd3c1f6668005835c603b25badc
+Frame selected: 120 of 302 (zero-based); static WebP 960x540.
+Copyright (c) 2026 Kostyantyn Pshenychnyy. MIT License, see datacenter-survival-LICENSE.txt.
+
+Both frames are extracted from the projects' official demonstrations. They are not screenshots of a playthrough performed for this site. The combined survival-games cover uses these same two frames; it has the same attribution and license requirements. No endorsement by the author is implied.
+
+The Ubuntu/SSH and Hexo/Nginx covers are concept diagrams created for these articles, not evidence of actual operations. Do not reuse them as screenshots of a terminal, host, or real cloud console.

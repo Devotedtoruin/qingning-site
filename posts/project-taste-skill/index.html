@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="给 coding agent 艺术方向、参考图和浏览器检查能力的设计 Skill。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>taste-skill：给 coding agent 艺术方向、参考图和浏览器检查能力的设计 Skill | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-taste-skill/">
+  <meta property="og:url" content="https://qingning.co/posts/project-taste-skill/">
+
+  <meta property="og:title" content="taste-skill：给 coding agent 艺术方向、参考图和浏览器检查能力的设计 Skill | 青柠小站">
+  <meta property="og:description" content="给 coding agent 艺术方向、参考图和浏览器检查能力的设计 Skill。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-13">2026年9月13日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-17">2026年9月17日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>taste-skill：给 coding agent 艺术方向、参考图和浏览器检查能力的设计 Skill</h1>
+          <p class="article-meta"><time datetime="2026-09-13">2026年9月13日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-17">2026年9月17日</time></p>
+          <p class="article-description">给 coding agent 艺术方向、参考图和浏览器检查能力的设计 Skill。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/CSS/">#CSS</a><a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-taste-skill/cover.webp" alt="taste-skill 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/Leonxlnx/taste-skill/main/examples/v2/coffee-storefront.webp" target="_blank" rel="noopener">来源</a> · MIT</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>taste-skill 由 Leonxlnx 维护，仓库为 Leonxlnx&#x2F;taste-skill，官网是 tasteskill.dev。仓库现在只有一个 Skill：<code>design-taste-frontend</code>。它不提供一套现成组件，而是让 coding agent 在动手前先定艺术方向、找真实图片，生成后再在真实浏览器里检查自己的页面。README 的说法是让 agent 设计网站和应用界面，而不是拼出一张平均化的落地页。按官方 README 整理，未在本机完整实测。</p>
+<h2 id="六步构建流程"><a href="#六步构建流程" class="headerlink" title="六步构建流程"></a>六步构建流程</h2><p>README 把一次构建拆成六步：读 brief，列出只有这个客户才有的东西；脚本从 20 个研究过的方向里发三张牌，由 agent 选一个；用一句话把客户自己的材料和这个方向连起来；用开放图库里的真实图片和视频搭建页面；在真实浏览器里按三个宽度检查，发现模板味就判失败；最后看自己的截图，修最严重的三个问题，最多三轮。</p>
+<p>README 估算一次构建约 30 到 45 分钟、几十万 token。这个数字来自项目自述，不是独立基准；实际耗时取决于页面复杂度和模型。</p>
+<h2 id="真实图片从哪里来"><a href="#真实图片从哪里来" class="headerlink" title="真实图片从哪里来"></a>真实图片从哪里来</h2><p>图片不是模型生成的，而是从 Wikimedia Commons、Openverse、Met 等开放馆藏里找，只接受公有领域、CC0、CC BY 和 CC BY-SA 文件，并把署名放在页面上。需要联网找图，但不需要 API key，Skill 本身也不安装任何东西。</p>
+<p>使用时的运行条件是 Node 22 以上，以及已安装的 Chrome、Edge 或 Chromium。换成客户自己的产品照片通常更好；开放图库能解决“页面里全是渐变占位块”的问题，但未必能表达真实门店、真实人物或真实产品。</p>
+<h2 id="v2-1-的仪表盘分支"><a href="#v2-1-的仪表盘分支" class="headerlink" title="v2.1 的仪表盘分支"></a>v2.1 的仪表盘分支</h2><p>落地页之外，v2.1 也处理仪表盘和应用界面。它会从真实产品截图里蒸馏出的应用风格中发一张，按对应数值搭外壳、数据、图表和表格，再用应用规则检查：面板要安静、数字要对齐、颜色花在数据上、手机布局里导航要能收起来。对应命令是 <code>inspect.mjs --app</code>。</p>
+<p>页面框架也会被检查：首屏有没有清晰标题、左右边距是否相等、有没有某一节被挤到一边、有没有莫名其妙的空白段。动效标准参考最近 100 个 Awwwards Sites of the Day，README 说这是测量出来的，不是凭感觉写的。</p>
+<h2 id="安装与运行"><a href="#安装与运行" class="headerlink" title="安装与运行"></a>安装与运行</h2><p>用通用安装器只装这一个 Skill：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx skills add https://github.com/Leonxlnx/taste-skill --skill <span class="string">&quot;design-taste-frontend&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Claude Code 和 Codex 也各有插件安装方式；从克隆仓库安装时，<code>./install.sh</code> 会把 Skill 软链接进去，<code>git pull</code> 后原地更新。仓库只保留 <code>design-taste-frontend</code>，早期的高端视觉、极简 UI、工业粗野等 Skill 已迁到 taste-skill-classics，图片生成相关 Skill 迁到 imagegen-skills，安装名不变但仓库变了。</p>
+<h2 id="一个品牌落地页的场景"><a href="#一个品牌落地页的场景" class="headerlink" title="一个品牌落地页的场景"></a>一个品牌落地页的场景</h2><p>一家独立咖啡店只有一段 brief 和几张门店照片。Skill 先找出“二十年烘豆经验、只有二十个座位”这类只属于这家店的材料，再选一个方向，用开放图库补足氛围图，搭出页面后在三个宽度检查，最后根据截图修排版。人仍然要决定品牌语气、菜单、价格和法务文案；图库照片也不能假装成真实门店。</p>
+<h2 id="与规则型设计-Skill、v0-Framer-的差别"><a href="#与规则型设计-Skill、v0-Framer-的差别" class="headerlink" title="与规则型设计 Skill、v0&#x2F;Framer 的差别"></a>与规则型设计 Skill、v0&#x2F;Framer 的差别</h2><p>只给检查清单的设计 Skill 能指出问题，但不会给方向，也不会自己找图。taste-skill 把方向、素材和浏览器自查串成一条流程，适合“从零做一个有风格的页面”。v0、Framer 这类工具从模板或组件出发，产出快、可视化强；taste-skill 的产出仍是代码，检查和迭代在本地浏览器完成，速度慢一些，但更容易接进现有前端工程。</p>
+<h2 id="代价与边界"><a href="#代价与边界" class="headerlink" title="代价与边界"></a>代价与边界</h2><p>30 到 45 分钟和大量 token 意味着它不适合快速原型。开放图库的图片可能和品牌气质不符，商用前要核对每张图的许可和署名要求。参考 Awwwards 的动效标准有变成追逐潮流的风险，也不等于用户能顺利完成任务。</p>
+<p>浏览器检查能发现布局、溢出和明显的模板味，发现不了商业定位是否成立，也不能替代可访问性测试和人工设计评审。README 的自检流程是项目方法，不是独立质量认证。</p>
+<h2 id="项目入口"><a href="#项目入口" class="headerlink" title="项目入口"></a>项目入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/Leonxlnx/taste-skill">Leonxlnx&#x2F;taste-skill</a></li>
+<li>官网：<a target="_blank" rel="noopener" href="https://tasteskill.dev/">tasteskill.dev</a>，桌面版：<a target="_blank" rel="noopener" href="https://tastecode.dev/">tastecode.dev</a></li>
+<li>许可：MIT</li>
+<li>适合：想让 AI 做出有明确视觉方向、而不是平均模板页的设计师和前端</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

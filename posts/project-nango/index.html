@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="开源 API 集成平台，连接 1000+ API。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>Nango：开源 API 集成平台 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-nango/">
+  <meta property="og:url" content="https://qingning.co/posts/project-nango/">
+
+  <meta property="og:title" content="Nango：开源 API 集成平台 | 青柠小站">
+  <meta property="og:description" content="开源 API 集成平台，连接 1000+ API。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-02">2026年9月2日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-06">2026年9月6日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>Nango：开源 API 集成平台</h1>
+          <p class="article-meta"><time datetime="2026-09-02">2026年9月2日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-06">2026年9月6日</time></p>
+          <p class="article-description">开源 API 集成平台，连接 1000+ API。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">#效率工具</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-nango/cover.webp" alt="Nango 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://nango.dev/opengraph-image.png" target="_blank" rel="noopener">来源</a> · 以仓库为准</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>Nango 是一个开源的 API 集成平台，目标是让产品或 AI Agent 用一套统一的方式连接 1000 多个外部 API。它由 NangoHQ 维护，TypeScript 编写，2020 年创建，官网 nango.dev。核心工作是把 OAuth、凭据刷新、多租户连接、请求代理和集成函数收进一个运行时，开发者只写业务逻辑，不用为每个 SaaS 重做一遍授权和 token 管理。本文按官方 README 整理，未在本机完整实测；API 覆盖和许可条款以官方文档为准。</p>
+<h2 id="三个原语：Auth、Proxy、Functions"><a href="#三个原语：Auth、Proxy、Functions" class="headerlink" title="三个原语：Auth、Proxy、Functions"></a>三个原语：Auth、Proxy、Functions</h2><p>README 把能力归纳为三块。</p>
+<p><strong>Auth</strong>：托管 OAuth、API Key 和 token 刷新，覆盖 1000 多个 API。前端可以嵌入白标授权流程：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">nango.<span class="title function_">openConnectUI</span>(&#123; <span class="attr">onEvent</span>: <span class="function">(<span class="params">event</span>) =&gt;</span> &#123; <span class="comment">/* 处理授权完成 */</span> &#125; &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>凭据存储、多租户连接和刷新由 Nango 负责，产品侧只需保存 connectionId。</p>
+<p><strong>Proxy</strong>：替用户发起带授权的请求。它解析 provider、注入凭据、处理重试和限流，然后返回响应：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Nango</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nangohq/node&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> nango = <span class="keyword">new</span> <span class="title class_">Nango</span>(&#123; <span class="attr">secretKey</span>: <span class="string">&#x27;&lt;NANGO-SECRET-KEY&gt;&#x27;</span> &#125;);</span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> nango.<span class="title function_">get</span>(&#123;</span><br><span class="line">  <span class="attr">endpoint</span>: <span class="string">&#x27;/v3/contacts&#x27;</span>,</span><br><span class="line">  <span class="attr">providerConfigKey</span>: <span class="string">&#x27;&lt;INTEGRATION-ID&gt;&#x27;</span>,</span><br><span class="line">  <span class="attr">connectionId</span>: <span class="string">&#x27;&lt;CONNECTION-ID&gt;&#x27;</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>Functions</strong>：把集成逻辑写成 TypeScript 函数，部署到 Nango 的运行时，自带 API 访问、重试、存储和可观测性。函数可以手写，也可以让 AI builder 根据描述生成。README 强调生成的是可读、可审查、可版本控制的代码，而不是黑盒配置；官方还提供类型检查和测试框架。</p>
+<h2 id="面向-Agent-的工具调用"><a href="#面向-Agent-的工具调用" class="headerlink" title="面向 Agent 的工具调用"></a>面向 Agent 的工具调用</h2><p>README 把“AI tool calling &amp; MCP”列在用例第一位：给 Agent 调用外部 API 的能力，认证和限流交给 Nango。除此之外还覆盖数据同步（为 RAG 建索引、做单向或双向同步）、Webhook 处理、API 统一（把多个服务归一成自己的 schema）、写操作 Actions，以及按客户定制集成行为。</p>
+<p>对做 Agent 产品的团队，这解决了一个很实际的问题：模型会调用工具，但工具背后的 OAuth 授权、token 过期和多租户隔离不该由提示词处理。Nango 把这些放到平台层，Agent 只看到“已连接的账号”。平台可以通过 CLI 和 API 操作，兼容任意后端语言，也兼容 Cursor、Codex、Claude Code 等编码工具以及 MCP、LangChain 等 Agent SDK。</p>
+<h2 id="部署与许可"><a href="#部署与许可" class="headerlink" title="部署与许可"></a>部署与许可</h2><p>README 给出三种运行方式：Nango Cloud、BYOC（部署到自己的云账号）和免费自托管。Cloud 与 BYOC 按套餐提供全部功能，免费自托管功能受限。自托管适合数据不能出内网的团队，但要自己维护数据库、运行时和密钥管理；BYOC 把运行环境放在自己的云账号里，运维责任仍由自己承担一部分。</p>
+<p>许可证是 Elastic License，不是 MIT 或 Apache。商用、分发和托管服务前要读仓库 LICENSE 和定价页，确认自己的使用方式是否被允许。</p>
+<figure class="article-diagram"><img src="/images/projects/project-nango/screen-01.webp" alt="Nango 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>配图清单中的 Nango 官方素材实际是标志横幅，不是产品界面截图；功能与部署方式以 README 和文档为准</figcaption></figure>
+
+<h2 id="典型场景"><a href="#典型场景" class="headerlink" title="典型场景"></a>典型场景</h2><p>一个 SaaS 产品想支持“连接你的 GitHub 和 Slack”：用户在设置页点授权，Nango 弹出白标 OAuth 流程，完成后产品拿到 connectionId。后端通过 Proxy 读取仓库列表、发消息，不需要自己实现 OAuth 回调、刷新 token 和处理每个租户的凭据。之后再加一个 CRM，只写一个同步函数，不用改认证框架。对 Agent 产品，同一套连接可以直接暴露成工具，让模型替用户执行操作。</p>
+<h2 id="和自己写-OAuth、iPaaS-的差别"><a href="#和自己写-OAuth、iPaaS-的差别" class="headerlink" title="和自己写 OAuth、iPaaS 的差别"></a>和自己写 OAuth、iPaaS 的差别</h2><p>自己接 API 意味着每个服务都要处理授权流程、token 刷新、限流、重试和错误映射，接五个服务就会长出五套相似代码。Zapier、Make 这类 iPaaS 面向无代码自动化，适合把现成应用串起来，但不容易嵌进产品自己的界面和权限模型。Nango 的位置在两者之间：代码可控，认证和运行时托管，前端还能嵌入授权 UI。</p>
+<h2 id="限制与风险"><a href="#限制与风险" class="headerlink" title="限制与风险"></a>限制与风险</h2><p>1000 多个 API 是官方目录的数量，具体某个服务的覆盖深度、字段和权限仍要看文档；冷门 API 可能要自己写函数。自托管免费版功能有限，生产环境用 Cloud 或 BYOC 会产生费用。凭据集中在 Nango 后，密钥管理、租户隔离、审计和备份都成为关键风险，部署前要明确谁能访问 secret key。平台版本和 API 行为会变化，升级与迁移也要预留时间。</p>
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><p>适合要把多个 SaaS 接进自己产品、又不愿为每个服务重写 OAuth 的工程团队；也适合给 Agent 提供外部工具调用的平台开发者。只需要接一两个 API、且没有多租户需求的内部脚本，直接写 HTTP 客户端更轻。</p>
+<h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/NangoHQ/nango">NangoHQ&#x2F;nango</a></li>
+<li>官网：<a target="_blank" rel="noopener" href="https://nango.dev/">nango.dev</a></li>
+<li>文档：<a target="_blank" rel="noopener" href="https://nango.dev/docs/">nango.dev&#x2F;docs</a></li>
+<li>API 目录：<a target="_blank" rel="noopener" href="https://nango.dev/docs/integrations/overview/">nango.dev&#x2F;docs&#x2F;integrations&#x2F;overview</a></li>
+<li>许可证：Elastic License（以仓库 LICENSE 为准）</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

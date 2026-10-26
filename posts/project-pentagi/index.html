@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="多 Agent 自主渗透测试系统。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>PENTAGI：多 Agent 自主渗透测试系统 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-pentagi/">
+  <meta property="og:url" content="https://qingning.co/posts/project-pentagi/">
+
+  <meta property="og:title" content="PENTAGI：多 Agent 自主渗透测试系统 | 青柠小站">
+  <meta property="og:description" content="多 Agent 自主渗透测试系统。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-07">2026年9月7日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-11">2026年9月11日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>PENTAGI：多 Agent 自主渗透测试系统</h1>
+          <p class="article-meta"><time datetime="2026-09-07">2026年9月7日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-11">2026年9月11日</time></p>
+          <p class="article-description">多 Agent 自主渗透测试系统。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/%E5%AE%89%E5%85%A8/">#安全</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-pentagi/cover.webp" alt="PENTAGI 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://pentagi.com/opengraph-image" target="_blank" rel="noopener">来源</a> · 以仓库为准</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>PentAGI 由安全工程公司 VXControl 开发，仓库以 MIT 许可发布（以 LICENSE 为准），是一套自托管的多 Agent 自主渗透测试系统。用户用自然语言描述目标和范围，一组 Agent 负责规划、调用工具、记录发现并生成报告；nmap、Metasploit、sqlmap 等 20 多个工具在隔离的 Docker 沙箱里执行。后端 Go + GraphQL，前端 React，结果与成功经验写入带 pgvector 的 PostgreSQL，可选 Neo4j&#x2F;Graphiti 知识图谱，另有 Grafana、Jaeger、Loki、Langfuse 等可观测组件。</p>
+<h2 id="一次-Flow-怎么跑"><a href="#一次-Flow-怎么跑" class="headerlink" title="一次 Flow 怎么跑"></a>一次 Flow 怎么跑</h2><p>登录后从侧栏进入 Flows，新建 Flow，选择 Automation（全自动）或 Assistant（可逐步干预）。在输入框写清目标 URL、评估类型、范围限制和期望产出，也可以套用模板。示例提示词：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Assess https://target.example for common web application vulnerabilities.</span><br><span class="line">Focus on authentication, file handling, and injection issues.</span><br><span class="line">Stay within the provided target only and summarize confirmed findings</span><br><span class="line">with reproduction steps.</span><br></pre></td></tr></table></figure>
+
+<p>Flow 页面会显示 Agent 消息、任务与子任务、工具调用和终端输出；Assistant 视图可以查看状态、停止当前任务、追加指令或修改剩余子任务，也可以开启 Use Agents 委托给子 Agent。结束后从 Report 菜单打开网页版、复制、下载 Markdown 或 PDF。文件页签区分上传文件、资源库附件和从容器拉取的快照，上传上限 300 MB，注入容器后位于 <code>/work/uploads/</code> 与 <code>/work/resources/</code>；上传内容会自动列进 Agent 的系统提示，容器快照只留在界面里。删除 Flow 会移除记录和长期记忆，但不会自动清理宿主机上的 <code>flow-{id}-data/</code> 目录，需要手动回收空间。</p>
+<h2 id="安装与第一次登录"><a href="#安装与第一次登录" class="headerlink" title="安装与第一次登录"></a>安装与第一次登录</h2><p>官方提供 Linux（amd64&#x2F;arm64）、Windows（amd64）、macOS（Intel 与 Apple Silicon）的交互式安装器，解压后运行 <code>./installer</code>，它会检查 Docker、生成 <code>.env</code>、配置模型与搜索服务并启动 compose。新建 Flow 时可以套用已保存模板，或用 <code>examples/prompts/base_web_pentest.md</code> 作为起点。手动部署则是复制 <code>.env.example</code>、填入至少一个模型供应商的 Key，再执行 <code>docker compose up -d</code>。系统要求至少 2 vCPU、4 GB 内存和 20 GB 磁盘。Web UI 默认在 <code>https://localhost:8443</code>，初始账号与密码由 README 公布，首次登录应先修改密码。模型可选 OpenAI、Anthropic、Gemini、Bedrock、Ollama、DeepSeek、GLM、Kimi、Qwen、MiniMax、Mistral、xAI 或任意兼容端点；搜索可接 DuckDuckGo、Google、Tavily、Firecrawl、Perplexity、Sploitus、SearXNG 等。</p>
+<p>需要观测与知识图谱时，先启动主 compose 创建网络，再叠加 <code>docker-compose-langfuse.yml</code>、<code>docker-compose-graphiti.yml</code> 或 <code>docker-compose-observability.yml</code>。Web UI 默认只监听 <code>127.0.0.1</code>；要从其他机器访问，需要设置 <code>PENTAGI_LISTEN_IP</code>、<code>PUBLIC_URL</code> 和 <code>CORS_ORIGINS</code>，再重建容器。API Token 在 Settings → API Tokens 创建，有效期可从 1 分钟到 3 年，用 Bearer 调用 REST 或 GraphQL；GraphQL Playground 与 Swagger UI 都在实例上提供，便于脚本化创建 Flow 和拉取结果。</p>
+<h2 id="一次授权演练的用法"><a href="#一次授权演练的用法" class="headerlink" title="一次授权演练的用法"></a>一次授权演练的用法</h2><p>在测试环境创建 Automation Flow，把目标域名、测试时间窗、禁止操作和报告要求写进提示词，让 Agent 在隔离 worker 上完成信息收集与验证；遇到需要人工判断的入口，切到 Assistant 视图调整方向。结束后导出 PDF 报告并复核证据，把误报、未验证项和超出范围的动作单独记录。</p>
+<h2 id="隔离、授权与禁止事项"><a href="#隔离、授权与禁止事项" class="headerlink" title="隔离、授权与禁止事项"></a>隔离、授权与禁止事项</h2><p>PentAGI 会真实执行扫描与利用，只能在自有或获得明确书面授权的目标上使用，并严格限定域名、IP 段和时间窗口；README 与 EULA 都要求遵守授权范围，未经授权的测试在多数司法辖区违法。生产或敏感环境应使用两节点部署，把 worker 放在独立主机；需要容器内 Docker 时，优先用 <code>DOCKER_INSIDE</code> 指向加固过的 dind 服务并开启 TLS 校验，不要把宿主机 Docker socket 直接挂进沙箱——那等于把宿主机 root 权限交给自主 Agent。默认管理员密码、对外监听端口和 28000–29999 的带外回调端口也要一并收紧。</p>
+<h2 id="与-Metasploit、SaaS-平台的差别"><a href="#与-Metasploit、SaaS-平台的差别" class="headerlink" title="与 Metasploit、SaaS 平台的差别"></a>与 Metasploit、SaaS 平台的差别</h2><p>Metasploit 是工具集，选什么模块、什么时候停仍由人决定；PentAGI 把工具调用、记忆、任务规划和报告串成自主流程，适合在授权演练中减少重复操作。与托管式自动化渗透 SaaS 相比，它强调自托管、模型可选和数据留在本地，代价是要自己维护一整套容器、数据库与监控。无论选哪种，授权和范围管理都不能外包给 Agent。</p>
+<h2 id="限制与适合的人"><a href="#限制与适合的人" class="headerlink" title="限制与适合的人"></a>限制与适合的人</h2><p>自主 Agent 可能执行超出预期的操作，甚至造成破坏；README 也说明它目前不是 CALDERA 式的 BAS 平台，JSON 流程报告不在支持格式内。开启执行监控和任务规划会增加执行时间与 token 消耗，官方建议小模型场景使用，但仍需人工复核每条命令与发现；重要结论要回到目标上验证，运行截图与命令输出也应脱敏后再对外分享。按官方 README 整理，未在本机完整实测。适合有授权范围、能提供隔离环境的安全团队和红队；生产环境、无授权目标或无法隔离运行的环境不适合。</p>
+<h2 id="官方入口"><a href="#官方入口" class="headerlink" title="官方入口"></a>官方入口</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/vxcontrol/pentagi">PentAGI</a> — MIT，以仓库为准</li>
+<li><a target="_blank" rel="noopener" href="https://pentagi.com/">官网</a></li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

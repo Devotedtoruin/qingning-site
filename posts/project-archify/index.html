@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="把代码库、需求或计划转成可交互架构图的 Agent Skill。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>archify：把代码库、需求或计划转成可交互架构图的 Agent Skill | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-archify/">
+  <meta property="og:url" content="https://qingning.co/posts/project-archify/">
+
+  <meta property="og:title" content="archify：把代码库、需求或计划转成可交互架构图的 Agent Skill | 青柠小站">
+  <meta property="og:description" content="把代码库、需求或计划转成可交互架构图的 Agent Skill。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-16">2026年9月16日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-20">2026年9月20日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>archify：把代码库、需求或计划转成可交互架构图的 Agent Skill</h1>
+          <p class="article-meta"><time datetime="2026-09-16">2026年9月16日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-20">2026年9月20日</time></p>
+          <p class="article-description">把代码库、需求或计划转成可交互架构图的 Agent Skill。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-archify/cover.webp" alt="archify 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/tt-a1i/archify/main/docs/assets/archify-demo-reach.png" target="_blank" rel="noopener">来源</a> · MIT</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>archify 是 tt-a1i 维护的 Agent Skill，官方站点是 archify.si，代码以 MIT 许可发布。它把一句需求、一个计划或一个代码仓库转成可交互的 HTML 图，读图的人能展开节点、沿路径追踪、切换主题，也能把它当成一份可以带走的架构说明。</p>
+<h2 id="先把关系写成结构，再决定怎么画"><a href="#先把关系写成结构，再决定怎么画" class="headerlink" title="先把关系写成结构，再决定怎么画"></a>先把关系写成结构，再决定怎么画</h2><p>常见的 AI 画图流程是让模型直接吐一段 Mermaid，边写边猜布局；archify 改成了另一条路：Agent 先生成带类型的 JSON IR，再由渲染器排版。组件、边界、调用方向、返回关系和证据都落在源数据里，图只是这份数据的视图。官方称其支持十种图：架构、工作流、时序、数据流、生命周期、ERD、类图、树、时间线和瀑布图，每种都有对应的校验规则。</p>
+<figure class="article-diagram"><img src="/images/projects/project-archify/screen-01.webp" alt="archify 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>archify 的 explainer 页面：先给结论，再用分栏和时序图解释一次 TLS 首次访问。</figcaption></figure>
+
+<h2 id="描述、仓库和解释页三种入口"><a href="#描述、仓库和解释页三种入口" class="headerlink" title="描述、仓库和解释页三种入口"></a>描述、仓库和解释页三种入口</h2><p>没有现成仓库也能用。对 Agent 说“用 Archify 画 Browser 到 API、Redis 和 PostgreSQL 的请求路径”，它会先生成结构，再根据“加上鉴权”“高亮缓存未命中”这类指令继续改。把仓库交给它时，可以限定八到十二个核心组件、一条主路径、外部依赖和信任边界，源证据节点会打开固定提交里的文件和行号，而不是泛泛指向仓库首页。</p>
+<p>第三种用法是“回答成一页”。问题会先给结论，再按子问题拆成面板，把步骤、表格、代码和经过校验的图放在一起；每条论断可以带编号来源，适合排查 P99 延迟、拆解一次请求或做技术选型说明。</p>
+<h2 id="安装与本地命令"><a href="#安装与本地命令" class="headerlink" title="安装与本地命令"></a>安装与本地命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx skills add tt-a1i/archify -g</span><br></pre></td></tr></table></figure>
+
+<p>装好后在 Claude Code、Codex、Cursor 或 OpenCode 里直接描述要画的系统。仓库也带一个零依赖 CLI，进入仓库目录后可用于验证和交付：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">node bin/archify.mjs guide <span class="string">&quot;Show an API request with Redis cache miss&quot;</span></span><br><span class="line">node bin/archify.mjs validate workflow examples/agent-tool-call.workflow.json --quality showcase --json</span><br><span class="line">node bin/archify.mjs deliver workflow examples/agent-tool-call.workflow.json /tmp/workflow.html --quality showcase --open</span><br></pre></td></tr></table></figure>
+
+<p><code>validate</code> 会检查 schema、布局、HTML&#x2F;SVG、路径和标签避让；失败时返回机器可读的诊断和建议修复项。<code>preview</code> 只监听本机回环地址，刷新前会先验证候选文件，验证不过就保留上一份可用结果。</p>
+<h2 id="给老项目补一张能讲清的图"><a href="#给老项目补一张能讲清的图" class="headerlink" title="给老项目补一张能讲清的图"></a>给老项目补一张能讲清的图</h2><p>接手一个没有架构文档的仓库时，先让 Agent 只读入口、路由、数据访问和外部服务，产出一张高层运行时图；确认主路径后，再让它补充鉴权、队列和失败重试。把图发给同事前，用 <code>#focus=</code>、<code>#route=</code> 或 <code>#reach=</code> 固定视图，对方打开就能看到同一个焦点，不用在聊天里反复解释“看右边那个框”。需要汇报时导出 PNG、WebP、JPG 长图或打印成 PDF。</p>
+<h2 id="和-Mermaid、通用画图工具的区别"><a href="#和-Mermaid、通用画图工具的区别" class="headerlink" title="和 Mermaid、通用画图工具的区别"></a>和 Mermaid、通用画图工具的区别</h2><p>Mermaid 适合把结构快速写进 Markdown，Excalidraw 和 diagrams.net 适合手绘和自由排版；archify 的重点是让 Agent 先理解系统，再产出带交互和证据的页面。它明确不把自动解析 Mermaid、通用自动布局、托管分享和所见即所得编辑列进当前范围。换句话说，它不是一个更聪明的白板，而是一条从技术意图到沟通材料的流水线。如果团队已经有 Mermaid 文档，也可以把 archify 的产出当作讲解层，而不是全部替换。</p>
+<h2 id="限制与适合的人"><a href="#限制与适合的人" class="headerlink" title="限制与适合的人"></a>限制与适合的人</h2><p>图里的关系来自代码、描述或计划，不是运行时监控，不能据此判断线上真实流量和故障影响；源代码证据也只在主动要求时才会附上。仓库越大，越需要先限定分析范围，否则图会退化成组件清单。运行环境需要 Node.js 18 以上，Claude.ai 的沙箱还取决于是否有 Node 访问权限。</p>
+<p>适合需要补架构文档、做技术分享、评审方案或交接项目的开发者；如果只想要一张静态示意图，或者需要实时拓扑和 APM 能力，应该选别的工具。</p>
+<h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><p>仓库：<a target="_blank" rel="noopener" href="https://github.com/tt-a1i/archify">https://github.com/tt-a1i/archify</a> 。官方站与示例库：<a target="_blank" rel="noopener" href="https://archify.si/">https://archify.si</a> ，场景指南：<a target="_blank" rel="noopener" href="https://archify.si/guide.html">https://archify.si/guide.html</a> 。许可证为 MIT。本文按官方 README、站点说明和仓库元数据整理，未在本机完整实测。</p>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

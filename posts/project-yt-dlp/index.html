@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="功能完整的命令行音视频下载器。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>yt-dlp：功能完整的命令行音视频下载器 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-yt-dlp/">
+  <meta property="og:url" content="https://qingning.co/posts/project-yt-dlp/">
+
+  <meta property="og:title" content="yt-dlp：功能完整的命令行音视频下载器 | 青柠小站">
+  <meta property="og:description" content="功能完整的命令行音视频下载器。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-03">2026年9月3日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-07">2026年9月7日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>yt-dlp：功能完整的命令行音视频下载器</h1>
+          <p class="article-meta"><time datetime="2026-09-03">2026年9月3日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-07">2026年9月7日</time></p>
+          <p class="article-description">功能完整的命令行音视频下载器。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">#效率工具</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-yt-dlp/cover.webp" alt="yt-dlp 的字排封面，类别：开源替代" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：本站生成 · 本站原创</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>yt-dlp 是一个功能完整的命令行音视频下载器，支持数千个站点，采用 Unlicense 许可。项目由社区维护，是 youtube-dl 的分支，代码基础来自已经停止活跃的 youtube-dlc。和图形下载器相比，它更像一条可以脚本化、可重复执行的下载流水线。</p>
+<h2 id="命令行里的下载流水线"><a href="#命令行里的下载流水线" class="headerlink" title="命令行里的下载流水线"></a>命令行里的下载流水线</h2><p>图形工具通常围绕“粘贴链接、点下载”设计，遇到需要选清晰度、只取音轨、批量归档或跳过已下载文件时就会受限。yt-dlp 把这些操作拆成参数：格式选择、输出命名、字幕、元数据、后处理各管一段，可以组合进脚本，也可以写进配置文件反复使用。</p>
+<p>项目本身用 Python 编写，支持 Python 3.11 及以上版本。真正下载时还依赖外部工具，README 把 ffmpeg 和 ffprobe 列为强烈推荐：合并分离的视频流和音频流、转封装、嵌入缩略图都要用到。</p>
+<h2 id="格式、命名与字幕"><a href="#格式、命名与字幕" class="headerlink" title="格式、命名与字幕"></a>格式、命名与字幕</h2><p>常用参数不多，但足够覆盖大部分归档需求：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先列出站点提供的格式，确认是否有分离的音视频流</span></span><br><span class="line">yt-dlp -F <span class="string">&quot;&lt;视频页面 URL&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 选最佳视频加最佳音频，失败时回退到单文件；合并需要 ffmpeg</span></span><br><span class="line">yt-dlp -f <span class="string">&quot;bv*+ba/b&quot;</span> -o <span class="string">&quot;%(title)s [%(id)s].%(ext)s&quot;</span> <span class="string">&quot;&lt;视频页面 URL&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入中英文字幕；站点是否提供字幕决定最终结果</span></span><br><span class="line">yt-dlp --write-subs --sub-langs <span class="string">&quot;zh.*,en.*&quot;</span> <span class="string">&quot;&lt;视频页面 URL&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-o</code> 的输出模板可以带标题、站点、上传者、视频 ID 等字段，批量下载时用统一的命名规则能省掉后续整理。<code>--download-archive archive.txt</code> 会把已下载的视频 ID 记进文件，下次运行时自动跳过，适合定期同步一个频道或播放列表。</p>
+<p>需要登录才能访问的内容，可以用 <code>--cookies-from-browser</code> 从本机浏览器读取 Cookie。Cookie 等同于登录凭据，不要把导出的文件提交到仓库或发给别人。</p>
+<h2 id="安装、依赖与更新"><a href="#安装、依赖与更新" class="headerlink" title="安装、依赖与更新"></a>安装、依赖与更新</h2><p>可以下载官方独立二进制，也可以用 pip 安装。README 特别说明发布通道：<code>stable</code> 更新较慢，站点一改就可能失效；<code>nightly</code> 是给普通用户的推荐通道；<code>master</code> 跟随每次提交，适合愿意承担回归风险的人。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># pip 安装，需要 Python 3.11 及以上</span></span><br><span class="line">python -m pip install -U <span class="string">&quot;yt-dlp[default]&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用官方独立二进制时，可切换到 nightly 通道</span></span><br><span class="line">yt-dlp --update-to nightly</span><br></pre></td></tr></table></figure>
+
+<p>如果通过 pip 安装，更新时重跑同一条安装命令，而不是依赖 <code>-U</code>。完整 YouTube 支持还需要 <code>yt-dlp-ejs</code> 和一个受支持的 JavaScript 运行时，README 推荐 deno，也支持 Node.js、bun 和 QuickJS。以下命令按官方 README 整理，未在本机完整实测。</p>
+<h2 id="批量归档场景"><a href="#批量归档场景" class="headerlink" title="批量归档场景"></a>批量归档场景</h2><p>假设你要保存自己上传的课程视频，或者有授权的一批公开讲座。先建一个归档文件，再让 yt-dlp 按播放列表逐条处理；已经下载过的条目自动跳过，新增条目补进来。配上 <code>--write-info-json</code> 可以保留标题、上传日期和简介，配上字幕参数可以一起收走字幕。整个过程可以放进定时任务，失败了下次重跑即可。</p>
+<h2 id="和-youtube-dl、图形下载器的区别"><a href="#和-youtube-dl、图形下载器的区别" class="headerlink" title="和 youtube-dl、图形下载器的区别"></a>和 youtube-dl、图形下载器的区别</h2><p>youtube-dl 是这一脉的源头，yt-dlp 则从已停止活跃的 youtube-dlc 分支继续开发，新站点适配和修复更及时。图形下载器把参数藏进界面，遇到站点改版时同样会失效，却少了命令行排查和脚本化的余地。浏览器扩展则更适合偶尔存一个文件，不适合批量归档。</p>
+<h2 id="版权、失效与维护"><a href="#版权、失效与维护" class="headerlink" title="版权、失效与维护"></a>版权、失效与维护</h2><p>工具本身不判断内容授权。下载什么、能不能再分发，取决于平台条款和当地法律，README 不提供这方面的许可。站点改版会让提取器失效，这也是官方建议普通用户使用 nightly 的原因。需要登录、验证码或地区限制的内容，失败原因往往在账号或网络，而不在参数。</p>
+<p>把下载任务交给脚本后，还要留意磁盘空间、并发数和请求频率。对站点造成过大压力，既可能触发限流，也可能让账号被限制。</p>
+<h2 id="适用人群"><a href="#适用人群" class="headerlink" title="适用人群"></a>适用人群</h2><p>适合熟悉命令行、需要批量处理或把下载接进自动化流程的人，也适合要归档自己作品、且有明确授权的创作者。偶尔下载一个文件、不想读参数的人，用图形工具更直接。</p>
+<h2 id="官方资料"><a href="#官方资料" class="headerlink" title="官方资料"></a>官方资料</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/yt-dlp/yt-dlp">yt-dlp&#x2F;yt-dlp</a></li>
+<li>文档与常见问题：<a target="_blank" rel="noopener" href="https://github.com/yt-dlp/yt-dlp/wiki">yt-dlp Wiki</a></li>
+<li>支持站点列表：<a target="_blank" rel="noopener" href="https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md">supportedsites.md</a></li>
+<li>许可：Unlicense；部分打包二进制因包含 GPLv3+ 代码，按 GPLv3+ 分发</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

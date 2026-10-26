@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="用自然语言控制 Blender 的社区 MCP 插件。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>mcp-for-blender：用自然语言控制 Blender 的社区 MCP 插件 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-mcp-for-blender/">
+  <meta property="og:url" content="https://qingning.co/posts/project-mcp-for-blender/">
+
+  <meta property="og:title" content="mcp-for-blender：用自然语言控制 Blender 的社区 MCP 插件 | 青柠小站">
+  <meta property="og:description" content="用自然语言控制 Blender 的社区 MCP 插件。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-08">2026年9月8日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-12">2026年9月12日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>mcp-for-blender：用自然语言控制 Blender 的社区 MCP 插件</h1>
+          <p class="article-meta"><time datetime="2026-09-08">2026年9月8日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-12">2026年9月12日</time></p>
+          <p class="article-description">用自然语言控制 Blender 的社区 MCP 插件。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/%E8%A7%86%E9%A2%91/">#视频</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-mcp-for-blender/cover.webp" alt="mcp-for-blender 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/ahujasid/mcp-for-blender/main/assets/codex-screenshot.png" target="_blank" rel="noopener">来源</a> · MIT</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>mcp-for-blender 由 ahujasid 维护，前身是 <code>blender-mcp</code>，PyPI 包名已改为 <code>mcp-for-blender</code>。它把 Blender 变成一个 MCP 服务器：任何支持 Model Context Protocol 的客户端都能连上来，用自然语言建模、改材质、布光、摆相机、渲染。README 明确声明这是第三方集成，与 Blender Foundation 无关。</p>
+<figure class="article-diagram"><img src="/images/projects/project-mcp-for-blender/screen-01.webp" alt="mcp-for-blender 的界面或功能演示截图" width="1200" height="750" loading="lazy" decoding="async"><figcaption>Blender 3D 视图侧栏中的 MCP for Blender 连接面板（仓库截图）</figcaption></figure>
+
+<h2 id="两件东西：MCP-服务与-Blender-插件"><a href="#两件东西：MCP-服务与-Blender-插件" class="headerlink" title="两件东西：MCP 服务与 Blender 插件"></a>两件东西：MCP 服务与 Blender 插件</h2><p>系统由两部分组成：一个 Python MCP 服务器负责和客户端说话，一个 Blender 插件在 Blender 内部开 socket 服务器执行命令。两边通过 JSON 消息通信，命令带 <code>type</code> 和可选参数，返回 <code>status</code> 与结果。安装时两者都要到位，只装 Python 包或只开插件都连不上。</p>
+<h2 id="一条命令装齐"><a href="#一条命令装齐" class="headerlink" title="一条命令装齐"></a>一条命令装齐</h2><p>官方提供一键安装脚本，会检测本机的 Claude Desktop、Claude Code、Codex、Cursor、VS Code、Windsurf、OpenCode 等客户端，让你选择要配置哪些，再安装并启用 Blender 插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># macOS / Linux</span></span><br><span class="line">curl -LsSf https://www.mcp-for-blender.com/install.sh | sh</span><br></pre></td></tr></table></figure>
+
+<p>Windows 用 PowerShell 的 <code>irm ... | iex</code>，或者先 <code>winget install --id=astral-sh.uv -e</code>，再执行 <code>uvx mcp-for-blender setup</code>。手工配置也不复杂：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">claude mcp add blender uvx mcp-for-blender</span><br><span class="line">uvx mcp-for-blender install-addon</span><br></pre></td></tr></table></figure>
+
+<p>然后在 Blender 的 Edit → Preferences → Add-ons 里启用 Interface: MCP for Blender。3D 视图按 <code>N</code> 打开侧栏，找到 MCP for Blender 标签，勾选要用的能力，点 Connect to Claude。插件随 Blender 启动而开服务器，同一时间只应运行一个 MCP 服务实例。客户端从 GUI 启动时不会继承终端 PATH，如果报 <code>spawn uvx ENOENT</code>，用 <code>which uvx</code> 或 <code>where uvx</code> 查到的绝对路径替换命令，改完配置要完全退出并重启客户端。</p>
+<h2 id="九个工具里挑几个说"><a href="#九个工具里挑几个说" class="headerlink" title="九个工具里挑几个说"></a>九个工具里挑几个说</h2><p><code>execute_blender_code</code> 让模型直接在你的 Blender 里跑 Python，这是能力的来源，也是风险所在。只想让模型执行一段现成脚本时，走到这一步就够了，其余工具可以按需开启。<code>look</code> 负责视觉校验，可以从视口、相机、自动取景的多角度组合或动画帧序列截图，支持 solid、material、rendered、wireframe、xray 等显示方式。<code>get_scene_info</code> 返回紧凑的场景摘要，每行一个对象，可按位置、材质、拓扑、权重等字段筛选。<code>generate_3d</code> 一次调用完成生成并导入，接的是 Tripo、Hunyuan3D、Hyper3D Rodin 或 Meshy。<code>search_assets</code> 与 <code>import_asset</code> 覆盖 Poly Haven 的 HDRI、贴图和模型，Sketchfab 模型，以及 Poly Pizza 的低模。</p>
+<p>资产导入会保留来源信息：Poly Haven 全部是 CC0，导入后对象上会写入 <code>polyhaven_id</code>、作者、分辨率和许可证；Poly Pizza 约 69% 是 CC-BY，导入时会写入 <code>polypizza_attribution</code>，商用时要按许可证署名。</p>
+<h2 id="一个布景流程"><a href="#一个布景流程" class="headerlink" title="一个布景流程"></a>一个布景流程</h2><p>让它“用阴天午后的 HDRI 打光，给墙面上锈金属贴图”：模型先搜索 Poly Haven，拿到候选缩略图，再导入 HDRI 和贴图并应用到指定对象，最后用 <code>look</code> 从相机视角检查。不满意就继续调材质或换角度，整个过程留在 Blender 会话里，不需要手工找资产再拖进节点编辑器。做占位场景、快速概念图、批量改材质时，这种闭环比手动操作快。</p>
+<h2 id="与-CLI-Anything-的-Blender-CLI-对比"><a href="#与-CLI-Anything-的-Blender-CLI-对比" class="headerlink" title="与 CLI-Anything 的 Blender CLI 对比"></a>与 CLI-Anything 的 Blender CLI 对比</h2><p>CLI-Anything 也能为 Blender 生成命令行，但那条路面向批处理和无人值守：命令写在脚本里，适合 CI、批量渲染和可重复的资产生成。mcp-for-blender 面向实时会话，模型在打开着的 Blender 里边看边改。两者的共同点是都调用真实 Blender，而不是另写一个简化渲染器；选择取决于你要“对话式建模”还是“流水线执行”。</p>
+<h2 id="限制与安全"><a href="#限制与安全" class="headerlink" title="限制与安全"></a>限制与安全</h2><p><code>execute_blender_code</code> 能运行任意 Python，README 用大写提醒先在 Blender 里保存工作，生产环境谨慎使用。复杂操作要拆成小步骤，超时通常意味着该简化请求。Poly Haven 资产在 Blender 主线程下载，下载期间界面会卡住，靠近镜头的资产再用 2k 以上分辨率。Poly Pizza 的 CDN 会拦截数据中心、VPN 和云主机 IP，失败时与 API Key 无关。遥测默认只收最小匿名使用记录，提示词、生成代码、截图和场景数据在未勾选同意前不会上传，可用 <code>DISABLE_TELEMETRY=true</code> 全部关闭。本文按官方 README 与仓库元数据整理，未在本机完整实测。</p>
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><p>适合需要快速做 3D 占位、概念场景、批量材质调整的创作者，以及想把 Blender 接进 agent 工作流的开发者。需要严格拓扑、精细绑定和可复现工业级输出的项目，仍应由人工主导，模型只做辅助。</p>
+<h2 id="官方入口"><a href="#官方入口" class="headerlink" title="官方入口"></a>官方入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/ahujasid/mcp-for-blender">ahujasid&#x2F;mcp-for-blender</a></li>
+<li>官网：<a target="_blank" rel="noopener" href="https://www.mcp-for-blender.com/">mcp-for-blender.com</a></li>
+<li>PyPI：<a target="_blank" rel="noopener" href="https://pypi.org/project/mcp-for-blender/">mcp-for-blender</a></li>
+<li>许可证：MIT</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

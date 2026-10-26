@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="跨平台检索最近 30 天信息并汇总的 Agent Skill。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>last30days：跨平台检索最近 30 天信息并汇总的 Agent Skill | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-last30days/">
+  <meta property="og:url" content="https://qingning.co/posts/project-last30days/">
+
+  <meta property="og:title" content="last30days：跨平台检索最近 30 天信息并汇总的 Agent Skill | 青柠小站">
+  <meta property="og:description" content="跨平台检索最近 30 天信息并汇总的 Agent Skill。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-12">2026年9月12日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-16">2026年9月16日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>last30days：跨平台检索最近 30 天信息并汇总的 Agent Skill</h1>
+          <p class="article-meta"><time datetime="2026-09-12">2026年9月12日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-16">2026年9月16日</time></p>
+          <p class="article-description">跨平台检索最近 30 天信息并汇总的 Agent Skill。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-last30days/cover.webp" alt="last30days 的字排封面，类别：AI Skill" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：本站生成 · 本站原创</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>last30days 是 mvanhorn 维护的 Agent Skill，仓库为 mvanhorn&#x2F;last30days-skill。它把“最近 30 天”当作检索边界，在 Reddit、X、YouTube、Hacker News、Polymarket、GitHub 等来源里并行搜索同一个话题，再按真实互动和时间排序，交给 agent 合成一份带来源的简报。README 的定位很直接：不是编辑挑选的搜索结果，而是按点赞、观看、赔率这些人群行为排序。按官方 README 整理，未在本机完整实测。</p>
+<h2 id="装好之后，先问一个人或一件事"><a href="#装好之后，先问一个人或一件事" class="headerlink" title="装好之后，先问一个人或一件事"></a>装好之后，先问一个人或一件事</h2><p>Claude Code 走插件市场：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">/plugin marketplace add mvanhorn/last30days-skill</span><br><span class="line">/plugin install last30days</span><br></pre></td></tr></table></figure>
+
+<p>Codex、Cursor、Copilot、Gemini CLI 等其他支持 Agent Skills 的工具，用通用安装器：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx skills add mvanhorn/last30days-skill -g</span><br></pre></td></tr></table></figure>
+
+<p>装好后直接给话题，例如 <code>/last30days Peter Steinberger</code>、<code>/last30days OpenClaw vs Hermes vs Paperclip</code>。它会先解析相关的人、仓库、子版块、频道和话题标签，再多查询并行搜索，把同一件事在 Reddit、X、YouTube 上的讨论合并成一个簇，最后按来源引用。</p>
+<h2 id="零配置能跑，但更多来源要自己接"><a href="#零配置能跑，但更多来源要自己接" class="headerlink" title="零配置能跑，但更多来源要自己接"></a>零配置能跑，但更多来源要自己接</h2><p>Reddit（含评论）、Hacker News、Polymarket 和 GitHub 开箱可用，不需要配置。第一次运行会引导补上 X、YouTube、TikTok、arXiv、Techmeme 等来源所需的钥匙或命令行工具。X 可以用 <code>X_BEARER_TOKEN</code>，也可以登录浏览器会话；YouTube 需要 <code>yt-dlp</code>；TikTok、Instagram、Threads、Pinterest、LinkedIn 和 YouTube 评论走 ScrapeCreators；网页搜索用 Brave。README 给出的免费额度包括 ScrapeCreators 一万次调用、Brave 每月两千次查询，之后按各自规则计费。</p>
+<p>小红书是显式 opt-in，需要本地运行已登录的 x-mcp 浏览器插件或 <code>xiaohongshu-mcp</code>，再用 <code>--search xhs</code>。来源可用性取决于凭据、已安装工具、话题类型和是否主动开启，不是装完就全都有。</p>
+<h2 id="三种不止“查资料”的用法"><a href="#三种不止“查资料”的用法" class="headerlink" title="三种不止“查资料”的用法"></a>三种不止“查资料”的用法</h2><p>第一种是发现模式。问 <code>/last30days what&#39;s exploding in AI agents?</code>，它会扫 Reddit 分类、Hacker News 首页、Digg 的 AI 与 Tech 流，必要时加上 X，最后由 agent 过滤垃圾、判断内容价值，给出 5–10 个按速度排序的话题，并附上可直接执行的后继命令。</p>
+<p>第二种是招聘信号。<code>/last30days Listen Labs --hiring-signals</code> 会把当前招聘页面当作公司重心的证据，报告“招聘看起来指向什么”，而不是预测路线图。</p>
+<p>第三种是沉淀与自动化。直接调用引擎可以输出 JSON：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 skills/last30days/scripts/last30days.py <span class="string">&quot;AI coding agents&quot;</span> --emit=json</span><br></pre></td></tr></table></figure>
+
+<p>加 <code>--store</code> 会把结果写入本地 SQLite，配合 <code>watchlist.py</code> 做定时监控，<code>briefing.py</code> 生成日报或周报；<code>library feed</code> 可以把已保存的简报变成本地 HTML 索引和 Atom feed，<code>library search</code> 则离线检索历史简报。</p>
+<h2 id="一个具体场景"><a href="#一个具体场景" class="headerlink" title="一个具体场景"></a>一个具体场景</h2><p>明天要见一位合作方，先跑 <code>/last30days &lt;姓名或公司&gt;</code>。值得看的不是“他最近发了什么”，而是最近一个月的帖子、播客转录、GitHub 提交节奏和 Reddit 上的争议点是否互相印证。重要结论回到原帖或原始视频核对，尤其是数字、引语和带情绪的二手总结。如果结果集中在某一个平台，先检查是来源没启用，还是这个话题本来只在该平台讨论，别急着把缺失当成结论。写选题前也可以用同样方法判断一个工具是否真的有人用，而不是只看发布稿。</p>
+<h2 id="与通用搜索、深度研究的差别"><a href="#与通用搜索、深度研究的差别" class="headerlink" title="与通用搜索、深度研究的差别"></a>与通用搜索、深度研究的差别</h2><p>Google、Perplexity 或通用 deep research 更擅长抓文章、文档和网页；last30days 把论坛投票、视频转录和预测市场赔率放进同一个时间窗口，再按互动量排序。代价是来源更依赖钥匙、cookie 和第三方 CLI，覆盖面取决于你启用了什么。它不是学术数据库，也不适合需要严格引用的正式研究。</p>
+<h2 id="数据与判断的边界"><a href="#数据与判断的边界" class="headerlink" title="数据与判断的边界"></a>数据与判断的边界</h2><p>默认在本机运行，除了向你自己配置的搜索 API 发请求，研究内容不会上传。设置推理 provider 后，话题和检索片段会发给该 provider 做相关性重排；不设 key 时退回本地评分。<code>--store</code> 的 SQLite 也只保存在本地。</p>
+<p>互动量不等于真实性，投票可以被人为放大，预测市场给的是赔率而不是事实。X 官方 API 的近期搜索默认只覆盖约一周，除非开发者项目有完整存档权限，所以“30 天”在 X 上未必成立。第三方来源的条款、额度和隐私政策要自己确认；浏览器 cookie 方案也意味着把登录态交给本地脚本处理。</p>
+<h2 id="项目入口"><a href="#项目入口" class="headerlink" title="项目入口"></a>项目入口</h2><ul>
+<li>仓库与安装说明：<a target="_blank" rel="noopener" href="https://github.com/mvanhorn/last30days-skill">mvanhorn&#x2F;last30days-skill</a></li>
+<li>许可：MIT</li>
+<li>适合：写选题、做竞品调研、会前了解一个人或公司、判断工具热度的研究和内容工作者</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">开源替代付费软件</title>
+  <desc id="desc">一排应用方块被箭头替换成开源工具箱，旁边是打开的盒子。</desc>
+  <rect width="1200" height="750" fill="#f3f0e6"/>
+  <rect x="80" y="140" width="360" height="470" rx="26" fill="#202a20"/>
+  <rect x="120" y="180" width="130" height="130" rx="22" fill="#2f5d3a"/>
+  <rect x="280" y="180" width="130" height="130" rx="22" fill="#a95532"/>
+  <rect x="120" y="340" width="130" height="130" rx="22" fill="#dde8d7"/>
+  <rect x="280" y="340" width="130" height="130" rx="22" fill="#3d6b43"/>
+  <rect x="120" y="510" width="290" height="50" rx="12" fill="#f3f0e6" opacity=".2"/>
+  <path d="M490 375h120m-28-28 28 28-28 28" stroke="#2f5d3a" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="680" y="110" width="420" height="520" rx="30" fill="#fbfaf5"/>
+  <rect x="730" y="160" width="320" height="70" rx="16" fill="#dde8d7"/>
+  <rect x="760" y="186" width="180" height="10" rx="5" fill="#2f5d3a" opacity=".65"/>
+  <rect x="730" y="256" width="320" height="70" rx="16" fill="#dde8d7"/>
+  <rect x="760" y="282" width="220" height="10" rx="5" fill="#2f5d3a" opacity=".65"/>
+  <rect x="730" y="352" width="320" height="70" rx="16" fill="#dde8d7"/>
+  <rect x="760" y="378" width="150" height="10" rx="5" fill="#2f5d3a" opacity=".65"/>
+  <rect x="730" y="448" width="320" height="110" rx="18" fill="#202a20"/>
+  <path d="M770 486h120m-120 26h180m-180 26h90" stroke="#a9d18e" stroke-width="7" opacity=".65"/>
+  <circle cx="1010" cy="560" r="42" fill="#a95532"/>
+  <path d="M996 560l10 10 18-22" stroke="#f3f0e6" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

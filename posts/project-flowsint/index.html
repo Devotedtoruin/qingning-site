@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="可视化、可扩展的图调查与威胁情报平台。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>Flowsint：可视化、可扩展的图调查与威胁情报平台 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-flowsint/">
+  <meta property="og:url" content="https://qingning.co/posts/project-flowsint/">
+
+  <meta property="og:title" content="Flowsint：可视化、可扩展的图调查与威胁情报平台 | 青柠小站">
+  <meta property="og:description" content="可视化、可扩展的图调查与威胁情报平台。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-07">2026年9月7日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-11">2026年9月11日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>Flowsint：可视化、可扩展的图调查与威胁情报平台</h1>
+          <p class="article-meta"><time datetime="2026-09-07">2026年9月7日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-11">2026年9月11日</time></p>
+          <p class="article-description">可视化、可扩展的图调查与威胁情报平台。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/%E5%AE%89%E5%85%A8/">#安全</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-flowsint/cover.webp" alt="Flowsint 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://github.com/user-attachments/assets/01eb128e-bef4-486e-9276-c4da58f829ae" target="_blank" rel="noopener">来源</a> · Apache-2.0</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>Flowsint 是 reconurge 维护的开源图调查平台，Apache-2.0，前端 TypeScript、后端 FastAPI，数据落在 PostgreSQL 与 Neo4j。用途是把域名、IP、ASN、邮箱、账号、组织、钱包等实体放进同一张关系图，再用一组 enricher 逐步补全线索，适合事件响应、威胁情报和公开来源调查。README 把它定位为早期项目，明确只用于合法、合乎伦理的调查。</p>
+<h2 id="从一张图开始"><a href="#从一张图开始" class="headerlink" title="从一张图开始"></a>从一张图开始</h2><p>首次部署后访问 <code>http://localhost:5173/register</code> 注册账号，系统没有默认凭据。建立调查后，把已知实体加入图中，再运行对应 enricher：域名可以做 DNS 解析、反向解析、子域枚举、WHOIS、根域提取、ASN 归属和历史记录；IP 可以查地理位置与 ASN；ASN 能展开 CIDR，CIDR 再枚举 IP。社交方向集成 Maigret 做用户名检索，邮箱可以查 Gravatar、泄露记录和关联域名，电话可以查泄露，组织可以展开 ASN 与域名，钱包可以拉交易和 NFT。网站侧提供爬虫、链接提取、跟踪脚本识别和正文提取。结果以节点和边回到图上，调查过程和证据留在本机实例中。</p>
+<h2 id="部署与网络暴露"><a href="#部署与网络暴露" class="headerlink" title="部署与网络暴露"></a>部署与网络暴露</h2><p>Linux&#x2F;macOS 装好 Docker 与 Make 后，克隆仓库执行 <code>make prod</code>。Windows 需要先启动 Docker Desktop 并准备 Git，不需要 Make，复制四份 <code>.env</code> 后运行：</p>
+<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">docker compose -f docker-compose.prod.yml up -d</span><br></pre></td></tr></table></figure>
+
+<p>这套 compose 只把 <code>5173</code> 暴露到网络，PostgreSQL、Redis、Neo4j 和 API 都绑定在 <code>127.0.0.1</code>，由前端反向代理转发。同一网络内的客户端直接访问 <code>http://&lt;服务器 IP&gt;:5173</code>，前端会代理所有 API 请求。给团队使用时，必须在 <code>.env</code> 里替换 <code>AUTH_SECRET</code>、<code>MASTER_VAULT_KEY_V1</code> 和 <code>NEO4J_PASSWORD</code>，并把服务器域名加入 <code>flowsint-app/nginx.conf</code> 的 Host 允许列表；默认只接受 localhost，这是为了防 DNS rebinding。再往外网开放时，建议在 5173 前放 Caddy 一类反向代理并启用 HTTPS，同时把应用端口改为只绑定 <code>127.0.0.1</code>。需要固定版本时设置 <code>FLOWSINT_VERSION</code>，避免 <code>latest</code> 镜像漂移。</p>
+<h2 id="代码怎么分模块"><a href="#代码怎么分模块" class="headerlink" title="代码怎么分模块"></a>代码怎么分模块</h2><p>仓库按职责拆成五块：<code>flowsint-types</code> 放 Pydantic 类型，<code>flowsint-enrichers</code> 放 enricher 与扫描逻辑，<code>flowsint-core</code> 负责编排、凭据 vault、Celery 任务和数据库连接，<code>flowsint-api</code> 只放 FastAPI 路由与 schema，<code>flowsint-app</code> 是前端。依赖方向从上到下，新增实体类型、数据源或接口时各有对应位置，二次开发不用挤进一个单体。<code>flowsint-api</code> 还提供认证、图数据库集成与实时事件流。开发模式用 <code>make dev</code> 启动，Windows 可用 <code>docker compose -f docker-compose.dev.yml up -d --build</code>，各模块用 <code>uv run pytest</code> 单独测试；README 说明测试套件并不完整，新增功能应自己补测试。集成方向还提供 N8n 连接器，可把调查接到自有工作流。</p>
+<h2 id="一个典型场景"><a href="#一个典型场景" class="headerlink" title="一个典型场景"></a>一个典型场景</h2><p>接到钓鱼域名举报后，先把域名加入图中，跑 WHOIS 与 DNS 解析，展开子域和 ASN，再跳到对应 CIDR 查看同段 IP，遇到新的域名再反向解析回去。如果页面里有邮箱，可以补查 Gravatar 与泄露记录，把关联账号挂到同一张图上。调查员在节点旁记录证据来源，把关系图留在调查里供报告引用。整个过程不自动攻击目标，只做公开信息聚合与关联分析。</p>
+<h2 id="与-Maltego-的取舍"><a href="#与-Maltego-的取舍" class="headerlink" title="与 Maltego 的取舍"></a>与 Maltego 的取舍</h2><p>Maltego 是成熟的图调查商业工具，transform 生态和报告能力更完整，很多数据源需要订阅。Flowsint 的优势是自托管、代码可改、数据留在自己的机器上；代价是项目仍处早期，各模块的测试套件不完整，enricher 覆盖面和稳定性需要自己验证。选型时先看数据能否出境、团队是否愿意维护 Neo4j 与整套容器栈，再比较具体数据源。</p>
+<h2 id="合法边界与限制"><a href="#合法边界与限制" class="headerlink" title="合法边界与限制"></a>合法边界与限制</h2><p>README 的 ETHICS.md 明确禁止未经授权的入侵、监控和数据收集，也禁止骚扰、起底和违反隐私法的用途。泄露查询、用户名检索这类 enricher 会接触第三方数据源，使用前要确认服务条款与当地法律；只对有权调查的目标和公开信息使用，并把授权范围写进调查记录，不要把调查结果用于定位或骚扰个人。按官方 README 整理，未在本机完整实测。适合有明确调查授权、愿意自托管的安全分析与 OSINT 团队；想自动化攻击或收集他人隐私的人不适合。</p>
+<h2 id="官方入口"><a href="#官方入口" class="headerlink" title="官方入口"></a>官方入口</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/reconurge/flowsint">Flowsint</a> — Apache-2.0</li>
+<li><a target="_blank" rel="noopener" href="https://flowsint.io/">官网</a></li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>

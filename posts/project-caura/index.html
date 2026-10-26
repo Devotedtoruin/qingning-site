@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向多 Agent 的受治理共享记忆系统。">
+
+  <meta name="keywords" content="青柠小站,技术文章,实用分享,个人博客">
+
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="journal-build" content="20261025-full">
+  <title>caura：面向多 Agent 的受治理共享记忆系统 | 青柠小站</title>
+
+
+  <link rel="canonical" href="https://qingning.co/posts/project-caura/">
+  <meta property="og:url" content="https://qingning.co/posts/project-caura/">
+
+  <meta property="og:title" content="caura：面向多 Agent 的受治理共享记忆系统 | 青柠小站">
+  <meta property="og:description" content="面向多 Agent 的受治理共享记忆系统。">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="青柠小站">
+
+  <link rel="alternate" type="application/atom+xml" title="青柠小站" href="https://qingning.co/atom.xml">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/fonts/noto-serif-sc-600.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261025-full">
+  <link rel="stylesheet" href="/css/backgrounds.css?v=20261025-full">
+  <script src="/js/ui.js?v=20261025-full"></script>
+  <script src="/js/backgrounds.js?v=20261025-full"></script>
+  <script src="/js/appearance.js?v=20261025-full"></script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body data-layout="post">
+
+<a class="skip-link" href="#main">跳至正文</a>
+<header class="site-header" data-floating-header>
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="青柠小站，返回首页">
+      <span class="brand-mark" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32"></span>
+      <span class="brand-copy"><strong>青柠小站</strong></span>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+
+      <a href="/articles/">文章</a>
+
+      <a href="/learning/">学习路线</a>
+
+      <a href="/projects/">项目库</a>
+
+      <a href="/categories/">分类</a>
+
+      <a href="/tags/">标签</a>
+      <a href="/archives/">归档</a>
+    </nav>
+    <div class="header-actions">
+      <details class="appearance-controls" data-appearance-controls>
+        <summary class="appearance-toggle icon-button" aria-label="外观设置" title="外观设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></summary>
+        <div class="appearance-panel">
+          <fieldset class="appearance-options"><legend>配色</legend><div class="appearance-choices appearance-schemes">
+            <button type="button" data-appearance-choice="light" aria-pressed="false">浅色</button>
+            <button type="button" data-appearance-choice="dark" aria-pressed="false">深色</button>
+            <button type="button" data-appearance-choice="system" aria-pressed="false">跟随系统</button>
+          </div></fieldset>
+          <fieldset class="appearance-options"><legend>画布</legend><div class="appearance-choices appearance-backgrounds">
+
+            <button type="button" data-background-choice="mist" aria-pressed="false">雾林</button>
+
+            <button type="button" data-background-choice="night" aria-pressed="false">夜岭</button>
+
+            <button type="button" data-background-choice="paper" aria-pressed="false">纸庭</button>
+
+          </div></fieldset>
+          <label for="appearance-transparency">内容面板透明度</label>
+          <div class="appearance-control-row">
+            <input class="appearance-range" id="appearance-transparency" type="range" min="0" max="90" step="1" value="30" aria-describedby="appearance-help" data-appearance-range>
+            <output class="appearance-value" id="appearance-value" for="appearance-transparency" aria-live="polite">30%</output>
+          </div>
+          <p id="appearance-help">0% 为实色面板；只调整内容面板底色，不改变背景或文字清晰度。</p>
+          <button class="appearance-reset" type="button" data-appearance-reset>恢复默认</button>
+        </div>
+      </details>
+      <button class="icon-button search-trigger" type="button" data-search-open aria-label="搜索文章" title="搜索文章"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button class="icon-button menu-button" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="导航"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="移动导航">
+
+    <a href="/articles/">文章</a>
+
+    <a href="/learning/">学习路线</a>
+
+    <a href="/projects/">项目库</a>
+
+    <a href="/categories/">分类</a>
+
+    <a href="/tags/">标签</a>
+    <a href="/archives/">归档</a>
+  </nav>
+</header>
+
+
+<main class="page-main article-page" id="main" tabindex="-1">
+  <div class="shell article-shell">
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <dl class="article-facts">
+          <div><dt>发布</dt><dd><time datetime="2026-09-17">2026年9月17日</time></dd></div>
+          <div><dt>更新</dt><dd><time datetime="2026-09-21">2026年9月21日</time></dd></div>
+          <div><dt>分类</dt><dd><a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></dd></div>
+          <div><dt>阅读</dt><dd>约 5 分钟</dd></div>
+        </dl>
+      </aside>
+      <article class="article-main">
+        <a class="article-back" data-article-back href="/articles/">← 返回文章</a>
+        <header class="article-header">
+          <h1>caura：面向多 Agent 的受治理共享记忆系统</h1>
+          <p class="article-meta"><time datetime="2026-09-17">2026年9月17日</time> · <a href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> · 约 5 分钟阅读</p>
+<p class="article-updated">更新于 <time datetime="2026-09-21">2026年9月21日</time></p>
+          <p class="article-description">面向多 Agent 的受治理共享记忆系统。</p>
+          <div class="post-tags"><a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">#开源项目</a><a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a></div>
+        </header>
+
+        
+        <figure class="article-cover"><img src="/images/projects/project-caura/cover.webp" alt="caura 的官方界面或演示截图" width="1600" height="1065" loading="eager" decoding="async"><figcaption>封面：<a href="https://raw.githubusercontent.com/caura-ai/caura/main/static/images/caura-concept.png" target="_blank" rel="noopener">来源</a> · 以仓库为准</figcaption></figure>
+
+        <nav class="article-toc" data-article-toc hidden aria-label="文章目录">
+          <p class="toc-title">本页目录</p>
+          <button class="toc-toggle" type="button" data-toc-toggle aria-controls="article-toc-list" aria-expanded="true">本页目录</button>
+          <ol id="article-toc-list" data-toc-list></ol>
+        </nav>
+        <div class="article-content"><p>caura 是 caura-ai 团队维护的共享记忆层，Apache-2.0 许可，原名 MemClaw。它面向的不是单个聊天机器人，而是一组多租户、多 Agent 的协作环境：每个 Agent 把学到的东西写进来，其他 Agent 按权限召回，失败和成功的结果再反哺记忆。README 把这条循环概括为 write、recall、compound。</p>
+<h2 id="让一组-Agent-共用一本可审计的账"><a href="#让一组-Agent-共用一本可审计的账" class="headerlink" title="让一组 Agent 共用一本可审计的账"></a>让一组 Agent 共用一本可审计的账</h2><p>一个 Agent 工作时，把上下文塞进提示词就够用；Agent 一多，问题就变成：部署 Agent 学到的回滚命令，事故处理 Agent 怎么知道？哪些记忆能跨团队读？谁在什么时候删了一条规则？caura 把这些问题收进一个服务，写入时打上租户、可见范围和信任级别，召回时按权限过滤，所有写删和状态变化留审计记录。</p>
+<h2 id="写入、召回与治理"><a href="#写入、召回与治理" class="headerlink" title="写入、召回与治理"></a>写入、召回与治理</h2><p>每次写入只要求一个 <code>content</code> 字段，服务端会推断记忆类型、标题、摘要、重要度，标记 PII 并抽取实体。记忆分七种类型，Agent 也可以批量写入，单次最多 100 条。</p>
+<p>召回采用混合检索：pgvector 语义相似度、全文关键词和知识图谱扩展一起排序，图谱最多扩两跳。若结果里同时出现被取代的旧记忆和替代它的新记忆，新记忆会排在旧记忆紧邻的上方，避免过期信息压过修正。写入时还会做矛盾检测，发现冲突就生成替代关系并保留链路。</p>
+<p>治理是这套系统与普通向量库差别最大的地方。每个租户在数据库层面隔离；每条记忆标记为 <code>scope_agent</code>、<code>scope_team</code> 或 <code>scope_org</code>，跨 fleet 召回需要授权；Agent 有四级信任层级，控制跨 fleet 的读、写和删除；所有操作进审计日志。PII 检测会把 <code>contains_pii</code> 和类型写进元数据，但它是提示，不是合规认证。</p>
+<h2 id="最小自托管"><a href="#最小自托管" class="headerlink" title="最小自托管"></a>最小自托管</h2><p>不配置模型 Key 也能先跑起来。standalone 模式是单租户、关闭鉴权，记忆不做向量化，只能按关键词检索：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/caura-ai/caura.git</span><br><span class="line"><span class="built_in">cd</span> caura</span><br><span class="line"></span><br><span class="line"><span class="comment"># 仅用于本地单租户试用；这行会关闭鉴权</span></span><br><span class="line"><span class="built_in">cp</span> .env.example .<span class="built_in">env</span> &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;IS_STANDALONE=true&quot;</span> &gt;&gt; .<span class="built_in">env</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 Postgres + pgvector、Redis、API 和调度器</span></span><br><span class="line">docker compose up -d --<span class="built_in">wait</span></span><br></pre></td></tr></table></figure>
+
+<p>写入和搜索可以直接用 curl 验证：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 写一条记忆；standalone 模式下 API Key 固定为 standalone</span></span><br><span class="line">curl -X POST http://localhost:8000/api/v1/memories \</span><br><span class="line">  -H <span class="string">&quot;X-API-Key: standalone&quot;</span> -H <span class="string">&quot;Content-Type: application/json&quot;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;&quot;tenant_id&quot;: &quot;default&quot;, &quot;agent_id&quot;: &quot;quickstart&quot;, &quot;write_mode&quot;: &quot;strong&quot;, &quot;content&quot;: &quot;认证服务使用 JWT，有效期 15 分钟。&quot;&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 按关键词找回</span></span><br><span class="line">curl -X POST http://localhost:8000/api/v1/search \</span><br><span class="line">  -H <span class="string">&quot;X-API-Key: standalone&quot;</span> -H <span class="string">&quot;Content-Type: application/json&quot;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;&quot;tenant_id&quot;: &quot;default&quot;, &quot;query&quot;: &quot;JWT 有效期&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要语义召回时再配置 embedding 供应商。MCP 客户端可以直接接本地服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">claude mcp add --transport http -s user caura http://localhost:8000/mcp --header <span class="string">&quot;X-API-Key: standalone&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>以上命令按官方 README 整理，未在本机完整实测；配置供应商、反向代理和生产鉴权要另看自托管文档。</p>
+<h2 id="部署-Agent-与事故-Agent"><a href="#部署-Agent-与事故-Agent" class="headerlink" title="部署 Agent 与事故 Agent"></a>部署 Agent 与事故 Agent</h2><p>平台团队有两个 Agent：<code>deploy-agent</code> 把“用 deployctl 回滚 auth-service”的经验以 <code>scope_team</code> 写入 <code>platform</code> fleet；几周后 <code>incident-agent</code> 在处理故障时用 <code>caura_recall</code> 问“怎么回滚 auth-service”，结果里带着作者和信任级别。需要跨团队共享时，把记忆提升到 <code>scope_org</code>，由信任层级决定谁能读。这样的分工让经验只写一次，而不是每个 Agent 各自踩坑。</p>
+<h2 id="与-Mem0、Zep、Letta-的定位差异"><a href="#与-Mem0、Zep、Letta-的定位差异" class="headerlink" title="与 Mem0、Zep、Letta 的定位差异"></a>与 Mem0、Zep、Letta 的定位差异</h2><p>单个 Agent 用 Mem0、Zep 或 Letta 都能工作，caura 自己也不否认这一点。差异出现在 Agent 数量增加之后：多 fleet、信任层级、跨厂商共享、矛盾检测和按 Agent 调参，是 README 对比表里强调的能力。那张表基于厂商对公开文档的解读，选型时仍应逐项核对，不能把它当成第三方评测。</p>
+<p>性能方面，README 公布了 LoCoMo 和 LongMemEval 的结果，同时注明这些公开基准测的是单 Agent、单用户的长对话，不能直接代表多 Agent 治理场景。延迟和召回质量要在自己的数据上验证。</p>
+<h2 id="记忆放大的隐私与复杂度"><a href="#记忆放大的隐私与复杂度" class="headerlink" title="记忆放大的隐私与复杂度"></a>记忆放大的隐私与复杂度</h2><p>共享记忆把隐私风险也放大了：一条含个人信息的记忆如果被错误地设成 <code>scope_org</code>，影响范围比单机聊天记录大得多。PII 标记、租户隔离和审计只能降低风险，保留周期、删除流程和访问策略仍要自己设计。</p>
+<p>自托管要维护 Postgres、pgvector、Redis、API 和调度器，小项目会觉得重。standalone 模式省掉了鉴权和语义检索，适合试用，不适合生产。记忆写入越多， crystallization 和矛盾检测带来的后台任务也越多，需要观察成本和延迟。</p>
+<h2 id="什么时候值得上"><a href="#什么时候值得上" class="headerlink" title="什么时候值得上"></a>什么时候值得上</h2><p>适合已有多个 Agent、需要共享事实和操作经验，并且在意权限与审计的团队，例如平台运维、客服自动化或多产品线 Agent 平台。只有一个 Agent、数据量很小的个人项目，用更轻的记忆库或直接拼上下文更合适。</p>
+<h2 id="官方入口"><a href="#官方入口" class="headerlink" title="官方入口"></a>官方入口</h2><ul>
+<li>仓库：<a target="_blank" rel="noopener" href="https://github.com/caura-ai/caura">caura-ai&#x2F;caura</a></li>
+<li>官网：<a target="_blank" rel="noopener" href="https://caura.ai/">caura.ai</a></li>
+<li>文档：<a target="_blank" rel="noopener" href="https://caura.ai/docs">caura.ai&#x2F;docs</a></li>
+<li>许可：以仓库为准，README 标注 Apache-2.0</li>
+</ul>
+</div>
+        <footer class="article-footer"><a href="/articles/">← 返回全部文章</a></footer>
+      </article>
+      <aside class="article-aside" aria-label="文章目录"></aside>
+    </div>
+  </div>
+</main>
+<div class="read-progress" data-read-progress role="presentation"></div>
+<button class="to-top" type="button" data-to-top aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 13 6-6 6 6M12 7v12"/></svg></button>
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="footer-brand-name" href="/"><img src="/favicon.svg" alt="" width="24" height="24"><strong>青柠小站</strong></a>
+      <p class="footer-tagline">收录偶然遇到的有趣事物。</p>
+    </div>
+    <nav class="footer-links" aria-label="页脚导航">
+      <a href="/articles/">全部文章</a>
+      <a href="/categories/">分类</a>
+      <a href="/tags/">标签</a>
+      <a href="/atom.xml">RSS</a>
+      <a href="/credits/">素材致谢</a>
+    </nav>
+    <p class="footer-meta">© 2026 青柠小站<span class="footer-meta-extra"> · 技术记录与随手笔记 · Powered by Hexo</span></p>
+  </div>
+
+</footer>
+<div class="music-player" data-music-player data-music-state="idle" data-music-position="dock">
+  <div class="music-mini">
+    <button class="music-mini-toggle" type="button" data-music-mini-toggle data-music-disc aria-label="播放：Gymnopédie No. 1"><span class="vinyl-mini" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></span><span data-music-mini-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+    <span class="music-mini-label" aria-hidden="true"><span class="music-mini-title" data-music-mini-title>Gymnopédie No. 1</span><span class="music-mini-state" data-music-mini-state>未播放</span></span>
+    <button class="music-load" type="button" data-music-load aria-label="展开音乐播放器" title="展开音乐播放器" aria-controls="footer-music-panel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h11M4 12h11M4 17h7M19 5v10"/><circle cx="17" cy="16" r="2.4"/></svg></button>
+  </div>
+  <div class="music-body" id="footer-music-panel" data-music-body hidden role="region" aria-labelledby="footer-music-title">
+    <span class="music-sheet-handle" aria-hidden="true"></span>
+    <button class="music-close" type="button" data-music-close aria-label="收起音乐播放器" title="收起音乐播放器"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="music-now-playing">
+      <div class="vinyl-disc" data-vinyl-disc aria-hidden="true"><span class="vinyl-groove"></span><span class="vinyl-label"></span></div>
+      <div class="music-now-text">
+        <p class="music-kicker" id="footer-music-title">背景音乐</p>
+        <p class="music-title" data-music-title>Gymnopédie No. 1</p>
+        <p class="music-credit" data-music-credit><span data-music-credit-text>Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0</span> · <a href="/credits/#music">素材致谢</a></p>
+      </div>
+    </div>
+    <input class="music-progress" data-music-progress type="range" min="0" max="0" step="0.1" value="0" aria-label="播放进度" aria-valuetext="尚未加载播放时长" disabled>
+    <div class="music-times"><span data-music-current>0:00</span><span data-music-duration>--:--</span></div>
+    <div class="music-controls">
+      <button class="music-previous" type="button" data-music-previous aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 5v14m12-14L8 12l10 7V5Z"/></svg></button>
+      <button class="music-play" type="button" data-music-toggle aria-label="播放"><span data-music-toggle-icon aria-hidden="true"><span data-music-symbol="play"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7V5Z"/></svg></span><span data-music-symbol="pause" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14"/></svg></span></span></button>
+      <button class="music-next" type="button" data-music-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M18 5v14M6 5l10 7-10 7V5Z"/></svg></button>
+    </div>
+    <label class="music-volume" for="footer-music-volume">音量<input id="footer-music-volume" data-music-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+    <ol class="music-list" data-music-list role="list">
+
+      <li class="music-item is-current" data-track data-src="/audio/gymnopedie-no1.mp3" data-credit="Erik Satie 曲，Kevin MacLeod 演奏 · CC BY 3.0" aria-current="true">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Gymnopédie No. 1"><span class="music-item-index" aria-hidden="true">1</span><span class="music-item-title">Gymnopédie No. 1</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/meditation-impromptu-01.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Meditation Impromptu 01"><span class="music-item-index" aria-hidden="true">2</span><span class="music-item-title">Meditation Impromptu 01</span></button>
+      </li>
+
+      <li class="music-item" data-track data-src="/audio/avec-soin.mp3" data-credit="Kevin MacLeod · CC BY 3.0" aria-current="false">
+        <button class="music-item-play" type="button" data-track-play aria-label="播放：Avec Soin"><span class="music-item-index" aria-hidden="true">3</span><span class="music-item-title">Avec Soin</span></button>
+      </li>
+
+    </ol>
+    <audio id="footer-music" data-music-audio preload="none" aria-label="背景音乐播放器" hidden></audio>
+    <p class="music-status" data-music-status role="status" aria-live="polite">选择曲目后点击播放，不会自动播放。</p>
+  </div>
+  <noscript><p class="music-status">启用 JavaScript 后可加载播放器。</p></noscript>
+</div>
+<div class="search-dialog" data-search-dialog hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="search-head"><h2 id="search-title">站内搜索</h2><button class="icon-button" type="button" data-search-close aria-label="关闭搜索">×</button></div>
+    <input class="search-input" data-search-input type="search" aria-label="搜索文章" placeholder="输入关键词搜索文章" autocomplete="off">
+    <div class="search-meta" data-search-meta role="status" aria-live="polite">输入关键词开始检索</div>
+    <button class="search-retry secondary-action" type="button" data-search-retry hidden>重试搜索</button>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="/vendor/minisearch-7.2.0.js" defer></script>
+<script src="/js/search.js?v=20261025-full" defer></script>
+<script src="/js/site.js?v=20261025-full" defer></script>
+<script src="/js/quotes.js?v=20261025-full" defer></script>
+<script src="/js/media.js?v=20261025-full" defer></script>
+<script src="/js/music.js?v=20261025-full" defer></script>
+<script src="/js/pjax.js?v=20261025-full" defer></script>
+</body>
+</html>
